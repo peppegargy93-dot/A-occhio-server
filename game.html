@@ -1543,11 +1543,14 @@ function pensGiu(){
     <div class="card center pensgiu">
       <div class="pg-ic">✋</div>
       <div class="pg-ttl">PENNE GIÙ</div>
-      <p class="sub" style="margin:6px 0 0">Le lavagnette sono bloccate. Ora raccogli le stime ricevute e calcola il risultato.</p>
-      <button type="button" class="btn coral mt" id="toInput">Controlla le stime →</button>
+      <p class="sub" style="margin:6px 0 0">Le risposte sono state raccolte senza mostrarle. Premi il pulsante per rivelarle tutte insieme.</p>
+      <button type="button" class="btn coral mt" id="toInput">📲 Visualizza le stime ricevute</button>
     </div>
   `;
-  $("#toInput").addEventListener("click", renderInput);
+  $("#toInput").addEventListener("click", ()=>{
+    renderInput();
+    setTimeout(onlineFill,0);
+  });
 }
 
 /* =====================================================================
@@ -2587,11 +2590,9 @@ function onlineConnect(url){
 function renderOnlineBar(){
   const el=$("#onlineBar"); if(!el) return;
   if(ONLINE){
-    el.innerHTML = `<div style="font-size:13px">🌐 Stanza <b>${ONLINE.code}</b> · 📲 ${ONLINE.n||0} lavagnette · stime ricevute: <b>${Object.keys(ONLINE.est).length}</b></div>
+    el.innerHTML = `<div style="font-size:13px">🌐 Stanza <b>${ONLINE.code}</b> · 📲 ${ONLINE.n||0} lavagnette collegate</div>
       <div style="font-size:11px;color:#6b6350;margin-top:3px">Gli amici scansionano il QR oppure aprono ${esc(ONLINE.url+"/lavagnetta")} sul telefono</div>
-      <img alt="QR stanza" width="110" style="margin-top:6px;border-radius:8px" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(ONLINE.url+"/lavagnetta?c="+ONLINE.code)}">
-      <div><button type="button" class="btn teal sm mt-s" id="onlineFillBtn">📲 Riempi con le stime ricevute</button></div>`;
-    const f=$("#onlineFillBtn"); if(f) f.addEventListener("click",onlineFill);
+      <img alt="QR stanza" width="110" style="margin-top:6px;border-radius:8px" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(ONLINE.url+"/lavagnetta?c="+ONLINE.code)}">`;
   } else {
     el.innerHTML = `<div style="font-size:12px;font-weight:800">🌐 Lavagnette online</div>
       <input type="url" id="onlineUrl" value="${/^https?:/.test(location.protocol)? location.origin : location.origin}" autocomplete="off"

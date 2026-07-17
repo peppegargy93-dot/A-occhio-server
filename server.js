@@ -214,12 +214,20 @@ wss.on('connection',ws=>{
     if(m.t==='create'){const c=code4();rooms[c]={master:ws,pads:new Map()};ws._room=c;ws._master=true;
       ws.send(JSON.stringify({t:'room',code:c}));}
     else if(m.t==='join'){const r=rooms[m.code];if(!r)return ws.send(JSON.stringify({t:'err',msg:'Stanza non trovata'}));
-      r.pads.set(ws,{name:m.name});ws._room=m.code;
+      r.pads.set(ws,{name:m.name,submitted:false});ws._room=m.code;
       ws.send(JSON.stringify({t:'ok',code:m.code}));
       r.master&&r.master.send(JSON.stringify({t:'peer',name:m.name,n:r.pads.size}));}
-    else if(m.t==='q'||m.t==='lock'){const r=rooms[ws._room];if(r&&ws._master)for(const p of r.pads.keys())p.send(JSON.stringify(m));}
+    else if(m.t==='q'){const r=rooms[ws._room];
+      if(r&&ws._master){
+        for(const info of r.pads.values())info.submitted=false;
+        for(const p of r.pads.keys())p.send(JSON.stringify(m));
+      }}
+    else if(m.t==='lock'){const r=rooms[ws._room];
+      if(r&&ws._master)for(const p of r.pads.keys())p.send(JSON.stringify(m));}
     else if(m.t==='est'){const r=rooms[ws._room];const info=r&&r.pads.get(ws);
-      if(r&&info&&r.master)r.master.send(JSON.stringify({t:'est',name:info.name,value:m.value}));}
+      if(!r||!info||info.submitted)return;
+      info.submitted=true;
+      if(r.master)r.master.send(JSON.stringify({t:'est',name:info.name,value:m.value}));}
   });
   ws.on('close',()=>{const r=rooms[ws._room];if(!r)return;
     if(ws._master){for(const p of r.pads.keys())p.close();delete rooms[ws._room];}

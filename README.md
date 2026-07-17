@@ -1,25 +1,17 @@
-# A OCCHIO! — repository unica v2
+# A OCCHIO! — repository unica v3
 
-Un solo servizio contiene gioco, lavagnette e WebSocket.
+## Flusso corretto
 
-## Novità v2
-
-- Il QR della stanza compare nella configurazione, prima dell'inizio della partita.
-- Le lavagnette mostrano domanda, categoria, unità di misura e countdown.
-- A zero secondi scatta “Penne giù” e l'input viene bloccato.
-- Dopo l'invio, la lavagnetta torna a una schermata di attesa bloccata.
-- Alla domanda successiva la stessa pagina si riattiva automaticamente.
-
-## Rotte
-
-- `/` oppure `/gioco` — gioco principale
-- `/lavagnetta` — lavagnetta
-- `/lavagnetta?c=ABCD` — lavagnetta con codice precompilato
-- `/health` — controllo server
+1. Prima della partita il master mostra QR e codice stanza.
+2. I giocatori entrano e restano in attesa.
+3. Il master legge la domanda.
+4. Solo quando il master avvia il tempo, la domanda compare sulle lavagnette.
+5. Ogni giocatore può inviare una sola stima e non può modificarla.
+6. Le stime arrivano al server ma restano nascoste al master.
+7. A “Penne giù”, il master preme **Visualizza le stime ricevute** e le vede tutte insieme.
+8. Le lavagnette restano bloccate fino alla domanda successiva.
 
 ## Render
-
-Crea un solo Web Service:
 
 - Runtime: Node
 - Build Command: `npm install`
