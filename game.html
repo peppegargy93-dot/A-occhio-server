@@ -333,20 +333,25 @@
 
   /* ---------- board ---------- */
   .board{
-    display:grid;grid-template-columns:repeat(5,1fr);gap:10px 6px;margin-top:6px;padding:4px 2px;
+    position:relative;display:flex;flex-direction:column;gap:8px;margin-top:8px;padding:4px 2px 6px 28px;
   }
+  .board::before{content:"";position:absolute;left:15px;top:20px;bottom:22px;width:4px;border-radius:999px;background:linear-gradient(var(--teal),var(--ochre),var(--coral),var(--ink));opacity:.38;}
   .cell{
-    position:relative;aspect-ratio:1;border-radius:50%;display:flex;flex-direction:column;
-    align-items:center;justify-content:center;font-size:13px;border:2.5px solid rgba(255,255,255,.75);
-    background:var(--paper-2);overflow:visible;box-shadow:0 2px 0 rgba(30,46,51,.10);
+    position:relative;min-height:58px;border-radius:15px;display:grid;grid-template-columns:38px 1fr auto;
+    align-items:center;gap:9px;padding:8px 10px;font-size:13px;border:2px solid rgba(255,255,255,.8);
+    background:var(--paper-2);overflow:visible;box-shadow:0 3px 10px -7px rgba(30,46,51,.55);
   }
+  .cell::before{content:"";position:absolute;left:-19px;top:50%;width:18px;height:4px;background:var(--line);transform:translateY(-50%);}
+  .cell.start-cell{background:#edf3ef;border-color:#c9ddd2;}
+  .cell .cell-main{display:flex;align-items:center;gap:9px;min-width:0;}
+  .cell .cell-name{font-size:13px;font-weight:900;line-height:1.1;}
   .cat-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;}
   .cat-chip{font-size:11.5px;font-weight:800;border:2px solid var(--petrol);background:#fff;color:var(--petrol);
     border-radius:999px;padding:6px 10px;}
   .cat-chip.off{opacity:.35;border-style:dashed;text-decoration:line-through;}
   .cat-chip.shake{animation:dieTumble .3s ease;}
-  .cell .n{position:absolute;top:2px;left:4px;font-size:9px;font-weight:800;color:rgba(0,0,0,.4);}
-  .cell .ic{font-size:18px;line-height:1;}
+  .cell .n{position:static;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:900;color:var(--ink);background:rgba(255,255,255,.78);border:1.5px solid rgba(32,66,78,.13);}
+  .cell .ic{font-size:21px;line-height:1;}
   .cell.t-domanda{background:#e7eef0;}
   .cell.t-bonus{background:#f6e6b8;border-color:#e7cf86;}
   .cell.t-malus{background:#f6d9cf;border-color:#e7b4a3;}
@@ -362,9 +367,9 @@
   .cell.t-alfabetica{background:#d6e7e6;}
   .cell.t-finale{background:var(--ink);}
   .cell.t-finale .ic{filter:drop-shadow(0 0 1px #fff);}
-  .pawns{position:absolute;bottom:-6px;display:flex;justify-content:center;width:100%;}
-  .pawn{width:17px;height:17px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.35);
-    display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:900;color:#fff;margin-left:-6px;line-height:1;}
+  .pawns{position:static;display:flex;justify-content:flex-end;flex-wrap:wrap;gap:3px;min-width:22px;}
+  .pawn{width:24px;height:24px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.3);
+    display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;color:#fff;margin-left:0;line-height:1;}
   .pawn:first-child{margin-left:0;}
   .legend{display:flex;flex-wrap:wrap;gap:4px 9px;margin-top:11px;font-size:10px;color:#5c6c70;}
   .legend span{display:inline-flex;align-items:center;gap:3px;}
@@ -2344,7 +2349,7 @@ function diceOrder(players, opts, done){
   })();
 }
 function renderPostRound(){
-  onlineBroadcastView({kind:"score",title:"Punteggio aggiornato",text:"Ecco la situazione dopo il round.",scores:onlineScores()});
+  onlineBroadcastView({kind:"map",title:"Mappa aggiornata",text:"Ecco dove siete dopo il round.",scores:onlineScores(),map:onlineMap()});
   S.phase="postround";
   renderStatus();
   const w = S.roundWinnerId? pById(S.roundWinnerId):null;
@@ -2448,21 +2453,24 @@ function boardCard(positions, hoppingIds){
     if(r%2===1) rowIdx.reverse();
     order.push(...rowIdx);
   }
-  const cells = order.map(i=>{
-    const type=BOARD[i];
+  const startHere=S.players.filter(p=>posOf(p)===0);
+  const startPawns=startHere.map(p=>`<span class="pawn drop${hopSet.has(p.id)?' hop':''}" style="background:${p.color}" title="${esc(p.name)}">${esc(initialOf(p.name))}</span>`).join("");
+  const startCell=`<div class="cell start-cell"><span class="n">0</span><span class="cell-main"><span class="ic">🚩</span><span class="cell-name">Partenza</span></span>${startPawns?`<span class="pawns">${startPawns}</span>`:"<span></span>"}</div>`;
+  const cells = BOARD.map((type,i)=>{
     const n=i+1;
     const here = S.players.filter(p=>posOf(p)===n);
     const pawns = here.map(p=>`<span class="pawn drop${hopSet.has(p.id)?' hop':''}" style="background:${p.color}" title="${esc(p.name)}">${esc(initialOf(p.name))}</span>`).join("");
     return `<div class="cell t-${type}${landed.has(n)?' just':''}" title="${CELL[type].nm}">
         <span class="n">${n}</span>
-        <span class="ic">${CELL[type].ic}</span>
-        ${pawns?`<span class="pawns">${pawns}</span>`:""}
+        <span class="cell-main"><span class="ic">${CELL[type].ic}</span><span class="cell-name">${esc(CELL[type].nm)}</span></span>
+        ${pawns?`<span class="pawns">${pawns}</span>`:"<span></span>"}
       </div>`;
   }).join("");
   return `
     <div class="card" id="moveBoard">
-      <h2><span class="tick">🗺️</span> Tabellone</h2>
-      <div class="board">${cells}</div>
+      <h2><span class="tick">🗺️</span> Mappa di gioco</h2>
+      <p class="sub">Dalla casella 0 fino alla Finale. Le pedine mostrano la posizione aggiornata di tutti.</p>
+      <div class="board">${startCell}${cells}</div>
     </div>`;
 }
 function diceRollWinner(players, opts, done){
@@ -2629,7 +2637,14 @@ function closeMenu(){ if(menuSheet){ menuSheet.hidden=true; } if(menuBtn){ menuB
 let ONLINE=null;
 let ONLINE_RETRY=null;
 function onlineScores(){
-  return S.players.map(p=>({name:p.name,score:p.score,pos:p.pos}));
+  return S.players.map(p=>({name:p.name,score:p.score,pos:p.pos,color:p.color}));
+}
+function onlineMap(){
+  return {
+    finish:FINISH,
+    cells:BOARD.map((type,i)=>({n:i+1,type,icon:CELL[type].ic,name:CELL[type].nm})),
+    players:S.players.map(p=>({name:p.name,pos:p.pos,color:p.color,score:p.score}))
+  };
 }
 function onlineBroadcastView(payload){
   if(!ONLINE || !ONLINE.ws || ONLINE.ws.readyState!==WebSocket.OPEN) return;
