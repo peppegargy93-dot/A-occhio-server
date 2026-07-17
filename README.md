@@ -1,24 +1,27 @@
-# A OCCHIO! — repository unica
+# A OCCHIO! — repository unica v2
 
-Questo progetto contiene sia il gioco principale sia le lavagnette.
+Un solo servizio contiene gioco, lavagnette e WebSocket.
+
+## Novità v2
+
+- Il QR della stanza compare nella configurazione, prima dell'inizio della partita.
+- Le lavagnette mostrano domanda, categoria, unità di misura e countdown.
+- A zero secondi scatta “Penne giù” e l'input viene bloccato.
+- Dopo l'invio, la lavagnetta torna a una schermata di attesa bloccata.
+- Alla domanda successiva la stessa pagina si riattiva automaticamente.
 
 ## Rotte
 
-- `/` — gioco principale
-- `/gioco` — gioco principale, percorso alternativo
+- `/` oppure `/gioco` — gioco principale
 - `/lavagnetta` — lavagnetta
-- `/lavagnetta?c=ABCD` — lavagnetta con codice stanza già compilato
+- `/lavagnetta?c=ABCD` — lavagnetta con codice precompilato
 - `/health` — controllo server
-
-Il QR generato dal gioco punta alla lavagnetta sullo stesso dominio e sullo stesso server WebSocket.
 
 ## Render
 
-Crea un solo **Web Service** collegato a questa repository.
+Crea un solo Web Service:
 
 - Runtime: Node
 - Build Command: `npm install`
 - Start Command: `npm start`
 - Root Directory: vuoto
-
-Dopo il deploy, apri soltanto il dominio principale del servizio.

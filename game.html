@@ -1215,8 +1215,14 @@ function renderSetup(){
     </div>
 
     <div class="card">
+      <h2><span class="tick">📲</span> Collega le lavagnette</h2>
+      <p class="sub">Fallo prima di iniziare: ogni giocatore scansiona il QR, inserisce il proprio nome e resta in attesa della prima domanda.</p>
+      <div class="card flat mt-s" id="onlineBar" style="text-align:center"></div>
+    </div>
+
+    <div class="card">
       <h2><span class="tick">👁️</span> Come si gioca</h2>
-      <p class="sub">L'anti-quiz delle stime: esce una domanda numerica, tutti scrivono una stima in 20 secondi, vince chi si avvicina di più. I tre più vicini fanno 3 · 2 · 1 punti e avanzano sul tabellone.</p>
+      <p class="sub">L'anti-quiz delle stime: esce una domanda numerica, tutti inseriscono la propria stima sulla lavagnetta entro 20 secondi. Alla scadenza scatta “Penne giù”.</p>
       <button type="button" class="btn ghost sm" id="tutBtn">↻ Rivedi il tutorial</button>
     </div>
 
@@ -1233,6 +1239,7 @@ function renderSetup(){
     S.catMode=b.dataset.mode; renderSetup();
   }));
   renderPlayerInputs();
+  renderOnlineBar();
 }
 
 function syncPlayers(){
@@ -1415,7 +1422,7 @@ function renderDraw(){
           <div style="font-size:12px;color:#7a4536;margin-top:4px">${malusNotes.map(esc).join(" · ")}</div>
         </div>`:""}
       <div class="card flat mt" style="background:#eef4f0;border-color:#c9ddd2">
-        <div style="font-size:13px;color:#3a5a52">✍️ Scrivete la risposta su carta o lavagnetta. <b>Non inserirla ancora nell'app.</b></div>
+        <div style="font-size:13px;color:#3a5a52">📣 Il narratore legge la domanda. Poi avvia il timer: comparirà su tutte le lavagnette.</div>
       </div>
       <button type="button" class="btn ochre mt-s" id="goTimer">Avvia tempo di risposta ⏱️</button>
     </div>
@@ -1438,9 +1445,21 @@ function playerLimit(p){
   return p.malus.reduce((m,x)=> x.time? Math.min(m,x.time):m, 20);
 }
 function startWriting(){
-  if(ONLINE){ ONLINE.est={}; try{ONLINE.ws.send(JSON.stringify({t:"q",text:S.question.q+(S.question.u?" ("+S.question.u+")":"")}))}catch(e){} }
   S.phase="writing";
   S.timer.total=20; S.timer.left=20;
+  if(ONLINE){
+    ONLINE.est={};
+    try{
+      ONLINE.ws.send(JSON.stringify({
+        t:"q",
+        text:S.question.q,
+        unit:S.question.u||"",
+        cat:S.question.cat||"",
+        round:S.round,
+        seconds:S.timer.total
+      }));
+    }catch(e){}
+  }
   renderWriting();
   startTimer();
 }
@@ -1463,7 +1482,7 @@ function renderWriting(){
       ${unitHint(q)}
       <div class="timer-wrap">
         <div class="timer-num" id="tnum">20</div>
-        <div class="timer-lbl">✍️ scrivete ora · su carta, non nell'app</div>
+        <div class="timer-lbl">✍️ inserite ora la stima sulle lavagnette</div>
         <div class="tbar"><i id="tbar"></i></div>
       </div>
       <div class="write-roster mt">${roster}</div>
@@ -1524,8 +1543,8 @@ function pensGiu(){
     <div class="card center pensgiu">
       <div class="pg-ic">✋</div>
       <div class="pg-ttl">PENNE GIÙ</div>
-      <p class="sub" style="margin:6px 0 0">Le risposte sono bloccate. Ora il master le inserisce, con calma e senza timer.</p>
-      <button type="button" class="btn coral mt" id="toInput">Inserisci le risposte →</button>
+      <p class="sub" style="margin:6px 0 0">Le lavagnette sono bloccate. Ora raccogli le stime ricevute e calcola il risultato.</p>
+      <button type="button" class="btn coral mt" id="toInput">Controlla le stime →</button>
     </div>
   `;
   $("#toInput").addEventListener("click", renderInput);
