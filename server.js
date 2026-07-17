@@ -1,0 +1,53 @@
+// A OCCHIO! — server lavagnette (stanze + WebSocket)
+const http=require('http');const {WebSocketServer}=require('ws');
+const PORT=process.env.PORT||3000;
+const rooms={}; // code -> {master, pads:Map<ws,{name}>}
+const code4=()=>{let c='';const A='ABCDEFGHKMNPRSTUVZ';for(let i=0;i<4;i++)c+=A[Math.floor(Math.random()*A.length)];return rooms[c]?code4():c;};
+const PAD=`<!DOCTYPE html><html lang="it"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A OCCHIO! — Lavagnetta</title><style>
+body{font-family:system-ui;background:#F3EBD3;color:#1E2E33;margin:0;padding:24px;text-align:center}
+h1{font-weight:900;letter-spacing:-1px}input,button{font-size:20px;padding:14px;border-radius:14px;border:2.5px solid #1E2E33;width:90%;max-width:340px;margin:8px 0;box-sizing:border-box}
+button{background:#E0795E;color:#fff;font-weight:900;border:none}
+#q{font-style:italic;color:#2E6B7A;font-size:19px;margin:18px 0;min-height:40px}
+#big{font-size:60px;font-weight:900;color:#E0795E}.hide{display:none}
+#st{font-size:13px;color:#2E6B7A;margin-top:14px}</style>
+<h1>👁 A OCCHIO!</h1>
+<div id="join"><input id="code" placeholder="CODICE STANZA" maxlength="4" style="text-transform:uppercase">
+<input id="name" placeholder="Il tuo nome"><button onclick="join()">Entra</button></div>
+<div id="play" class="hide"><div id="big">✋</div><div id="q">Aspetta la domanda…</div>
+<input id="est" type="number" step="any" inputmode="decimal" placeholder="La tua stima">
+<button onclick="send()">Invia stima 📤</button></div>
+<div id="st"></div>
+<script>
+let ws;const $=id=>document.getElementById(id);
+const url=(location.protocol==='https:'?'wss://':'ws://')+location.host;
+const p=new URLSearchParams(location.search);if(p.get('c'))$('code').value=p.get('c');
+function join(){ws=new WebSocket(url);
+ ws.onopen=()=>ws.send(JSON.stringify({t:'join',code:$('code').value.trim().toUpperCase(),name:$('name').value.trim()||'Anonimo'}));
+ ws.onmessage=e=>{const m=JSON.parse(e.data);
+  if(m.t==='ok'){$('join').classList.add('hide');$('play').classList.remove('hide');$('st').textContent='Collegato alla stanza '+m.code;}
+  if(m.t==='err'){$('st').textContent='⚠️ '+m.msg;}
+  if(m.t==='q'){$('q').textContent=m.text;$('big').textContent='✍️';$('est').value='';}
+  if(m.t==='lock'){$('big').textContent='✋';$('q').textContent='Penne giù!';}};
+ ws.onclose=()=>{$('st').textContent='Connessione persa. Ricarica per rientrare.';};}
+function send(){if(ws&&$('est').value!==''){ws.send(JSON.stringify({t:'est',value:$('est').value}));$('big').textContent='✅';}}
+</script></html>`;
+const srv=http.createServer((req,res)=>{res.writeHead(200,{'Content-Type':'text/html; charset=utf-8'});res.end(PAD);});
+const wss=new WebSocketServer({server:srv});
+wss.on('connection',ws=>{
+  ws.on('message',raw=>{let m;try{m=JSON.parse(raw)}catch(e){return}
+    if(m.t==='create'){const c=code4();rooms[c]={master:ws,pads:new Map()};ws._room=c;ws._master=true;
+      ws.send(JSON.stringify({t:'room',code:c}));}
+    else if(m.t==='join'){const r=rooms[m.code];if(!r)return ws.send(JSON.stringify({t:'err',msg:'Stanza non trovata'}));
+      r.pads.set(ws,{name:m.name});ws._room=m.code;
+      ws.send(JSON.stringify({t:'ok',code:m.code}));
+      r.master&&r.master.send(JSON.stringify({t:'peer',name:m.name,n:r.pads.size}));}
+    else if(m.t==='q'||m.t==='lock'){const r=rooms[ws._room];if(r&&ws._master)for(const p of r.pads.keys())p.send(JSON.stringify(m));}
+    else if(m.t==='est'){const r=rooms[ws._room];const info=r&&r.pads.get(ws);
+      if(r&&info&&r.master)r.master.send(JSON.stringify({t:'est',name:info.name,value:m.value}));}
+  });
+  ws.on('close',()=>{const r=rooms[ws._room];if(!r)return;
+    if(ws._master){for(const p of r.pads.keys())p.close();delete rooms[ws._room];}
+    else{const i=r.pads.get(ws);r.pads.delete(ws);r.master&&r.master.send(JSON.stringify({t:'bye',name:i&&i.name,n:r.pads.size}));}});
+});
+srv.listen(PORT,()=>console.log('A OCCHIO! server su porta '+PORT));
