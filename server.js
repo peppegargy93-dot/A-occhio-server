@@ -1,240 +1,271 @@
-// A OCCHIO! — server unico: gioco principale + lavagnette + WebSocket
+'use strict';
+
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
-const { WebSocketServer } = require('ws');
+const { WebSocketServer, WebSocket } = require('ws');
 
-const PORT = process.env.PORT || 3000;
-const GAME_PATH = path.join(__dirname, 'game.html');
-const GAME = fs.readFileSync(GAME_PATH, 'utf8');
+const PORT = Number(process.env.PORT || 3000);
+const PUBLIC_DIR = path.join(__dirname, 'public');
+const ROUND_SECONDS = 20;
+const rooms = new Map();
 
-const rooms = {}; // code -> {master, pads: Map<ws, {name}>}
-const code4 = () => {
-  let c = '';
-  const A = 'ABCDEFGHKMNPRSTUVZ';
-  for (let i = 0; i < 4; i++) c += A[Math.floor(Math.random() * A.length)];
-  return rooms[c] ? code4() : c;
-};
-
-const PAD=`<!DOCTYPE html>
-<html lang="it">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>A OCCHIO! — Lavagnetta</title>
-<style>
-:root{--ink:#1E2E33;--paper:#F3EBD3;--coral:#E0795E;--teal:#2E6B7A;--cream:#fffaf0}
-*{box-sizing:border-box}
-body{font-family:system-ui,-apple-system,sans-serif;background:var(--paper);color:var(--ink);margin:0;min-height:100svh;padding:22px;text-align:center}
-.wrap{width:min(100%,430px);margin:0 auto}
-h1{font-weight:950;letter-spacing:-1.5px;margin:8px 0 18px}
-.card{background:var(--cream);border:2.5px solid var(--ink);border-radius:20px;padding:18px;box-shadow:4px 5px 0 rgba(30,46,51,.16)}
-input,button{font-size:19px;padding:14px;border-radius:14px;border:2.5px solid var(--ink);width:100%;margin:7px 0}
-button{background:var(--coral);color:#fff;font-weight:900;border:none;min-height:54px}
-button:disabled,input:disabled{opacity:.5}
-.hide{display:none!important}
-.eyebrow{font-size:11px;font-weight:900;letter-spacing:1.7px;text-transform:uppercase;color:var(--teal)}
-#question{font-size:23px;font-weight:900;line-height:1.18;margin:10px 0 6px}
-#unit{font-size:13px;color:var(--teal);font-weight:800;min-height:18px}
-#timer{font-size:72px;line-height:1;font-weight:950;color:var(--ink);margin:18px 0 8px;font-variant-numeric:tabular-nums}
-#timer.warn{color:var(--coral)}
-.bar{height:10px;border-radius:99px;background:#ded5bd;overflow:hidden;margin:0 0 15px}
-.bar i{display:block;height:100%;width:100%;background:var(--teal);transition:width .25s linear}
-#est{font-size:28px;text-align:center;font-weight:900}
-.icon{font-size:62px;line-height:1;margin:8px 0 12px}
-.msg{font-size:16px;line-height:1.35}
-#st{font-size:13px;color:var(--teal);margin-top:14px;min-height:20px}
-.room{font-size:12px;font-weight:850;color:var(--teal);margin-top:8px}
-</style>
-</head>
-<body>
-<div class="wrap">
-<h1>👁 A OCCHIO!</h1>
-
-<section id="join" class="card">
-  <div class="eyebrow">Collegati alla partita</div>
-  <input id="code" placeholder="CODICE STANZA" maxlength="4" autocapitalize="characters" style="text-transform:uppercase">
-  <input id="name" placeholder="Il tuo nome" maxlength="20">
-  <button id="joinBtn" onclick="join()">Entra nella stanza</button>
-</section>
-
-<section id="waiting" class="card hide">
-  <div class="icon">📲</div>
-  <div class="eyebrow">Lavagnetta collegata</div>
-  <div class="msg"><b id="hello">Sei dentro!</b><br>Attendi che il narratore avvii la prossima domanda.</div>
-  <div class="room" id="room"></div>
-</section>
-
-<section id="play" class="card hide">
-  <div class="eyebrow" id="meta">Domanda</div>
-  <div id="question">Aspetta la domanda…</div>
-  <div id="unit"></div>
-  <div id="timer">20</div>
-  <div class="bar"><i id="bar"></i></div>
-  <input id="est" type="text" inputmode="decimal" placeholder="Inserisci la tua stima" autocomplete="off">
-  <button id="sendBtn" onclick="sendEstimate()">Invia stima 📤</button>
-  <div id="playMsg" class="msg"></div>
-</section>
-
-<section id="locked" class="card hide">
-  <div class="icon" id="lockIcon">✋</div>
-  <div class="eyebrow" id="lockTitle">Penne giù</div>
-  <div class="msg" id="lockMsg">Tempo scaduto. La lavagnetta è bloccata.<br>Attendi il prossimo round.</div>
-  <div class="room" id="lockRoom"></div>
-</section>
-
-<div id="st"></div>
-</div>
-
-<script>
-let ws=null, timerId=null, left=0, total=20, joinedName="", roomCode="", submitted=false;
-const $=id=>document.getElementById(id);
-const socketUrl=(location.protocol==='https:'?'wss://':'ws://')+location.host;
-const params=new URLSearchParams(location.search);
-if(params.get('c')) $('code').value=params.get('c').toUpperCase();
-
-function show(id){
-  ['join','waiting','play','locked'].forEach(x=>$(x).classList.toggle('hide',x!==id));
+function roomCode() {
+  const alphabet = 'ABCDEFGHKMNPRSTUVZ';
+  let code = '';
+  do {
+    code = Array.from({ length: 4 }, () => alphabet[Math.floor(Math.random() * alphabet.length)]).join('');
+  } while (rooms.has(code));
+  return code;
 }
-function setStatus(text){$('st').textContent=text||''}
-function stopClock(){if(timerId){clearInterval(timerId);timerId=null}}
-function paintClock(){
-  $('timer').textContent=Math.max(0,left);
-  $('timer').classList.toggle('warn',left<=5);
-  $('bar').style.width=(Math.max(0,left)/Math.max(1,total)*100)+'%';
-}
-function join(){
-  const code=$('code').value.trim().toUpperCase();
-  joinedName=$('name').value.trim()||'Anonimo';
-  if(code.length!==4){setStatus('⚠️ Inserisci il codice stanza di 4 lettere.');return}
-  $('joinBtn').disabled=true;
-  setStatus('Connessione…');
-  ws=new WebSocket(socketUrl);
-  ws.onopen=()=>ws.send(JSON.stringify({t:'join',code,name:joinedName}));
-  ws.onmessage=e=>{
-    let m;try{m=JSON.parse(e.data)}catch(err){return}
-    if(m.t==='ok'){
-      roomCode=m.code;
-      $('hello').textContent='Ciao '+joinedName+'!';
-      $('room').textContent='Stanza '+roomCode;
-      $('lockRoom').textContent='Stanza '+roomCode;
-      setStatus('');
-      show('waiting');
-    }
-    if(m.t==='err'){
-      $('joinBtn').disabled=false;
-      setStatus('⚠️ '+m.msg);
-    }
-    if(m.t==='q') openQuestion(m);
-    if(m.t==='lock') lockBoard(false);
-  };
-  ws.onclose=()=>{
-    stopClock();
-    setStatus('Connessione persa. Ricarica la pagina per rientrare.');
-    $('sendBtn').disabled=true;
-    $('est').disabled=true;
-  };
-}
-function openQuestion(m){
-  stopClock();
-  submitted=false;
-  total=Math.max(1,Number(m.seconds)||20);
-  left=total;
-  $('meta').textContent=(m.round?'Round '+m.round+' · ':'')+(m.cat||'Domanda');
-  $('question').textContent=m.text||'Nuova domanda';
-  $('unit').textContent=m.unit?'Rispondi in '+m.unit:'';
-  $('est').value='';
-  $('est').disabled=false;
-  $('sendBtn').disabled=false;
-  $('playMsg').textContent='';
-  show('play');
-  paintClock();
-  setTimeout(()=>$('est').focus(),150);
-  timerId=setInterval(()=>{
-    left--;
-    paintClock();
-    if(left<=0){stopClock();lockBoard(false)}
-  },1000);
-}
-function sendEstimate(){
-  if(submitted||left<=0||!ws||ws.readyState!==1)return;
-  const value=$('est').value.trim();
-  if(value===''){
-    $('playMsg').textContent='Inserisci prima una stima.';
-    return;
+
+function send(ws, payload) {
+  if (ws && ws.readyState === WebSocket.OPEN) {
+    ws.send(JSON.stringify(payload));
   }
-  submitted=true;
-  ws.send(JSON.stringify({t:'est',value}));
-  stopClock();
-  $('lockIcon').textContent='✅';
-  $('lockTitle').textContent='Stima inviata';
-  $('lockMsg').innerHTML='La risposta è stata consegnata.<br>Attendi la prossima domanda.';
-  show('locked');
 }
-function lockBoard(fromServer){
-  if(submitted)return;
-  stopClock();
-  submitted=true;
-  $('est').disabled=true;
-  $('sendBtn').disabled=true;
-  $('lockIcon').textContent='✋';
-  $('lockTitle').textContent='Penne giù';
-  $('lockMsg').innerHTML='Tempo scaduto. La lavagnetta è bloccata.<br>Attendi il prossimo round.';
-  show('locked');
+
+function broadcast(room, payload) {
+  send(room.masterSocket, payload);
+  for (const player of room.players.values()) send(player.socket, payload);
 }
-</script>
-</body>
-</html>`;
 
-const srv = http.createServer((req, res) => {
-  const pathname = new URL(req.url, 'http://localhost').pathname;
+function publicPlayers(room) {
+  return [...room.players.values()].map(p => ({
+    id: p.id,
+    name: p.name,
+    isMaster: p.isMaster,
+    connected: p.socket.readyState === WebSocket.OPEN
+  }));
+}
 
-  if (pathname === '/lavagnetta') {
-    res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
-    return res.end(PAD);
-  }
-
-  if (pathname === '/' || pathname === '/gioco') {
-    res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
-    return res.end(GAME);
-  }
-
-  if (pathname === '/health') {
-    res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
-    return res.end(JSON.stringify({ ok: true, rooms: Object.keys(rooms).length }));
-  }
-
-  res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
-  res.end('Pagina non trovata');
-});
-
-const wss=new WebSocketServer({server:srv});
-wss.on('connection',ws=>{
-  ws.on('message',raw=>{let m;try{m=JSON.parse(raw)}catch(e){return}
-    if(m.t==='create'){const c=code4();rooms[c]={master:ws,pads:new Map()};ws._room=c;ws._master=true;
-      ws.send(JSON.stringify({t:'room',code:c}));}
-    else if(m.t==='join'){const r=rooms[m.code];if(!r)return ws.send(JSON.stringify({t:'err',msg:'Stanza non trovata'}));
-      r.pads.set(ws,{name:m.name,submitted:false});ws._room=m.code;
-      ws.send(JSON.stringify({t:'ok',code:m.code}));
-      r.master&&r.master.send(JSON.stringify({t:'peer',name:m.name,n:r.pads.size}));}
-    else if(m.t==='q'){const r=rooms[ws._room];
-      if(r&&ws._master){
-        for(const info of r.pads.values())info.submitted=false;
-        for(const p of r.pads.keys())p.send(JSON.stringify(m));
-      }}
-    else if(m.t==='lock'){const r=rooms[ws._room];
-      if(r&&ws._master)for(const p of r.pads.keys())p.send(JSON.stringify(m));}
-    else if(m.t==='est'){const r=rooms[ws._room];const info=r&&r.pads.get(ws);
-      if(!r||!info||info.submitted)return;
-      info.submitted=true;
-      if(r.master)r.master.send(JSON.stringify({t:'est',name:info.name,value:m.value}));}
+function notifyLobby(room) {
+  broadcast(room, {
+    t: 'lobby',
+    code: room.code,
+    players: publicPlayers(room),
+    expectedAnswers: room.players.size
   });
-  ws.on('close',()=>{const r=rooms[ws._room];if(!r)return;
-    if(ws._master){for(const p of r.pads.keys())p.close();delete rooms[ws._room];}
-    else{const i=r.pads.get(ws);r.pads.delete(ws);r.master&&r.master.send(JSON.stringify({t:'bye',name:i&&i.name,n:r.pads.size}));}});
+}
+
+function safeNumber(raw) {
+  const normalized = String(raw ?? '').trim().replace(/\s/g, '').replace(',', '.');
+  if (!normalized) return null;
+  const value = Number(normalized);
+  return Number.isFinite(value) ? value : null;
+}
+
+function closeRound(room, reason) {
+  const round = room.round;
+  if (!round || round.status !== 'active') return;
+
+  round.status = 'completed';
+  if (round.timer) clearTimeout(round.timer);
+
+  const answers = [...room.players.values()].map(player => {
+    const answer = round.answers.get(player.id);
+    return {
+      playerId: player.id,
+      name: player.name,
+      isMaster: player.isMaster,
+      value: answer ? answer.value : null,
+      submittedAt: answer ? answer.submittedAt : null,
+      missing: !answer
+    };
+  });
+
+  broadcast(room, {
+    t: 'round_completed',
+    reason,
+    roundId: round.id,
+    question: round.question,
+    mode: round.mode,
+    answers
+  });
+}
+
+function startRound(room, message) {
+  if (room.round?.status === 'active') {
+    return send(room.masterSocket, { t: 'err', msg: 'C’è già un round attivo.' });
+  }
+
+  const question = String(message.question || '').trim();
+  if (!question) return send(room.masterSocket, { t: 'err', msg: 'Inserisci una domanda.' });
+
+  const mode = message.mode === 'voice' ? 'voice' : 'secret';
+  const roundId = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+  const deadline = Date.now() + ROUND_SECONDS * 1000;
+
+  room.round = {
+    id: roundId,
+    status: 'active',
+    question,
+    mode,
+    answers: new Map(),
+    deadline,
+    timer: setTimeout(() => closeRound(room, 'timeout'), ROUND_SECONDS * 1000 + 100)
+  };
+
+  broadcast(room, {
+    t: 'round_started',
+    roundId,
+    question,
+    mode,
+    duration: ROUND_SECONDS,
+    deadline,
+    expectedAnswers: room.players.size
+  });
+}
+
+function submitEstimate(room, ws, message) {
+  const round = room.round;
+  const player = room.players.get(ws.playerId);
+
+  if (!round || round.status !== 'active') return send(ws, { t: 'err', msg: 'Il round non è attivo.' });
+  if (!player) return send(ws, { t: 'err', msg: 'Giocatore non riconosciuto.' });
+  if (Date.now() > round.deadline) {
+    closeRound(room, 'timeout');
+    return send(ws, { t: 'err', msg: 'Tempo scaduto.' });
+  }
+  if (round.answers.has(player.id)) return send(ws, { t: 'err', msg: 'Risposta già inviata e bloccata.' });
+
+  const value = safeNumber(message.value);
+  if (value === null) return send(ws, { t: 'err', msg: 'Inserisci una stima numerica valida.' });
+
+  round.answers.set(player.id, {
+    value,
+    submittedAt: Date.now()
+  });
+
+  send(ws, { t: 'estimate_locked', roundId: round.id });
+
+  // Nessun valore viene mai inviato prima della fine del round.
+  broadcast(room, {
+    t: 'answer_progress',
+    received: round.answers.size,
+    expected: room.players.size
+  });
+
+  if (round.answers.size >= room.players.size) closeRound(room, 'all_answered');
+}
+
+function serveStatic(req, res) {
+  const urlPath = new URL(req.url, `http://${req.headers.host}`).pathname;
+  const filePath = urlPath === '/' ? path.join(PUBLIC_DIR, 'index.html') : path.join(PUBLIC_DIR, urlPath);
+
+  if (!filePath.startsWith(PUBLIC_DIR)) {
+    res.writeHead(403);
+    return res.end('Forbidden');
+  }
+
+  fs.readFile(filePath, (error, data) => {
+    if (error) {
+      res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
+      return res.end('Pagina non trovata');
+    }
+    const ext = path.extname(filePath);
+    const types = {
+      '.html': 'text/html; charset=utf-8',
+      '.js': 'application/javascript; charset=utf-8',
+      '.css': 'text/css; charset=utf-8',
+      '.json': 'application/json; charset=utf-8'
+    };
+    res.writeHead(200, { 'Content-Type': types[ext] || 'application/octet-stream' });
+    res.end(data);
+  });
+}
+
+const server = http.createServer(serveStatic);
+const wss = new WebSocketServer({ server });
+
+wss.on('connection', ws => {
+  ws.on('message', raw => {
+    let message;
+    try {
+      message = JSON.parse(raw.toString());
+    } catch {
+      return send(ws, { t: 'err', msg: 'Messaggio non valido.' });
+    }
+
+    if (message.t === 'create_room') {
+      const masterName = String(message.name || 'Master').trim() || 'Master';
+      const code = roomCode();
+      const masterId = `p-${Math.random().toString(36).slice(2, 10)}`;
+      const room = {
+        code,
+        masterSocket: ws,
+        players: new Map(),
+        round: null
+      };
+      ws.roomCode = code;
+      ws.playerId = masterId;
+      ws.isMaster = true;
+      room.players.set(masterId, { id: masterId, name: masterName, isMaster: true, socket: ws });
+      rooms.set(code, room);
+      send(ws, { t: 'room_created', code, playerId: masterId, isMaster: true });
+      notifyLobby(room);
+      return;
+    }
+
+    if (message.t === 'join_room') {
+      const code = String(message.code || '').trim().toUpperCase();
+      const room = rooms.get(code);
+      if (!room) return send(ws, { t: 'err', msg: 'Stanza non trovata.' });
+      if (room.round?.status === 'active') return send(ws, { t: 'err', msg: 'Partita già in corso.' });
+
+      const playerId = `p-${Math.random().toString(36).slice(2, 10)}`;
+      const name = String(message.name || 'Giocatore').trim() || 'Giocatore';
+      ws.roomCode = code;
+      ws.playerId = playerId;
+      ws.isMaster = false;
+      room.players.set(playerId, { id: playerId, name, isMaster: false, socket: ws });
+      send(ws, { t: 'room_joined', code, playerId, isMaster: false });
+      notifyLobby(room);
+      return;
+    }
+
+    const room = rooms.get(ws.roomCode);
+    if (!room) return send(ws, { t: 'err', msg: 'Stanza non disponibile.' });
+
+    if (message.t === 'start_round') {
+      if (!ws.isMaster) return send(ws, { t: 'err', msg: 'Solo il master può avviare il round.' });
+      return startRound(room, message);
+    }
+
+    if (message.t === 'estimate') {
+      return submitEstimate(room, ws, message);
+    }
+
+    if (message.t === 'return_lobby') {
+      if (!ws.isMaster) return;
+      room.round = null;
+      broadcast(room, { t: 'returned_lobby' });
+      notifyLobby(room);
+    }
+  });
+
+  ws.on('close', () => {
+    const room = rooms.get(ws.roomCode);
+    if (!room) return;
+
+    if (ws.isMaster) {
+      broadcast(room, { t: 'room_closed', msg: 'Il master ha chiuso la stanza.' });
+      if (room.round?.timer) clearTimeout(room.round.timer);
+      rooms.delete(room.code);
+      return;
+    }
+
+    room.players.delete(ws.playerId);
+
+    // Se un giocatore esce durante il round, il totale atteso si aggiorna.
+    if (room.round?.status === 'active' && room.round.answers.size >= room.players.size) {
+      closeRound(room, 'all_answered');
+    } else {
+      notifyLobby(room);
+    }
+  });
 });
 
-srv.listen(PORT, () => {
-  console.log(`A OCCHIO! server unico sulla porta ${PORT}`);
-  console.log('Gioco: /  |  Lavagnetta: /lavagnetta');
+server.listen(PORT, () => {
+  console.log(`A OCCHIO! attivo sulla porta ${PORT}`);
 });

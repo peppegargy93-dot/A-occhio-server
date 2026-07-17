@@ -1,11 +1,12 @@
 {
-  "name": "a-occhio",
-  "version": "1.0.0",
+  "name": "a-occhio-party-game",
+  "version": "2.0.0",
   "private": true,
-  "description": "A OCCHIO! - gioco multiplayer con lavagnette sullo stesso server",
+  "description": "A OCCHIO! - party game multiplayer con master, timer server-side e modalit\u00e0 risposta a voce",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "check": "node --check server.js"
   },
   "engines": {
     "node": ">=18"
