@@ -2702,6 +2702,26 @@ function onlineConnect(url, resume=false){
     ONLINE_RETRY=setTimeout(()=>onlineConnect(ONLINE.url,true),1500);
   };
 }
+
+function onlineStartFreshRoom(){
+  clearTimeout(ONLINE_RETRY);
+  const old=ONLINE;
+  if(old && old.ws){
+    try{
+      if(old.ws.readyState===WebSocket.OPEN){
+        old.ws.send(JSON.stringify({t:"close_room"}));
+      }
+      old.ws.onclose=null;
+      old.ws.close();
+    }catch(e){}
+  }
+  try{ localStorage.removeItem("aocchio_master"); }catch(e){}
+  ONLINE=null;
+  setTimeout(()=>{
+    if(/^https?:$/.test(location.protocol)) onlineConnect(location.origin,false);
+  },250);
+}
+
 function renderOnlineBar(){
   const el=$("#onlineBar"); if(!el) return;
   if(ONLINE){
@@ -2755,7 +2775,7 @@ function initMenu(){
       if(act==="restart"){
         confirmAction("Ricominciare la partita da capo con gli stessi giocatori? I punteggi e le posizioni attuali andranno persi.", startGame);
       } else if(act==="home"){
-        confirmAction("Uscire dalla partita e tornare alla Home? La partita in corso verrà chiusa.", renderSetup);
+        confirmAction("Uscire dalla partita e tornare alla Home? La partita in corso verrà chiusa.", ()=>{ onlineStartFreshRoom(); renderSetup(); });
       }
     });
   });

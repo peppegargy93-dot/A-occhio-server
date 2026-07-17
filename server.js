@@ -7,97 +7,488 @@ const crypto = require('crypto');
 const { WebSocketServer, WebSocket } = require('ws');
 
 const PORT = Number(process.env.PORT || 3000);
-const ROOM_GRACE_MS = 10 * 60 * 1000;
+const ROOM_TTL_MS = 10 * 60 * 1000;
+
 let GAME = '';
-try { GAME = fs.readFileSync(path.join(__dirname, 'game.html'), 'utf8'); }
-catch (error) { console.error('Impossibile leggere game.html:', error.message); }
+try {
+  GAME = fs.readFileSync(path.join(__dirname, 'game.html'), 'utf8');
+} catch (error) {
+  console.error('Impossibile leggere game.html:', error.message);
+}
 
-const rooms = Object.create(null);
-const token = () => crypto.randomBytes(18).toString('hex');
+const rooms = new Map();
 
-function code4(){
-  const alphabet='ABCDEFGHKMNPRSTUVZ'; let code='';
-  do{ code=Array.from({length:4},()=>alphabet[Math.floor(Math.random()*alphabet.length)]).join(''); }while(rooms[code]);
+function makeToken() {
+  return crypto.randomBytes(18).toString('hex');
+}
+
+function code4() {
+  const alphabet = 'ABCDEFGHKMNPRSTUVZ';
+  let code = '';
+  do {
+    code = Array.from(
+      { length: 4 },
+      () => alphabet[Math.floor(Math.random() * alphabet.length)]
+    ).join('');
+  } while (rooms.has(code));
   return code;
 }
-function send(ws,payload){ if(ws && ws.readyState===WebSocket.OPEN) ws.send(JSON.stringify(payload)); }
-function activePadCount(room){ return [...room.pads.values()].filter(p=>p.ws&&p.ws.readyState===WebSocket.OPEN).length; }
-function broadcastPads(room,payload){ for(const p of room.pads.values()) send(p.ws,payload); }
-function remember(room,payload){
-  if(payload.t==='q' || payload.t==='lock') room.latestRound=payload;
-  if(payload.t==='view') room.latestView=payload;
-}
-function cancelCleanup(room){ if(room.cleanupTimer){ clearTimeout(room.cleanupTimer); room.cleanupTimer=null; } }
-function scheduleCleanup(room){
-  cancelCleanup(room);
-  room.cleanupTimer=setTimeout(()=>{
-    if(room.master && room.master.readyState===WebSocket.OPEN) return;
-    for(const p of room.pads.values()) if(p.ws&&p.ws.readyState===WebSocket.OPEN) p.ws.close();
-    delete rooms[room.code];
-  },ROOM_GRACE_MS);
-}
-function syncPad(room,pad){
-  if(room.latestRound){
-    const roundState={...room.latestRound};
-    if(roundState.t==='q') roundState.alreadyAnswered=(pad.answeredRound===room.round);
-    send(pad.ws,roundState);
+
+function send(ws, payload) {
+  if (ws && ws.readyState === WebSocket.OPEN) {
+    ws.send(JSON.stringify(payload));
   }
-  if(room.latestView) send(pad.ws,room.latestView);
 }
 
-const PAD = `<!DOCTYPE html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#20424E"><title>A OCCHIO! — Lavagnetta</title><style>
-:root{--cream:#F5ECD6;--paper:#FFFDF6;--ink:#20424E;--petrol:#2E6B7A;--teal:#48A39A;--coral:#E0795E;--ochre:#E6AC3C;--line:rgba(32,66,78,.18)}*{box-sizing:border-box}body{font-family:system-ui,-apple-system,sans-serif;background:var(--cream);color:var(--ink);margin:0;padding:22px 16px;text-align:center;min-height:100dvh}main{max-width:420px;margin:auto}.card{background:var(--paper);border:2px solid var(--line);border-radius:22px;padding:20px;box-shadow:0 12px 28px rgba(32,66,78,.12)}h1{font-weight:950;letter-spacing:-1px;margin:8px 0 20px}.q{font-size:21px;font-weight:800;line-height:1.25;margin:16px 0}.cat{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:1px;color:var(--coral)}input,button{font:inherit;font-size:19px;padding:14px;border-radius:14px;width:100%;margin:7px 0}input{border:2px solid var(--ink);background:white;color:var(--ink)}button{background:var(--coral);color:white;font-weight:900;border:none}button:disabled,input:disabled{opacity:.5}.big{font-size:58px;font-weight:900;color:var(--coral);line-height:1}.hide{display:none}.st{font-size:13px;color:var(--petrol);margin-top:12px}.timer{font-size:42px;font-weight:950;margin:8px 0}.ok{color:var(--teal);font-weight:900}.info{margin-top:14px;padding:14px;border-radius:16px;background:#f8efd8;border:2px solid #ead39b;text-align:left}.info h2{font-size:19px;margin:0 0 8px}.info p{white-space:pre-line;margin:0;font-size:15px;line-height:1.45}.answer{font-size:34px;font-weight:950;color:var(--coral);text-align:center;margin:10px 0}.scores{margin-top:12px}.score{display:flex;justify-content:space-between;gap:10px;padding:8px 2px;border-bottom:1px dashed var(--line)}.score.me{font-weight:950;background:#e4f2ef;border-radius:8px;padding:8px}.rank{font-size:13px;margin-top:8px}.reco{color:var(--ochre);font-weight:900}.map{position:relative;display:flex;flex-direction:column;gap:7px;margin-top:15px;padding:4px 1px 5px 25px}.map:before{content:"";position:absolute;left:12px;top:18px;bottom:18px;width:4px;border-radius:99px;background:linear-gradient(var(--teal),var(--ochre),var(--coral),var(--ink));opacity:.4}.mcell{position:relative;min-height:52px;border-radius:14px;display:grid;grid-template-columns:32px 1fr auto;align-items:center;gap:8px;padding:7px 9px;background:#eef2f2;border:2px solid #fff;box-shadow:0 3px 9px -7px rgba(32,66,78,.7);text-align:left}.mcell:before{content:"";position:absolute;left:-16px;top:50%;width:16px;height:4px;background:var(--line)}.mnum{width:27px;height:27px;border-radius:50%;display:grid;place-items:center;background:#fff;font-size:10px;font-weight:950}.mname{font-size:12px;font-weight:900}.mplayers{display:flex;justify-content:flex-end;flex-wrap:wrap;gap:3px}.mpawn{width:24px;height:24px;border-radius:50%;border:2px solid white;display:grid;place-items:center;color:white;font-size:9px;font-weight:950;box-shadow:0 1px 4px #0004}.mcell.start{background:#e4f2ef}.mcell.bonus{background:#f6e6b8}.mcell.malus,.mcell.voce{background:#f6d9cf}.mcell.timer{background:#d9ecec}.mcell.duello{background:#e2dcea}.mcell.dadocaos{background:#dfeede}.mcell.azzardo,.mcell.random{background:#e9e2d0}.mcell.fenomeno{background:#e6ac3c}.mcell.finale{background:#20424e;color:white}.maptitle{font-size:13px;font-weight:950;margin-top:16px;text-align:left}
-</style></head><body><main><div class="card"><h1>👁 A OCCHIO!</h1><div id="join"><input id="code" placeholder="CODICE STANZA" maxlength="4" style="text-transform:uppercase"><input id="name" placeholder="Il tuo nome"><button id="joinBtn" type="button">Entra</button></div><div id="play" class="hide"><div id="big" class="big">✋</div><div id="cat" class="cat"></div><div id="q" class="q">Aspetta la domanda…</div><div id="timer" class="timer hide">20</div><input id="est" type="text" inputmode="decimal" placeholder="La tua stima" disabled><button id="sendBtn" type="button" disabled>Invia e blocca 📤</button><div id="info" class="info hide"><h2 id="infoTitle"></h2><div id="answer" class="answer hide"></div><p id="infoText"></p><div id="ranking" class="rank"></div><div id="scores" class="scores"></div><div id="mapTitle" class="maptitle hide">🗺️ Posizioni sulla mappa</div><div id="map" class="map hide"></div></div></div><div id="st" class="st"></div></div></main><script>
-let ws=null,sent=false,timerId=null,deadline=0,retry=null,creds=null;const $=id=>document.getElementById(id);const proto=location.protocol==='https:'?'wss://':'ws://';const params=new URLSearchParams(location.search);if(params.get('c'))$('code').value=params.get('c');try{creds=JSON.parse(localStorage.getItem('aocchio_pad')||'null')}catch(e){}if(creds){$('code').value=creds.code||$('code').value;$('name').value=creds.name||'';}
-function setTimer(seconds,absolute){clearInterval(timerId);deadline=absolute||Date.now()+seconds*1000;$('timer').classList.remove('hide');const draw=()=>{const left=Math.max(0,Math.ceil((deadline-Date.now())/1000));$('timer').textContent=left;if(left<=0)clearInterval(timerId)};draw();timerId=setInterval(draw,200)}
-function initial(n){return String(n||'?').trim().charAt(0).toUpperCase()}function renderMap(map){if(!map||!Array.isArray(map.cells)){$('map').classList.add('hide');$('mapTitle').classList.add('hide');return}const players=map.players||[];const cell=(n,name,icon,type)=>{const here=players.filter(p=>Number(p.pos)===n);return '<div class="mcell '+(type||'')+(n===0?' start':'')+'"><span class="mnum">'+n+'</span><span><b style="font-size:19px">'+icon+'</b> <span class="mname">'+name+'</span></span><span class="mplayers">'+here.map(p=>'<span class="mpawn" title="'+p.name+'" style="background:'+(p.color||'#2E6B7A')+'">'+initial(p.name)+'</span>').join('')+'</span></div>'};$('map').innerHTML=cell(0,'Partenza','🚩','start')+map.cells.map(c=>cell(Number(c.n),c.name,c.icon,c.type)).join('');$('map').classList.remove('hide');$('mapTitle').classList.remove('hide')}function renderView(m){$('info').classList.remove('hide');$('infoTitle').textContent=m.title||'Aggiornamento';$('infoText').textContent=m.text||'';if(m.answer){$('answer').textContent=m.answer;$('answer').classList.remove('hide')}else $('answer').classList.add('hide');$('ranking').innerHTML=(m.ranking||[]).map(r=>'<div>'+r.name+': '+(r.estimate==null?'nessuna stima':r.estimate)+' · '+(r.points>0?'+'+r.points:r.points||0)+' pt</div>').join('');const my=(creds&&creds.name||'').toLowerCase();$('scores').innerHTML=(m.scores||[]).slice().sort((a,b)=>b.score-a.score||b.pos-a.pos).map(s=>'<div class="score '+(s.name.toLowerCase()===my?'me':'')+'"><span>'+s.name+(s.name.toLowerCase()===my?' (tu)':'')+' · cas. '+s.pos+'</span><b>'+s.score+' pt</b></div>').join('');renderMap(m.map)}
-function connect(){clearTimeout(retry);if(!creds)return;ws=new WebSocket(proto+location.host);$('st').textContent='Connessione…';ws.onopen=()=>ws.send(JSON.stringify({t:'join',code:creds.code,name:creds.name,token:creds.token||''}));ws.onmessage=e=>{let m;try{m=JSON.parse(e.data)}catch{return}if(m.t==='ok'){creds.token=m.token;localStorage.setItem('aocchio_pad',JSON.stringify(creds));$('join').classList.add('hide');$('play').classList.remove('hide');$('st').innerHTML='<span class="ok">Collegato alla stanza '+m.code+'.</span>'}if(m.t==='err')$('st').textContent='⚠️ '+m.msg;if(m.t==='q'){sent=!!m.alreadyAnswered;$('info').classList.add('hide');$('map').classList.add('hide');$('mapTitle').classList.add('hide');$('big').textContent=sent?'✅':'✍️';$('cat').textContent=m.cat||'';$('q').textContent=m.text+(m.unit?' · '+m.unit:'');$('est').value='';$('est').disabled=sent;$('sendBtn').disabled=sent;$('st').textContent=sent?'Stima già inviata e bloccata.':'Scrivi la tua stima senza mostrarla agli altri.';setTimer(Number(m.seconds)||20,m.deadline);if(!sent)$('est').focus()}if(m.t==='lock'){clearInterval(timerId);$('timer').textContent='0';$('big').textContent='✋';$('q').textContent='Penne giù!';$('est').disabled=true;$('sendBtn').disabled=true;if(!sent)$('st').textContent='Tempo scaduto: nessuna risposta inviata.'}if(m.t==='duplicate'){$('st').textContent='Hai già inviato la risposta: non puoi modificarla.';sent=true;$('est').disabled=true;$('sendBtn').disabled=true}if(m.t==='view')renderView(m)};ws.onclose=()=>{$('st').innerHTML='<span class="reco">Riconnessione automatica…</span>';retry=setTimeout(connect,1200)}}
-function join(){const code=$('code').value.trim().toUpperCase(),name=$('name').value.trim();if(code.length!==4||!name){$('st').textContent='Inserisci codice e nome.';return}creds={code,name,token:creds&&creds.code===code&&creds.name===name?creds.token:''};localStorage.setItem('aocchio_pad',JSON.stringify(creds));connect()}
-function submit(){if(!ws||ws.readyState!==1||sent||$('est').disabled)return;const value=$('est').value.trim();if(!value){$('st').textContent='Inserisci una stima.';return}ws.send(JSON.stringify({t:'est',value}));sent=true;$('est').disabled=true;$('sendBtn').disabled=true;$('big').textContent='✅';$('st').innerHTML='<span class="ok">Stima inviata e bloccata.</span>'}
-$('joinBtn').addEventListener('click',join);$('sendBtn').addEventListener('click',submit);$('est').addEventListener('keydown',e=>{if(e.key==='Enter')submit()});document.addEventListener('visibilitychange',()=>{if(!document.hidden&&creds&&(!ws||ws.readyState>1))connect()});if(creds&&creds.code&&creds.name)connect();
+function livePads(room) {
+  return [...room.pads.values()].filter(
+    pad => pad.socket && pad.socket.readyState === WebSocket.OPEN
+  );
+}
+
+function notifyMaster(room) {
+  send(room.masterSocket, {
+    t: 'peer',
+    n: livePads(room).length
+  });
+}
+
+function broadcastPads(room, payload) {
+  for (const pad of room.pads.values()) {
+    send(pad.socket, payload);
+  }
+}
+
+function clearDeleteTimer(room) {
+  if (room.deleteTimer) {
+    clearTimeout(room.deleteTimer);
+    room.deleteTimer = null;
+  }
+}
+
+function scheduleDelete(room) {
+  clearDeleteTimer(room);
+  room.deleteTimer = setTimeout(() => {
+    if (room.masterSocket?.readyState === WebSocket.OPEN) return;
+    broadcastPads(room, {
+      t: 'room_closed',
+      msg: 'La partita è terminata. Inserisci il nuovo codice.'
+    });
+    rooms.delete(room.code);
+  }, ROOM_TTL_MS);
+}
+
+function destroyRoom(room, message) {
+  clearDeleteTimer(room);
+  broadcastPads(room, {
+    t: 'room_closed',
+    msg: message || 'La partita è terminata.'
+  });
+  for (const pad of room.pads.values()) {
+    try { pad.socket?.close(); } catch {}
+  }
+  rooms.delete(room.code);
+}
+
+function roomState(room, pad = null) {
+  return {
+    locked: room.locked,
+    round: room.round,
+    deadline: room.deadline,
+    question: room.question,
+    view: room.lastView,
+    sent: !!pad && pad.answeredRound === room.round
+  };
+}
+
+function attachPad(room, ws, pad) {
+  if (pad.socket && pad.socket !== ws) {
+    try {
+      send(pad.socket, {
+        t: 'replaced',
+        msg: 'Questa lavagnetta è stata aperta in un’altra scheda.'
+      });
+      pad.socket.close();
+    } catch {}
+  }
+
+  pad.socket = ws;
+  ws._room = room.code;
+  ws._role = 'pad';
+  ws._padToken = pad.token;
+  notifyMaster(room);
+}
+
+const PAD = `<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#20424E">
+<title>A OCCHIO! — Lavagnetta</title>
+<style>
+:root{--cream:#F5ECD6;--paper:#FFFDF6;--ink:#20424E;--petrol:#2E6B7A;--teal:#48A39A;--coral:#E0795E;--ochre:#E6AC3C;--line:rgba(32,66,78,.18)}
+*{box-sizing:border-box}body{font-family:system-ui,-apple-system,sans-serif;background:var(--cream);color:var(--ink);margin:0;padding:18px 14px;text-align:center;min-height:100dvh}
+main{max-width:440px;margin:auto}.card{background:var(--paper);border:2px solid var(--line);border-radius:22px;padding:20px;box-shadow:0 12px 28px rgba(32,66,78,.12)}
+h1{font-weight:950;letter-spacing:-1px;margin:8px 0 20px}.q{font-size:21px;font-weight:800;line-height:1.25;margin:16px 0}.cat{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:1px;color:var(--coral)}
+input,button{font:inherit;font-size:18px;padding:14px;border-radius:14px;width:100%;margin:7px 0}input{border:2px solid var(--ink);background:white;color:var(--ink)}button{background:var(--coral);color:white;font-weight:900;border:none}button.secondary{background:transparent;color:var(--ink);border:2px solid var(--line);font-size:14px;padding:10px}button:disabled,input:disabled{opacity:.5}.big{font-size:58px;font-weight:900;color:var(--coral);line-height:1}.hide{display:none!important}.st{font-size:13px;color:var(--petrol);margin-top:12px}.timer{font-size:42px;font-weight:950;margin:8px 0}.ok{color:var(--teal);font-weight:900}
+.info{text-align:left;white-space:pre-wrap;line-height:1.45;font-size:15px}.scores{margin-top:14px}.score{display:flex;gap:10px;align-items:center;padding:9px 2px;border-bottom:1px dashed var(--line)}.score b{flex:1;text-align:left}.score span{font-weight:900}
+.map{display:flex;flex-direction:column-reverse;gap:7px;margin-top:14px}.cell{display:flex;align-items:center;gap:9px;text-align:left;padding:9px 11px;border:2px solid var(--line);border-radius:14px;background:#eef2f2}.cell.bonus{background:#f6e6b8}.cell.malus{background:#f6d9cf}.cell.timer{background:#d9ecec;font-size:inherit;margin:0}.cell.finale{background:var(--ink);color:white}.num{font-weight:950;min-width:30px}.cellname{flex:1;font-size:13px;font-weight:800}.pawns{display:flex;gap:3px;flex-wrap:wrap;justify-content:flex-end}.pawn{width:25px;height:25px;border-radius:50%;display:grid;place-items:center;color:white;border:2px solid white;font-size:10px;font-weight:950}
+</style>
+</head>
+<body><main><div class="card">
+<h1>👁 A OCCHIO!</h1>
+<div id="join">
+  <input id="code" placeholder="CODICE STANZA" maxlength="4" style="text-transform:uppercase">
+  <input id="name" placeholder="Il tuo nome">
+  <button id="joinBtn" type="button">Entra</button>
+</div>
+<div id="play" class="hide">
+  <div id="big" class="big">✋</div>
+  <div id="cat" class="cat"></div>
+  <div id="q" class="q">Aspetta la domanda…</div>
+  <div id="timer" class="timer hide">20</div>
+  <input id="est" type="text" inputmode="decimal" placeholder="La tua stima" disabled>
+  <button id="sendBtn" type="button" disabled>Invia e blocca 📤</button>
+  <div id="scores" class="scores hide"></div>
+  <div id="map" class="map hide"></div>
+  <button id="changeBtn" class="secondary" type="button">Cambia stanza</button>
+</div>
+<div id="st" class="st"></div>
+</div></main>
+<script>
+let ws=null,sent=false,timerId=null,deadline=0,retry=null,currentCode='',currentName='',padToken='',manualClose=false;
+const $=id=>document.getElementById(id);
+const proto=location.protocol==='https:'?'wss://':'ws://';
+const queryCode=(new URLSearchParams(location.search).get('c')||'').trim().toUpperCase();
+if(queryCode)$('code').value=queryCode;
+
+function getSaved(){try{return JSON.parse(localStorage.getItem('aocchio_pad')||'null')}catch{return null}}
+function save(){try{localStorage.setItem('aocchio_pad',JSON.stringify({code:currentCode,name:currentName,token:padToken}))}catch{}}
+function clearSaved(){try{localStorage.removeItem('aocchio_pad')}catch{}}
+function stopTimer(){clearInterval(timerId);timerId=null}
+function setTimer(value){
+  stopTimer();deadline=Number(value)||0;
+  if(!deadline){$('timer').classList.add('hide');return}
+  $('timer').classList.remove('hide');
+  const draw=()=>{const left=Math.max(0,Math.ceil((deadline-Date.now())/1000));$('timer').textContent=left;if(left<=0)stopTimer()};
+  draw();timerId=setInterval(draw,200);
+}
+function resetPlay(){
+  stopTimer();sent=false;$('big').textContent='✋';$('cat').textContent='';$('q').textContent='Aspetta la domanda…';
+  $('timer').classList.add('hide');$('est').value='';$('est').disabled=true;$('sendBtn').disabled=true;
+  $('scores').classList.add('hide');$('map').classList.add('hide');$('scores').innerHTML='';$('map').innerHTML='';
+}
+function showJoin(message=''){
+  resetPlay();$('play').classList.add('hide');$('join').classList.remove('hide');$('st').textContent=message;
+}
+function closeSocket(){
+  manualClose=true;clearTimeout(retry);
+  try{ws&&ws.close()}catch{}ws=null;
+  setTimeout(()=>{manualClose=false},50);
+}
+function applyQuestion(m){
+  sent=!!m.sent;$('scores').classList.add('hide');$('map').classList.add('hide');
+  $('big').textContent=sent?'✅':'✍️';$('cat').textContent=m.cat||'';$('q').textContent=(m.text||'')+(m.unit?' · '+m.unit:'');
+  $('est').disabled=sent||m.locked;$('sendBtn').disabled=sent||m.locked;
+  $('st').textContent=sent?'Stima già inviata e bloccata.':'Scrivi la tua stima senza mostrarla agli altri.';
+  setTimer(m.deadline||0);
+}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function safeColor(c){return /^#[0-9a-f]{3,8}$/i.test(c||'')?c:'#2E6B7A'}
+function pawn(p){return '<span class="pawn" style="background:'+safeColor(p.color)+'" title="'+esc(p.name||'')+'">'+esc((p.name||'?').slice(0,1).toUpperCase())+'</span>'}
+function renderScores(scores){
+  if(!Array.isArray(scores)||!scores.length){$('scores').classList.add('hide');return}
+  $('scores').innerHTML=scores.slice().sort((a,b)=>(b.score||0)-(a.score||0)).map(p=>'<div class="score"><b>'+esc(p.name||'')+'</b><span>'+(p.score||0)+' pt · cas. '+(p.pos||0)+'</span></div>').join('');
+  $('scores').classList.remove('hide');
+}
+function typeClass(type){if(type==='bonus')return'bonus';if(type==='malus'||type==='penitenza')return'malus';if(type==='timer')return'timer';if(type==='finale')return'finale';return''}
+function renderMap(map){
+  if(!map||!Array.isArray(map.cells)){$('map').classList.add('hide');return}
+  const players=Array.isArray(map.players)?map.players:[];
+  let html='<div class="cell"><span class="num">0</span><span class="cellname">🚩 Partenza</span><span class="pawns">'+players.filter(p=>(p.pos||0)===0).map(pawn).join('')+'</span></div>';
+  html+=map.cells.map(c=>'<div class="cell '+typeClass(c.type)+'"><span class="num">'+c.n+'</span><span>'+(c.icon||'')+'</span><span class="cellname">'+esc(c.name||c.type||'Casella')+'</span><span class="pawns">'+players.filter(p=>(p.pos||0)===c.n).map(pawn).join('')+'</span></div>').join('');
+  $('map').innerHTML=html;$('map').classList.remove('hide');
+}
+function applyView(v){
+  stopTimer();$('timer').classList.add('hide');$('est').disabled=true;$('sendBtn').disabled=true;
+  $('big').textContent=v.kind==='map'?'🗺️':'📣';$('cat').textContent=v.title||'Aggiornamento';$('q').textContent=v.text||'';
+  renderScores(v.scores||[]);renderMap(v.map);$('st').textContent='Aggiornamento della partita.';
+}
+function applyState(s){
+  if(s.view)applyView(s.view);
+  else if(s.question)applyQuestion({...s.question,deadline:s.deadline,locked:s.locked,sent:s.sent});
+  else resetPlay();
+}
+function connect(mode){
+  clearTimeout(retry);
+  if(!currentCode||!currentName)return;
+  try{ws=new WebSocket(proto+location.host)}catch{$('st').textContent='Impossibile collegarsi.';return}
+  $('st').textContent=mode==='resume'?'Riconnessione…':'Connessione…';
+  ws.onopen=()=>ws.send(JSON.stringify(mode==='resume'&&padToken?{t:'resume_pad',code:currentCode,token:padToken}:{t:'join',code:currentCode,name:currentName}));
+  ws.onmessage=e=>{let m;try{m=JSON.parse(e.data)}catch{return}
+    if(m.t==='ok'||m.t==='resumed_pad'){
+      currentCode=m.code;padToken=m.token||padToken;save();
+      $('join').classList.add('hide');$('play').classList.remove('hide');$('st').textContent='Collegato alla stanza '+m.code+'.';
+      if(m.state)applyState(m.state);
+    } else if(m.t==='q') applyQuestion(m);
+    else if(m.t==='lock'){stopTimer();$('timer').textContent='0';$('big').textContent='✋';$('q').textContent='Penne giù!';$('est').disabled=true;$('sendBtn').disabled=true;if(!sent)$('st').textContent='Tempo scaduto: nessuna risposta inviata.'}
+    else if(m.t==='view') applyView(m);
+    else if(m.t==='accepted'){sent=true;$('est').disabled=true;$('sendBtn').disabled=true;$('big').textContent='✅';$('st').innerHTML='<span class="ok">Stima inviata e bloccata.</span>'}
+    else if(m.t==='duplicate'){sent=true;$('est').disabled=true;$('sendBtn').disabled=true;$('st').textContent='Hai già inviato la risposta: non puoi modificarla.'}
+    else if(m.t==='room_closed'){padToken='';clearSaved();showJoin(m.msg||'La partita è terminata. Inserisci il nuovo codice.')}
+    else if(m.t==='replaced')showJoin(m.msg||'Sessione spostata su un’altra scheda.')
+    else if(m.t==='err'){if(m.reset){padToken='';clearSaved();showJoin('⚠️ '+m.msg)}else $('st').textContent='⚠️ '+m.msg}
+  };
+  ws.onclose=()=>{if(manualClose)return;$('st').textContent='Connessione interrotta: provo a rientrare…';retry=setTimeout(()=>connect('resume'),1200)};
+}
+function join(){
+  const code=$('code').value.trim().toUpperCase(),name=$('name').value.trim();
+  if(code.length!==4||!name){$('st').textContent='Inserisci codice e nome.';return}
+  closeSocket();resetPlay();currentCode=code;currentName=name;padToken='';clearSaved();setTimeout(()=>connect('join'),80);
+}
+function submit(){
+  if(!ws||ws.readyState!==WebSocket.OPEN||sent||$('est').disabled)return;
+  const value=$('est').value.trim();if(!value){$('st').textContent='Inserisci una stima.';return}
+  ws.send(JSON.stringify({t:'est',value}));
+}
+$('joinBtn').addEventListener('click',join);
+$('sendBtn').addEventListener('click',submit);
+$('changeBtn').addEventListener('click',()=>{try{ws&&ws.send(JSON.stringify({t:'leave_pad'}))}catch{}closeSocket();currentCode='';padToken='';clearSaved();showJoin('Inserisci il nuovo codice stanza.')});
+$('est').addEventListener('keydown',e=>{if(e.key==='Enter')submit()});
+$('code').addEventListener('input',()=>{$('code').value=$('code').value.toUpperCase()});
+
+window.addEventListener('pageshow',()=>{
+  const saved=getSaved();
+  if(queryCode&&saved&&saved.code!==queryCode){
+    clearSaved();currentCode='';padToken='';showJoin('Nuovo codice rilevato: entra nella nuova stanza.');
+    $('code').value=queryCode;$('name').value=saved.name||'';return;
+  }
+  if(saved&&saved.code&&saved.name&&saved.token){
+    currentCode=saved.code;currentName=saved.name;padToken=saved.token;$('code').value=currentCode;$('name').value=currentName;connect('resume');
+  }
+});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&currentCode&&currentName&&(!ws||ws.readyState>1))connect('resume')});
 </script></body></html>`;
 
-const server=http.createServer((req,res)=>{
-  const pathname=new URL(req.url,'http://localhost').pathname;
-  if(pathname==='/lavagnetta'){res.writeHead(200,{'Content-Type':'text/html; charset=utf-8','Cache-Control':'no-store'});return res.end(PAD);}
-  if(pathname==='/'||pathname==='/gioco'||pathname==='/game.html'){if(!GAME){res.writeHead(500,{'Content-Type':'text/plain; charset=utf-8'});return res.end('game.html non trovato');}res.writeHead(200,{'Content-Type':'text/html; charset=utf-8','Cache-Control':'no-store'});return res.end(GAME);}
-  if(pathname==='/health'){res.writeHead(200,{'Content-Type':'application/json; charset=utf-8'});return res.end(JSON.stringify({ok:true,rooms:Object.keys(rooms).length}));}
-  res.writeHead(404,{'Content-Type':'text/plain; charset=utf-8'});res.end('Pagina non trovata');
+const server = http.createServer((req, res) => {
+  const pathname = new URL(req.url, 'http://localhost').pathname;
+
+  if (pathname === '/lavagnetta') {
+    res.writeHead(200, {
+      'Content-Type': 'text/html; charset=utf-8',
+      'Cache-Control': 'no-store, no-cache, must-revalidate'
+    });
+    return res.end(PAD);
+  }
+
+  if (pathname === '/' || pathname === '/gioco' || pathname === '/game.html') {
+    if (!GAME) {
+      res.writeHead(500, { 'Content-Type': 'text/plain; charset=utf-8' });
+      return res.end('game.html non trovato');
+    }
+    res.writeHead(200, {
+      'Content-Type': 'text/html; charset=utf-8',
+      'Cache-Control': 'no-store, no-cache, must-revalidate'
+    });
+    return res.end(GAME);
+  }
+
+  if (pathname === '/health') {
+    res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+    return res.end(JSON.stringify({ ok: true, rooms: rooms.size }));
+  }
+
+  res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
+  res.end('Pagina non trovata');
 });
 
-const wss=new WebSocketServer({server});
-wss.on('connection',ws=>{
-  ws.on('message',raw=>{
-    let m;try{m=JSON.parse(raw.toString())}catch{return}
-    if(m.t==='create'){
-      const code=code4(),masterToken=token();
-      rooms[code]={code,master:ws,masterToken,pads:new Map(),round:0,locked:true,latestRound:null,latestView:null,cleanupTimer:null};
-      ws._room=code;ws._master=true;send(ws,{t:'room',code,token:masterToken,n:0});return;
+const wss = new WebSocketServer({ server });
+
+wss.on('connection', ws => {
+  ws.on('message', raw => {
+    let m;
+    try { m = JSON.parse(raw.toString()); } catch { return; }
+
+    if (m.t === 'create') {
+      const code = code4();
+      const room = {
+        code,
+        masterToken: makeToken(),
+        masterSocket: ws,
+        pads: new Map(),
+        round: 0,
+        locked: true,
+        deadline: 0,
+        question: null,
+        lastView: null,
+        deleteTimer: null
+      };
+      rooms.set(code, room);
+      ws._room = code;
+      ws._role = 'master';
+      send(ws, { t: 'room', code, token: room.masterToken, n: 0 });
+      return;
     }
-    if(m.t==='resume_master'){
-      const room=rooms[String(m.code||'').toUpperCase()];
-      if(!room||m.token!==room.masterToken)return send(ws,{t:'err',msg:'Stanza scaduta: crea una nuova stanza.'});
-      cancelCleanup(room);room.master=ws;ws._room=room.code;ws._master=true;send(ws,{t:'resumed_master',code:room.code,n:activePadCount(room)});return;
+
+    if (m.t === 'resume_master') {
+      const code = String(m.code || '').trim().toUpperCase();
+      const room = rooms.get(code);
+      if (!room || room.masterToken !== m.token) {
+        return send(ws, { t: 'err', msg: 'La vecchia stanza non esiste più.', reset: true });
+      }
+      clearDeleteTimer(room);
+      room.masterSocket = ws;
+      ws._room = code;
+      ws._role = 'master';
+      send(ws, { t: 'resumed_master', code, n: livePads(room).length });
+      return;
     }
-    if(m.t==='join'){
-      const code=String(m.code||'').trim().toUpperCase(),room=rooms[code];if(!room)return send(ws,{t:'err',msg:'Stanza non trovata'});
-      const name=String(m.name||'Anonimo').trim()||'Anonimo';let padToken=String(m.token||'');let pad=padToken&&room.pads.get(padToken);
-      if(!pad){padToken=token();pad={token:padToken,name,ws:null,answeredRound:-1};room.pads.set(padToken,pad)}
-      else pad.name=name;
-      if(pad.ws&&pad.ws!==ws&&pad.ws.readyState===WebSocket.OPEN)pad.ws.close();pad.ws=ws;ws._room=code;ws._master=false;ws._padToken=padToken;
-      send(ws,{t:'ok',code,token:padToken});send(room.master,{t:'peer',name,n:activePadCount(room)});syncPad(room,pad);return;
+
+    if (m.t === 'join') {
+      const code = String(m.code || '').trim().toUpperCase();
+      const room = rooms.get(code);
+      if (!room) {
+        return send(ws, {
+          t: 'err',
+          msg: 'Stanza non trovata. Controlla il nuovo codice.',
+          reset: true
+        });
+      }
+
+      const name = String(m.name || '').trim();
+      if (!name) return send(ws, { t: 'err', msg: 'Inserisci il nome.' });
+
+      const pad = {
+        token: makeToken(),
+        name,
+        socket: null,
+        answeredRound: -1
+      };
+      room.pads.set(pad.token, pad);
+      attachPad(room, ws, pad);
+      send(ws, {
+        t: 'ok',
+        code,
+        token: pad.token,
+        state: roomState(room, pad)
+      });
+      return;
     }
-    const room=rooms[ws._room];if(!room)return;
-    if((m.t==='q'||m.t==='lock'||m.t==='view')&&ws._master){
-      if(m.t==='q'){room.round++;room.locked=false;room.latestView=null;m.deadline=Date.now()+(Number(m.seconds)||20)*1000;}
-      if(m.t==='lock')room.locked=true;remember(room,m);broadcastPads(room,m);return;
+
+    if (m.t === 'resume_pad') {
+      const code = String(m.code || '').trim().toUpperCase();
+      const room = rooms.get(code);
+      const pad = room?.pads.get(String(m.token || ''));
+
+      if (!room || !pad) {
+        return send(ws, {
+          t: 'err',
+          msg: 'Questa sessione apparteneva alla partita precedente. Inserisci il nuovo codice.',
+          reset: true
+        });
+      }
+
+      attachPad(room, ws, pad);
+      send(ws, {
+        t: 'resumed_pad',
+        code,
+        token: pad.token,
+        state: roomState(room, pad)
+      });
+      return;
     }
-    if(m.t==='est'&&!ws._master){const pad=room.pads.get(ws._padToken);if(!pad||room.locked)return;if(pad.answeredRound===room.round)return send(ws,{t:'duplicate'});pad.answeredRound=room.round;send(room.master,{t:'est',name:pad.name,value:m.value});return;}
+
+    const room = rooms.get(ws._room);
+    if (!room) return send(ws, { t: 'err', msg: 'Stanza scaduta.', reset: true });
+
+    if (m.t === 'close_room' && ws._role === 'master') {
+      destroyRoom(room, 'Il Master ha aperto una nuova partita. Inserisci il nuovo codice.');
+      return;
+    }
+
+    if (m.t === 'leave_pad' && ws._role === 'pad') {
+      room.pads.delete(ws._padToken);
+      notifyMaster(room);
+      try { ws.close(); } catch {}
+      return;
+    }
+
+    if (m.t === 'q' && ws._role === 'master') {
+      room.round += 1;
+      room.locked = false;
+      room.deadline = Date.now() + (Number(m.seconds) || 20) * 1000;
+      room.question = {
+        cat: m.cat || '',
+        text: m.text || '',
+        unit: m.unit || ''
+      };
+      room.lastView = null;
+
+      broadcastPads(room, {
+        t: 'q',
+        cat: room.question.cat,
+        text: room.question.text,
+        unit: room.question.unit,
+        deadline: room.deadline,
+        seconds: Number(m.seconds) || 20
+      });
+      return;
+    }
+
+    if (m.t === 'lock' && ws._role === 'master') {
+      room.locked = true;
+      room.deadline = 0;
+      broadcastPads(room, { t: 'lock' });
+      return;
+    }
+
+    if (m.t === 'view' && ws._role === 'master') {
+      room.lastView = { ...m, t: 'view' };
+      broadcastPads(room, room.lastView);
+      return;
+    }
+
+    if (m.t === 'est' && ws._role === 'pad') {
+      const pad = room.pads.get(ws._padToken);
+      if (!pad || room.locked) return;
+      if (pad.answeredRound === room.round) {
+        return send(ws, { t: 'duplicate' });
+      }
+
+      pad.answeredRound = room.round;
+      send(ws, { t: 'accepted' });
+      send(room.masterSocket, {
+        t: 'est',
+        name: pad.name,
+        value: m.value
+      });
+    }
   });
-  ws.on('close',()=>{
-    const room=rooms[ws._room];if(!room)return;
-    if(ws._master){if(room.master===ws)room.master=null;scheduleCleanup(room);return;}
-    const pad=room.pads.get(ws._padToken);if(pad&&pad.ws===ws)pad.ws=null;send(room.master,{t:'bye',name:pad&&pad.name,n:activePadCount(room)});
+
+  ws.on('close', () => {
+    const room = rooms.get(ws._room);
+    if (!room) return;
+
+    if (ws._role === 'master') {
+      if (room.masterSocket === ws) {
+        room.masterSocket = null;
+        scheduleDelete(room);
+      }
+      return;
+    }
+
+    if (ws._role === 'pad') {
+      const pad = room.pads.get(ws._padToken);
+      if (pad && pad.socket === ws) {
+        pad.socket = null;
+      }
+      notifyMaster(room);
+    }
   });
 });
-server.listen(PORT,'0.0.0.0',()=>console.log(`A OCCHIO! attivo sulla porta ${PORT}`));
+
+server.listen(PORT, '0.0.0.0', () => {
+  console.log(`A OCCHIO! attivo sulla porta ${PORT}`);
+  console.log('Gioco: /  |  Lavagnetta: /lavagnetta');
+});
