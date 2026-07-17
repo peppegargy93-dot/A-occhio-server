@@ -222,6 +222,7 @@
   .player-row .pname{flex:1;font-family:inherit;font-size:15.5px;font-weight:600;color:var(--ink);
       padding:12px;border:1.5px solid var(--line);border-radius:11px;background:var(--paper-2);min-width:0;}
   .player-row .pname:focus{border-color:var(--petrol);background:#fff;}
+  .master-badge{flex:0 0 auto;font-size:10px;font-weight:900;letter-spacing:.7px;text-transform:uppercase;background:var(--ochre);color:#3a2c06;border:1.5px solid #caa02f;border-radius:999px;padding:5px 8px;}
 
   /* ---------- hero card + category options ---------- */
   .card.hero{border:2px solid var(--petrol);box-shadow:var(--shadow-lg);}
@@ -349,6 +350,7 @@
   .cell.t-domanda{background:#e7eef0;}
   .cell.t-bonus{background:#f6e6b8;border-color:#e7cf86;}
   .cell.t-malus{background:#f6d9cf;border-color:#e7b4a3;}
+  .cell.t-voce{background:#f6d9cf;border-color:var(--coral);}
   .cell.t-timer{background:#d9ecec;}
   .cell.t-duello{background:#e2dcea;}
   .cell.t-dadocaos{background:#dfeede;}
@@ -949,7 +951,7 @@ let BOARD = [
   // 2 random/categoria, 2 dado caos, 1 alfabetica, 1 tesi, 1 penitenza, 1 fenomeno, 1 finale.
   "domanda","bonus","malus","timer","domanda","duello",
   "azzardo","domanda","cecchino","tiroleader","malus","domanda",
-  "gemelli","dadocaos","postadoppia","domanda","bonus","malus",
+  "gemelli","dadocaos","postadoppia","domanda","bonus","voce",
   "domanda","fenomeno","timer","azzardo","duello","domanda",
   "cecchino","penitenza","domanda","dadocaos","malus","finale"
 ];
@@ -962,6 +964,7 @@ const CELL = {
   domanda:{ic:"❓",nm:"Domanda"},
   bonus:{ic:"⭐",nm:"Bonus"},
   malus:{ic:"⛔",nm:"Malus"},
+  voce:{ic:"📢",nm:"Infamata a voce"},
   timer:{ic:"⏱️",nm:"Timer Challenge"},
   duello:{ic:"⚔️",nm:"Duello"},
   dadocaos:{ic:"🎲",nm:"Dado Caos"},
@@ -1216,7 +1219,7 @@ function renderSetup(){
 
     <div class="card">
       <h2><span class="tick">📲</span> Collega le lavagnette</h2>
-      <p class="sub">Fallo prima di iniziare: ogni giocatore scansiona il QR, inserisce il proprio nome e resta in attesa della prima domanda.</p>
+      <p class="sub">Fallo prima di iniziare: gli altri giocatori scansionano il QR. Il primo nome della lista usa questo telefono ed è il Master.</p>
       <div class="card flat mt-s" id="onlineBar" style="text-align:center"></div>
     </div>
 
@@ -1253,7 +1256,7 @@ function syncPlayers(){
       color: COLORS[i],
       avatar: prev? prev.avatar : null,
       score:0, pos:0, streak:0, fenomeno:false,
-      malus:[], bonus:[],
+      malus:[], bonus:[], voiceNext:false,
     });
   }
 }
@@ -1273,6 +1276,7 @@ function renderPlayerInputs(){
         <input type="file" id="avf${i}" accept="image/*" hidden>
       </label>
       <input type="text" class="pname" id="pn${i}" maxlength="14" placeholder="Giocatore ${i+1}" value="${esc(p.name)}" autocomplete="off">
+      ${i===0?`<span class="master-badge">Master</span>`:""}
     </div>`).join("");
   S.players.forEach((p,i)=>{
     $("#pn"+i).addEventListener("input", e=>{
@@ -1417,6 +1421,10 @@ function renderDraw(){
         <div class="qtext">${esc(q.q)}</div>
         ${unitHint(q)}<div class="qhint">Tutti stimano. Più vicino è meglio.</div>
       </div>
+      ${S.players.some(p=>p.voiceNext)?`<div class="card flat mt" style="background:#fbe0d8;border-color:#e7b4a3">
+          <strong style="font-size:12px;color:#a23a22">📢 Infamata a voce</strong>
+          <div style="font-size:12px;color:#7a4536;margin-top:4px">${S.players.filter(p=>p.voiceNext).map(p=>esc(p.name)).join(", ")} deve dire subito la propria stima ad alta voce, prima di inviarla.</div>
+        </div>`:""}
       ${malusNotes.length?`<div class="card flat mt" style="background:#fbe9e2;border-color:#e7b4a3">
           <strong style="font-size:12px;color:#a23a22">⛔ Malus attivi questo round</strong>
           <div style="font-size:12px;color:#7a4536;margin-top:4px">${malusNotes.map(esc).join(" · ")}</div>
@@ -1424,7 +1432,7 @@ function renderDraw(){
       <div class="card flat mt" style="background:#eef4f0;border-color:#c9ddd2">
         <div style="font-size:13px;color:#3a5a52">📣 Il narratore legge la domanda. Poi avvia il timer: comparirà su tutte le lavagnette.</div>
       </div>
-      <button type="button" class="btn ochre mt-s" id="goTimer">Avvia tempo di risposta ⏱️</button>
+      <button type="button" class="btn ochre mt-s" id="goTimer">Compila la stima ⏱️</button>
     </div>
     ${boardCard()}
     ${scoreCard()}
@@ -1465,13 +1473,16 @@ function startWriting(){
 }
 function renderWriting(){
   const q = S.question;
+  const master = S.players[0];
+  const masterKey = (master.name||"").trim().toLowerCase();
   const roster = S.players.map((p,i)=>{
     const lim = playerLimit(p);
     const reduced = lim<20;
+    const sent = ONLINE && ONLINE.est[(p.name||"").trim().toLowerCase()]!=null;
     return `<div class="write-row">
         ${avatarHTML(p,28)}
-        <span class="wr-nm">${esc(p.name)}${p.fenomeno?" 👑":""}</span>
-        <span class="wr-stat${reduced?' reduced':''}" id="ws${i}">${lim}s</span>
+        <span class="wr-nm">${esc(p.name)}${i===0?' <span class="master-badge">Master</span>':''}${p.fenomeno?" 👑":""}</span>
+        <span class="wr-stat${sent?' down':(reduced?' reduced':'')}" id="ws${i}">${sent?'INVIATA ✓':lim+'s'}</span>
       </div>`;
   }).join("");
   const anyReduced = S.players.some(p=>playerLimit(p)<20);
@@ -1480,17 +1491,43 @@ function renderWriting(){
       <p class="eyebrow">Round ${S.round} · ${esc(q.cat)}</p>
       <div style="font-size:15.5px;font-weight:800;line-height:1.25;margin-bottom:2px">${esc(q.q)}</div>
       ${unitHint(q)}
+      ${master.voiceNext?`<div class="card flat mt-s" style="background:#fbe0d8;border-color:#e7b4a3"><b>📢 Infamata a voce:</b> ${esc(master.name)} deve dire subito la stima ad alta voce.</div>`:""}
       <div class="timer-wrap">
         <div class="timer-num" id="tnum">20</div>
-        <div class="timer-lbl">✍️ inserite ora la stima sulle lavagnette</div>
+        <div class="timer-lbl">✍️ tutti compilano la propria stima</div>
         <div class="tbar"><i id="tbar"></i></div>
       </div>
+      <div class="card flat mt" style="background:#eef4f0;border-color:#c9ddd2">
+        <div style="font-size:12px;font-weight:900;margin-bottom:5px">La stima del Master</div>
+        <input id="masterEstimate" type="text" inputmode="decimal" autocomplete="off" placeholder="Inserisci la tua stima" style="width:100%;font-size:19px;font-weight:800;border:2px solid var(--ink);border-radius:11px;padding:11px;box-sizing:border-box">
+        <button type="button" class="btn teal mt-s" id="masterSubmit">Invia e blocca la stima</button>
+        <div id="masterStatus" class="nowin-note"></div>
+      </div>
       <div class="write-roster mt">${roster}</div>
-      ${anyReduced?`<p class="nowin-note">Chi ha un malus a tempo posa la penna prima. Gli altri continuano fino allo stop.</p>`:""}
-      <button type="button" class="btn ghost sm mt" id="skipTimer">Ferma il tempo ora</button>
+      ${anyReduced?`<p class="nowin-note">Chi ha un malus a tempo deve inviare prima. Gli altri continuano fino allo stop.</p>`:""}
     </div>
   `;
-  $("#skipTimer").addEventListener("click", ()=>{ stopTimer(); pensGiu(); });
+  const mi=$("#masterEstimate"), mb=$("#masterSubmit");
+  if(ONLINE && ONLINE.est[masterKey]!=null){ mi.value=ONLINE.est[masterKey]; mi.disabled=true; mb.disabled=true; $("#masterStatus").textContent="✅ Stima inviata e bloccata."; }
+  const submitMaster=()=>{
+    const value=(mi.value||"").trim();
+    if(!value){ $("#masterStatus").textContent="Inserisci prima una stima."; return; }
+    if(!ONLINE) ONLINE={ws:null,code:"",url:"",est:{},n:0};
+    if(ONLINE.est[masterKey]!=null) return;
+    ONLINE.est[masterKey]=value;
+    mi.disabled=true; mb.disabled=true;
+    $("#masterStatus").textContent="✅ Stima inviata e bloccata.";
+    updateWriteRoster();
+    checkAllEstimates();
+  };
+  mb.addEventListener("click",submitMaster);
+  mi.addEventListener("keydown",e=>{if(e.key==="Enter") submitMaster();});
+}
+
+function checkAllEstimates(){
+  if(S.phase!=="writing" || !ONLINE) return;
+  const all = S.players.every(p=> ONLINE.est[(p.name||"").trim().toLowerCase()]!=null);
+  if(all){ stopTimer(); pensGiu(); }
 }
 
 function startTimer(){
@@ -1521,6 +1558,8 @@ function updateWriteRoster(){
   const elapsed = S.timer.total - S.timer.left;
   S.players.forEach((p,i)=>{
     const cell=$("#ws"+i); if(!cell) return;
+    const key=(p.name||"").trim().toLowerCase();
+    if(ONLINE && ONLINE.est[key]!=null){ cell.textContent="INVIATA ✓"; cell.classList.add("down"); cell.classList.remove("urgent","reduced"); return; }
     const personal = Math.max(0, playerLimit(p) - elapsed);
     if(personal<=0){
       if(!cell.classList.contains("down")){ cell.textContent="PENNA GIÙ ✋"; cell.classList.add("down"); cell.classList.remove("urgent"); if(playerLimit(p)<20) beep(300,180); }
@@ -1537,20 +1576,17 @@ function updateWriteRoster(){
    SCHERMATA 3 — PENNE GIÙ
    ===================================================================== */
 function pensGiu(){
-  if(ONLINE){ try{ONLINE.ws.send(JSON.stringify({t:"lock"}))}catch(e){} }
+  if(S.phase==="pensgiu" || S.phase==="input") return;
+  if(ONLINE && ONLINE.ws){ try{ONLINE.ws.send(JSON.stringify({t:"lock"}))}catch(e){} }
   S.phase="pensgiu";
   app.innerHTML = `
     <div class="card center pensgiu">
       <div class="pg-ic">✋</div>
       <div class="pg-ttl">PENNE GIÙ</div>
-      <p class="sub" style="margin:6px 0 0">Le risposte sono state raccolte senza mostrarle. Premi il pulsante per rivelarle tutte insieme.</p>
-      <button type="button" class="btn coral mt" id="toInput">📲 Visualizza le stime ricevute</button>
+      <p class="sub" style="margin:6px 0 0">Tutte le stime sono bloccate. Le apro adesso.</p>
     </div>
   `;
-  $("#toInput").addEventListener("click", ()=>{
-    renderInput();
-    setTimeout(onlineFill,0);
-  });
+  setTimeout(()=>{ renderInput(); setTimeout(onlineFill,0); },650);
 }
 
 /* =====================================================================
@@ -1673,7 +1709,7 @@ function calcResults(){
     } else {
       log(`Risposta: <b>${fmtNum(q.a)}${q.u?" "+q.u:""}</b>. Nessuna stima valida questo round.`);
     }
-    S.players.forEach(p=> p.malus = p.malus.filter(m=> m.sticky && p.fenomeno)); // i malus normali si consumano; quelli della corona restano finché sei Fenomeno
+    S.players.forEach(p=>{ p.voiceNext=false; p.malus = p.malus.filter(m=> m.sticky && p.fenomeno); }); // i malus normali si consumano; quelli della corona restano finché sei Fenomeno
     S.phase="reveal";
     renderReveal();
   }
@@ -1835,6 +1871,9 @@ function renderSpecial(){
   if(type==="bonus"){
     body = `<p class="sub center">${esc(lander.name)} pesca una carta Bonus e la tiene.</p>
             <div class="choice-grid" id="bonusList"></div>`;
+  } else if(type==="voce"){
+    body = `<p class="sub center">📢 <b>Piccola infamata!</b> Nel prossimo round ${esc(lander.name)} dovrà dire subito la propria stima ad alta voce, prima che gli altri rispondano.</p>
+            <button type="button" class="btn coral mt" id="voiceGo">Accetta l’infamata 📢</button>`;
   } else if(type==="malus"){
     body = `<p class="sub center">${esc(lander.name)} pesca un Malus da rifilare a un avversario.</p>
             <div class="card flat" style="background:#fbe9e2;border-color:#e7b4a3" id="malusCard"></div>
@@ -1926,6 +1965,13 @@ function wireSpecial(type, lander){
         log(`⭐ ${esc(lander.name)} tiene il bonus "${b.nm}".`);
         nextSpecialOrPost();
       });
+    });
+  }
+  else if(type==="voce"){
+    $("#voiceGo").addEventListener("click",()=>{
+      lander.voiceNext=true;
+      log(`📢 ${esc(lander.name)} dovrà dire la prossima stima ad alta voce.`);
+      nextSpecialOrPost();
     });
   }
   else if(type==="malus"){
@@ -2583,14 +2629,14 @@ function onlineConnect(url){
     if(m.t==="room"){ ONLINE={ws,code:m.code,url:url.replace(/\/$/,""),est:{},n:0}; renderOnlineBar(); log("🌐 Stanza lavagnette aperta: <b>"+m.code+"</b>",0); }
     else if(m.t==="peer"){ ONLINE.n=m.n; renderOnlineBar(); }
     else if(m.t==="bye"){ ONLINE.n=m.n; renderOnlineBar(); }
-    else if(m.t==="est"){ ONLINE.est[(m.name||"").trim().toLowerCase()]=m.value; renderOnlineBar(); }
+    else if(m.t==="est"){ ONLINE.est[(m.name||"").trim().toLowerCase()]=m.value; renderOnlineBar(); updateWriteRoster(); checkAllEstimates(); }
   };
   ws.onclose=()=>{ if(ONLINE&&ONLINE.ws===ws) ONLINE=null; renderOnlineBar(); };
 }
 function renderOnlineBar(){
   const el=$("#onlineBar"); if(!el) return;
   if(ONLINE){
-    el.innerHTML = `<div style="font-size:13px">🌐 Stanza <b>${ONLINE.code}</b> · 📲 ${ONLINE.n||0} lavagnette collegate</div>
+    el.innerHTML = `<div style="font-size:13px">🌐 Stanza <b>${ONLINE.code}</b> · 📲 ${ONLINE.n||0} lavagnette collegate · Master su questo telefono</div>
       <div style="font-size:11px;color:#6b6350;margin-top:3px">Gli amici scansionano il QR oppure aprono ${esc(ONLINE.url+"/lavagnetta")} sul telefono</div>
       <img alt="QR stanza" width="110" style="margin-top:6px;border-radius:8px" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(ONLINE.url+"/lavagnetta?c="+ONLINE.code)}">`;
   } else {

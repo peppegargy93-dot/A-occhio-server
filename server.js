@@ -6,403 +6,176 @@ const path = require('path');
 const { WebSocketServer, WebSocket } = require('ws');
 
 const PORT = Number(process.env.PORT || 3000);
-const ROOT_DIR = __dirname;
-const ROUND_SECONDS = 20;
-const rooms = new Map();
+let GAME = '';
+try {
+  GAME = fs.readFileSync(path.join(__dirname, 'game.html'), 'utf8');
+} catch (error) {
+  console.error('Impossibile leggere game.html:', error.message);
+}
 
-function roomCode() {
+const rooms = Object.create(null);
+
+function code4() {
   const alphabet = 'ABCDEFGHKMNPRSTUVZ';
   let code = '';
   do {
-    code = Array.from(
-      { length: 4 },
-      () => alphabet[Math.floor(Math.random() * alphabet.length)]
-    ).join('');
-  } while (rooms.has(code));
+    code = Array.from({ length: 4 }, () => alphabet[Math.floor(Math.random() * alphabet.length)]).join('');
+  } while (rooms[code]);
   return code;
 }
 
 function send(ws, payload) {
-  if (ws && ws.readyState === WebSocket.OPEN) {
-    ws.send(JSON.stringify(payload));
-  }
+  if (ws && ws.readyState === WebSocket.OPEN) ws.send(JSON.stringify(payload));
 }
 
-function broadcast(room, payload) {
-  send(room.masterSocket, payload);
-  for (const player of room.players.values()) {
-    if (player.socket !== room.masterSocket) send(player.socket, payload);
-  }
+function broadcastPads(room, payload) {
+  for (const pad of room.pads.keys()) send(pad, payload);
 }
 
-function publicPlayers(room) {
-  return [...room.players.values()].map(player => ({
-    id: player.id,
-    name: player.name,
-    isMaster: player.isMaster,
-    connected: player.socket.readyState === WebSocket.OPEN
-  }));
-}
+const PAD = `<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#20424E">
+<title>A OCCHIO! — Lavagnetta</title>
+<style>
+:root{--cream:#F5ECD6;--paper:#FFFDF6;--ink:#20424E;--petrol:#2E6B7A;--teal:#48A39A;--coral:#E0795E;--line:rgba(32,66,78,.18)}
+*{box-sizing:border-box}body{font-family:system-ui,-apple-system,sans-serif;background:var(--cream);color:var(--ink);margin:0;padding:22px 16px;text-align:center;min-height:100dvh}
+main{max-width:420px;margin:auto}.card{background:var(--paper);border:2px solid var(--line);border-radius:22px;padding:20px;box-shadow:0 12px 28px rgba(32,66,78,.12)}
+h1{font-weight:950;letter-spacing:-1px;margin:8px 0 20px}.q{font-size:21px;font-weight:800;line-height:1.25;margin:16px 0}.cat{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:1px;color:var(--coral)}
+input,button{font:inherit;font-size:19px;padding:14px;border-radius:14px;width:100%;margin:7px 0}input{border:2px solid var(--ink);background:white;color:var(--ink)}button{background:var(--coral);color:white;font-weight:900;border:none}button:disabled,input:disabled{opacity:.5}.big{font-size:58px;font-weight:900;color:var(--coral);line-height:1}.hide{display:none}.st{font-size:13px;color:var(--petrol);margin-top:12px}.timer{font-size:42px;font-weight:950;margin:8px 0}.ok{color:var(--teal);font-weight:900}
+</style>
+</head>
+<body><main><div class="card">
+<h1>👁 A OCCHIO!</h1>
+<div id="join">
+  <input id="code" placeholder="CODICE STANZA" maxlength="4" style="text-transform:uppercase">
+  <input id="name" placeholder="Il tuo nome">
+  <button id="joinBtn" type="button">Entra</button>
+</div>
+<div id="play" class="hide">
+  <div id="big" class="big">✋</div>
+  <div id="cat" class="cat"></div>
+  <div id="q" class="q">Aspetta la domanda…</div>
+  <div id="timer" class="timer hide">20</div>
+  <input id="est" type="text" inputmode="decimal" placeholder="La tua stima" disabled>
+  <button id="sendBtn" type="button" disabled>Invia e blocca 📤</button>
+</div>
+<div id="st" class="st"></div>
+</div></main>
+<script>
+let ws=null, sent=false, timerId=null, deadline=0;
+const $=id=>document.getElementById(id);
+const proto=location.protocol==='https:'?'wss://':'ws://';
+const params=new URLSearchParams(location.search);if(params.get('c'))$('code').value=params.get('c');
+function setTimer(seconds){clearInterval(timerId);deadline=Date.now()+seconds*1000;$('timer').classList.remove('hide');const draw=()=>{const left=Math.max(0,Math.ceil((deadline-Date.now())/1000));$('timer').textContent=left;if(left<=0)clearInterval(timerId)};draw();timerId=setInterval(draw,200)}
+function join(){const code=$('code').value.trim().toUpperCase(),name=$('name').value.trim();if(code.length!==4||!name){$('st').textContent='Inserisci codice e nome.';return}ws=new WebSocket(proto+location.host);ws.onopen=()=>ws.send(JSON.stringify({t:'join',code,name}));ws.onmessage=e=>{let m;try{m=JSON.parse(e.data)}catch{return}
+if(m.t==='ok'){$('join').classList.add('hide');$('play').classList.remove('hide');$('st').textContent='Collegato alla stanza '+m.code;}
+if(m.t==='err')$('st').textContent='⚠️ '+m.msg;
+if(m.t==='q'){sent=false;$('big').textContent='✍️';$('cat').textContent=m.cat||'';$('q').textContent=m.text+(m.unit?' · '+m.unit:'');$('est').value='';$('est').disabled=false;$('sendBtn').disabled=false;$('st').textContent='Scrivi la tua stima senza mostrarla agli altri.';setTimer(Number(m.seconds)||20);$('est').focus();}
+if(m.t==='lock'){clearInterval(timerId);$('timer').textContent='0';$('big').textContent='✋';$('q').textContent='Penne giù!';$('est').disabled=true;$('sendBtn').disabled=true;if(!sent)$('st').textContent='Tempo scaduto: nessuna risposta inviata.';}
+if(m.t==='duplicate')$('st').textContent='Hai già inviato la risposta: non puoi modificarla.';
+};ws.onclose=()=>{$('st').textContent='Connessione persa. Ricarica per rientrare.';};}
+function submit(){if(!ws||sent||$('est').disabled)return;const value=$('est').value.trim();if(!value){$('st').textContent='Inserisci una stima.';return}ws.send(JSON.stringify({t:'est',value}));sent=true;$('est').disabled=true;$('sendBtn').disabled=true;$('big').textContent='✅';$('st').innerHTML='<span class="ok">Stima inviata e bloccata.</span>';}
+$('joinBtn').addEventListener('click',join);$('sendBtn').addEventListener('click',submit);$('est').addEventListener('keydown',e=>{if(e.key==='Enter')submit()});
+</script></body></html>`;
 
-function notifyLobby(room) {
-  broadcast(room, {
-    t: 'lobby',
-    code: room.code,
-    players: publicPlayers(room),
-    expectedAnswers: room.players.size
-  });
-}
+const server = http.createServer((req, res) => {
+  const pathname = new URL(req.url, 'http://localhost').pathname;
 
-function safeNumber(raw) {
-  const normalized = String(raw ?? '')
-    .trim()
-    .replace(/\s/g, '')
-    .replace(',', '.');
-
-  if (!normalized) return null;
-  const value = Number(normalized);
-  return Number.isFinite(value) ? value : null;
-}
-
-function closeRound(room, reason) {
-  const round = room.round;
-  if (!round || round.status !== 'active') return;
-
-  round.status = 'completed';
-
-  if (round.timer) {
-    clearTimeout(round.timer);
-    round.timer = null;
+  if (pathname === '/lavagnetta') {
+    res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-cache' });
+    return res.end(PAD);
   }
 
-  const answers = [...room.players.values()].map(player => {
-    const answer = round.answers.get(player.id);
-
-    return {
-      playerId: player.id,
-      name: player.name,
-      isMaster: player.isMaster,
-      value: answer ? answer.value : null,
-      submittedAt: answer ? answer.submittedAt : null,
-      missing: !answer
-    };
-  });
-
-  broadcast(room, {
-    t: 'round_completed',
-    reason,
-    roundId: round.id,
-    question: round.question,
-    mode: round.mode,
-    answers
-  });
-}
-
-function startRound(room, message) {
-  if (room.round?.status === 'active') {
-    return send(room.masterSocket, {
-      t: 'err',
-      msg: 'C’è già un round attivo.'
-    });
-  }
-
-  const question = String(message.question || '').trim();
-  if (!question) {
-    return send(room.masterSocket, {
-      t: 'err',
-      msg: 'Inserisci una domanda.'
-    });
-  }
-
-  const mode = message.mode === 'voice' ? 'voice' : 'secret';
-  const roundId = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
-  const deadline = Date.now() + ROUND_SECONDS * 1000;
-
-  room.round = {
-    id: roundId,
-    status: 'active',
-    question,
-    mode,
-    answers: new Map(),
-    deadline,
-    timer: setTimeout(
-      () => closeRound(room, 'timeout'),
-      ROUND_SECONDS * 1000 + 150
-    )
-  };
-
-  broadcast(room, {
-    t: 'round_started',
-    roundId,
-    question,
-    mode,
-    duration: ROUND_SECONDS,
-    deadline,
-    expectedAnswers: room.players.size
-  });
-}
-
-function submitEstimate(room, ws, message) {
-  const round = room.round;
-  const player = room.players.get(ws.playerId);
-
-  if (!round || round.status !== 'active') {
-    return send(ws, { t: 'err', msg: 'Il round non è attivo.' });
-  }
-
-  if (!player) {
-    return send(ws, { t: 'err', msg: 'Giocatore non riconosciuto.' });
-  }
-
-  if (Date.now() > round.deadline) {
-    closeRound(room, 'timeout');
-    return send(ws, { t: 'err', msg: 'Tempo scaduto.' });
-  }
-
-  if (round.answers.has(player.id)) {
-    return send(ws, {
-      t: 'err',
-      msg: 'Risposta già inviata e bloccata.'
-    });
-  }
-
-  const value = safeNumber(message.value);
-  if (value === null) {
-    return send(ws, {
-      t: 'err',
-      msg: 'Inserisci una stima numerica valida.'
-    });
-  }
-
-  round.answers.set(player.id, {
-    value,
-    submittedAt: Date.now()
-  });
-
-  send(ws, {
-    t: 'estimate_locked',
-    roundId: round.id
-  });
-
-  broadcast(room, {
-    t: 'answer_progress',
-    received: round.answers.size,
-    expected: room.players.size
-  });
-
-  if (round.answers.size >= room.players.size) {
-    closeRound(room, 'all_answered');
-  }
-}
-
-function getRequestedFile(urlPath) {
-  const routes = {
-    '/': 'index.html',
-    '/index.html': 'index.html',
-    '/app.js': 'app.js',
-    '/styles.css': 'styles.css',
-    '/game.html': 'game.html'
-  };
-
-  const filename = routes[urlPath];
-  return filename ? path.join(ROOT_DIR, filename) : null;
-}
-
-function serveStatic(req, res) {
-  let urlPath;
-
-  try {
-    urlPath = new URL(req.url, `http://${req.headers.host}`).pathname;
-  } catch {
-    res.writeHead(400, { 'Content-Type': 'text/plain; charset=utf-8' });
-    return res.end('Richiesta non valida');
-  }
-
-  const filePath = getRequestedFile(urlPath);
-
-  if (!filePath) {
-    res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
-    return res.end('Pagina non trovata');
-  }
-
-  fs.readFile(filePath, (error, data) => {
-    if (error) {
-      console.error(`File non trovato: ${filePath}`, error.message);
-      res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
-      return res.end('Pagina non trovata');
+  if (pathname === '/' || pathname === '/gioco' || pathname === '/game.html') {
+    if (!GAME) {
+      res.writeHead(500, { 'Content-Type': 'text/plain; charset=utf-8' });
+      return res.end('game.html non trovato');
     }
+    res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-cache' });
+    return res.end(GAME);
+  }
 
-    const ext = path.extname(filePath);
-    const types = {
-      '.html': 'text/html; charset=utf-8',
-      '.js': 'application/javascript; charset=utf-8',
-      '.css': 'text/css; charset=utf-8'
-    };
+  if (pathname === '/health') {
+    res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+    return res.end(JSON.stringify({ ok: true, rooms: Object.keys(rooms).length }));
+  }
 
-    res.writeHead(200, {
-      'Content-Type': types[ext] || 'application/octet-stream',
-      'Cache-Control': 'no-cache'
-    });
-    res.end(data);
-  });
-}
+  res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
+  res.end('Pagina non trovata');
+});
 
-const server = http.createServer(serveStatic);
 const wss = new WebSocketServer({ server });
 
 wss.on('connection', ws => {
   ws.on('message', raw => {
     let message;
+    try { message = JSON.parse(raw.toString()); } catch { return; }
 
-    try {
-      message = JSON.parse(raw.toString());
-    } catch {
-      return send(ws, {
-        t: 'err',
-        msg: 'Messaggio non valido.'
-      });
-    }
-
-    if (message.t === 'create_room') {
-      const masterName = String(message.name || 'Master').trim() || 'Master';
-      const code = roomCode();
-      const masterId = `p-${Math.random().toString(36).slice(2, 10)}`;
-
-      const room = {
-        code,
-        masterSocket: ws,
-        players: new Map(),
-        round: null
-      };
-
-      ws.roomCode = code;
-      ws.playerId = masterId;
-      ws.isMaster = true;
-
-      room.players.set(masterId, {
-        id: masterId,
-        name: masterName,
-        isMaster: true,
-        socket: ws
-      });
-
-      rooms.set(code, room);
-
-      send(ws, {
-        t: 'room_created',
-        code,
-        playerId: masterId,
-        isMaster: true
-      });
-
-      notifyLobby(room);
+    if (message.t === 'create') {
+      const code = code4();
+      rooms[code] = { master: ws, pads: new Map(), round: 0, locked: true };
+      ws._room = code;
+      ws._master = true;
+      send(ws, { t: 'room', code });
       return;
     }
 
-    if (message.t === 'join_room') {
+    if (message.t === 'join') {
       const code = String(message.code || '').trim().toUpperCase();
-      const room = rooms.get(code);
-
-      if (!room) {
-        return send(ws, {
-          t: 'err',
-          msg: 'Stanza non trovata.'
-        });
-      }
-
-      if (room.round?.status === 'active') {
-        return send(ws, {
-          t: 'err',
-          msg: 'Partita già in corso.'
-        });
-      }
-
-      const playerId = `p-${Math.random().toString(36).slice(2, 10)}`;
-      const name = String(message.name || 'Giocatore').trim() || 'Giocatore';
-
-      ws.roomCode = code;
-      ws.playerId = playerId;
-      ws.isMaster = false;
-
-      room.players.set(playerId, {
-        id: playerId,
-        name,
-        isMaster: false,
-        socket: ws
-      });
-
-      send(ws, {
-        t: 'room_joined',
-        code,
-        playerId,
-        isMaster: false
-      });
-
-      notifyLobby(room);
+      const room = rooms[code];
+      if (!room) return send(ws, { t: 'err', msg: 'Stanza non trovata' });
+      const name = String(message.name || 'Anonimo').trim() || 'Anonimo';
+      room.pads.set(ws, { name, answeredRound: -1 });
+      ws._room = code;
+      ws._master = false;
+      send(ws, { t: 'ok', code });
+      send(room.master, { t: 'peer', name, n: room.pads.size });
       return;
     }
 
-    const room = rooms.get(ws.roomCode);
+    const room = rooms[ws._room];
+    if (!room) return;
 
-    if (!room) {
-      return send(ws, {
-        t: 'err',
-        msg: 'Stanza non disponibile.'
-      });
-    }
-
-    if (message.t === 'start_round') {
-      if (!ws.isMaster) {
-        return send(ws, {
-          t: 'err',
-          msg: 'Solo il Master può avviare il round.'
-        });
+    if ((message.t === 'q' || message.t === 'lock') && ws._master) {
+      if (message.t === 'q') {
+        room.round += 1;
+        room.locked = false;
+      } else {
+        room.locked = true;
       }
-
-      return startRound(room, message);
+      broadcastPads(room, message);
+      return;
     }
 
-    if (message.t === 'estimate') {
-      return submitEstimate(room, ws, message);
-    }
-
-    if (message.t === 'return_lobby') {
-      if (!ws.isMaster) return;
-
-      room.round = null;
-      broadcast(room, { t: 'returned_lobby' });
-      notifyLobby(room);
+    if (message.t === 'est' && !ws._master) {
+      const info = room.pads.get(ws);
+      if (!info || room.locked) return;
+      if (info.answeredRound === room.round) return send(ws, { t: 'duplicate' });
+      info.answeredRound = room.round;
+      send(room.master, { t: 'est', name: info.name, value: message.value });
     }
   });
 
   ws.on('close', () => {
-    const room = rooms.get(ws.roomCode);
+    const room = rooms[ws._room];
     if (!room) return;
 
-    if (ws.isMaster) {
-      broadcast(room, {
-        t: 'room_closed',
-        msg: 'Il Master ha chiuso la stanza.'
-      });
-
-      if (room.round?.timer) clearTimeout(room.round.timer);
-      rooms.delete(room.code);
+    if (ws._master) {
+      for (const pad of room.pads.keys()) pad.close();
+      delete rooms[ws._room];
       return;
     }
 
-    room.players.delete(ws.playerId);
-
-    if (
-      room.round?.status === 'active' &&
-      room.round.answers.size >= room.players.size
-    ) {
-      closeRound(room, 'all_answered');
-    } else {
-      notifyLobby(room);
-    }
+    const info = room.pads.get(ws);
+    room.pads.delete(ws);
+    send(room.master, { t: 'bye', name: info && info.name, n: room.pads.size });
   });
 });
 
 server.listen(PORT, '0.0.0.0', () => {
   console.log(`A OCCHIO! attivo sulla porta ${PORT}`);
+  console.log('Gioco: /  |  Lavagnetta: /lavagnetta');
 });
