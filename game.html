@@ -1765,6 +1765,14 @@ function renderReveal(){
   `;
   $("#advanceBtn").addEventListener("click", applyScoringAndMove);
   wireBoardLog();
+  onlineBroadcastView({
+    kind:"result",
+    title:"La risposta era",
+    text:q.q,
+    answer:fmtNum(q.a)+(q.u?" "+q.u:""),
+    ranking:S.ranking.map(e=>({name:e.name,estimate:e.dist===Infinity?null:fmtNum(e.est),points:e.pts})),
+    scores:onlineScores()
+  });
 }
 
 /* =====================================================================
@@ -1948,6 +1956,7 @@ function renderSpecial(){
   `;
   wireSpecial(type, lander);
   wireBoardLog();
+  setTimeout(()=>onlineScreenFromMaster((c.ic||"")+" "+c.nm,"special"),0);
 }
 
 function wireSpecial(type, lander){
@@ -2335,6 +2344,7 @@ function diceOrder(players, opts, done){
   })();
 }
 function renderPostRound(){
+  onlineBroadcastView({kind:"score",title:"Punteggio aggiornato",text:"Ecco la situazione dopo il round.",scores:onlineScores()});
   S.phase="postround";
   renderStatus();
   const w = S.roundWinnerId? pById(S.roundWinnerId):null;
@@ -2617,26 +2627,70 @@ function confirmAction(msg, onYes){
 }
 function closeMenu(){ if(menuSheet){ menuSheet.hidden=true; } if(menuBtn){ menuBtn.setAttribute("aria-expanded","false"); } }
 let ONLINE=null;
-function onlineConnect(url){
+let ONLINE_RETRY=null;
+function onlineScores(){
+  return S.players.map(p=>({name:p.name,score:p.score,pos:p.pos}));
+}
+function onlineBroadcastView(payload){
+  if(!ONLINE || !ONLINE.ws || ONLINE.ws.readyState!==WebSocket.OPEN) return;
+  try{ ONLINE.ws.send(JSON.stringify({t:"view",scores:onlineScores(),...payload})); }catch(e){}
+}
+function onlineScreenFromMaster(title, kind="info"){
+  const card=app && app.querySelector(".card");
+  if(!card) return;
+  const clone=card.cloneNode(true);
+  clone.querySelectorAll("button,input,img").forEach(x=>x.remove());
+  const text=(clone.innerText||"").replace(/\n{3,}/g,"\n\n").trim();
+  onlineBroadcastView({kind,title:title||"Aggiornamento di gioco",text});
+}
+function onlineConnect(url, resume=false){
   url=(url||location.origin).trim().replace(/\/$/,"");
-  const st=$("#onlineSt"); if(st) st.textContent="Connessione al server… (se dorme, sveglio in ~30s)";
+  const st=$("#onlineSt"); if(st) st.textContent=resume?"Riconnessione automatica…":"Connessione al server… (se dorme, sveglio in ~30s)";
+  clearTimeout(ONLINE_RETRY);
   let ws;
   try{ ws=new WebSocket(url.replace(/^http/,"ws")); }
-  catch(e){ if(st) st.textContent="⚠️ Questo visualizzatore blocca le connessioni. Apri il gioco in Safari: "+url+"/gioco"; return; }
-  ws.onerror=()=>{ const s2=$("#onlineSt"); if(s2 && !ONLINE) s2.textContent="⚠️ Non raggiungo il server. Apri prima l'URL nel browser per svegliarlo, poi riprova."; };
-  ws.onopen=()=>ws.send(JSON.stringify({t:"create"}));
+  catch(e){ if(st) st.textContent="⚠️ Apri il gioco in Safari: "+url+"/gioco"; return; }
+
+  const previous=ONLINE;
+  if(!ONLINE) ONLINE={ws:null,code:"",url,est:{},n:0,masterToken:"",connecting:true};
+  ONLINE.ws=ws; ONLINE.url=url; ONLINE.connecting=true;
+
+  ws.onerror=()=>{};
+  ws.onopen=()=>{
+    ONLINE.connecting=false;
+    if(ONLINE.code && ONLINE.masterToken){
+      ws.send(JSON.stringify({t:"resume_master",code:ONLINE.code,token:ONLINE.masterToken}));
+    }else{
+      ws.send(JSON.stringify({t:"create"}));
+    }
+  };
   ws.onmessage=e=>{ let m; try{m=JSON.parse(e.data)}catch(err){return;}
-    if(m.t==="room"){ ONLINE={ws,code:m.code,url:url.replace(/\/$/,""),est:{},n:0}; renderOnlineBar(); log("🌐 Stanza lavagnette aperta: <b>"+m.code+"</b>",0); }
+    if(m.t==="room"){
+      ONLINE.code=m.code; ONLINE.masterToken=m.token||ONLINE.masterToken; ONLINE.n=m.n||0;
+      try{localStorage.setItem("aocchio_master",JSON.stringify({code:ONLINE.code,token:ONLINE.masterToken,url:ONLINE.url}));}catch(e){}
+      renderOnlineBar();
+      if(!resume) log("🌐 Stanza lavagnette aperta: <b>"+m.code+"</b>",0);
+    }
+    else if(m.t==="resumed_master"){
+      ONLINE.n=m.n||0; renderOnlineBar();
+      const s2=$("#onlineSt"); if(s2) s2.textContent="Riconnesso ✓";
+    }
     else if(m.t==="peer"){ ONLINE.n=m.n; renderOnlineBar(); }
     else if(m.t==="bye"){ ONLINE.n=m.n; renderOnlineBar(); }
     else if(m.t==="est"){ ONLINE.est[(m.name||"").trim().toLowerCase()]=m.value; renderOnlineBar(); updateWriteRoster(); checkAllEstimates(); }
+    else if(m.t==="err"){ const s2=$("#onlineSt"); if(s2) s2.textContent="⚠️ "+m.msg; }
   };
-  ws.onclose=()=>{ if(ONLINE&&ONLINE.ws===ws) ONLINE=null; renderOnlineBar(); };
+  ws.onclose=()=>{
+    if(!ONLINE || ONLINE.ws!==ws) return;
+    ONLINE.connecting=true;
+    renderOnlineBar();
+    ONLINE_RETRY=setTimeout(()=>onlineConnect(ONLINE.url,true),1500);
+  };
 }
 function renderOnlineBar(){
   const el=$("#onlineBar"); if(!el) return;
   if(ONLINE){
-    el.innerHTML = `<div style="font-size:13px">🌐 Stanza <b>${ONLINE.code}</b> · 📲 ${ONLINE.n||0} lavagnette collegate · Master su questo telefono</div>
+    el.innerHTML = `<div style="font-size:13px">${ONLINE.connecting?"🟠 Riconnessione automatica…":"🌐 Stanza <b>"+ONLINE.code+"</b>"} · 📲 ${ONLINE.n||0} lavagnette collegate · Master su questo telefono</div>
       <div style="font-size:11px;color:#6b6350;margin-top:3px">Gli amici scansionano il QR oppure aprono ${esc(ONLINE.url+"/lavagnetta")} sul telefono</div>
       <img alt="QR stanza" width="110" style="margin-top:6px;border-radius:8px" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(ONLINE.url+"/lavagnetta?c="+ONLINE.code)}">`;
   } else {
