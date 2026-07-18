@@ -997,7 +997,7 @@ const MALUS = [
   {id:"miraggio",   nm:"Miraggio",      desc:"Vedi doppio: la tua distanza conta +20% in questo round.", penalty:1.2},
 ];
 const FENOMENO_MALUS = [
-  {id:"firma",  nm:"La Firma del Campione", desc:"Scrivi le stime con la mano NON dominante (e hai 15s invece di 20).", time:15, sticky:true},
+  {id:"firma",  nm:"La Firma del Campione", desc:"Scrivi le stime con la mano NON dominante (e hai 15s invece di 25).", time:15, sticky:true},
   {id:"corona", nm:"Il Peso della Corona",  desc:"Finché porti la corona, la tua distanza conta +25%.", penalty:1.25, sticky:true},
 ]; // il prezzo della fama: restano finché sei Il Fenomeno
 
@@ -1029,7 +1029,7 @@ const S = {
   catMode:"random",      // random | turno
   chosenCat:null,        // categoria scelta per il round corrente
   log:[],
-  timer:{id:null,left:0,total:20},
+  timer:{id:null,left:0,total:25},
 };
 
 /* =====================================================================
@@ -1151,7 +1151,7 @@ function renderSplash(){
    ===================================================================== */
 const TUTORIAL = [
   {ic:"🎯", t:"Tira a indovinare", x:"A OCCHIO! non è un quiz. Esce una domanda con un numero come risposta e tu provi a indovinarlo: non devi saperlo davvero, ti basta avvicinarti."},
-  {ic:"✍️", t:"Scrivi in 20 secondi", x:"Parte il timer e ognuno scrive il suo numero in segreto, su carta o lavagnetta. Quando il tempo finisce le risposte si bloccano, e uno di voi le inserisce nel telefono."},
+  {ic:"✍️", t:"Scrivi in 25 secondi", x:"Parte il timer e ognuno scrive il suo numero in segreto, su carta o lavagnetta. Quando il tempo finisce le risposte si bloccano, e uno di voi le inserisce nel telefono."},
   {ic:"🥇", t:"Più sei vicino, più punti", x:"Chi si avvicina di più vince il round: 3 punti al primo, 2 al secondo, 1 al terzo. Con i punti avanzi sul tabellone, tra caselle che regalano premi o piccoli scherzi."},
   {ic:"⚡", t:"Vince chi ci va vicino", x:"Se due sono pari, li separa un minigioco lampo di intuito. E chi vince troppo si becca qualche malus simpatico: così resta in gioco anche chi non sa tutto."},
 ];
@@ -1230,7 +1230,7 @@ function renderSetup(){
 
     <div class="card">
       <h2><span class="tick">👁️</span> Come si gioca</h2>
-      <p class="sub">L'anti-quiz delle stime: esce una domanda numerica, tutti inseriscono la propria stima sulla lavagnetta entro 20 secondi. Alla scadenza scatta “Penne giù”.</p>
+      <p class="sub">L'anti-quiz delle stime: esce una domanda numerica, tutti inseriscono la propria stima sulla lavagnetta entro 25 secondi. Alla scadenza scatta “Penne giù”.</p>
       <button type="button" class="btn ghost sm" id="tutBtn">↻ Rivedi il tutorial</button>
     </div>
 
@@ -1459,7 +1459,7 @@ function playerLimit(p){
 }
 function startWriting(){
   S.phase="writing";
-  S.timer.total=20; S.timer.left=20;
+  S.timer.total=25; S.timer.left=25;
   if(ONLINE){
     ONLINE.est={};
     try{
@@ -1482,7 +1482,7 @@ function renderWriting(){
   const masterKey = (master.name||"").trim().toLowerCase();
   const roster = S.players.map((p,i)=>{
     const lim = playerLimit(p);
-    const reduced = lim<20;
+    const reduced = lim<25;
     const sent = ONLINE && ONLINE.est[(p.name||"").trim().toLowerCase()]!=null;
     return `<div class="write-row">
         ${avatarHTML(p,28)}
@@ -1490,7 +1490,7 @@ function renderWriting(){
         <span class="wr-stat${sent?' down':(reduced?' reduced':'')}" id="ws${i}">${sent?'INVIATA ✓':lim+'s'}</span>
       </div>`;
   }).join("");
-  const anyReduced = S.players.some(p=>playerLimit(p)<20);
+  const anyReduced = S.players.some(p=>playerLimit(p)<25);
   app.innerHTML = `
     <div class="card">
       <p class="eyebrow">Round ${S.round} · ${esc(q.cat)}</p>
@@ -1567,10 +1567,10 @@ function updateWriteRoster(){
     if(ONLINE && ONLINE.est[key]!=null){ cell.textContent="INVIATA ✓"; cell.classList.add("down"); cell.classList.remove("urgent","reduced"); return; }
     const personal = Math.max(0, playerLimit(p) - elapsed);
     if(personal<=0){
-      if(!cell.classList.contains("down")){ cell.textContent="PENNA GIÙ ✋"; cell.classList.add("down"); cell.classList.remove("urgent"); if(playerLimit(p)<20) beep(300,180); }
+      if(!cell.classList.contains("down")){ cell.textContent="PENNA GIÙ ✋"; cell.classList.add("down"); cell.classList.remove("urgent"); if(playerLimit(p)<25) beep(300,180); }
     } else {
       cell.textContent = personal+"s";
-      const limited = playerLimit(p)<20;
+      const limited = playerLimit(p)<25;
       cell.classList.toggle("urgent", limited && personal<=3);
       if(limited && personal<=3 && p._lastTick!==personal){ p._lastTick=personal; beep(760,55); }
     }

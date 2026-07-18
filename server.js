@@ -157,7 +157,7 @@ input,button{font:inherit;font-size:18px;padding:14px;border-radius:14px;width:1
 <div id="st" class="st"></div>
 </div></main>
 <script>
-let ws=null,sent=false,timerId=null,deadline=0,retry=null,currentCode='',currentName='',padToken='',manualClose=false;
+let ws=null,sent=false,timerId=null,deadline=0,retry=null,retryMs=1000,currentCode='',currentName='',padToken='',manualClose=false;
 const $=id=>document.getElementById(id);
 const proto=location.protocol==='https:'?'wss://':'ws://';
 const queryCode=(new URLSearchParams(location.search).get('c')||'').trim().toUpperCase();
@@ -229,6 +229,7 @@ function connect(mode){
   ws.onmessage=e=>{let m;try{m=JSON.parse(e.data)}catch{return}
     if(m.t==='ok'||m.t==='resumed_pad'){
       currentCode=m.code;padToken=m.token||padToken;save();
+      retryMs=1000;
       $('join').classList.add('hide');$('play').classList.remove('hide');$('st').textContent='Collegato alla stanza '+m.code+'.';
       if(m.state)applyState(m.state);
     } else if(m.t==='q') applyQuestion(m);
@@ -240,8 +241,9 @@ function connect(mode){
     else if(m.t==='replaced')showJoin(m.msg||'Sessione spostata su un’altra scheda.')
     else if(m.t==='err'){if(m.reset){padToken='';clearSaved();showJoin('⚠️ '+m.msg)}else $('st').textContent='⚠️ '+m.msg}
   };
-  ws.onclose=()=>{if(manualClose)return;$('st').textContent='Connessione interrotta: provo a rientrare…';retry=setTimeout(()=>connect('resume'),1200)};
+  ws.onclose=()=>{if(manualClose)return;$('st').textContent='Connessione interrotta: riprovo tra '+Math.round(retryMs/1000)+'s…';retry=setTimeout(()=>connect('resume'),retryMs);retryMs=Math.min(10000,retryMs*2)};
 }
+function changeRoom(){manualClose=true;try{ws&&ws.close()}catch(e){};clearTimeout(retry);padToken='';clearSaved();manualClose=false;showJoin('Inserisci il codice della nuova stanza.');}
 function join(){
   const code=$('code').value.trim().toUpperCase(),name=$('name').value.trim();
   if(code.length!==4||!name){$('st').textContent='Inserisci codice e nome.';return}
@@ -258,6 +260,9 @@ $('changeBtn').addEventListener('click',()=>{try{ws&&ws.send(JSON.stringify({t:'
 $('est').addEventListener('keydown',e=>{if(e.key==='Enter')submit()});
 $('code').addEventListener('input',()=>{$('code').value=$('code').value.toUpperCase()});
 
+document.addEventListener('visibilitychange',()=>{
+  if(document.visibilityState==='visible' && padToken && (!ws || ws.readyState>1)){ retryMs=1000; connect('resume'); }
+});
 window.addEventListener('pageshow',()=>{
   const saved=getSaved();
   if(queryCode&&saved&&saved.code!==queryCode){
@@ -311,6 +316,9 @@ wss.on('connection', ws => {
     try { m = JSON.parse(raw.toString()); } catch { return; }
 
     if (m.t === 'create') {
+      if (ws._room && rooms.get(ws._room) && rooms.get(ws._room).masterSocket === ws) {
+        destroyRoom(rooms.get(ws._room), 'Il Master ha aperto una nuova partita: stanza chiusa.');
+      }
       const code = code4();
       const room = {
         code,
