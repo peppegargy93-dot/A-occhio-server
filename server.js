@@ -425,7 +425,7 @@ wss.on('connection', ws => {
     if (m.t === 'q' && ws._role === 'master') {
       room.round += 1;
       room.locked = false;
-      room.deadline = Date.now() + (Number(m.seconds) || 20) * 1000;
+      room.deadline = Date.now() + (Number(m.seconds) || 25) * 1000;
       room.question = {
         cat: m.cat || '',
         text: m.text || '',
@@ -439,7 +439,7 @@ wss.on('connection', ws => {
         text: room.question.text,
         unit: room.question.unit,
         deadline: room.deadline,
-        seconds: Number(m.seconds) || 20
+        seconds: Number(m.seconds) || 25
       });
       return;
     }

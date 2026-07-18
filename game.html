@@ -1378,7 +1378,7 @@ function finalizeDraw(cat){
   S.chosenCat = cat;
   S.question = drawFromPool(cat);
   renderStatus();
-  renderDraw();
+  startWriting();
 }
 
 /* SCELTA CATEGORIA — un giocatore sceglie la categoria del round */
@@ -1479,7 +1479,8 @@ function startWriting(){
         unit:S.question.u||"",
         cat:S.question.cat||"",
         round:S.round,
-        seconds:S.timer.total
+        seconds:S.timer.total,
+        deadline:Date.now()+S.timer.total*1000
       }));
     }catch(e){}
   }
@@ -1787,7 +1788,7 @@ function renderReveal(){
     answer:fmtNum(q.a)+(q.u?" "+q.u:""),
     ranking:S.ranking.map(e=>({name:e.name,estimate:e.dist===Infinity?null:fmtNum(e.est),points:e.pts})),
     scores:onlineScores()
-  });
+  });  onlineScreenFromMaster("📊 Risultati del Round "+S.round,"reveal");
 }
 
 /* =====================================================================
@@ -2388,7 +2389,7 @@ function renderPostRound(){
   `;
   const nb=$("#nextBtn"); if(nb) nb.addEventListener("click", drawQuestion);
   $("#endBtn").addEventListener("click", ()=>{ S.winnerFinal=null; renderGameOver(); });
-  wireBoardLog();
+  wireBoardLog();  onlineScreenFromMaster("🏁 Fine Round "+S.round+" · punteggi e mappa","info");
 }
 function renderGameOver(){
   S.phase="gameover";
@@ -2424,7 +2425,7 @@ function renderGameOver(){
   `;
   $("#againBtn").addEventListener("click", startGame);
   $("#setupBtn").addEventListener("click", renderSetup);
-  wireBoardLog();
+  wireBoardLog();  onlineScreenFromMaster("🏆 Fine partita!","info");
 }
 const prefersReducedMotion = ()=> window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 function animateBoardMove(movers, done){
