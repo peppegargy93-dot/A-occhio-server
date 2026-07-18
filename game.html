@@ -1749,6 +1749,35 @@ function calcResults(){
   else resolveCluster(0);
 }
 
+
+function questionFunFact(q){
+  if(q && q.f) return q.f;
+  const text=(q&&q.q||"").toLowerCase();
+  const answer=fmtNum(q.a)+(q.u?" "+q.u:"");
+  if(text.includes("quanti minuti dura") || text.includes("quante ore")){
+    return `⏱️ Piccola curiosità: durate e tempi possono cambiare leggermente tra edizioni, montaggi o rilevazioni. Nel gioco usiamo ${answer} come dato di riferimento.`;
+  }
+  if(text.includes("quanto è alto") || text.includes("quanti cm") || text.includes("metri è alto")){
+    return `📏 Le misure dei personaggi famosi vengono spesso arrotondate. Qui il riferimento è ${answer}: abbastanza per far litigare almeno due biografie online.`;
+  }
+  if(text.includes("record") || (q&&q.cat)==="Record Assurdi"){
+    return `🏆 I record cambiano quando qualcuno decide di superarli: per questa domanda il valore di riferimento è ${answer}. La parte più assurda è che qualcuno ha davvero pensato di misurarlo.`;
+  }
+  if((q&&q.cat)==="Cibo e Calorie"){
+    return `🍽️ Calorie e pesi variano con ricetta e porzione. Il gioco usa ${answer} come valore medio: la scienza più pericolosa resta comunque “ne prendo solo un pezzetto”.`;
+  }
+  if((q&&q.cat)==="Spazio & Tempo" || (q&&q.cat)==="Scienza"){
+    return `🔬 Questo dato nasce da misurazioni e stime scientifiche: il riferimento del round è ${answer}. In pratica, qualcuno ha fatto molti più calcoli di noi.`;
+  }
+  if((q&&q.cat)==="Cinema" || (q&&q.cat)==="Serie TV"){
+    return `🎬 Il dato di riferimento è ${answer}. Tra versioni, tagli e speciali, però, il mondo dello spettacolo ama complicare anche i numeri semplici.`;
+  }
+  if((q&&q.cat)==="Musica"){
+    return `🎵 Il valore corretto è ${answer}. Un numero preciso, cosa rara in un settore in cui perfino la durata di un brano può cambiare tra radio edit e album.`;
+  }
+  return `💡 Fun fact: il dato usato nel gioco è ${answer}. È il genere di informazione inutile finché non arriva esattamente questa domanda.`;
+}
+
 function renderReveal(){
   const q=S.question;
   const rowsHtml = S.ranking.map((e,ix)=>{
@@ -1773,6 +1802,7 @@ function renderReveal(){
         <div class="lbl">La risposta era</div>
         <div class="big ans-pop">${fmtNum(q.a)}${q.u?" <span style='font-size:18px'>"+esc(q.u)+"</span>":""}</div>
         <div class="qhint" style="font-style:normal">${esc(q.q)}</div>
+        <div class="card flat mt-s" style="background:#eef4f0;border-color:#c9ddd2;text-align:left;font-size:12.5px;line-height:1.45">${esc(questionFunFact(q))}</div>
       </div>
       ${rowsHtml}
       <button type="button" class="btn teal mt" id="advanceBtn">Assegna punti e avanza →</button>
@@ -1798,6 +1828,7 @@ function renderReveal(){
     title:"Risultati del round",
     question:q.q,
     answer:fmtNum(q.a)+(q.u?" "+q.u:""),
+    funFact:questionFunFact(q),
     ranking:S.ranking.map(e=>({
       name:e.name,
       color:e.color,
@@ -1992,7 +2023,7 @@ function renderSpecial(){
   `;
   wireSpecial(type, lander);
   wireBoardLog();
-  setTimeout(()=>onlineScreenFromMaster((c.ic||"")+" "+c.nm,"special"),0);
+  setTimeout(()=>onlineSpecialFromMaster(type, lander, c),0);
 }
 
 function wireSpecial(type, lander){
@@ -2704,14 +2735,54 @@ function onlineBroadcastView(payload){
   if(!ONLINE || !ONLINE.ws || ONLINE.ws.readyState!==WebSocket.OPEN) return;
   try{ ONLINE.ws.send(JSON.stringify({t:"view",scores:onlineScores(),...payload})); }catch(e){}
 }
+function cleanOnlineText(value){
+  return String(value||"")
+    .replace(/([a-zà-ù])([A-ZÀ-Ù])/g,"$1 $2")
+    .replace(/\s+/g," ")
+    .replace(/\s+([,.;:!?])/g,"$1")
+    .trim();
+}
+function onlineSpecialFromMaster(type, lander, cell){
+  const cardTitle=cleanOnlineText(document.querySelector("#malusCard strong, #vendCard strong")?.textContent||"");
+  const cardDesc=cleanOnlineText(document.querySelector("#malusCard div, #vendCard div")?.textContent||"");
+  const intro=cleanOnlineText(app?.querySelector(".card .sub.center")?.textContent||"");
+  const labels={
+    bonus:{icon:"⭐",title:"Carta Bonus",instruction:"Il Master completa la scelta della carta."},
+    malus:{icon:"⛔",title:"Carta Malus",instruction:"Il Master assegna il malus al giocatore scelto."},
+    voce:{icon:"📢",title:"Stima ad alta voce",instruction:"Il giocatore dovrà pronunciare la prossima stima prima di inviarla."},
+    timer:{icon:"⏱️",title:"Timer Challenge",instruction:"Nel prossimo round il tempo sarà ridotto."},
+    penitenza:{icon:"🗡️",title:"Vendetta",instruction:"Il Master sceglie chi subirà l’effetto."},
+    fenomeno:{icon:"👑",title:"Casella Fenomeno",instruction:"Segui l’effetto indicato sul telefono principale."},
+    postadoppia:{icon:"🔥",title:"Posta doppia",instruction:"Il rischio sarà attivo nel prossimo round."},
+    gemelli:{icon:"🤝",title:"Gemelli",instruction:"Il giocatore sceglie il proprio compagno."},
+    azzardo:{icon:"🎰",title:"Azzardo",instruction:"Il dado stabilirà l’effetto."},
+    dadocaos:{icon:"🎲",title:"Dado del caos",instruction:"Il Master tira il dado per determinare l’esito."},
+    random:{icon:"🌀",title:"Categoria casuale",instruction:"Il tabellone sceglierà la prossima categoria."},
+    dispensa:{icon:"🍫",title:"Allarme merendine",instruction:"La prossima domanda sarà di Cibo e Calorie."},
+    tesi:{icon:"⚖️",title:"Tesi e Antitesi",instruction:"Ascolta il confronto e vota insieme al tavolo."}
+  };
+  const cfg=labels[type]||{icon:"🎲",title:(cell&&cell.nm)||"Casella speciale",instruction:"Segui le indicazioni del Master."};
+  onlineBroadcastView({
+    kind:"special",
+    icon:cfg.icon,
+    title:cfg.title,
+    subject:`Casella ${S.special?.cell||"—"} · ${lander?.name||"Giocatore"}`,
+    effectTitle:cardTitle.replace(/^[^A-Za-zÀ-ÿ0-9]+/,"") || cfg.title,
+    description:cardDesc || intro || `È stata attivata la casella ${cfg.title}.`,
+    instruction:cfg.instruction,
+    round:S.round
+  });
+}
 function onlineScreenFromMaster(title, kind="info"){
   const card=app && app.querySelector(".card");
   if(!card) return;
   const clone=card.cloneNode(true);
-  clone.querySelectorAll("button,input,img").forEach(x=>x.remove());
-  const text=(clone.innerText||"").replace(/\n{3,}/g,"\n\n").trim();
-  onlineBroadcastView({kind,title:title||"Aggiornamento di gioco",text});
+  clone.querySelectorAll("button,input,img,.logbox").forEach(x=>x.remove());
+  const lines=(clone.innerText||"").split(/\n+/).map(cleanOnlineText).filter(Boolean);
+  const unique=lines.filter((x,i,a)=>a.indexOf(x)===i).slice(0,4);
+  onlineBroadcastView({kind,title:title||"Aggiornamento di gioco",text:unique.join(". ")});
 }
+
 function onlineConnect(url, resume=false){
   url=(url||location.origin).trim().replace(/\/$/,"");
   const st=$("#onlineSt"); if(st) st.textContent=resume?"Riconnessione automatica…":"Connessione al server… (se dorme, sveglio in ~30s)";

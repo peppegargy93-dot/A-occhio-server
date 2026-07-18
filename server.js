@@ -97,6 +97,8 @@ function roomState(room, pad = null) {
     deadline: room.deadline,
     question: room.question,
     view: room.lastView,
+    lastResult: room.lastResult || null,
+    lastMap: room.lastMap || null,
     sent: !!pad && pad.answeredRound === room.round
   };
 }
@@ -134,6 +136,7 @@ body{padding:12px 14px calc(24px + env(safe-area-inset-bottom))}.shell{width:100
 .eyebrow{font-size:10.5px;font-weight:950;letter-spacing:1.35px;text-transform:uppercase;color:var(--coral);margin-bottom:7px}.hero{text-align:center}.icon{font-size:48px;line-height:1;margin:7px 0 11px}.title{font-size:25px;font-weight:950;letter-spacing:-.55px;line-height:1.12;margin:0}.sub{font-size:13.5px;color:#587078;line-height:1.45;margin:8px 0 0}.question{font-size:23px;font-weight:850;letter-spacing:-.3px;line-height:1.27;margin:12px 0;text-align:center}.category{display:inline-flex;background:var(--petrol);color:white;border-radius:999px;padding:5px 11px;font-size:10.5px;font-weight:900;letter-spacing:1px;text-transform:uppercase}
 .timer{font-size:64px;font-weight:950;letter-spacing:-3px;line-height:1;text-align:center;margin:13px 0 2px;font-variant-numeric:tabular-nums}.timer.warn{color:var(--coral)}.timer-label{text-align:center;font-size:10px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;color:#7b725d}.bar{height:8px;background:var(--soft);border-radius:99px;overflow:hidden;margin:10px 0 16px}.bar i{display:block;height:100%;width:100%;background:linear-gradient(90deg,var(--teal),var(--ochre),var(--coral));transition:width .2s linear}
 .field{margin-top:12px}.field label{display:block;font-size:12px;font-weight:900;margin:0 0 6px}.field input{width:100%;border:2px solid var(--ink);background:var(--paper2);border-radius:14px;padding:14px 13px;font:inherit;font-size:21px;font-weight:850;color:var(--ink);text-align:center}.btn{width:100%;border:0;border-radius:14px;padding:14px 16px;margin-top:10px;font:inherit;font-size:15px;font-weight:900;background:var(--coral);color:white}.btn.secondary{background:transparent;color:var(--ink);border:1.5px solid var(--line);font-size:13px;padding:10px}.btn:disabled,.field input:disabled{opacity:.46}.status{text-align:center;font-size:12.5px;color:#587078;margin:10px 0 0;min-height:18px}.success{display:flex;align-items:center;gap:10px;background:#e4f1ed;border:1.5px solid #badbd2;border-radius:14px;padding:12px;text-align:left;margin-top:14px}.success b{display:block}.success span{font-size:12px;color:#45685f}
+.fact-card{background:#eef4f0;border:1.5px solid #c9ddd2;border-radius:14px;padding:12px 13px;margin:11px 0;text-align:left;font-size:12.5px;line-height:1.45;color:#3f5d55}.fact-card b{display:block;margin-bottom:3px;color:var(--ink)}.event-card{background:var(--paper2);border:1.5px solid var(--line);border-radius:16px;padding:14px;margin-top:12px;text-align:left}.event-subject{font-size:10px;font-weight:950;letter-spacing:1px;text-transform:uppercase;color:var(--coral)}.event-title{font-size:21px;font-weight:950;line-height:1.15;margin:5px 0 7px}.event-desc{font-size:14px;line-height:1.45;color:#48646c}.instruction{margin-top:10px;padding:10px 11px;border-radius:12px;background:#eef4f0;border:1px solid #c9ddd2;font-size:12.5px;font-weight:800;line-height:1.4}.context-card{margin-top:14px;border-top:1px dashed var(--line);padding-top:13px}.context-head{display:flex;justify-content:space-between;gap:8px;align-items:center}.context-answer{font-size:18px;font-weight:950;color:var(--coral)}.compact-score{display:flex;justify-content:space-between;gap:9px;padding:7px 1px;border-bottom:1px dashed var(--line);font-size:12.5px}.compact-score b{font-weight:900}.compact-score span{white-space:nowrap;font-weight:900;color:var(--teal)}
 .answer-card{background:var(--paper2);border:2px solid var(--ochre);border-radius:17px;padding:15px;text-align:center;margin:12px 0;animation:reveal .5s cubic-bezier(.2,1.2,.3,1) both}.answer-label{font-size:10px;font-weight:950;letter-spacing:1.4px;text-transform:uppercase;color:#806522}.answer-value{font-size:40px;font-weight:950;letter-spacing:-1.4px;color:var(--coral);line-height:1.08;margin-top:3px}.question-small{font-family:Georgia,serif;font-size:13px;color:#746a54;margin-top:6px;line-height:1.4}
 .personal{border:1.5px solid var(--line);border-radius:16px;padding:13px;margin:12px 0;background:#fff}.personal-head{display:flex;align-items:center;justify-content:space-between;gap:8px}.personal-name{font-weight:950}.round-points{font-size:23px;font-weight:950;color:var(--teal)}.personal-meta{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.metric{background:var(--soft);border-radius:11px;padding:9px}.metric small{display:block;font-size:9px;font-weight:900;letter-spacing:.8px;text-transform:uppercase;color:#687b80}.metric b{display:block;margin-top:2px;font-size:15px}.section-title{font-size:11px;font-weight:950;letter-spacing:1.1px;text-transform:uppercase;margin:15px 0 7px}.rank-row,.score-row{display:grid;grid-template-columns:32px 1fr auto;align-items:center;gap:9px;padding:10px 3px;border-bottom:1px dashed var(--line)}.rank-row.me,.score-row.me{background:#fff3d6;border-radius:11px;padding-left:8px;padding-right:8px;border-bottom:0;margin:3px 0}.rank-num{width:27px;height:27px;border-radius:50%;display:grid;place-items:center;background:var(--soft);font-size:12px;font-weight:950}.rank-main b{display:block;font-size:14px}.rank-main span{display:block;font-size:11px;color:#65787e;margin-top:1px}.rank-points{font-weight:950;color:var(--teal);white-space:nowrap}.step{opacity:0;animation:stepIn .34s ease forwards}@keyframes stepIn{to{opacity:1;transform:none}from{opacity:0;transform:translateY(7px)}}
 .summary{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin:10px 0 13px}.summary .metric{text-align:center}.summary .metric b{font-size:17px}.map-wrap{position:relative}.map{display:flex;flex-direction:column-reverse;gap:7px;padding:5px 0 5px 23px;position:relative}.map:before{content:"";position:absolute;left:10px;top:16px;bottom:16px;width:3px;border-radius:99px;background:linear-gradient(var(--teal),var(--ochre),var(--coral),var(--ink));opacity:.35}.cell{position:relative;display:grid;grid-template-columns:31px 1fr auto;gap:8px;align-items:center;min-height:49px;padding:7px 9px;border:1.5px solid var(--line);border-radius:13px;background:#e8eff0;text-align:left}.cell:before{content:"";position:absolute;width:13px;height:3px;left:-14px;top:50%;background:var(--line)}.cell.current{box-shadow:0 0 0 3px var(--coral);transform:scale(1.01)}.cell.bonus{background:#f5e5b7}.cell.malus{background:#f4d9cf}.cell.timer-cell{background:#d8ebeb}.cell.duello{background:#e2dcea}.cell.special{background:#e9e2d0}.cell.finale{background:var(--ink);color:white}.num{width:27px;height:27px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.75);font-size:11px;font-weight:950;color:var(--ink)}.cell-name{font-size:12px;font-weight:900;line-height:1.15}.pawns{display:flex;gap:2px;flex-wrap:wrap;justify-content:flex-end}.pawn{width:23px;height:23px;border-radius:50%;display:grid;place-items:center;color:white;border:2px solid white;font-size:9px;font-weight:950}.map-note{text-align:center;font-size:11px;color:#687b80;margin-top:8px}.hidden{display:none!important}
@@ -165,6 +168,7 @@ body{padding:12px 14px calc(24px + env(safe-area-inset-bottom))}.shell{width:100
     <section id="resultScreen" class="screen">
       <div class="hero"><div id="resultEyebrow" class="eyebrow">Risultati del round</div><h2 class="title">Scopri com’è andata</h2></div>
       <div class="answer-card step" style="animation-delay:.05s"><div class="answer-label">La risposta corretta era</div><div id="correctAnswer" class="answer-value"></div><div id="resultQuestion" class="question-small"></div></div>
+      <div id="funFact" class="fact-card step hidden" style="animation-delay:.16s"></div>
       <div id="personalResult" class="personal step" style="animation-delay:.25s"></div>
       <div class="section-title step" style="animation-delay:.42s">Classifica del round</div><div id="roundRanking" class="step" style="animation-delay:.48s"></div>
       <p class="status step" style="animation-delay:.62s">Tra poco vedrai i punteggi totali e la nuova posizione sulla mappa.</p>
@@ -178,7 +182,11 @@ body{padding:12px 14px calc(24px + env(safe-area-inset-bottom))}.shell{width:100
       <button id="toggleMap" class="btn secondary hidden" type="button">Mostra tutta la mappa</button><div id="mapNote" class="map-note"></div>
     </section>
 
-    <section id="infoScreen" class="screen"><div class="hero"><div id="infoIcon" class="icon">📣</div><div id="infoTitle" class="eyebrow"></div><h2 id="infoText" class="title"></h2></div></section>
+    <section id="infoScreen" class="screen">
+      <div class="hero"><div id="infoIcon" class="icon">📣</div><div id="infoTitle" class="eyebrow"></div></div>
+      <div class="event-card"><div id="infoSubject" class="event-subject"></div><div id="infoEffectTitle" class="event-title"></div><div id="infoText" class="event-desc"></div><div id="infoInstruction" class="instruction"></div></div>
+      <div id="infoContext" class="context-card hidden"><div class="section-title">Ultimo round</div><div class="context-head"><span>Risposta corretta</span><span id="contextAnswer" class="context-answer"></span></div><div id="contextFact" class="fact-card hidden"></div><div class="section-title">Classifica aggiornata</div><div id="contextScores"></div></div>
+    </section>
 
     <button id="changeBtn" class="btn secondary hidden" type="button">Cambia stanza</button>
     <div id="status" class="status"></div><div class="connection"><i id="connDot" class="dot off"></i><span id="connText">Non collegato</span></div>
@@ -200,14 +208,50 @@ function setTimer(value){stopTimer();deadline=Number(value)||0;const draw=()=>{c
 function resetQuestion(){sent=false;$('estimate').value='';$('estimate').disabled=false;$('sendBtn').disabled=false;$('sentBox').classList.add('hidden')}
 function applyQuestion(m){resetQuestion();sent=!!m.sent;$('qCat').textContent=m.cat||'Domanda';$('qText').textContent=(m.text||'')+(m.unit?' · '+m.unit:'');if(sent){$('estimate').disabled=true;$('sendBtn').disabled=true;$('sentBox').classList.remove('hidden')}setTimer(m.deadline||0);showScreen('questionScreen');$('status').textContent=sent?'La tua risposta è già stata registrata.':'Rispondi entro lo scadere del tempo.'}
 function meIn(list){return (list||[]).find(x=>key(x.name)===key(currentName))}
-function applyResult(v){stopTimer();showScreen('resultScreen');$('resultEyebrow').textContent='Risultati del round '+(v.round||'');$('correctAnswer').textContent=v.answer||'—';$('resultQuestion').textContent=v.question||'';const mine=meIn(v.ranking);const projected=meIn(v.scores);$('personalResult').innerHTML=mine?'<div class="personal-head"><div><div class="eyebrow" style="margin:0">Il tuo risultato</div><div class="personal-name">'+esc(currentName)+'</div></div><div class="round-points">'+(mine.points>0?'+':'')+(mine.points||0)+' pt</div></div><div class="personal-meta"><div class="metric"><small>La tua stima</small><b>'+(mine.estimate??'Nessuna')+'</b></div><div class="metric"><small>Distanza</small><b>'+(mine.distance??'—')+'</b></div><div class="metric"><small>Posizione round</small><b>'+(mine.rank?mine.rank+'°':'—')+'</b></div><div class="metric"><small>Totale previsto</small><b>'+(projected?projected.score:0)+' pt</b></div></div>':'<div class="sub">Il tuo risultato non è disponibile.</div>';
- const ranking=(v.ranking||[]).slice().sort((a,b)=>(a.rank||99)-(b.rank||99));$('roundRanking').innerHTML=ranking.map((r,i)=>'<div class="rank-row '+(key(r.name)===key(currentName)?'me':'')+'"><div class="rank-num">'+(r.rank||'–')+'</div><div class="rank-main"><b>'+esc(r.name)+'</b><span>'+(r.estimate==null?'Nessuna stima':'Stima '+esc(r.estimate)+(r.distance!=null?' · distanza '+esc(r.distance):''))+'</span></div><div class="rank-points">'+(r.points>0?'+':'')+(r.points||0)+' pt</div></div>').join('');$('status').textContent='Risultato calcolato. Attendi l’avanzamento delle pedine.'}
+function applyResult(v){
+  stopTimer();showScreen('resultScreen');
+  $('resultEyebrow').textContent='Risultati del round '+(v.round||'');
+  $('correctAnswer').textContent=v.answer||'—';
+  $('resultQuestion').textContent=v.question||'';
+  if(v.funFact){$('funFact').innerHTML='<b>💡 Curiosità</b>'+esc(v.funFact);$('funFact').classList.remove('hidden')}else{$('funFact').classList.add('hidden');$('funFact').innerHTML=''}
+  const ranking=Array.isArray(v.ranking)?v.ranking:[];
+  const scores=Array.isArray(v.scores)?v.scores:[];
+  const mine=meIn(ranking),projected=meIn(scores);
+  $('personalResult').innerHTML=mine
+    ?'<div class="personal-head"><div><div class="eyebrow" style="margin:0">Il tuo risultato</div><div class="personal-name">'+esc(currentName)+'</div></div><div class="round-points">'+(mine.points>0?'+':'')+(mine.points||0)+' pt</div></div><div class="personal-meta"><div class="metric"><small>La tua stima</small><b>'+(mine.estimate??'Nessuna')+'</b></div><div class="metric"><small>Distanza</small><b>'+(mine.distance??'—')+'</b></div><div class="metric"><small>Posizione nel round</small><b>'+(mine.rank?mine.rank+'°':'—')+'</b></div><div class="metric"><small>Totale provvisorio</small><b>'+(projected?projected.score:0)+' pt</b></div></div>'
+    :'<div class="sub">Il tuo risultato non è disponibile.</div>';
+  const ordered=ranking.slice().sort((a,b)=>(a.rank||99)-(b.rank||99));
+  $('roundRanking').innerHTML=ordered.map(r=>'<div class="rank-row '+(key(r.name)===key(currentName)?'me':'')+'"><div class="rank-num">'+(r.rank||'–')+'</div><div class="rank-main"><b>'+esc(r.name)+'</b><span>'+(r.estimate==null?'Nessuna stima':'Stima '+esc(r.estimate)+(r.distance!=null?' · distanza '+esc(r.distance):''))+'</span></div><div class="rank-points">'+(r.points>0?'+':'')+(r.points||0)+' pt</div></div>').join('');
+  $('status').textContent='Risultato provvisorio: i punteggi definitivi compariranno dopo bonus, malus e movimento delle pedine.';
+}
 function typeClass(type){if(type==='bonus')return'bonus';if(type==='malus'||type==='penitenza'||type==='voce')return'malus';if(type==='timer')return'timer-cell';if(type==='duello'||type==='alfabetica'||type==='tiroleader')return'duello';if(type==='finale')return'finale';if(type!=='domanda')return'special';return''}
 function pawn(p){return '<span class="pawn" style="background:'+(/^#[0-9a-f]{3,8}$/i.test(p.color||'')?p.color:'#2E6B7A')+'" title="'+esc(p.name)+'">'+esc((p.name||'?').slice(0,1).toUpperCase())+'</span>'}
 function renderScores(scores){const sorted=(scores||[]).slice().sort((a,b)=>(b.score||0)-(a.score||0)||(b.pos||0)-(a.pos||0));$('scoreboard').innerHTML=sorted.map((p,i)=>'<div class="score-row '+(key(p.name)===key(currentName)?'me':'')+'"><div class="rank-num">'+(i+1)+'</div><div class="rank-main"><b>'+esc(p.name)+'</b><span>Casella '+(p.pos||0)+'</span></div><div class="rank-points">'+(p.score||0)+' pt</div></div>').join('');return {sorted,mine:meIn(sorted)}}
 function renderMap(){if(!currentMap||!Array.isArray(currentMap.cells))return;const players=currentMap.players||[],mine=meIn(players),center=mine?Number(mine.pos)||0:0;let cells=[{n:0,type:'start',icon:'🚩',name:'Partenza'},...currentMap.cells];const visible=mapExpanded?cells:cells.filter(c=>Math.abs(c.n-center)<=4||c.n===0||c.n===currentMap.finish);$('map').innerHTML=visible.map(c=>{const here=players.filter(p=>(Number(p.pos)||0)===c.n);return '<div class="cell '+typeClass(c.type)+' '+(c.n===center?'current':'')+'"><span class="num">'+c.n+'</span><span class="cell-name">'+esc(c.icon||'')+' '+esc(c.name||'Casella')+'</span><span class="pawns">'+here.map(pawn).join('')+'</span></div>'}).join('');$('toggleMap').classList.toggle('hidden',cells.length<=visible.length&&mapExpanded);$('toggleMap').textContent=mapExpanded?'Mostra solo la tua zona':'Mostra tutta la mappa';$('mapNote').textContent=mine?'Sei alla casella '+center+' su '+currentMap.finish+'.':'Posizione in aggiornamento.'}
 function applyMap(v){stopTimer();showScreen('mapScreen');$('mapText').textContent=v.text||'Punti e posizioni aggiornati.';const data=renderScores(v.scores||[]),mine=data.mine;const leader=data.sorted[0];$('personalSummary').innerHTML='<div class="metric"><small>La tua posizione</small><b>'+(mine?(data.sorted.indexOf(mine)+1)+'°':'—')+'</b></div><div class="metric"><small>Punti</small><b>'+(mine?mine.score:0)+'</b></div><div class="metric"><small>Casella</small><b>'+(mine?mine.pos:0)+'</b></div>';currentMap=v.map||null;mapExpanded=false;renderMap();$('toggleMap').classList.toggle('hidden',!currentMap||!currentMap.cells||currentMap.cells.length<=9);$('status').textContent=leader?'In testa: '+leader.name+' con '+leader.score+' punti.':''}
-function applyInfo(v){stopTimer();showScreen('infoScreen');$('infoIcon').textContent=v.kind==='special'?'🎲':'📣';$('infoTitle').textContent=v.title||'Aggiornamento';$('infoText').textContent=(v.text||'').replace(/\s+/g,' ').trim();$('status').textContent='Segui le indicazioni del Master.'}
+function compactScores(scores,target){
+  const sorted=(scores||[]).slice().sort((a,b)=>(b.score||0)-(a.score||0)||(b.pos||0)-(a.pos||0));
+  $(target).innerHTML=sorted.map((p,i)=>'<div class="compact-score"><b>'+(i+1)+'°. '+esc(p.name)+(key(p.name)===key(currentName)?' · tu':'')+'</b><span>'+(p.score||0)+' pt · cas. '+(p.pos||0)+'</span></div>').join('');
+}
+function applyInfo(v){
+  stopTimer();showScreen('infoScreen');
+  $('infoIcon').textContent=v.icon||(v.kind==='special'?'🎲':'📣');
+  $('infoTitle').textContent=v.title||'Aggiornamento';
+  $('infoSubject').textContent=v.subject||'';
+  $('infoEffectTitle').textContent=v.effectTitle||v.title||'Aggiornamento di gioco';
+  $('infoText').textContent=(v.description||v.text||'').replace(/\s+/g,' ').trim();
+  $('infoInstruction').textContent=v.instruction||'Segui le indicazioni del Master.';
+  const result=v.contextResult||null,map=v.contextMap||null;
+  if(result||map){
+    $('infoContext').classList.remove('hidden');
+    $('contextAnswer').textContent=result?.answer||'—';
+    if(result?.funFact){$('contextFact').innerHTML='<b>💡 Curiosità</b>'+esc(result.funFact);$('contextFact').classList.remove('hidden')}else{$('contextFact').classList.add('hidden')}
+    compactScores(v.scores||map?.scores||result?.scores||[],'contextScores');
+  }else{
+    $('infoContext').classList.add('hidden');$('contextScores').innerHTML='';
+  }
+  $('status').textContent='Evento in corso. La situazione della partita resta visibile qui sotto.';
+}
 function applyView(v){if(v.kind==='result')return applyResult(v);if(v.kind==='map')return applyMap(v);return applyInfo(v)}
 function applyState(s){if(s.view)applyView(s.view);else if(s.question)applyQuestion({...s.question,deadline:s.deadline,locked:s.locked,sent:s.sent});else showScreen('waitingScreen')}
 function closeSocket(){manualClose=true;clearTimeout(retry);try{ws&&ws.close()}catch{}ws=null;setTimeout(()=>manualClose=false,80)}
@@ -251,6 +295,8 @@ wss.on('connection', ws => {
         deadline: 0,
         question: null,
         lastView: null,
+        lastResult: null,
+        lastMap: null,
         deleteTimer: null
       };
       rooms.set(code, room);
@@ -373,8 +419,15 @@ wss.on('connection', ws => {
     }
 
     if (m.t === 'view' && ws._role === 'master') {
-      room.lastView = { ...m, t: 'view' };
-      broadcastPads(room, room.lastView);
+      const payload = { ...m, t: 'view' };
+      if (payload.kind === 'result') room.lastResult = payload;
+      if (payload.kind === 'map') room.lastMap = payload;
+      if (payload.kind === 'special' || payload.kind === 'info') {
+        payload.contextResult = room.lastResult || null;
+        payload.contextMap = room.lastMap || null;
+      }
+      room.lastView = payload;
+      broadcastPads(room, payload);
       return;
     }
 
