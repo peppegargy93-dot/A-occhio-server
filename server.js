@@ -138,7 +138,7 @@ body{padding:12px 14px calc(24px + env(safe-area-inset-bottom))}.shell{width:100
 .field{margin-top:12px}.field label{display:block;font-size:12px;font-weight:900;margin:0 0 6px}.field input{width:100%;border:2px solid var(--ink);background:var(--paper2);border-radius:14px;padding:14px 13px;font:inherit;font-size:21px;font-weight:850;color:var(--ink);text-align:center}.btn{width:100%;border:0;border-radius:14px;padding:14px 16px;margin-top:10px;font:inherit;font-size:15px;font-weight:900;background:var(--coral);color:white}.btn.secondary{background:transparent;color:var(--ink);border:1.5px solid var(--line);font-size:13px;padding:10px}.btn:disabled,.field input:disabled{opacity:.46}.status{text-align:center;font-size:12.5px;color:#587078;margin:10px 0 0;min-height:18px}.success{display:flex;align-items:center;gap:10px;background:#e4f1ed;border:1.5px solid #badbd2;border-radius:14px;padding:12px;text-align:left;margin-top:14px}.success b{display:block}.success span{font-size:12px;color:#45685f}
 .fact-card{background:#eef4f0;border:1.5px solid #c9ddd2;border-radius:14px;padding:12px 13px;margin:11px 0;text-align:left;font-size:12.5px;line-height:1.45;color:#3f5d55}.fact-card b{display:block;margin-bottom:3px;color:var(--ink)}.event-card{background:var(--paper2);border:1.5px solid var(--line);border-radius:16px;padding:14px;margin-top:12px;text-align:left}.event-subject{font-size:10px;font-weight:950;letter-spacing:1px;text-transform:uppercase;color:var(--coral)}.event-title{font-size:21px;font-weight:950;line-height:1.15;margin:5px 0 7px}.event-desc{font-size:14px;line-height:1.45;color:#48646c}.instruction{margin-top:10px;padding:10px 11px;border-radius:12px;background:#eef4f0;border:1px solid #c9ddd2;font-size:12.5px;font-weight:800;line-height:1.4}.context-card{margin-top:14px;border-top:1px dashed var(--line);padding-top:13px}.context-head{display:flex;justify-content:space-between;gap:8px;align-items:center}.context-answer{font-size:18px;font-weight:950;color:var(--coral)}.compact-score{display:flex;justify-content:space-between;gap:9px;padding:7px 1px;border-bottom:1px dashed var(--line);font-size:12.5px}.compact-score b{font-weight:900}.compact-score span{white-space:nowrap;font-weight:900;color:var(--teal)}
 .answer-card{background:var(--paper2);border:2px solid var(--ochre);border-radius:17px;padding:15px;text-align:center;margin:12px 0;animation:reveal .5s cubic-bezier(.2,1.2,.3,1) both}.answer-label{font-size:10px;font-weight:950;letter-spacing:1.4px;text-transform:uppercase;color:#806522}.answer-value{font-size:40px;font-weight:950;letter-spacing:-1.4px;color:var(--coral);line-height:1.08;margin-top:3px}.question-small{font-family:Georgia,serif;font-size:13px;color:#746a54;margin-top:6px;line-height:1.4}
-.personal{border:1.5px solid var(--line);border-radius:16px;padding:13px;margin:12px 0;background:#fff}.personal-head{display:flex;align-items:center;justify-content:space-between;gap:8px}.personal-name{font-weight:950}.round-points{font-size:23px;font-weight:950;color:var(--teal)}.personal-meta{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.metric{background:var(--soft);border-radius:11px;padding:9px}.metric small{display:block;font-size:9px;font-weight:900;letter-spacing:.8px;text-transform:uppercase;color:#687b80}.metric b{display:block;margin-top:2px;font-size:15px}.section-title{font-size:11px;font-weight:950;letter-spacing:1.1px;text-transform:uppercase;margin:15px 0 7px}.rank-row,.score-row{display:grid;grid-template-columns:32px 1fr auto;align-items:center;gap:9px;padding:10px 3px;border-bottom:1px dashed var(--line)}.rank-row.me,.score-row.me{background:#fff3d6;border-radius:11px;padding-left:8px;padding-right:8px;border-bottom:0;margin:3px 0}.rank-num{width:27px;height:27px;border-radius:50%;display:grid;place-items:center;background:var(--soft);font-size:12px;font-weight:950}.rank-main b{display:block;font-size:14px}.rank-main span{display:block;font-size:11px;color:#65787e;margin-top:1px}.rank-points{font-weight:950;color:var(--teal);white-space:nowrap}.step{opacity:0;animation:stepIn .34s ease forwards}@keyframes stepIn{to{opacity:1;transform:none}from{opacity:0;transform:translateY(7px)}}
+.personal{border:1.5px solid var(--line);border-radius:16px;padding:13px;margin:12px 0;background:#fff}.personal-head{display:flex;align-items:center;justify-content:space-between;gap:8px}.personal-name{font-weight:950}.round-points{font-size:23px;font-weight:950;color:var(--teal)}.personal-meta{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.metric{background:var(--soft);border-radius:11px;padding:9px}.metric small{display:block;font-size:9px;font-weight:900;letter-spacing:.8px;text-transform:uppercase;color:#687b80}.metric b{display:block;margin-top:2px;font-size:15px}.section-title{font-size:11px;font-weight:950;letter-spacing:1.1px;text-transform:uppercase;margin:15px 0 7px}.rank-row,.score-row{display:grid;grid-template-columns:32px 1fr auto;align-items:center;gap:9px;padding:10px 3px;border-bottom:1px dashed var(--line)}.rank-row.me,.score-row.me{background:#fff3d6;border-radius:11px;padding-left:8px;padding-right:8px;border-bottom:0;margin:3px 0}.rank-num{width:27px;height:27px;border-radius:50%;display:grid;place-items:center;background:var(--soft);font-size:12px;font-weight:950}.rank-main b{display:block;font-size:14px}.rank-main span{display:block;font-size:11px;color:#65787e;margin-top:1px}.rank-points{font-weight:950;color:var(--teal);white-space:nowrap}.step{opacity:1;animation:stepIn .34s ease both}@keyframes stepIn{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
 .summary{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin:10px 0 13px}.summary .metric{text-align:center}.summary .metric b{font-size:17px}.map-wrap{position:relative}.map{display:flex;flex-direction:column-reverse;gap:7px;padding:5px 0 5px 23px;position:relative}.map:before{content:"";position:absolute;left:10px;top:16px;bottom:16px;width:3px;border-radius:99px;background:linear-gradient(var(--teal),var(--ochre),var(--coral),var(--ink));opacity:.35}.cell{position:relative;display:grid;grid-template-columns:31px 1fr auto;gap:8px;align-items:center;min-height:49px;padding:7px 9px;border:1.5px solid var(--line);border-radius:13px;background:#e8eff0;text-align:left}.cell:before{content:"";position:absolute;width:13px;height:3px;left:-14px;top:50%;background:var(--line)}.cell.current{box-shadow:0 0 0 3px var(--coral);transform:scale(1.01)}.cell.bonus{background:#f5e5b7}.cell.malus{background:#f4d9cf}.cell.timer-cell{background:#d8ebeb}.cell.duello{background:#e2dcea}.cell.special{background:#e9e2d0}.cell.finale{background:var(--ink);color:white}.num{width:27px;height:27px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.75);font-size:11px;font-weight:950;color:var(--ink)}.cell-name{font-size:12px;font-weight:900;line-height:1.15}.pawns{display:flex;gap:2px;flex-wrap:wrap;justify-content:flex-end}.pawn{width:23px;height:23px;border-radius:50%;display:grid;place-items:center;color:white;border:2px solid white;font-size:9px;font-weight:950}.map-note{text-align:center;font-size:11px;color:#687b80;margin-top:8px}.hidden{display:none!important}
 .connection{display:flex;align-items:center;gap:6px;font-size:11px;color:#65787e;margin-top:9px;justify-content:center}.dot{width:7px;height:7px;border-radius:50%;background:var(--teal)}.dot.off{background:var(--coral)}
 </style>
@@ -159,6 +159,7 @@ body{padding:12px 14px calc(24px + env(safe-area-inset-bottom))}.shell{width:100
       <div class="hero"><div id="qCat" class="category"></div><div id="qText" class="question"></div></div>
       <div id="timer" class="timer">25</div><div class="timer-label">secondi per rispondere</div><div class="bar"><i id="timerBar"></i></div>
       <div class="field"><label for="estimate">La tua stima</label><input id="estimate" inputmode="decimal" autocomplete="off" placeholder="Scrivi un numero"></div>
+      <div id="limitedNotice" class="instruction hidden"></div>
       <button id="sendBtn" class="btn" type="button">Invia e blocca</button>
       <div id="sentBox" class="success hidden"><div style="font-size:26px">✅</div><div><b>Stima inviata</b><span>È bloccata e non può essere modificata.</span></div></div>
     </section>
@@ -193,7 +194,7 @@ body{padding:12px 14px calc(24px + env(safe-area-inset-bottom))}.shell{width:100
   </div>
 </div>
 <script>
-let ws=null,sent=false,timerId=null,deadline=0,retry=null,retryMs=1000,currentCode='',currentName='',padToken='',manualClose=false,currentMap=null,mapExpanded=false;
+let ws=null,sent=false,timerId=null,deadline=0,timerDuration=25,retry=null,retryMs=1000,currentCode='',currentName='',padToken='',manualClose=false,currentMap=null,mapExpanded=false;
 const $=id=>document.getElementById(id), proto=location.protocol==='https:'?'wss://':'ws://';
 const queryCode=(new URLSearchParams(location.search).get('c')||'').trim().toUpperCase();if(queryCode)$('code').value=queryCode;
 const screens=['joinScreen','waitingScreen','questionScreen','lockedScreen','resultScreen','mapScreen','infoScreen'];
@@ -204,16 +205,53 @@ function getSaved(){try{return JSON.parse(localStorage.getItem('aocchio_pad')||'
 function connection(ok,text){$('connDot').classList.toggle('off',!ok);$('connText').textContent=text}
 function setRoom(){if(currentCode){$('roomBadge').textContent='Stanza '+currentCode;$('roomBadge').classList.remove('hidden')}else $('roomBadge').classList.add('hidden')}
 function stopTimer(){clearInterval(timerId);timerId=null}
-function setTimer(value){stopTimer();deadline=Number(value)||0;const draw=()=>{const ms=Math.max(0,deadline-Date.now()),left=Math.ceil(ms/1000);$('timer').textContent=left;$('timer').classList.toggle('warn',left<=5);$('timerBar').style.width=Math.min(100,ms/25000*100)+'%';if(left<=0)stopTimer()};draw();timerId=setInterval(draw,150)}
-function resetQuestion(){sent=false;$('estimate').value='';$('estimate').disabled=false;$('sendBtn').disabled=false;$('sentBox').classList.add('hidden')}
-function applyQuestion(m){resetQuestion();sent=!!m.sent;$('qCat').textContent=m.cat||'Domanda';$('qText').textContent=(m.text||'')+(m.unit?' · '+m.unit:'');if(sent){$('estimate').disabled=true;$('sendBtn').disabled=true;$('sentBox').classList.remove('hidden')}setTimer(m.deadline||0);showScreen('questionScreen');$('status').textContent=sent?'La tua risposta è già stata registrata.':'Rispondi entro lo scadere del tempo.'}
+function setTimer(value,duration=25){
+  stopTimer();
+  deadline=Number(value)||0;
+  timerDuration=Math.max(1,Number(duration)||25);
+  const draw=()=>{
+    const ms=Math.max(0,deadline-Date.now()),left=Math.ceil(ms/1000);
+    $('timer').textContent=left;
+    $('timer').classList.toggle('warn',left<=5);
+    $('timerBar').style.width=Math.min(100,ms/(timerDuration*1000)*100)+'%';
+    if(left<=0){
+      stopTimer();
+      if(!sent){
+        $('estimate').disabled=true;
+        $('sendBtn').disabled=true;
+        $('status').textContent='Tempo personale scaduto: la lavagnetta è bloccata.';
+      }
+    }
+  };
+  draw();
+  timerId=setInterval(draw,150);
+}
+function resetQuestion(){sent=false;$('estimate').value='';$('estimate').disabled=false;$('sendBtn').disabled=false;$('sentBox').classList.add('hidden');$('limitedNotice').classList.add('hidden');$('limitedNotice').textContent=''}
+function applyQuestion(m){
+  resetQuestion();
+  sent=!!m.sent;
+  $('qCat').textContent=m.cat||'Domanda';
+  $('qText').textContent=(m.text||'')+(m.unit?' · '+m.unit:'');
+  if(m.limited || Number(m.seconds)<25){
+    $('limitedNotice').textContent='⏱️ Malus tempo attivo: hai '+(Number(m.seconds)||0)+' secondi. Allo scadere la lavagnetta si blocca automaticamente.';
+    $('limitedNotice').classList.remove('hidden');
+  }
+  if(sent){
+    $('estimate').disabled=true;
+    $('sendBtn').disabled=true;
+    $('sentBox').classList.remove('hidden');
+  }
+  setTimer(m.deadline||0,m.seconds||25);
+  showScreen('questionScreen');
+  $('status').textContent=sent?'La tua risposta è già stata registrata.':'Rispondi entro lo scadere del tuo tempo personale.';
+}
 function meIn(list){return (list||[]).find(x=>key(x.name)===key(currentName))}
 function applyResult(v){
   stopTimer();showScreen('resultScreen');
   $('resultEyebrow').textContent='Risultati del round '+(v.round||'');
   $('correctAnswer').textContent=v.answer||'—';
   $('resultQuestion').textContent=v.question||'';
-  if(v.funFact){$('funFact').innerHTML='<b>💡 Curiosità</b>'+esc(v.funFact);$('funFact').classList.remove('hidden')}else{$('funFact').classList.add('hidden');$('funFact').innerHTML=''}
+  if(v.funFact){$('funFact').innerHTML='<b>💡 Curiosità verificata</b>'+esc(v.funFact);$('funFact').classList.remove('hidden')}else{$('funFact').classList.add('hidden');$('funFact').innerHTML=''}
   const ranking=Array.isArray(v.ranking)?v.ranking:[];
   const scores=Array.isArray(v.scores)?v.scores:[];
   const mine=meIn(ranking),projected=meIn(scores);
@@ -244,8 +282,8 @@ function applyInfo(v){
   const result=v.contextResult||null,map=v.contextMap||null;
   if(result||map){
     $('infoContext').classList.remove('hidden');
-    $('contextAnswer').textContent=result?.answer||'—';
-    if(result?.funFact){$('contextFact').innerHTML='<b>💡 Curiosità</b>'+esc(result.funFact);$('contextFact').classList.remove('hidden')}else{$('contextFact').classList.add('hidden')}
+    $('contextAnswer').textContent=result?.answer||'Risposta non ancora disponibile';
+    if(result?.funFact){$('contextFact').innerHTML='<b>💡 Curiosità verificata</b>'+esc(result.funFact);$('contextFact').classList.remove('hidden')}else{$('contextFact').classList.add('hidden');$('contextFact').innerHTML=''}
     compactScores(v.scores||map?.scores||result?.scores||[],'contextScores');
   }else{
     $('infoContext').classList.add('hidden');$('contextScores').innerHTML='';
@@ -255,7 +293,7 @@ function applyInfo(v){
 function applyView(v){if(v.kind==='result')return applyResult(v);if(v.kind==='map')return applyMap(v);return applyInfo(v)}
 function applyState(s){if(s.view)applyView(s.view);else if(s.question)applyQuestion({...s.question,deadline:s.deadline,locked:s.locked,sent:s.sent});else showScreen('waitingScreen')}
 function closeSocket(){manualClose=true;clearTimeout(retry);try{ws&&ws.close()}catch{}ws=null;setTimeout(()=>manualClose=false,80)}
-function connect(mode){clearTimeout(retry);if(!currentCode||!currentName)return;connection(false,mode==='resume'?'Riconnessione…':'Connessione…');try{ws=new WebSocket(proto+location.host)}catch{return}$('status').textContent='';ws.onopen=()=>ws.send(JSON.stringify(mode==='resume'&&padToken?{t:'resume_pad',code:currentCode,token:padToken}:{t:'join',code:currentCode,name:currentName}));ws.onmessage=e=>{let m;try{m=JSON.parse(e.data)}catch{return}if(m.t==='ok'||m.t==='resumed_pad'){currentCode=m.code;padToken=m.token||padToken;save();retryMs=1000;setRoom();connection(true,'Collegato');$('changeBtn').classList.remove('hidden');if(m.state)applyState(m.state);else showScreen('waitingScreen')}else if(m.t==='q')applyQuestion(m);else if(m.t==='lock'){stopTimer();showScreen('lockedScreen');$('status').textContent=sent?'La tua stima è al sicuro.':'Tempo scaduto: nessuna stima inviata.'}else if(m.t==='view')applyView(m);else if(m.t==='accepted'){sent=true;$('estimate').disabled=true;$('sendBtn').disabled=true;$('sentBox').classList.remove('hidden');$('status').textContent='Risposta registrata.'}else if(m.t==='duplicate'){sent=true;$('estimate').disabled=true;$('sendBtn').disabled=true;$('sentBox').classList.remove('hidden');$('status').textContent='La risposta era già stata inviata.'}else if(m.t==='room_closed'){padToken='';clearSaved();currentCode='';setRoom();showScreen('joinScreen');$('status').textContent=m.msg||'La partita è terminata.'}else if(m.t==='replaced'){showScreen('joinScreen');$('status').textContent=m.msg||'Sessione aperta altrove.'}else if(m.t==='err'){if(m.reset){padToken='';clearSaved();showScreen('joinScreen')} $('status').textContent='⚠️ '+m.msg}};ws.onclose=()=>{connection(false,'Connessione interrotta');if(manualClose)return;retry=setTimeout(()=>connect('resume'),retryMs);retryMs=Math.min(10000,retryMs*2)}}
+function connect(mode){clearTimeout(retry);if(!currentCode||!currentName)return;connection(false,mode==='resume'?'Riconnessione…':'Connessione…');try{ws=new WebSocket(proto+location.host)}catch{return}$('status').textContent='';ws.onopen=()=>ws.send(JSON.stringify(mode==='resume'&&padToken?{t:'resume_pad',code:currentCode,token:padToken}:{t:'join',code:currentCode,name:currentName}));ws.onmessage=e=>{let m;try{m=JSON.parse(e.data)}catch{return}if(m.t==='ok'||m.t==='resumed_pad'){currentCode=m.code;padToken=m.token||padToken;save();retryMs=1000;setRoom();connection(true,'Collegato');$('changeBtn').classList.remove('hidden');if(m.state)applyState(m.state);else showScreen('waitingScreen')}else if(m.t==='q')applyQuestion(m);else if(m.t==='lock'){stopTimer();showScreen('lockedScreen');$('status').textContent=sent?'La tua stima è al sicuro.':'Tempo scaduto: nessuna stima inviata.'}else if(m.t==='view')applyView(m);else if(m.t==='accepted'){sent=true;$('estimate').disabled=true;$('sendBtn').disabled=true;$('sentBox').classList.remove('hidden');$('status').textContent='Risposta registrata.'}else if(m.t==='duplicate'){sent=true;$('estimate').disabled=true;$('sendBtn').disabled=true;$('sentBox').classList.remove('hidden');$('status').textContent='La risposta era già stata inviata.'}else if(m.t==='personal_timeout'){$('estimate').disabled=true;$('sendBtn').disabled=true;$('status').textContent=m.msg||'Tempo personale scaduto: la lavagnetta è bloccata.'}else if(m.t==='room_closed'){padToken='';clearSaved();currentCode='';setRoom();showScreen('joinScreen');$('status').textContent=m.msg||'La partita è terminata.'}else if(m.t==='replaced'){showScreen('joinScreen');$('status').textContent=m.msg||'Sessione aperta altrove.'}else if(m.t==='err'){if(m.reset){padToken='';clearSaved();showScreen('joinScreen')} $('status').textContent='⚠️ '+m.msg}};ws.onclose=()=>{connection(false,'Connessione interrotta');if(manualClose)return;retry=setTimeout(()=>connect('resume'),retryMs);retryMs=Math.min(10000,retryMs*2)}}
 function join(){const code=$('code').value.trim().toUpperCase(),name=$('name').value.trim();if(code.length!==4||!name){$('status').textContent='Inserisci un codice di quattro lettere e il tuo nome.';return}closeSocket();currentCode=code;currentName=name;padToken='';clearSaved();setRoom();setTimeout(()=>connect('join'),100)}
 function submit(){if(!ws||ws.readyState!==WebSocket.OPEN||sent)return;const value=$('estimate').value.trim();if(!value){$('status').textContent='Inserisci prima una stima.';return}ws.send(JSON.stringify({t:'est',value}))}
 $('joinBtn').addEventListener('click',join);$('sendBtn').addEventListener('click',submit);$('estimate').addEventListener('keydown',e=>{if(e.key==='Enter')submit()});$('code').addEventListener('input',()=>$('code').value=$('code').value.toUpperCase());$('toggleMap').addEventListener('click',()=>{mapExpanded=!mapExpanded;renderMap()});$('changeBtn').addEventListener('click',()=>{try{ws&&ws.send(JSON.stringify({t:'leave_pad'}))}catch{}closeSocket();currentCode='';padToken='';clearSaved();setRoom();showScreen('joinScreen');$('status').textContent='Inserisci il codice della nuova stanza.'});
@@ -338,7 +376,8 @@ wss.on('connection', ws => {
         token: makeToken(),
         name,
         socket: null,
-        answeredRound: -1
+        answeredRound: -1,
+        personalDeadline: 0
       };
       room.pads.set(pad.token, pad);
       attachPad(room, ws, pad);
@@ -400,14 +439,30 @@ wss.on('connection', ws => {
       };
       room.lastView = null;
 
-      broadcastPads(room, {
-        t: 'q',
-        cat: room.question.cat,
-        text: room.question.text,
-        unit: room.question.unit,
-        deadline: room.deadline,
-        seconds: Number(m.seconds) || 25
-      });
+      const limits = m.playerLimits && typeof m.playerLimits === 'object'
+        ? m.playerLimits
+        : {};
+
+      for (const pad of room.pads.values()) {
+        const normalizedName = String(pad.name || '').trim().toLocaleLowerCase('it-IT');
+        const requestedLimit = Number(limits[normalizedName]);
+        const personalSeconds = Number.isFinite(requestedLimit)
+          ? Math.max(1, Math.min(Number(m.seconds) || 25, requestedLimit))
+          : (Number(m.seconds) || 25);
+
+        pad.personalDeadline = Date.now() + personalSeconds * 1000;
+
+        send(pad.socket, {
+          t: 'q',
+          cat: room.question.cat,
+          text: room.question.text,
+          unit: room.question.unit,
+          deadline: pad.personalDeadline,
+          globalDeadline: room.deadline,
+          seconds: personalSeconds,
+          limited: personalSeconds < (Number(m.seconds) || 25)
+        });
+      }
       return;
     }
 
@@ -434,6 +489,14 @@ wss.on('connection', ws => {
     if (m.t === 'est' && ws._role === 'pad') {
       const pad = room.pads.get(ws._padToken);
       if (!pad || room.locked) return;
+
+      if (pad.personalDeadline && Date.now() > pad.personalDeadline) {
+        return send(ws, {
+          t: 'personal_timeout',
+          msg: 'Il tuo tempo personale è scaduto. La lavagnetta è stata bloccata.'
+        });
+      }
+
       if (pad.answeredRound === room.round) {
         return send(ws, { t: 'duplicate' });
       }

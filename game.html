@@ -998,8 +998,8 @@ const CELL = {
 };
 
 const MALUS = [
-  {id:"copione",    nm:"Copione",       desc:"Solo 10 secondi per stimare.", time:10},
-  {id:"lampo",      nm:"Risposta lampo",desc:"Solo 5 secondi per stimare.",  time:5},
+  {id:"copione",    nm:"Copione",       desc:"Hai 15 secondi per inviare la stima.", time:15},
+  {id:"lampo",      nm:"Risposta lampo",desc:"Hai 10 secondi per inviare la stima.", time:10},
   {id:"spanne",     nm:"A spanne, genio",desc:"La tua stima vale solo arrotondata alla decina.", round10:true},
   // "Prima tu" eliminato: con la scrittura simultanea non aveva senso.
   // Sostituito da una tassa sul sapientone: la tua distanza pesa di più.
@@ -1464,7 +1464,7 @@ function renderDraw(){
    SCHERMATA 2 — TIMER IN CORSO (i giocatori scrivono A MANO, niente input)
    ===================================================================== */
 function playerLimit(p){
-  // tempo personale: 20s, ridotto dai malus a tempo (Copione 10, Risposta lampo 5)
+  // Tempo personale: 25 secondi; Copione riduce a 15 e Risposta lampo a 10.
   return p.malus.reduce((m,x)=> x.time? Math.min(m,x.time):m, 25);
 }
 function startWriting(){
@@ -1480,7 +1480,10 @@ function startWriting(){
         cat:S.question.cat||"",
         round:S.round,
         seconds:S.timer.total,
-        deadline:Date.now()+S.timer.total*1000
+        deadline:Date.now()+S.timer.total*1000,
+        playerLimits:Object.fromEntries(
+          S.players.map(p=>[(p.name||"").trim().toLocaleLowerCase("it-IT"),playerLimit(p)])
+        )
       }));
     }catch(e){}
   }
@@ -1579,6 +1582,14 @@ function updateWriteRoster(){
     const personal = Math.max(0, playerLimit(p) - elapsed);
     if(personal<=0){
       if(!cell.classList.contains("down")){ cell.textContent="PENNA GIÙ ✋"; cell.classList.add("down"); cell.classList.remove("urgent"); if(playerLimit(p)<25) beep(300,180); }
+      if(i===0){
+        const masterInput=$("#masterEstimate"), masterButton=$("#masterSubmit"), masterStatus=$("#masterStatus");
+        if(masterInput && !(ONLINE && ONLINE.est[key]!=null)){
+          masterInput.disabled=true;
+          if(masterButton) masterButton.disabled=true;
+          if(masterStatus) masterStatus.textContent="Tempo personale scaduto: la lavagnetta del Master è bloccata.";
+        }
+      }
     } else {
       cell.textContent = personal+"s";
       const limited = playerLimit(p)<25;
@@ -1751,31 +1762,102 @@ function calcResults(){
 
 
 function questionFunFact(q){
-  if(q && q.f) return q.f;
-  const text=(q&&q.q||"").toLowerCase();
-  const answer=fmtNum(q.a)+(q.u?" "+q.u:"");
-  if(text.includes("quanti minuti dura") || text.includes("quante ore")){
-    return `⏱️ Piccola curiosità: durate e tempi possono cambiare leggermente tra edizioni, montaggi o rilevazioni. Nel gioco usiamo ${answer} come dato di riferimento.`;
-  }
-  if(text.includes("quanto è alto") || text.includes("quanti cm") || text.includes("metri è alto")){
-    return `📏 Le misure dei personaggi famosi vengono spesso arrotondate. Qui il riferimento è ${answer}: abbastanza per far litigare almeno due biografie online.`;
-  }
-  if(text.includes("record") || (q&&q.cat)==="Record Assurdi"){
-    return `🏆 I record cambiano quando qualcuno decide di superarli: per questa domanda il valore di riferimento è ${answer}. La parte più assurda è che qualcuno ha davvero pensato di misurarlo.`;
-  }
-  if((q&&q.cat)==="Cibo e Calorie"){
-    return `🍽️ Calorie e pesi variano con ricetta e porzione. Il gioco usa ${answer} come valore medio: la scienza più pericolosa resta comunque “ne prendo solo un pezzetto”.`;
-  }
-  if((q&&q.cat)==="Spazio & Tempo" || (q&&q.cat)==="Scienza"){
-    return `🔬 Questo dato nasce da misurazioni e stime scientifiche: il riferimento del round è ${answer}. In pratica, qualcuno ha fatto molti più calcoli di noi.`;
-  }
-  if((q&&q.cat)==="Cinema" || (q&&q.cat)==="Serie TV"){
-    return `🎬 Il dato di riferimento è ${answer}. Tra versioni, tagli e speciali, però, il mondo dello spettacolo ama complicare anche i numeri semplici.`;
-  }
-  if((q&&q.cat)==="Musica"){
-    return `🎵 Il valore corretto è ${answer}. Un numero preciso, cosa rara in un settore in cui perfino la durata di un brano può cambiare tra radio edit e album.`;
-  }
-  return `💡 Fun fact: il dato usato nel gioco è ${answer}. È il genere di informazione inutile finché non arriva esattamente questa domanda.`;
+  /*
+    Regola editoriale:
+    - Mostrare solo curiosità reali e curate.
+    - Il campo `f` va scritto insieme alla domanda e deve riferirsi a un fatto verificabile.
+    - Non generare frasi automatiche partendo soltanto da categoria o risposta.
+  */
+  if(q && typeof q.f==="string" && q.f.trim()) return q.f.trim();
+
+  const VERIFIED_FACTS = {
+    "Quante pagine ha 1984 di George Orwell (circa)?":
+      "George Orwell terminò 1984 sull’isola scozzese di Jura. Il romanzo uscì nel 1949, pochi mesi prima della morte dello scrittore.",
+    "Quanti minuti dura Il Padrino?":
+      "Il Padrino uscì nel 1972. Marlon Brando registrò parte del provino con del cotone in bocca per immaginare la voce di Don Vito Corleone.",
+    "Quanti minuti dura Titanic?":
+      "Il Titanic reale impiegò circa due ore e quaranta minuti ad affondare: quasi quanto la durata del film di James Cameron.",
+    "Quanti Oscar ha vinto Titanic?":
+      "Titanic vinse 11 Oscar, eguagliando allora il primato di Ben-Hur. In seguito anche Il ritorno del re arrivò a 11.",
+    "Quanti episodi totali ha Friends?":
+      "Friends conta 236 episodi. L’ultimo, trasmesso nel 2004, fu seguito negli Stati Uniti da oltre 50 milioni di spettatori.",
+    "Quanti secondi dura Bohemian Rhapsody?":
+      "Bohemian Rhapsody non ha un ritornello tradizionale: è costruita come una piccola suite con ballata, parte operistica e sezione rock.",
+    "Quanti tasti ha un pianoforte a coda?":
+      "Il pianoforte moderno standard ha 88 tasti: 52 bianchi e 36 neri.",
+    "Quanti anni aveva Mozart alla sua prima composizione?":
+      "Mozart iniziò a comporre da bambino e il padre Leopold trascrisse alcuni dei suoi primi brani, perché Wolfgang era ancora troppo piccolo per scriverli con facilità.",
+    "Quanti episodi ha Il Trono di Spade in totale?":
+      "Il Trono di Spade è composto da 73 episodi distribuiti in otto stagioni.",
+    "Quanti metri e alto il Burj Khalifa?":
+      "Il Burj Khalifa supera gli 800 metri e il suo nome attuale fu annunciato soltanto durante l’inaugurazione del 2010.",
+    "Quanti secondi il record dei 100 metri di Bolt?":
+      "Usain Bolt stabilì il record mondiale di 9,58 secondi a Berlino nel 2009.",
+    "Quanti metri e il record del salto in lungo?":
+      "Mike Powell saltò 8,95 metri ai Mondiali di Tokyo del 1991, superando un record che durava da 23 anni.",
+    "Quanti km e lunga una maratona?":
+      "La distanza ufficiale della maratona è 42,195 km. Fu standardizzata dopo i Giochi di Londra del 1908.",
+    "Quanti metri e lunga una piscina olimpionica?":
+      "Una piscina olimpionica è lunga 50 metri; nelle competizioni internazionali le corsie sono normalmente dieci.",
+    "Quanti Oscar ha vinto Titanic?":
+      "Titanic vinse 11 Oscar, compresi miglior film e miglior regia.",
+    "Quante corde ha un'arpa da concerto?":
+      "Un’arpa da concerto moderna ha normalmente 47 corde e sette pedali, usati per modificare l’altezza delle note.",
+    "Quanti tasti ha un pianoforte a coda?":
+      "Gli 88 tasti del pianoforte standard coprono poco più di sette ottave.",
+    "Quanti episodi totali ha Friends?":
+      "Il celebre divano arancione del Central Perk fu trovato in un deposito degli studi Warner Bros.",
+    "Quanti minuti dura Avengers Endgame?":
+      "Avengers: Endgame fu il primo film del Marvel Cinematic Universe a superare le tre ore.",
+    "Quanti minuti dura Pulp Fiction?":
+      "Pulp Fiction racconta gli eventi fuori ordine cronologico: rimontando le scene, la storia segue una sequenza molto diversa.",
+    "Quanti minuti dura Forrest Gump?":
+      "Per alcune scene di corsa, il fratello di Tom Hanks lavorò come controfigura grazie alla loro somiglianza.",
+    "Quanti minuti dura La Grande Bellezza?":
+      "La Grande Bellezza vinse l’Oscar come miglior film in lingua straniera nel 2014.",
+    "Quanti minuti dura C'e ancora domani (circa)?":
+      "C’è ancora domani è stato girato principalmente in bianco e nero ed è l’esordio alla regia di Paola Cortellesi.",
+    "Quanti minuti dura The Dark Side of the Moon?":
+      "The Dark Side of the Moon rimase nella classifica Billboard 200 per oltre 900 settimane complessive.",
+    "Quante corde ha un'arpa da concerto?":
+      "Le corde dell’arpa hanno colori di riferimento: i Do sono rossi e i Fa sono scuri, così il musicista si orienta più rapidamente.",
+    "Quanti episodi totali ha I Simpson (circa)?":
+      "I Simpson debuttarono come brevi segmenti nel Tracey Ullman Show prima di diventare una serie autonoma nel 1989.",
+    "Quanti minuti dura in media un episodio di Gomorra?":
+      "Gomorra - La serie è ispirata al libro di Roberto Saviano, ma sviluppa personaggi e trame originali per la televisione.",
+    "Quante ore di video si caricano su YouTube ogni minuto?":
+      "YouTube nacque nel 2005; il primo video caricato, Me at the zoo, dura soltanto 19 secondi.",
+    "Quanti grammi pesa una pallina da tennis (circa)?":
+      "Le palline da tennis da competizione devono rispettare intervalli precisi di peso, diametro e rimbalzo.",
+    "Quanti grammi pesa un pallone da calcio regolamentare?":
+      "Un pallone regolamentare di misura 5 deve pesare tra 410 e 450 grammi all’inizio della partita.",
+    "Quanti anni aveva la persona piu longeva mai documentata?":
+      "Jeanne Calment visse 122 anni e 164 giorni ed è la persona con la maggiore longevità verificata.",
+    "Quanti giorni e rimasto sveglio il detentore del record senza dormire?":
+      "Randy Gardner rimase sveglio per circa 11 giorni nel 1964 durante un esperimento scolastico seguito da ricercatori.",
+    "Quanti metri era alto l'uomo piu alto mai misurato?":
+      "Robert Wadlow raggiunse 2,72 metri ed era ancora in crescita quando morì nel 1940.",
+    "Quanti km/h puo raggiungere uno starnuto umano?":
+      "La velocità di uno starnuto varia molto tra le misurazioni: per questo i valori divulgativi sono spesso approssimativi.",
+    "Quanti anni ha il piu antico albero vivente conosciuto (circa)?":
+      "Alcuni pini dai coni setolosi delle White Mountains hanno più di 4.800 anni; la posizione esatta degli esemplari più antichi viene protetta.",
+    "Quante volte batte le ali un'ape in un secondo (circa)?":
+      "Il ronzio dell’ape nasce proprio dal rapidissimo movimento delle ali.",
+    "Quanti cm e alto Lionel Messi?":
+      "Da ragazzo Lionel Messi seguì una terapia per un deficit dell’ormone della crescita prima di trasferirsi al Barcellona.",
+    "Quanti cm e alto Michael Jordan?":
+      "Michael Jordan fu scelto con la terza chiamata assoluta al Draft NBA del 1984.",
+    "Quanti cm e alto Usain Bolt?":
+      "L’altezza di Usain Bolt gli permetteva una falcata molto lunga: nella finale del record mondiale completò i 100 metri con circa 41 passi.",
+    "Quante kcal ha una lattina di Coca-Cola da 330 ml?":
+      "Le calorie della Coca-Cola classica provengono quasi interamente dagli zuccheri disciolti nella bevanda.",
+    "Quanti grammi di zucchero in una lattina di Fanta?":
+      "La quantità di zucchero può cambiare tra Paesi e ricette: per questo l’etichetta della lattina resta il riferimento più preciso.",
+    "Quanti kg di pasta mangia un italiano in un anno (circa)?":
+      "L’Italia è stabilmente tra i Paesi con il più alto consumo pro capite di pasta al mondo."
+  };
+
+  return VERIFIED_FACTS[q?.q] || "";
 }
 
 function renderReveal(){
@@ -1994,7 +2076,7 @@ function renderSpecial(){
   } else if(type==="tesi"){
     body = renderTesiBody(lander);
   } else if(type==="timer"){
-    body = `<p class="sub center">Timer Challenge! Al prossimo round ${esc(lander.name)} avrà solo 5 secondi.</p>
+    body = `<p class="sub center">Timer Challenge! Nel prossimo round ${esc(lander.name)} avrà 10 secondi per inviare la stima.</p>
             <button type="button" class="btn ochre" id="applyTimer">Accetta la sfida ⏱️</button>`;
   } else if(type==="dispensa"){
     body = `<p class="sub center">Allarme merendine! Il prossimo round sarà di categoria <b>Cibo e Calorie</b>.</p>
@@ -2039,7 +2121,15 @@ function wireSpecial(type, lander){
         const b = opts[+btn.dataset.i];
         lander.bonus.push(b);
         log(`⭐ ${esc(lander.name)} tiene il bonus "${b.nm}".`);
-        nextSpecialOrPost();
+        onlineBroadcastCardResolution({
+          icon:"⭐",
+          title:"Bonus assegnato",
+          subject:`${lander.name} · Casella ${S.special?.cell||"—"}`,
+          effectTitle:b.nm,
+          description:b.desc,
+          instruction:`${lander.name} conserva questa carta. L’effetto verrà applicato quando previsto dal gioco.`
+        });
+        setTimeout(nextSpecialOrPost,700);
       });
     });
   }
@@ -2063,11 +2153,29 @@ function wireSpecial(type, lander){
         if(scudoIdx>=0){
           tgt.bonus.splice(scudoIdx,1);
           log(`🛡️ ${esc(tgt.name)} usa lo Scudo e blocca "${m.nm}"!`);
+          onlineBroadcastCardResolution({
+            icon:"🛡️",
+            title:"Malus bloccato",
+            subject:`${tgt.name} usa lo Scudo`,
+            effectTitle:m.nm,
+            description:`Il malus non viene applicato: ${tgt.name} ha consumato la carta Scudo.`,
+            instruction:"La partita prosegue senza questa penalità."
+          });
         } else {
           tgt.malus.push(m);
           log(`⛔ ${esc(lander.name)} rifila "${m.nm}" a ${esc(tgt.name)}.`);
+          onlineBroadcastCardResolution({
+            icon:"⛔",
+            title:"Malus assegnato",
+            subject:`Da ${lander.name} a ${tgt.name}`,
+            effectTitle:m.nm,
+            description:m.desc,
+            instruction:m.time
+              ? `Nel prossimo round la lavagnetta di ${tgt.name} verrà bloccata automaticamente dopo ${m.time} secondi.`
+              : `L’effetto verrà applicato automaticamente a ${tgt.name} nel prossimo round.`
+          });
         }
-        nextSpecialOrPost();
+        setTimeout(nextSpecialOrPost,850);
       });
     });
   }
@@ -2743,36 +2851,143 @@ function cleanOnlineText(value){
     .trim();
 }
 function onlineSpecialFromMaster(type, lander, cell){
-  const cardTitle=cleanOnlineText(document.querySelector("#malusCard strong, #vendCard strong")?.textContent||"");
-  const cardDesc=cleanOnlineText(document.querySelector("#malusCard div, #vendCard div")?.textContent||"");
-  const intro=cleanOnlineText(app?.querySelector(".card .sub.center")?.textContent||"");
-  const labels={
-    bonus:{icon:"⭐",title:"Carta Bonus",instruction:"Il Master completa la scelta della carta."},
-    malus:{icon:"⛔",title:"Carta Malus",instruction:"Il Master assegna il malus al giocatore scelto."},
-    voce:{icon:"📢",title:"Stima ad alta voce",instruction:"Il giocatore dovrà pronunciare la prossima stima prima di inviarla."},
-    timer:{icon:"⏱️",title:"Timer Challenge",instruction:"Nel prossimo round il tempo sarà ridotto."},
-    penitenza:{icon:"🗡️",title:"Vendetta",instruction:"Il Master sceglie chi subirà l’effetto."},
-    fenomeno:{icon:"👑",title:"Casella Fenomeno",instruction:"Segui l’effetto indicato sul telefono principale."},
-    postadoppia:{icon:"🔥",title:"Posta doppia",instruction:"Il rischio sarà attivo nel prossimo round."},
-    gemelli:{icon:"🤝",title:"Gemelli",instruction:"Il giocatore sceglie il proprio compagno."},
-    azzardo:{icon:"🎰",title:"Azzardo",instruction:"Il dado stabilirà l’effetto."},
-    dadocaos:{icon:"🎲",title:"Dado del caos",instruction:"Il Master tira il dado per determinare l’esito."},
-    random:{icon:"🌀",title:"Categoria casuale",instruction:"Il tabellone sceglierà la prossima categoria."},
-    dispensa:{icon:"🍫",title:"Allarme merendine",instruction:"La prossima domanda sarà di Cibo e Calorie."},
-    tesi:{icon:"⚖️",title:"Tesi e Antitesi",instruction:"Ascolta il confronto e vota insieme al tavolo."}
+  const playerName=lander?.name||"Il giocatore";
+  const cellNumber=S.special?.cell||"—";
+
+  const previews={
+    bonus:{
+      icon:"⭐",
+      title:"Casella Bonus",
+      effectTitle:`${playerName} pesca una carta Bonus`,
+      description:"Sul telefono principale compariranno tre carte. Il Master farà completare la scelta, mentre tutti possono leggere l’anteprima.",
+      instruction:"La carta scelta verrà mostrata subito dopo a tutte le lavagnette."
+    },
+    malus:{
+      icon:"⛔",
+      title:"Casella Malus",
+      effectTitle:`${playerName} pesca una carta Malus`,
+      description:"Il malus verrà mostrato in anteprima. Soltanto il Master potrà selezionare il giocatore che lo riceverà.",
+      instruction:"Attendi l’assegnazione: nessun pulsante di scelta comparirà sulla tua lavagnetta."
+    },
+    voce:{
+      icon:"📢",
+      title:"Stima ad alta voce",
+      effectTitle:`Nel prossimo round ${playerName} parlerà per primo`,
+      description:`${playerName} dovrà pronunciare la propria stima ad alta voce prima dell’invio, così gli altri potranno sentirla.`,
+      instruction:"La risposta dovrà comunque essere inviata e bloccata dalla lavagnetta."
+    },
+    timer:{
+      icon:"⏱️",
+      title:"Timer Challenge",
+      effectTitle:`Tempo ridotto per ${playerName}`,
+      description:`Nel prossimo round ${playerName} avrà 10 secondi per inviare la stima.`,
+      instruction:"Alla scadenza dei 10 secondi la sua lavagnetta verrà bloccata automaticamente."
+    },
+    penitenza:{
+      icon:"🗡️",
+      title:"Vendetta",
+      effectTitle:`${playerName} pesca un malus`,
+      description:"Il malus potrà essere assegnato soltanto a un avversario che si trova più avanti sulla mappa.",
+      instruction:"La carta e il destinatario definitivo verranno mostrati dopo la scelta del Master."
+    },
+    fenomeno:{
+      icon:"👑",
+      title:"Casella Fenomeno",
+      effectTitle:`${playerName} entra nella zona del Fenomeno`,
+      description:"Il giocatore riceverà un effetto speciale legato alla leadership.",
+      instruction:"L’effetto definitivo comparirà dopo la conferma del Master."
+    },
+    postadoppia:{
+      icon:"🔥",
+      title:"Posta doppia",
+      effectTitle:`${playerName} accetta il rischio`,
+      description:"Nel prossimo round i punti possono raddoppiare, ma restare fuori dal podio comporta una penalità.",
+      instruction:"L’effetto verrà applicato automaticamente al prossimo risultato."
+    },
+    gemelli:{
+      icon:"🤝",
+      title:"Gemelli",
+      effectTitle:`${playerName} sceglie un compagno`,
+      description:"Se entrambi arriveranno sul podio nel prossimo round, riceveranno un punto aggiuntivo.",
+      instruction:"Soltanto il Master completa la scelta del compagno."
+    },
+    azzardo:{
+      icon:"🎰",
+      title:"Azzardo",
+      effectTitle:`${playerName} tenta la sorte`,
+      description:"Il dado stabilirà se il giocatore perde un punto, resta al sicuro oppure può sottrarre un punto.",
+      instruction:"Il lancio viene gestito dal telefono principale."
+    },
+    dadocaos:{
+      icon:"🎲",
+      title:"Dado del caos",
+      effectTitle:`Il dado decide la sorte di ${playerName}`,
+      description:"L’esito verrà determinato casualmente dal gioco.",
+      instruction:"Attendi il lancio effettuato dal Master."
+    },
+    random:{
+      icon:"🌀",
+      title:"Categoria casuale",
+      effectTitle:"La prossima categoria sarà estratta",
+      description:"Il gioco sceglierà casualmente la categoria della domanda successiva.",
+      instruction:"L’estrazione viene avviata dal telefono principale."
+    },
+    dispensa:{
+      icon:"🍫",
+      title:"Cibo e Calorie",
+      effectTitle:"La prossima domanda cambia categoria",
+      description:"Il prossimo round sarà dedicato a Cibo e Calorie.",
+      instruction:"La categoria verrà applicata automaticamente."
+    },
+    duello:{
+      icon:"⚔️",
+      title:"Duello",
+      effectTitle:`${playerName} sfida un avversario`,
+      description:"Il Master sceglierà lo sfidante. Le lavagnette abilitate verranno indicate dalla sfida.",
+      instruction:"Chi non partecipa resta spettatore."
+    },
+    tiroleader:{
+      icon:"🎯",
+      title:"Tiro al leader",
+      effectTitle:`${playerName} sfida il primo in classifica`,
+      description:"Soltanto i giocatori coinvolti dovranno inviare la propria stima.",
+      instruction:"Le altre lavagnette resteranno in modalità spettatore."
+    }
   };
-  const cfg=labels[type]||{icon:"🎲",title:(cell&&cell.nm)||"Casella speciale",instruction:"Segui le indicazioni del Master."};
+
+  const cfg=previews[type]||{
+    icon:(cell&&cell.ic)||"🎲",
+    title:(cell&&cell.nm)||"Casella speciale",
+    effectTitle:`${playerName} attiva una casella speciale`,
+    description:"L’effetto verrà gestito dal telefono principale.",
+    instruction:"Segui l’aggiornamento sulla tua lavagnetta."
+  };
+
   onlineBroadcastView({
     kind:"special",
     icon:cfg.icon,
     title:cfg.title,
-    subject:`Casella ${S.special?.cell||"—"} · ${lander?.name||"Giocatore"}`,
-    effectTitle:cardTitle.replace(/^[^A-Za-zÀ-ÿ0-9]+/,"") || cfg.title,
-    description:cardDesc || intro || `È stata attivata la casella ${cfg.title}.`,
+    subject:`Casella ${cellNumber} · ${playerName}`,
+    effectTitle:cfg.effectTitle,
+    description:cfg.description,
     instruction:cfg.instruction,
     round:S.round
   });
 }
+
+function onlineBroadcastCardResolution({icon,title,subject,effectTitle,description,instruction}){
+  onlineBroadcastView({
+    kind:"special",
+    icon,
+    title,
+    subject,
+    effectTitle,
+    description,
+    instruction,
+    round:S.round
+  });
+}
+
 function onlineScreenFromMaster(title, kind="info"){
   const card=app && app.querySelector(".card");
   if(!card) return;
