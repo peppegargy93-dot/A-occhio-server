@@ -127,187 +127,108 @@ const PAD = `<!DOCTYPE html>
 <meta name="theme-color" content="#20424E">
 <title>A OCCHIO! — Lavagnetta</title>
 <style>
-:root{--cream:#F5ECD6;--paper:#FFFDF6;--ink:#20424E;--petrol:#2E6B7A;--teal:#48A39A;--coral:#E0795E;--ochre:#E6AC3C;--line:rgba(32,66,78,.18)}
-*{box-sizing:border-box}body{font-family:system-ui,-apple-system,sans-serif;background:var(--cream);color:var(--ink);margin:0;padding:18px 14px;text-align:center;min-height:100dvh}
-main{max-width:440px;margin:auto}.card{background:var(--paper);border:2px solid var(--line);border-radius:22px;padding:20px;box-shadow:0 12px 28px rgba(32,66,78,.12)}
-h1{font-weight:950;letter-spacing:-1px;margin:8px 0 20px}.q{font-size:21px;font-weight:800;line-height:1.25;margin:16px 0}.cat{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:1px;color:var(--coral)}
-input,button{font:inherit;font-size:18px;padding:14px;border-radius:14px;width:100%;margin:7px 0}input{border:2px solid var(--ink);background:white;color:var(--ink)}button{background:var(--coral);color:white;font-weight:900;border:none}button.secondary{background:transparent;color:var(--ink);border:2px solid var(--line);font-size:14px;padding:10px}button:disabled,input:disabled{opacity:.5}.big{font-size:58px;font-weight:900;color:var(--coral);line-height:1}.hide{display:none!important}.st{font-size:13px;color:var(--petrol);margin-top:12px}.timer{font-size:42px;font-weight:950;margin:8px 0}.ok{color:var(--teal);font-weight:900}
-.info{text-align:left;white-space:pre-wrap;line-height:1.45;font-size:15px}.scores{margin-top:14px}.score{display:flex;gap:10px;align-items:center;padding:9px 2px;border-bottom:1px dashed var(--line)}.score b{flex:1;text-align:left}.score span{font-weight:900}
-.map{display:flex;flex-direction:column-reverse;gap:7px;margin-top:14px}.cell{display:flex;align-items:center;gap:9px;text-align:left;padding:9px 11px;border:2px solid var(--line);border-radius:14px;background:#eef2f2}.cell.bonus{background:#f6e6b8}.cell.malus{background:#f6d9cf}.cell.timer{background:#d9ecec;font-size:inherit;margin:0}.cell.finale{background:var(--ink);color:white}.num{font-weight:950;min-width:30px}.cellname{flex:1;font-size:13px;font-weight:800}.pawns{display:flex;gap:3px;flex-wrap:wrap;justify-content:flex-end}.pawn{width:25px;height:25px;border-radius:50%;display:grid;place-items:center;color:white;border:2px solid white;font-size:10px;font-weight:950}
+:root{--cream:#F5ECD6;--paper:#FBF6E7;--paper2:#FFFDF6;--ink:#20424E;--petrol:#2E6B7A;--teal:#48A39A;--coral:#E0795E;--ochre:#E6AC3C;--line:rgba(32,66,78,.16);--soft:rgba(32,66,78,.07);--shadow:0 14px 34px -22px rgba(32,66,78,.65)}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:radial-gradient(120% 70% at 50% -10%,#fff9e9 0,var(--cream) 60%,#ecdfc2 100%);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+body{padding:12px 14px calc(24px + env(safe-area-inset-bottom))}.shell{width:100%;max-width:520px;margin:auto}.top{display:flex;align-items:center;justify-content:space-between;padding:8px 3px 12px}.brand{display:flex;align-items:center;gap:9px;font-size:24px;font-weight:950;letter-spacing:-1px}.room{font-size:11px;font-weight:900;letter-spacing:.8px;text-transform:uppercase;border:1.5px solid var(--line);background:rgba(255,255,255,.55);padding:6px 9px;border-radius:999px}
+.panel{background:var(--paper);border:1.5px solid var(--line);border-radius:22px;padding:17px;box-shadow:var(--shadow);overflow:hidden}.screen{display:none}.screen.active{display:block;animation:enter .34s cubic-bezier(.2,.9,.3,1) both}@keyframes enter{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}@keyframes reveal{0%{opacity:0;transform:scale(.88)}70%{transform:scale(1.035)}100%{opacity:1;transform:scale(1)}}
+.eyebrow{font-size:10.5px;font-weight:950;letter-spacing:1.35px;text-transform:uppercase;color:var(--coral);margin-bottom:7px}.hero{text-align:center}.icon{font-size:48px;line-height:1;margin:7px 0 11px}.title{font-size:25px;font-weight:950;letter-spacing:-.55px;line-height:1.12;margin:0}.sub{font-size:13.5px;color:#587078;line-height:1.45;margin:8px 0 0}.question{font-size:23px;font-weight:850;letter-spacing:-.3px;line-height:1.27;margin:12px 0;text-align:center}.category{display:inline-flex;background:var(--petrol);color:white;border-radius:999px;padding:5px 11px;font-size:10.5px;font-weight:900;letter-spacing:1px;text-transform:uppercase}
+.timer{font-size:64px;font-weight:950;letter-spacing:-3px;line-height:1;text-align:center;margin:13px 0 2px;font-variant-numeric:tabular-nums}.timer.warn{color:var(--coral)}.timer-label{text-align:center;font-size:10px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;color:#7b725d}.bar{height:8px;background:var(--soft);border-radius:99px;overflow:hidden;margin:10px 0 16px}.bar i{display:block;height:100%;width:100%;background:linear-gradient(90deg,var(--teal),var(--ochre),var(--coral));transition:width .2s linear}
+.field{margin-top:12px}.field label{display:block;font-size:12px;font-weight:900;margin:0 0 6px}.field input{width:100%;border:2px solid var(--ink);background:var(--paper2);border-radius:14px;padding:14px 13px;font:inherit;font-size:21px;font-weight:850;color:var(--ink);text-align:center}.btn{width:100%;border:0;border-radius:14px;padding:14px 16px;margin-top:10px;font:inherit;font-size:15px;font-weight:900;background:var(--coral);color:white}.btn.secondary{background:transparent;color:var(--ink);border:1.5px solid var(--line);font-size:13px;padding:10px}.btn:disabled,.field input:disabled{opacity:.46}.status{text-align:center;font-size:12.5px;color:#587078;margin:10px 0 0;min-height:18px}.success{display:flex;align-items:center;gap:10px;background:#e4f1ed;border:1.5px solid #badbd2;border-radius:14px;padding:12px;text-align:left;margin-top:14px}.success b{display:block}.success span{font-size:12px;color:#45685f}
+.answer-card{background:var(--paper2);border:2px solid var(--ochre);border-radius:17px;padding:15px;text-align:center;margin:12px 0;animation:reveal .5s cubic-bezier(.2,1.2,.3,1) both}.answer-label{font-size:10px;font-weight:950;letter-spacing:1.4px;text-transform:uppercase;color:#806522}.answer-value{font-size:40px;font-weight:950;letter-spacing:-1.4px;color:var(--coral);line-height:1.08;margin-top:3px}.question-small{font-family:Georgia,serif;font-size:13px;color:#746a54;margin-top:6px;line-height:1.4}
+.personal{border:1.5px solid var(--line);border-radius:16px;padding:13px;margin:12px 0;background:#fff}.personal-head{display:flex;align-items:center;justify-content:space-between;gap:8px}.personal-name{font-weight:950}.round-points{font-size:23px;font-weight:950;color:var(--teal)}.personal-meta{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.metric{background:var(--soft);border-radius:11px;padding:9px}.metric small{display:block;font-size:9px;font-weight:900;letter-spacing:.8px;text-transform:uppercase;color:#687b80}.metric b{display:block;margin-top:2px;font-size:15px}.section-title{font-size:11px;font-weight:950;letter-spacing:1.1px;text-transform:uppercase;margin:15px 0 7px}.rank-row,.score-row{display:grid;grid-template-columns:32px 1fr auto;align-items:center;gap:9px;padding:10px 3px;border-bottom:1px dashed var(--line)}.rank-row.me,.score-row.me{background:#fff3d6;border-radius:11px;padding-left:8px;padding-right:8px;border-bottom:0;margin:3px 0}.rank-num{width:27px;height:27px;border-radius:50%;display:grid;place-items:center;background:var(--soft);font-size:12px;font-weight:950}.rank-main b{display:block;font-size:14px}.rank-main span{display:block;font-size:11px;color:#65787e;margin-top:1px}.rank-points{font-weight:950;color:var(--teal);white-space:nowrap}.step{opacity:0;animation:stepIn .34s ease forwards}@keyframes stepIn{to{opacity:1;transform:none}from{opacity:0;transform:translateY(7px)}}
+.summary{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin:10px 0 13px}.summary .metric{text-align:center}.summary .metric b{font-size:17px}.map-wrap{position:relative}.map{display:flex;flex-direction:column-reverse;gap:7px;padding:5px 0 5px 23px;position:relative}.map:before{content:"";position:absolute;left:10px;top:16px;bottom:16px;width:3px;border-radius:99px;background:linear-gradient(var(--teal),var(--ochre),var(--coral),var(--ink));opacity:.35}.cell{position:relative;display:grid;grid-template-columns:31px 1fr auto;gap:8px;align-items:center;min-height:49px;padding:7px 9px;border:1.5px solid var(--line);border-radius:13px;background:#e8eff0;text-align:left}.cell:before{content:"";position:absolute;width:13px;height:3px;left:-14px;top:50%;background:var(--line)}.cell.current{box-shadow:0 0 0 3px var(--coral);transform:scale(1.01)}.cell.bonus{background:#f5e5b7}.cell.malus{background:#f4d9cf}.cell.timer-cell{background:#d8ebeb}.cell.duello{background:#e2dcea}.cell.special{background:#e9e2d0}.cell.finale{background:var(--ink);color:white}.num{width:27px;height:27px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.75);font-size:11px;font-weight:950;color:var(--ink)}.cell-name{font-size:12px;font-weight:900;line-height:1.15}.pawns{display:flex;gap:2px;flex-wrap:wrap;justify-content:flex-end}.pawn{width:23px;height:23px;border-radius:50%;display:grid;place-items:center;color:white;border:2px solid white;font-size:9px;font-weight:950}.map-note{text-align:center;font-size:11px;color:#687b80;margin-top:8px}.hidden{display:none!important}
+.connection{display:flex;align-items:center;gap:6px;font-size:11px;color:#65787e;margin-top:9px;justify-content:center}.dot{width:7px;height:7px;border-radius:50%;background:var(--teal)}.dot.off{background:var(--coral)}
 </style>
 </head>
-<body><main><div class="card">
-<h1>👁 A OCCHIO!</h1>
-<div id="join">
-  <input id="code" placeholder="CODICE STANZA" maxlength="4" style="text-transform:uppercase">
-  <input id="name" placeholder="Il tuo nome">
-  <button id="joinBtn" type="button">Entra</button>
+<body><div class="shell">
+  <div class="top"><div class="brand">👁 A OCCHIO!</div><div id="roomBadge" class="room hidden"></div></div>
+  <div class="panel">
+    <section id="joinScreen" class="screen active">
+      <div class="hero"><div class="icon">🎲</div><div class="eyebrow">Lavagnetta personale</div><h1 class="title">Entra nella partita</h1><p class="sub">Inserisci il codice mostrato sul telefono principale.</p></div>
+      <div class="field"><label for="code">Codice stanza</label><input id="code" maxlength="4" autocomplete="off" placeholder="ABCD" style="text-transform:uppercase"></div>
+      <div class="field"><label for="name">Il tuo nome</label><input id="name" maxlength="30" autocomplete="off" placeholder="Es. Peppe"></div>
+      <button id="joinBtn" class="btn" type="button">Entra in partita</button>
+    </section>
+
+    <section id="waitingScreen" class="screen"><div class="hero"><div class="icon">✋</div><div class="eyebrow">Sei collegato</div><h2 class="title">Aspetta la prossima domanda</h2><p class="sub">Qui compariranno domanda, timer e risultati della partita.</p></div></section>
+
+    <section id="questionScreen" class="screen">
+      <div class="hero"><div id="qCat" class="category"></div><div id="qText" class="question"></div></div>
+      <div id="timer" class="timer">25</div><div class="timer-label">secondi per rispondere</div><div class="bar"><i id="timerBar"></i></div>
+      <div class="field"><label for="estimate">La tua stima</label><input id="estimate" inputmode="decimal" autocomplete="off" placeholder="Scrivi un numero"></div>
+      <button id="sendBtn" class="btn" type="button">Invia e blocca</button>
+      <div id="sentBox" class="success hidden"><div style="font-size:26px">✅</div><div><b>Stima inviata</b><span>È bloccata e non può essere modificata.</span></div></div>
+    </section>
+
+    <section id="lockedScreen" class="screen"><div class="hero"><div class="icon">✋</div><div class="eyebrow">Penne giù</div><h2 class="title">Le risposte sono chiuse</h2><p class="sub">Il Master sta calcolando il risultato del round.</p></div></section>
+
+    <section id="resultScreen" class="screen">
+      <div class="hero"><div id="resultEyebrow" class="eyebrow">Risultati del round</div><h2 class="title">Scopri com’è andata</h2></div>
+      <div class="answer-card step" style="animation-delay:.05s"><div class="answer-label">La risposta corretta era</div><div id="correctAnswer" class="answer-value"></div><div id="resultQuestion" class="question-small"></div></div>
+      <div id="personalResult" class="personal step" style="animation-delay:.25s"></div>
+      <div class="section-title step" style="animation-delay:.42s">Classifica del round</div><div id="roundRanking" class="step" style="animation-delay:.48s"></div>
+      <p class="status step" style="animation-delay:.62s">Tra poco vedrai i punteggi totali e la nuova posizione sulla mappa.</p>
+    </section>
+
+    <section id="mapScreen" class="screen">
+      <div class="hero"><div class="eyebrow">Situazione aggiornata</div><h2 class="title">Classifica e mappa</h2><p id="mapText" class="sub"></p></div>
+      <div id="personalSummary" class="summary"></div>
+      <div class="section-title">Classifica generale</div><div id="scoreboard"></div>
+      <div class="section-title">Il percorso</div><div class="map-wrap"><div id="map" class="map"></div></div>
+      <button id="toggleMap" class="btn secondary hidden" type="button">Mostra tutta la mappa</button><div id="mapNote" class="map-note"></div>
+    </section>
+
+    <section id="infoScreen" class="screen"><div class="hero"><div id="infoIcon" class="icon">📣</div><div id="infoTitle" class="eyebrow"></div><h2 id="infoText" class="title"></h2></div></section>
+
+    <button id="changeBtn" class="btn secondary hidden" type="button">Cambia stanza</button>
+    <div id="status" class="status"></div><div class="connection"><i id="connDot" class="dot off"></i><span id="connText">Non collegato</span></div>
+  </div>
 </div>
-<div id="play" class="hide">
-  <div id="big" class="big">✋</div>
-  <div id="cat" class="cat"></div>
-  <div id="q" class="q">Aspetta la domanda…</div>
-  <div id="timer" class="timer hide">20</div>
-  <input id="est" type="text" inputmode="decimal" placeholder="La tua stima" disabled>
-  <button id="sendBtn" type="button" disabled>Invia e blocca 📤</button>
-  <div id="scores" class="scores hide"></div>
-  <div id="map" class="map hide"></div>
-  <button id="changeBtn" class="secondary" type="button">Cambia stanza</button>
-</div>
-<div id="st" class="st"></div>
-</div></main>
 <script>
-let ws=null,sent=false,timerId=null,deadline=0,retry=null,retryMs=1000,currentCode='',currentName='',padToken='',manualClose=false;
-const $=id=>document.getElementById(id);
-const proto=location.protocol==='https:'?'wss://':'ws://';
-const queryCode=(new URLSearchParams(location.search).get('c')||'').trim().toUpperCase();
-if(queryCode)$('code').value=queryCode;
-
-function getSaved(){try{return JSON.parse(localStorage.getItem('aocchio_pad')||'null')}catch{return null}}
-function save(){try{localStorage.setItem('aocchio_pad',JSON.stringify({code:currentCode,name:currentName,token:padToken}))}catch{}}
-function clearSaved(){try{localStorage.removeItem('aocchio_pad')}catch{}}
+let ws=null,sent=false,timerId=null,deadline=0,retry=null,retryMs=1000,currentCode='',currentName='',padToken='',manualClose=false,currentMap=null,mapExpanded=false;
+const $=id=>document.getElementById(id), proto=location.protocol==='https:'?'wss://':'ws://';
+const queryCode=(new URLSearchParams(location.search).get('c')||'').trim().toUpperCase();if(queryCode)$('code').value=queryCode;
+const screens=['joinScreen','waitingScreen','questionScreen','lockedScreen','resultScreen','mapScreen','infoScreen'];
+function showScreen(id){screens.forEach(x=>$(x).classList.toggle('active',x===id));$('changeBtn').classList.toggle('hidden',id==='joinScreen');window.scrollTo({top:0,behavior:'smooth'})}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function key(s){return String(s||'').trim().toLocaleLowerCase('it-IT')}
+function getSaved(){try{return JSON.parse(localStorage.getItem('aocchio_pad')||'null')}catch{return null}}function save(){try{localStorage.setItem('aocchio_pad',JSON.stringify({code:currentCode,name:currentName,token:padToken}))}catch{}}function clearSaved(){try{localStorage.removeItem('aocchio_pad')}catch{}}
+function connection(ok,text){$('connDot').classList.toggle('off',!ok);$('connText').textContent=text}
+function setRoom(){if(currentCode){$('roomBadge').textContent='Stanza '+currentCode;$('roomBadge').classList.remove('hidden')}else $('roomBadge').classList.add('hidden')}
 function stopTimer(){clearInterval(timerId);timerId=null}
-function setTimer(value){
-  stopTimer();deadline=Number(value)||0;
-  if(!deadline){$('timer').classList.add('hide');return}
-  $('timer').classList.remove('hide');
-  const draw=()=>{const left=Math.max(0,Math.ceil((deadline-Date.now())/1000));$('timer').textContent=left;if(left<=0)stopTimer()};
-  draw();timerId=setInterval(draw,200);
-}
-function resetPlay(){
-  stopTimer();sent=false;$('big').textContent='✋';$('cat').textContent='';$('q').textContent='Aspetta la domanda…';
-  $('timer').classList.add('hide');$('est').value='';$('est').disabled=true;$('sendBtn').disabled=true;
-  $('scores').classList.add('hide');$('map').classList.add('hide');$('scores').innerHTML='';$('map').innerHTML='';
-}
-function showJoin(message=''){
-  resetPlay();$('play').classList.add('hide');$('join').classList.remove('hide');$('st').textContent=message;
-}
-function closeSocket(){
-  manualClose=true;clearTimeout(retry);
-  try{ws&&ws.close()}catch{}ws=null;
-  setTimeout(()=>{manualClose=false},50);
-}
-function applyQuestion(m){
-  sent=!!m.sent;$('scores').classList.add('hide');$('map').classList.add('hide');
-  $('big').textContent=sent?'✅':'✍️';$('cat').textContent=m.cat||'';$('q').textContent=(m.text||'')+(m.unit?' · '+m.unit:'');
-  $('est').disabled=sent||m.locked;$('sendBtn').disabled=sent||m.locked;
-  $('st').textContent=sent?'Stima già inviata e bloccata.':'Scrivi la tua stima senza mostrarla agli altri.';
-  setTimer(m.deadline||0);
-}
-function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function safeColor(c){return /^#[0-9a-f]{3,8}$/i.test(c||'')?c:'#2E6B7A'}
-function pawn(p){return '<span class="pawn" style="background:'+safeColor(p.color)+'" title="'+esc(p.name||'')+'">'+esc((p.name||'?').slice(0,1).toUpperCase())+'</span>'}
-function renderScores(scores){
-  if(!Array.isArray(scores)||!scores.length){$('scores').classList.add('hide');return}
-  $('scores').innerHTML=scores.slice().sort((a,b)=>(b.score||0)-(a.score||0)).map(p=>'<div class="score"><b>'+esc(p.name||'')+'</b><span>'+(p.score||0)+' pt · cas. '+(p.pos||0)+'</span></div>').join('');
-  $('scores').classList.remove('hide');
-}
-function typeClass(type){if(type==='bonus')return'bonus';if(type==='malus'||type==='penitenza')return'malus';if(type==='timer')return'timer';if(type==='finale')return'finale';return''}
-function renderMap(map){
-  if(!map||!Array.isArray(map.cells)){$('map').classList.add('hide');return}
-  const players=Array.isArray(map.players)?map.players:[];
-  let html='<div class="cell"><span class="num">0</span><span class="cellname">🚩 Partenza</span><span class="pawns">'+players.filter(p=>(p.pos||0)===0).map(pawn).join('')+'</span></div>';
-  html+=map.cells.map(c=>'<div class="cell '+typeClass(c.type)+'"><span class="num">'+c.n+'</span><span>'+(c.icon||'')+'</span><span class="cellname">'+esc(c.name||c.type||'Casella')+'</span><span class="pawns">'+players.filter(p=>(p.pos||0)===c.n).map(pawn).join('')+'</span></div>').join('');
-  $('map').innerHTML=html;$('map').classList.remove('hide');
-}
-function applyView(v){
-  stopTimer();$('timer').classList.add('hide');$('est').disabled=true;$('sendBtn').disabled=true;
-  $('big').textContent=v.kind==='map'?'🗺️':'📣';$('cat').textContent=v.title||'Aggiornamento';$('q').textContent=v.text||'';
-  renderScores(v.scores||[]);renderMap(v.map);$('st').textContent='Aggiornamento della partita.';
-}
-function applyState(s){
-  if(s.view)applyView(s.view);
-  else if(s.question)applyQuestion({...s.question,deadline:s.deadline,locked:s.locked,sent:s.sent});
-  else resetPlay();
-}
-function connect(mode){
-  clearTimeout(retry);
-  if(!currentCode||!currentName)return;
-  try{ws=new WebSocket(proto+location.host)}catch{$('st').textContent='Impossibile collegarsi.';return}
-  $('st').textContent=mode==='resume'?'Riconnessione…':'Connessione…';
-  ws.onopen=()=>ws.send(JSON.stringify(mode==='resume'&&padToken?{t:'resume_pad',code:currentCode,token:padToken}:{t:'join',code:currentCode,name:currentName}));
-  ws.onmessage=e=>{let m;try{m=JSON.parse(e.data)}catch{return}
-    if(m.t==='ok'||m.t==='resumed_pad'){
-      currentCode=m.code;padToken=m.token||padToken;save();
-      retryMs=1000;
-      $('join').classList.add('hide');$('play').classList.remove('hide');$('st').textContent='Collegato alla stanza '+m.code+'.';
-      if(m.state)applyState(m.state);
-    } else if(m.t==='q') applyQuestion(m);
-    else if(m.t==='lock'){stopTimer();$('timer').textContent='0';$('big').textContent='✋';$('q').textContent='Penne giù!';$('est').disabled=true;$('sendBtn').disabled=true;if(!sent)$('st').textContent='Tempo scaduto: nessuna risposta inviata.'}
-    else if(m.t==='view') applyView(m);
-    else if(m.t==='accepted'){sent=true;$('est').disabled=true;$('sendBtn').disabled=true;$('big').textContent='✅';$('st').innerHTML='<span class="ok">Stima inviata e bloccata.</span>'}
-    else if(m.t==='duplicate'){sent=true;$('est').disabled=true;$('sendBtn').disabled=true;$('st').textContent='Hai già inviato la risposta: non puoi modificarla.'}
-    else if(m.t==='room_closed'){padToken='';clearSaved();showJoin(m.msg||'La partita è terminata. Inserisci il nuovo codice.')}
-    else if(m.t==='replaced')showJoin(m.msg||'Sessione spostata su un’altra scheda.')
-    else if(m.t==='err'){if(m.reset){padToken='';clearSaved();showJoin('⚠️ '+m.msg)}else $('st').textContent='⚠️ '+m.msg}
-  };
-  ws.onclose=()=>{if(manualClose)return;$('st').textContent='Connessione interrotta: riprovo tra '+Math.round(retryMs/1000)+'s…';retry=setTimeout(()=>connect('resume'),retryMs);retryMs=Math.min(10000,retryMs*2)};
-}
-function changeRoom(){manualClose=true;try{ws&&ws.close()}catch(e){};clearTimeout(retry);padToken='';clearSaved();manualClose=false;showJoin('Inserisci il codice della nuova stanza.');}
-function join(){
-  const code=$('code').value.trim().toUpperCase(),name=$('name').value.trim();
-  if(code.length!==4||!name){$('st').textContent='Inserisci codice e nome.';return}
-  closeSocket();resetPlay();currentCode=code;currentName=name;padToken='';clearSaved();setTimeout(()=>connect('join'),80);
-}
-function submit(){
-  if(!ws||ws.readyState!==WebSocket.OPEN||sent||$('est').disabled)return;
-  const value=$('est').value.trim();if(!value){$('st').textContent='Inserisci una stima.';return}
-  ws.send(JSON.stringify({t:'est',value}));
-}
-$('joinBtn').addEventListener('click',join);
-$('sendBtn').addEventListener('click',submit);
-$('changeBtn').addEventListener('click',()=>{try{ws&&ws.send(JSON.stringify({t:'leave_pad'}))}catch{}closeSocket();currentCode='';padToken='';clearSaved();showJoin('Inserisci il nuovo codice stanza.')});
-$('est').addEventListener('keydown',e=>{if(e.key==='Enter')submit()});
-$('code').addEventListener('input',()=>{$('code').value=$('code').value.toUpperCase()});
-
-document.addEventListener('visibilitychange',()=>{
-  if(document.visibilityState==='visible' && padToken && (!ws || ws.readyState>1)){ retryMs=1000; connect('resume'); }
-});
-window.addEventListener('pageshow',()=>{
-  const saved=getSaved();
-  if(queryCode&&saved&&saved.code!==queryCode){
-    clearSaved();currentCode='';padToken='';showJoin('Nuovo codice rilevato: entra nella nuova stanza.');
-    $('code').value=queryCode;$('name').value=saved.name||'';return;
-  }
-  if(saved&&saved.code&&saved.name&&saved.token){
-    currentCode=saved.code;currentName=saved.name;padToken=saved.token;$('code').value=currentCode;$('name').value=currentName;connect('resume');
-  }
-});
-document.addEventListener('visibilitychange',()=>{if(!document.hidden&&currentCode&&currentName&&(!ws||ws.readyState>1))connect('resume')});
+function setTimer(value){stopTimer();deadline=Number(value)||0;const draw=()=>{const ms=Math.max(0,deadline-Date.now()),left=Math.ceil(ms/1000);$('timer').textContent=left;$('timer').classList.toggle('warn',left<=5);$('timerBar').style.width=Math.min(100,ms/25000*100)+'%';if(left<=0)stopTimer()};draw();timerId=setInterval(draw,150)}
+function resetQuestion(){sent=false;$('estimate').value='';$('estimate').disabled=false;$('sendBtn').disabled=false;$('sentBox').classList.add('hidden')}
+function applyQuestion(m){resetQuestion();sent=!!m.sent;$('qCat').textContent=m.cat||'Domanda';$('qText').textContent=(m.text||'')+(m.unit?' · '+m.unit:'');if(sent){$('estimate').disabled=true;$('sendBtn').disabled=true;$('sentBox').classList.remove('hidden')}setTimer(m.deadline||0);showScreen('questionScreen');$('status').textContent=sent?'La tua risposta è già stata registrata.':'Rispondi entro lo scadere del tempo.'}
+function meIn(list){return (list||[]).find(x=>key(x.name)===key(currentName))}
+function applyResult(v){stopTimer();showScreen('resultScreen');$('resultEyebrow').textContent='Risultati del round '+(v.round||'');$('correctAnswer').textContent=v.answer||'—';$('resultQuestion').textContent=v.question||'';const mine=meIn(v.ranking);const projected=meIn(v.scores);$('personalResult').innerHTML=mine?'<div class="personal-head"><div><div class="eyebrow" style="margin:0">Il tuo risultato</div><div class="personal-name">'+esc(currentName)+'</div></div><div class="round-points">'+(mine.points>0?'+':'')+(mine.points||0)+' pt</div></div><div class="personal-meta"><div class="metric"><small>La tua stima</small><b>'+(mine.estimate??'Nessuna')+'</b></div><div class="metric"><small>Distanza</small><b>'+(mine.distance??'—')+'</b></div><div class="metric"><small>Posizione round</small><b>'+(mine.rank?mine.rank+'°':'—')+'</b></div><div class="metric"><small>Totale previsto</small><b>'+(projected?projected.score:0)+' pt</b></div></div>':'<div class="sub">Il tuo risultato non è disponibile.</div>';
+ const ranking=(v.ranking||[]).slice().sort((a,b)=>(a.rank||99)-(b.rank||99));$('roundRanking').innerHTML=ranking.map((r,i)=>'<div class="rank-row '+(key(r.name)===key(currentName)?'me':'')+'"><div class="rank-num">'+(r.rank||'–')+'</div><div class="rank-main"><b>'+esc(r.name)+'</b><span>'+(r.estimate==null?'Nessuna stima':'Stima '+esc(r.estimate)+(r.distance!=null?' · distanza '+esc(r.distance):''))+'</span></div><div class="rank-points">'+(r.points>0?'+':'')+(r.points||0)+' pt</div></div>').join('');$('status').textContent='Risultato calcolato. Attendi l’avanzamento delle pedine.'}
+function typeClass(type){if(type==='bonus')return'bonus';if(type==='malus'||type==='penitenza'||type==='voce')return'malus';if(type==='timer')return'timer-cell';if(type==='duello'||type==='alfabetica'||type==='tiroleader')return'duello';if(type==='finale')return'finale';if(type!=='domanda')return'special';return''}
+function pawn(p){return '<span class="pawn" style="background:'+(/^#[0-9a-f]{3,8}$/i.test(p.color||'')?p.color:'#2E6B7A')+'" title="'+esc(p.name)+'">'+esc((p.name||'?').slice(0,1).toUpperCase())+'</span>'}
+function renderScores(scores){const sorted=(scores||[]).slice().sort((a,b)=>(b.score||0)-(a.score||0)||(b.pos||0)-(a.pos||0));$('scoreboard').innerHTML=sorted.map((p,i)=>'<div class="score-row '+(key(p.name)===key(currentName)?'me':'')+'"><div class="rank-num">'+(i+1)+'</div><div class="rank-main"><b>'+esc(p.name)+'</b><span>Casella '+(p.pos||0)+'</span></div><div class="rank-points">'+(p.score||0)+' pt</div></div>').join('');return {sorted,mine:meIn(sorted)}}
+function renderMap(){if(!currentMap||!Array.isArray(currentMap.cells))return;const players=currentMap.players||[],mine=meIn(players),center=mine?Number(mine.pos)||0:0;let cells=[{n:0,type:'start',icon:'🚩',name:'Partenza'},...currentMap.cells];const visible=mapExpanded?cells:cells.filter(c=>Math.abs(c.n-center)<=4||c.n===0||c.n===currentMap.finish);$('map').innerHTML=visible.map(c=>{const here=players.filter(p=>(Number(p.pos)||0)===c.n);return '<div class="cell '+typeClass(c.type)+' '+(c.n===center?'current':'')+'"><span class="num">'+c.n+'</span><span class="cell-name">'+esc(c.icon||'')+' '+esc(c.name||'Casella')+'</span><span class="pawns">'+here.map(pawn).join('')+'</span></div>'}).join('');$('toggleMap').classList.toggle('hidden',cells.length<=visible.length&&mapExpanded);$('toggleMap').textContent=mapExpanded?'Mostra solo la tua zona':'Mostra tutta la mappa';$('mapNote').textContent=mine?'Sei alla casella '+center+' su '+currentMap.finish+'.':'Posizione in aggiornamento.'}
+function applyMap(v){stopTimer();showScreen('mapScreen');$('mapText').textContent=v.text||'Punti e posizioni aggiornati.';const data=renderScores(v.scores||[]),mine=data.mine;const leader=data.sorted[0];$('personalSummary').innerHTML='<div class="metric"><small>La tua posizione</small><b>'+(mine?(data.sorted.indexOf(mine)+1)+'°':'—')+'</b></div><div class="metric"><small>Punti</small><b>'+(mine?mine.score:0)+'</b></div><div class="metric"><small>Casella</small><b>'+(mine?mine.pos:0)+'</b></div>';currentMap=v.map||null;mapExpanded=false;renderMap();$('toggleMap').classList.toggle('hidden',!currentMap||!currentMap.cells||currentMap.cells.length<=9);$('status').textContent=leader?'In testa: '+leader.name+' con '+leader.score+' punti.':''}
+function applyInfo(v){stopTimer();showScreen('infoScreen');$('infoIcon').textContent=v.kind==='special'?'🎲':'📣';$('infoTitle').textContent=v.title||'Aggiornamento';$('infoText').textContent=(v.text||'').replace(/\s+/g,' ').trim();$('status').textContent='Segui le indicazioni del Master.'}
+function applyView(v){if(v.kind==='result')return applyResult(v);if(v.kind==='map')return applyMap(v);return applyInfo(v)}
+function applyState(s){if(s.view)applyView(s.view);else if(s.question)applyQuestion({...s.question,deadline:s.deadline,locked:s.locked,sent:s.sent});else showScreen('waitingScreen')}
+function closeSocket(){manualClose=true;clearTimeout(retry);try{ws&&ws.close()}catch{}ws=null;setTimeout(()=>manualClose=false,80)}
+function connect(mode){clearTimeout(retry);if(!currentCode||!currentName)return;connection(false,mode==='resume'?'Riconnessione…':'Connessione…');try{ws=new WebSocket(proto+location.host)}catch{return}$('status').textContent='';ws.onopen=()=>ws.send(JSON.stringify(mode==='resume'&&padToken?{t:'resume_pad',code:currentCode,token:padToken}:{t:'join',code:currentCode,name:currentName}));ws.onmessage=e=>{let m;try{m=JSON.parse(e.data)}catch{return}if(m.t==='ok'||m.t==='resumed_pad'){currentCode=m.code;padToken=m.token||padToken;save();retryMs=1000;setRoom();connection(true,'Collegato');$('changeBtn').classList.remove('hidden');if(m.state)applyState(m.state);else showScreen('waitingScreen')}else if(m.t==='q')applyQuestion(m);else if(m.t==='lock'){stopTimer();showScreen('lockedScreen');$('status').textContent=sent?'La tua stima è al sicuro.':'Tempo scaduto: nessuna stima inviata.'}else if(m.t==='view')applyView(m);else if(m.t==='accepted'){sent=true;$('estimate').disabled=true;$('sendBtn').disabled=true;$('sentBox').classList.remove('hidden');$('status').textContent='Risposta registrata.'}else if(m.t==='duplicate'){sent=true;$('estimate').disabled=true;$('sendBtn').disabled=true;$('sentBox').classList.remove('hidden');$('status').textContent='La risposta era già stata inviata.'}else if(m.t==='room_closed'){padToken='';clearSaved();currentCode='';setRoom();showScreen('joinScreen');$('status').textContent=m.msg||'La partita è terminata.'}else if(m.t==='replaced'){showScreen('joinScreen');$('status').textContent=m.msg||'Sessione aperta altrove.'}else if(m.t==='err'){if(m.reset){padToken='';clearSaved();showScreen('joinScreen')} $('status').textContent='⚠️ '+m.msg}};ws.onclose=()=>{connection(false,'Connessione interrotta');if(manualClose)return;retry=setTimeout(()=>connect('resume'),retryMs);retryMs=Math.min(10000,retryMs*2)}}
+function join(){const code=$('code').value.trim().toUpperCase(),name=$('name').value.trim();if(code.length!==4||!name){$('status').textContent='Inserisci un codice di quattro lettere e il tuo nome.';return}closeSocket();currentCode=code;currentName=name;padToken='';clearSaved();setRoom();setTimeout(()=>connect('join'),100)}
+function submit(){if(!ws||ws.readyState!==WebSocket.OPEN||sent)return;const value=$('estimate').value.trim();if(!value){$('status').textContent='Inserisci prima una stima.';return}ws.send(JSON.stringify({t:'est',value}))}
+$('joinBtn').addEventListener('click',join);$('sendBtn').addEventListener('click',submit);$('estimate').addEventListener('keydown',e=>{if(e.key==='Enter')submit()});$('code').addEventListener('input',()=>$('code').value=$('code').value.toUpperCase());$('toggleMap').addEventListener('click',()=>{mapExpanded=!mapExpanded;renderMap()});$('changeBtn').addEventListener('click',()=>{try{ws&&ws.send(JSON.stringify({t:'leave_pad'}))}catch{}closeSocket();currentCode='';padToken='';clearSaved();setRoom();showScreen('joinScreen');$('status').textContent='Inserisci il codice della nuova stanza.'});
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&padToken&&(!ws||ws.readyState>1)){retryMs=1000;connect('resume')}});window.addEventListener('pageshow',()=>{const saved=getSaved();if(queryCode&&saved&&saved.code!==queryCode){clearSaved();$('code').value=queryCode;$('name').value=saved.name||'';return}if(saved&&saved.code&&saved.name&&saved.token){currentCode=saved.code;currentName=saved.name;padToken=saved.token;$('code').value=currentCode;$('name').value=currentName;setRoom();connect('resume')}});
 </script></body></html>`;
 
-const server = http.createServer((req, res) => {
-  const pathname = new URL(req.url, 'http://localhost').pathname;
-
-  if (pathname === '/lavagnetta') {
-    res.writeHead(200, {
-      'Content-Type': 'text/html; charset=utf-8',
-      'Cache-Control': 'no-store, no-cache, must-revalidate'
-    });
-    return res.end(PAD);
-  }
-
-  if (pathname === '/' || pathname === '/gioco' || pathname === '/game.html') {
-    if (!GAME) {
-      res.writeHead(500, { 'Content-Type': 'text/plain; charset=utf-8' });
-      return res.end('game.html non trovato');
-    }
-    res.writeHead(200, {
-      'Content-Type': 'text/html; charset=utf-8',
-      'Cache-Control': 'no-store, no-cache, must-revalidate'
-    });
-    return res.end(GAME);
-  }
-
-  if (pathname === '/health') {
-    res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
-    return res.end(JSON.stringify({ ok: true, rooms: rooms.size }));
-  }
-
-  res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
-  res.end('Pagina non trovata');
+const MIME={'.html':'text/html; charset=utf-8','.js':'application/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json; charset=utf-8'};
+function serveFile(res,name){fs.readFile(path.join(__dirname,name),(err,data)=>{if(err){res.writeHead(404,{'Content-Type':'text/plain; charset=utf-8'});return res.end('Pagina non trovata')}res.writeHead(200,{'Content-Type':MIME[path.extname(name)]||'application/octet-stream','Cache-Control':'no-store, no-cache, must-revalidate'});res.end(data)})}
+const server = http.createServer((req,res)=>{
+  const pathname=new URL(req.url,'http://localhost').pathname;
+  if(pathname==='/lavagnetta'||pathname==='/lavagnetta/'){res.writeHead(200,{'Content-Type':'text/html; charset=utf-8','Cache-Control':'no-store, no-cache, must-revalidate'});return res.end(PAD)}
+  if(pathname==='/health'){res.writeHead(200,{'Content-Type':'application/json; charset=utf-8'});return res.end(JSON.stringify({ok:true,rooms:rooms.size}))}
+  if(pathname==='/'||pathname==='/gioco'||pathname==='/gioco/'||pathname==='/game.html') return serveFile(res,'game.html');
+  const routes={'/index.html':'index.html','/app.js':'app.js','/styles.css':'styles.css'};
+  if(routes[pathname]) return serveFile(res,routes[pathname]);
+  res.writeHead(404,{'Content-Type':'text/plain; charset=utf-8'});res.end('Pagina non trovata');
 });
-
 const wss = new WebSocketServer({ server });
 
 wss.on('connection', ws => {

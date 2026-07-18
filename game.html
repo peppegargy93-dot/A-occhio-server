@@ -1465,7 +1465,7 @@ function renderDraw(){
    ===================================================================== */
 function playerLimit(p){
   // tempo personale: 20s, ridotto dai malus a tempo (Copione 10, Risposta lampo 5)
-  return p.malus.reduce((m,x)=> x.time? Math.min(m,x.time):m, 20);
+  return p.malus.reduce((m,x)=> x.time? Math.min(m,x.time):m, 25);
 }
 function startWriting(){
   S.phase="writing";
@@ -1509,7 +1509,7 @@ function renderWriting(){
       ${unitHint(q)}
       ${master.voiceNext?`<div class="card flat mt-s" style="background:#fbe0d8;border-color:#e7b4a3"><b>📢 Infamata a voce:</b> ${esc(master.name)} deve dire subito la stima ad alta voce.</div>`:""}
       <div class="timer-wrap">
-        <div class="timer-num" id="tnum">20</div>
+        <div class="timer-num" id="tnum">25</div>
         <div class="timer-lbl">✍️ tutti compilano la propria stima</div>
         <div class="tbar"><i id="tbar"></i></div>
       </div>
@@ -1781,14 +1781,34 @@ function renderReveal(){
   `;
   $("#advanceBtn").addEventListener("click", applyScoringAndMove);
   wireBoardLog();
+  const projectedScores = S.players.map(p=>{
+    const e=S.ranking.find(r=>r.id===p.id);
+    const roundPoints=e?e.pts:0;
+    return {
+      name:p.name,
+      score:p.score+roundPoints,
+      pos:Math.min(FINISH,p.pos+roundPoints),
+      color:p.color,
+      roundPoints
+    };
+  });
   onlineBroadcastView({
     kind:"result",
-    title:"La risposta era",
-    text:q.q,
+    round:S.round,
+    title:"Risultati del round",
+    question:q.q,
     answer:fmtNum(q.a)+(q.u?" "+q.u:""),
-    ranking:S.ranking.map(e=>({name:e.name,estimate:e.dist===Infinity?null:fmtNum(e.est),points:e.pts})),
-    scores:onlineScores()
-  });  onlineScreenFromMaster("📊 Risultati del Round "+S.round,"reveal");
+    ranking:S.ranking.map(e=>({
+      name:e.name,
+      color:e.color,
+      estimate:e.dist===Infinity?null:fmtNum(e.est),
+      distance:e.dist===Infinity?null:fmtNum(e.dist),
+      points:e.pts,
+      rank:e.rank
+    })),
+    scores:projectedScores,
+    pendingMovement:true
+  });
 }
 
 /* =====================================================================
@@ -2360,7 +2380,7 @@ function diceOrder(players, opts, done){
   })();
 }
 function renderPostRound(){
-  onlineBroadcastView({kind:"map",title:"Mappa aggiornata",text:"Ecco dove siete dopo il round.",scores:onlineScores(),map:onlineMap()});
+  onlineBroadcastView({kind:"map",title:"Classifica e mappa aggiornate",text:"I punti sono stati assegnati. Controlla la tua nuova posizione.",scores:onlineScores(),map:onlineMap(),round:S.round});
   S.phase="postround";
   renderStatus();
   const w = S.roundWinnerId? pById(S.roundWinnerId):null;
