@@ -350,6 +350,16 @@
     border-radius:999px;padding:6px 10px;}
   .cat-chip.off{opacity:.35;border-style:dashed;text-decoration:line-through;}
   .cat-chip.shake{animation:dieTumble .3s ease;}
+  .map-behind{display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-size:11px;color:#6c7d82;font-weight:800;margin:2px 0 8px;}
+  .mb-chip{display:inline-flex;align-items:center;gap:5px;background:#eef0ea;border-radius:99px;padding:3px 10px 3px 3px;}
+  .mb-chip i{width:19px;height:19px;border-radius:50%;display:inline-grid;place-items:center;color:#fff;font-style:normal;font-size:10px;font-weight:900;border:2px solid #fff;}
+  .map-toggle{width:100%;margin-top:10px;background:transparent;border:2px dashed var(--petrol);color:var(--petrol);
+    border-radius:12px;padding:9px;font-weight:800;font-size:12.5px;}
+  .map-range{font-size:11px;font-weight:700;color:#7a6f55;text-transform:none;letter-spacing:0;margin-left:6px;}
+  .map-behind{display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-size:11px;color:#6c7d82;margin:2px 0 6px;}
+  .mb-chip{display:inline-flex;align-items:center;gap:4px;background:#eef0ea;border-radius:99px;padding:3px 9px 3px 4px;font-weight:800;}
+  .map-toggle{width:100%;margin-top:8px;background:transparent;border:2px dashed var(--petrol);color:var(--petrol);
+    border-radius:12px;padding:8px;font-weight:800;font-size:12.5px;}
   .cell .n{position:static;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:900;color:var(--ink);background:rgba(255,255,255,.78);border:1.5px solid rgba(32,66,78,.13);}
   .cell .ic{font-size:21px;line-height:1;}
   .cell.t-domanda{background:#e7eef0;}
@@ -2446,18 +2456,21 @@ function boardCard(positions, hoppingIds){
   const landed=new Set(S.lastLanded||[]);
   const hopSet=new Set(hoppingIds||[]);
   const posOf=(p)=> positions? (positions[p.id]!=null?positions[p.id]:p.pos) : p.pos;
-  const PER=5;
-  const order=[];
-  for(let r=0;r*PER<BOARD.length;r++){
-    const rowIdx=[]; for(let k=r*PER;k<Math.min((r+1)*PER,BOARD.length);k++) rowIdx.push(k);
-    if(r%2===1) rowIdx.reverse();
-    order.push(...rowIdx);
+  // 🎥 CAMERA: la mappa segue la corsa (stile Mario Party) invece di mostrare tutto in piccolo
+  const maxPos=Math.max(0,...S.players.map(p=>posOf(p)));
+  let lo=0, hi=BOARD.length, windowed=false;
+  if(!S.mapFull && BOARD.length>12){
+    hi=Math.min(BOARD.length, Math.max(9, maxPos+3));
+    lo=Math.max(0, hi-9);
+    windowed = !(lo===0 && hi===BOARD.length);
   }
+  const behind=S.players.filter(p=>posOf(p)<lo).sort((a,b)=>b.pos-a.pos);
   const startHere=S.players.filter(p=>posOf(p)===0);
   const startPawns=startHere.map(p=>`<span class="pawn drop${hopSet.has(p.id)?' hop':''}" style="background:${p.color}" title="${esc(p.name)}">${esc(initialOf(p.name))}</span>`).join("");
   const startCell=`<div class="cell start-cell"><span class="n">0</span><span class="cell-main"><span class="ic">🚩</span><span class="cell-name">Partenza</span></span>${startPawns?`<span class="pawns">${startPawns}</span>`:"<span></span>"}</div>`;
   const cells = BOARD.map((type,i)=>{
     const n=i+1;
+    if(n<lo || n>hi) return "";
     const here = S.players.filter(p=>posOf(p)===n);
     const pawns = here.map(p=>`<span class="pawn drop${hopSet.has(p.id)?' hop':''}" style="background:${p.color}" title="${esc(p.name)}">${esc(initialOf(p.name))}</span>`).join("");
     return `<div class="cell t-${type}${landed.has(n)?' just':''}" title="${CELL[type].nm}">
@@ -2466,12 +2479,30 @@ function boardCard(positions, hoppingIds){
         ${pawns?`<span class="pawns">${pawns}</span>`:"<span></span>"}
       </div>`;
   }).join("");
+  const behindHtml = behind.length
+    ? `<div class="map-behind">↓ più indietro: ${behind.map(p=>`<span class="mb-chip"><i style="background:${p.color}">${esc(initialOf(p.name))}</i>cas. ${posOf(p)}</span>`).join("")}</div>` : "";
+  const toggle = BOARD.length>12
+    ? `<button type="button" class="map-toggle" id="mapToggle">${S.mapFull? "🎥 Segui la corsa" : "🗺️ Vedi tutta la mappa"}</button>` : "";
+  const sub = windowed
+    ? `Caselle ${lo}–${hi} di ${BOARD.length} · la mappa segue chi è in testa.`
+    : `Dalla casella 0 fino alla Finale. Le pedine mostrano la posizione aggiornata di tutti.`;
   return `
     <div class="card" id="moveBoard">
       <h2><span class="tick">🗺️</span> Mappa di gioco</h2>
-      <p class="sub">Dalla casella 0 fino alla Finale. Le pedine mostrano la posizione aggiornata di tutti.</p>
-      <div class="board">${startCell}${cells}</div>
+      <p class="sub">${sub}</p>
+      ${behindHtml}
+      <div class="board">${(lo===0?startCell:"")}${cells}</div>
+      ${toggle}
     </div>`;
+}
+function wireMapToggle(){
+  const b=document.getElementById("mapToggle");
+  if(!b) return;
+  b.addEventListener("click",()=>{
+    S.mapFull=!S.mapFull;
+    const box=document.getElementById("moveBoard");
+    if(box){ box.outerHTML=boardCard(); wireMapToggle(); }
+  });
 }
 function diceRollWinner(players, opts, done){
   if(!opts._skipIntro){
@@ -2608,7 +2639,9 @@ function logCard(openByDefault){
       </div>
     </details>`;
 }
-function wireBoardLog(){ /* i details/log non richiedono listener; placeholder per estensioni future */ }
+function wireBoardLog(){
+  wireMapToggle();
+  wireMapToggle(); /* i details/log non richiedono listener; placeholder per estensioni future */ }
 
 /* =====================================================================
    BOOT
