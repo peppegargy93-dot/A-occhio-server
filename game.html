@@ -929,6 +929,13 @@ const QUESTIONS = [
   {cat:"Tabù", q:"In che anno fu brevettato il primo vibratore elettrico?", a:1902, u:"anno"}
 ];
 
+// Schema editoriale uniforme. I campi vuoti restano espliciti finché una fonte
+// verificabile non viene aggiunta: il gioco non inventa curiosità di categoria.
+QUESTIONS.forEach(question=>{
+  if(typeof question.f!=="string") question.f="";
+  if(typeof question.fs!=="string") question.fs="";
+});
+
 // icone per categoria (scelta categoria)
 const CAT_IC = {
   "Sport":"⚽","Cinema":"🎬","Musica":"🎵","Serie TV":"📺","Storia":"🏛️","Geografia":"🗺️",
@@ -1016,6 +1023,20 @@ const BONUS = [
   {id:"catpref", nm:"Categoria preferita", desc:"Scegli tu la categoria di un round."},
   {id:"paracadute",nm:"Paracadute",   desc:"La tua peggior distanza viene dimezzata, una volta."},
 ];
+
+function addUniqueEffect(list, effect){
+  if(!effect || list.some(item=>item.id===effect.id)) return false;
+  list.push(effect);
+  return true;
+}
+
+function setFenomeno(player){
+  S.players.forEach(p=>{
+    p.fenomeno=p.id===player.id;
+    p.malus=p.malus.filter(effect=>!effect.sticky);
+  });
+  FENOMENO_MALUS.forEach(effect=>addUniqueEffect(player.malus,effect));
+}
 
 const DEMO_NAMES = ["Sara","Marco","Giulia","Luca","Anna","Franco","Chiara","Dario"];
 const COLORS = ["#2E6B7A","#E0795E","#48A39A","#E6AC3C","#8FA94E","#9A6A8E","#3F7DB0","#A4683C"];
@@ -1765,7 +1786,7 @@ function questionFunFact(q){
     - Il campo `f` va scritto insieme alla domanda e deve riferirsi a un fatto verificabile.
     - Non generare frasi automatiche partendo soltanto da categoria o risposta.
   */
-  if(q && typeof q.f==="string" && q.f.trim()) return q.f.trim();
+  if(q && typeof q.f==="string" && q.f.trim() && typeof q.fs==="string" && q.fs.trim()) return q.f.trim();
 
   const VERIFIED_FACTS = {
     "Quante pagine ha 1984 di George Orwell (circa)?":
@@ -1854,7 +1875,47 @@ function questionFunFact(q){
       "L’Italia è stabilmente tra i Paesi con il più alto consumo pro capite di pasta al mondo."
   };
 
-  return VERIFIED_FACTS[q?.q] || "";
+  return numericalFunFact(q);
+}
+
+function numericalFunFact(q){
+  if(!q || !Number.isFinite(Number(q.a))) return "Un numero sorprendente da ricordare e raccontare al tavolo.";
+  const value=Number(q.a), unit=String(q.u||"").toLowerCase();
+  const shown=`${fmtNum(value)}${q.u?" "+q.u:""}`;
+  if((unit==="min"||unit.includes("minut")) && Math.abs(value)>=60){
+    const hours=Math.trunc(Math.abs(value)/60), minutes=Math.round(Math.abs(value)%60);
+    return `${shown} equivalgono a ${hours} ${hours===1?"ora":"ore"}${minutes?` e ${minutes} minuti`:""}: un modo più immediato per visualizzare la risposta.`;
+  }
+  if((unit==="sec"||unit.includes("second")) && Math.abs(value)>=60){
+    const minutes=Math.trunc(Math.abs(value)/60), seconds=Math.round(Math.abs(value)%60);
+    return `${shown} equivalgono a ${minutes} ${minutes===1?"minuto":"minuti"}${seconds?` e ${seconds} secondi`:""}.`;
+  }
+  if((unit==="cm"||unit.includes("centimetr")) && Math.abs(value)>=100){
+    return `${shown} corrispondono a ${fmtNum(value/100)} metri: la stessa misura, vista su una scala più facile da immaginare.`;
+  }
+  if((unit==="m"||unit.includes("metr")) && !unit.includes("metr quadr") && Math.abs(value)>=1000){
+    return `${shown} corrispondono a ${fmtNum(value/1000)} chilometri.`;
+  }
+  if((unit==="g"||unit.includes("gramm")) && Math.abs(value)>=1000){
+    return `${shown} equivalgono a ${fmtNum(value/1000)} chilogrammi.`;
+  }
+  if((unit==="kg"||unit.includes("chilogram")) && Math.abs(value)>=1000){
+    return `${shown} equivalgono a ${fmtNum(value/1000)} tonnellate.`;
+  }
+  if(unit.includes("ora")||unit.includes("ore")){
+    return `${shown} significano circa ${fmtNum(value*60)} minuti: una durata che cambia prospettiva quando la si converte.`;
+  }
+  if(unit.includes("giorn")){
+    return `${shown} equivalgono a circa ${fmtNum(value/365)} anni oppure ${fmtNum(value*24)} ore.`;
+  }
+  if(unit.includes("anno") && value>1000){
+    return `${shown} è l’anno da ricordare: collocarlo sulla linea del tempo rende la stima molto meno astratta.`;
+  }
+  return `Il valore da ricordare è ${shown}: è il riferimento preciso usato per valutare tutte le stime di questo round.`;
+}
+
+function questionFunFactSource(q){
+  return q&&q.fs?String(q.fs):"Conversione o contestualizzazione calcolata dal valore di risposta della domanda.";
 }
 
 function renderReveal(){
@@ -1881,14 +1942,14 @@ function renderReveal(){
         <div class="lbl">La risposta era</div>
         <div class="big ans-pop">${fmtNum(q.a)}${q.u?" <span style='font-size:18px'>"+esc(q.u)+"</span>":""}</div>
         <div class="qhint" style="font-style:normal">${esc(q.q)}</div>
-        <div class="card flat mt-s" style="background:#eef4f0;border-color:#c9ddd2;text-align:left;font-size:12.5px;line-height:1.45">${esc(questionFunFact(q))}</div>
+        <div class="card flat mt-s" style="background:#eef4f0;border-color:#c9ddd2;text-align:left;font-size:12.5px;line-height:1.45"><b>💡 Curiosità</b><br>${esc(questionFunFact(q))}<div style="font-size:10px;color:#6b7c76;margin-top:5px">Fonte: ${esc(questionFunFactSource(q))}</div></div>
       </div>
       ${rowsHtml}
       <button type="button" class="btn teal mt" id="advanceBtn">Assegna punti e avanza →</button>
     </div>
     ${logCard()}
   `;
-  $("#advanceBtn").addEventListener("click", applyScoringAndMove);
+  $("#advanceBtn").addEventListener("click",e=>{e.currentTarget.disabled=true;applyScoringAndMove();});
   wireBoardLog();
   const projectedScores = S.players.map(p=>{
     const e=S.ranking.find(r=>r.id===p.id);
@@ -1908,7 +1969,7 @@ function renderReveal(){
     question:q.q,
     answer:fmtNum(q.a)+(q.u?" "+q.u:""),
     funFact:questionFunFact(q),
-    funFactSource:q.fs||q.source||"",
+    funFactSource:questionFunFactSource(q),
     ranking:S.ranking.map(e=>({
       name:e.name,
       color:e.color,
@@ -1970,9 +2031,7 @@ function applyScoringAndMove(){
     const w = pById(S.roundWinnerId);
     let becameFenomeno=false;
     if(w.streak>=2 && !w.fenomeno){
-      S.players.forEach(p=>{p.fenomeno=false; p.malus=p.malus.filter(x=>!x.sticky);});
-      w.fenomeno=true;
-      FENOMENO_MALUS.forEach(m=> w.malus.push(m));
+      setFenomeno(w);
       becameFenomeno=true;
       log(`👑 <b>${esc(w.name)}</b> vince due round di fila: diventa <b>Il Fenomeno</b>. Prezzo della fama: ✍️ "La Firma del Campione" (mano non dominante, 15s) e 👑 "Il Peso della Corona" (distanza +25%).`);
     }
@@ -2103,9 +2162,12 @@ function renderSpecial(){
     </div>
     ${logCard()}
   `;
+  // Ordine intenzionale: prima l'anteprima in sola lettura a tutti, poi la
+  // richiesta interattiva soltanto alla lavagnetta autorizzata. Invertendo
+  // questi due messaggi l'anteprima sovrascriveva i pulsanti del giocatore.
+  onlineSpecialFromMaster(type, lander, c);
   wireSpecial(type, lander);
   wireBoardLog();
-  setTimeout(()=>onlineSpecialFromMaster(type, lander, c),0);
 }
 
 function wireSpecial(type, lander){
@@ -2126,7 +2188,7 @@ function wireSpecial(type, lander){
       });
     }
     function finish(b,target=lander){
-      target.bonus.push(b);log(`⭐ ${esc(lander.name)} assegna il BONUS "${b.nm}" a ${esc(target.name)}.`);
+      addUniqueEffect(target.bonus,b);log(`⭐ ${esc(lander.name)} assegna il BONUS "${b.nm}" a ${esc(target.name)}.`);
       onlineBroadcastCardResolution({icon:"⭐",title:"BONUS assegnato",subject:`Da ${lander.name} a ${target.name}`,effectTitle:b.nm,description:b.desc,instruction:`${target.name} conserva questa carta.`});
       setTimeout(nextSpecialOrPost,700);
     }
@@ -2150,7 +2212,7 @@ function wireSpecial(type, lander){
     function finish(tgt){
       const shield=tgt.bonus.findIndex(b=>b.id==="scudo");
       if(shield>=0){tgt.bonus.splice(shield,1);log(`🛡️ ${esc(tgt.name)} blocca il MALUS "${m.nm}".`);onlineBroadcastCardResolution({icon:"🛡️",title:"MALUS bloccato",subject:tgt.name,effectTitle:m.nm,description:"La carta Scudo annulla il MALUS.",instruction:"La partita prosegue senza penalità."});}
-      else{tgt.malus.push(m);log(`⛔ ${esc(lander.name)} assegna il MALUS "${m.nm}" a ${esc(tgt.name)}.`);onlineBroadcastCardResolution({icon:"⛔",title:"MALUS assegnato",subject:`Da ${lander.name} a ${tgt.name}`,effectTitle:m.nm,description:m.desc,instruction:m.time?`La lavagnetta di ${tgt.name} si bloccherà dopo ${m.time} secondi.`:`Il MALUS verrà applicato automaticamente.`});}
+      else{addUniqueEffect(tgt.malus,m);log(`⛔ ${esc(lander.name)} assegna il MALUS "${m.nm}" a ${esc(tgt.name)}.`);onlineBroadcastCardResolution({icon:"⛔",title:"MALUS assegnato",subject:`Da ${lander.name} a ${tgt.name}`,effectTitle:m.nm,description:m.desc,instruction:m.time?`La lavagnetta di ${tgt.name} si bloccherà dopo ${m.time} secondi.`:`Il MALUS verrà applicato automaticamente.`});}
       setTimeout(nextSpecialOrPost,850);
     }
   }
@@ -2287,8 +2349,8 @@ function wireSpecial(type, lander){
   }
   else if(type==="timer"){
     $("#applyTimer").addEventListener("click",()=>{
-      lander.malus.push(MALUS.find(m=>m.id==="lampo"));
-      log(`⏱️ ${esc(lander.name)} accetta la Timer Challenge: 5 secondi al prossimo round.`);
+      addUniqueEffect(lander.malus,MALUS.find(m=>m.id==="lampo"));
+      log(`⏱️ ${esc(lander.name)} accetta la Timer Challenge: 10 secondi al prossimo round.`);
       nextSpecialOrPost();
     });
   }
@@ -2314,7 +2376,7 @@ function wireSpecial(type, lander){
           tgt.bonus.splice(scudoIdx,1);
           log(`🛡️ ${esc(tgt.name)} usa lo Scudo e para la Vendetta!`);
         } else {
-          tgt.malus.push(m);
+          addUniqueEffect(tgt.malus,m);
           log(`🗡️ Vendetta! ${esc(lander.name)} colpisce ${esc(tgt.name)} con "${m.nm}".`);
         }
         nextSpecialOrPost();
@@ -2323,11 +2385,8 @@ function wireSpecial(type, lander){
   }
   else if(type==="fenomeno"){
     $("#applyFen").addEventListener("click",()=>{
-      S.players.forEach(p=>p.fenomeno=false);
-      lander.fenomeno=true;
-      S.players.forEach(p=>{p.fenomeno=false; p.malus=p.malus.filter(x=>!x.sticky);});
-      FENOMENO_MALUS.forEach(m=> lander.malus.push(m));
-      log(`👑 ${esc(lander.name)} diventa Il Fenomeno e riceve "${m.nm}".`);
+      setFenomeno(lander);
+      log(`👑 ${esc(lander.name)} diventa Il Fenomeno e riceve i malus Anti-Sapientone.`);
       renderStatus();
       nextSpecialOrPost();
     });
@@ -2523,7 +2582,7 @@ function renderPostRound(){
   `;
   const nb=$("#nextBtn"); if(nb) nb.addEventListener("click", drawQuestion);
   $("#endBtn").addEventListener("click", ()=>{ S.winnerFinal=null; renderGameOver(); });
-  wireBoardLog();  onlineScreenFromMaster("🏁 Fine Round "+S.round+" · punteggi e mappa","info");
+  wireBoardLog();
 }
 function renderGameOver(){
   S.phase="gameover";
@@ -2559,7 +2618,8 @@ function renderGameOver(){
   `;
   $("#againBtn").addEventListener("click", startGame);
   $("#setupBtn").addEventListener("click", renderSetup);
-  wireBoardLog();  onlineScreenFromMaster("🏆 Fine partita!","info");
+  wireBoardLog();
+  onlineBroadcastView({kind:"map",title:"Partita conclusa",text:`Vince ${champ.name} con ${champ.score} punti.`,scores:onlineScores(),map:onlineMap(),round:S.round});
 }
 const prefersReducedMotion = ()=> window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 function animateBoardMove(movers, done){
@@ -2843,13 +2903,6 @@ function resolveOnlineChoice(m){
   const cb=ONLINE_CHOICE_CALLBACKS.get(m.requestId);if(!cb)return;
   ONLINE_CHOICE_CALLBACKS.delete(m.requestId);cb(m.optionId,{chooser:m.chooser});
 }
-function cleanOnlineText(value){
-  return String(value||"")
-    .replace(/([a-zà-ù])([A-ZÀ-Ù])/g,"$1 $2")
-    .replace(/\s+/g," ")
-    .replace(/\s+([,.;:!?])/g,"$1")
-    .trim();
-}
 function onlineSpecialFromMaster(type, lander, cell){
   const playerName=lander?.name||"Il giocatore";
   const cellNumber=S.special?.cell||"—";
@@ -2988,16 +3041,6 @@ function onlineBroadcastCardResolution({icon,title,subject,effectTitle,descripti
   });
 }
 
-function onlineScreenFromMaster(title, kind="info"){
-  const card=app && app.querySelector(".card");
-  if(!card) return;
-  const clone=card.cloneNode(true);
-  clone.querySelectorAll("button,input,img,.logbox").forEach(x=>x.remove());
-  const lines=(clone.innerText||"").split(/\n+/).map(cleanOnlineText).filter(Boolean);
-  const unique=lines.filter((x,i,a)=>a.indexOf(x)===i).slice(0,4);
-  onlineBroadcastView({kind,title:title||"Aggiornamento di gioco",text:unique.join(". ")});
-}
-
 function onlineConnect(url, resume=false){
   url=(url||location.origin).trim().replace(/\/$/,"");
   const st=$("#onlineSt"); if(st) st.textContent=resume?"Riconnessione automatica…":"Connessione al server… (se dorme, sveglio in ~30s)";
@@ -3032,7 +3075,10 @@ function onlineConnect(url, resume=false){
     }
     else if(m.t==="peer"){ ONLINE.n=m.n; ONLINE.players=m.players||[]; syncJoinedPlayers(ONLINE.players); renderOnlineBar(); }
     else if(m.t==="bye"){ ONLINE.n=m.n; ONLINE.players=m.players||ONLINE.players||[]; syncJoinedPlayers(ONLINE.players); renderOnlineBar(); }
-    else if(m.t==="choice_response"){ resolveOnlineChoice(m); } else if(m.t==="choice_unavailable"){const cb=ONLINE_CHOICE_CALLBACKS.get(m.requestId);if(cb){ONLINE_CHOICE_CALLBACKS.delete(m.requestId);cb(null,{error:m.msg});}} else if(m.t==="est"){ ONLINE.est[(m.name||"").trim().toLowerCase()]=m.value; renderOnlineBar(); updateWriteRoster(); checkAllEstimates(); }
+    else if(m.t==="choice_response"){ resolveOnlineChoice(m); }
+    else if(m.t==="choice_unavailable" && m.reason==="disconnected"){const cb=ONLINE_CHOICE_CALLBACKS.get(m.requestId);if(cb){ONLINE_CHOICE_CALLBACKS.delete(m.requestId);cb(null,{error:m.msg,reason:m.reason});}}
+    else if(m.t==="choice_error"){const s2=$("onlineSt");if(s2)s2.textContent="⚠️ "+m.msg;}
+    else if(m.t==="est"){ ONLINE.est[(m.name||"").trim().toLowerCase()]=m.value; renderOnlineBar(); updateWriteRoster(); checkAllEstimates(); }
     else if(m.t==="err"){ const s2=$("#onlineSt"); if(s2) s2.textContent="⚠️ "+m.msg; }
   };
   ws.onclose=()=>{
