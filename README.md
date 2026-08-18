@@ -1,4 +1,4 @@
-# A OCCHIO! — GitHub Update v2.2
+# A OCCHIO! — GitHub Update v2.3 editoriale
 
 Party game multiplayer con Master e lavagnette WebSocket. Il gameplay originale è invariato; questa versione rafforza protocollo, responsive mobile, nickname, Anti-Sapientone e verificabilità editoriale.
 
@@ -28,4 +28,6 @@ Lavagnetta: `http://localhost:3000/lavagnetta`
 Le domande usano `f` per la curiosità specifica e `fs` per la fonte:
 `{cat:"...", q:"...", a:123, u:"...", f:"...", fs:"..."}`
 
-Il gioco mostra sempre una curiosità. Quando `f` e `fs` sono presenti usa il contenuto editoriale verificato; negli altri casi mostra una contestualizzazione numerica specifica derivata dalla risposta, mai un testo casuale di categoria. Non copia contenuti dal DOM del Master.
+Il gioco mostra soltanto curiosità specifiche della singola domanda, accompagnate da una fonte. Sono stati eliminati i fallback numerici e i testi generici di categoria. Una domanda priva di revisione editoriale viene esclusa automaticamente dal mazzo, così non può apparire durante la partita.
+
+La v2.3 contiene un primo mazzo attivo di 37 domande curate e 9 categorie. Le altre schede restano nel database ma sono disattivate fino alla loro revisione individuale; `npm run audit:questions` genera il rapporto completo.

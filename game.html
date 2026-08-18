@@ -517,7 +517,8 @@
    DATI
    ===================================================================== */
 let OFFCATS = new Set();
-const activeCats = ()=> CATEGORIES.filter(c=>!OFFCATS.has(c));
+const curatedCats = ()=> CATEGORIES.filter(c=>QUESTIONS.some(q=>q.cat===c&&q.f&&q.fs));
+const activeCats = ()=> curatedCats().filter(c=>!OFFCATS.has(c));
 const CATEGORIES = ["Sport","Cinema","Musica","Serie TV","Storia","Geografia","Cultura Pop","Internet","Scienza","Animali","Libri","Arte","Cibo e Calorie","Spazio & Tempo","Dati da Bar","Record Assurdi","Tabù"];
 
 const QUESTIONS = [
@@ -936,6 +937,164 @@ QUESTIONS.forEach(question=>{
   if(typeof question.fs!=="string") question.fs="";
 });
 
+// Curiosità editoriali: ogni voce è legata alla domanda esatta, non alla
+// categoria. Le domande prive di una voce verificata non entrano nel mazzo.
+const EDITORIAL_FACTS = {
+  "Quante pagine ha 1984 di George Orwell (circa)?": [
+    "Orwell completò 1984 sull’isola scozzese di Jura, lavorando in condizioni difficili mentre la sua salute peggiorava.",
+    "https://www.orwellfoundation.com/the-orwell-foundation/orwell/biography/"
+  ],
+  "Quanti minuti dura Il Padrino?": [
+    "Per costruire la voce di Don Vito Corleone, Marlon Brando fece il provino con del cotone in bocca; sul set fu poi usata una protesi dentale.",
+    "https://www.britannica.com/topic/The-Godfather-film-by-Coppola"
+  ],
+  "Quanti minuti dura Titanic?": [
+    "Il Titanic reale impiegò circa due ore e quaranta minuti ad affondare: quasi quanto la durata del film di James Cameron.",
+    "https://www.britannica.com/topic/Titanic"
+  ],
+  "Quanti Oscar ha vinto Titanic?": [
+    "Titanic eguagliò il record di Ben-Hur con 11 Oscar; anni dopo anche Il ritorno del re raggiunse lo stesso totale.",
+    "https://www.oscars.org/oscars/ceremonies/1998"
+  ],
+  "Quanti minuti dura Avengers Endgame?": [
+    "Avengers: Endgame fu il primo film del Marvel Cinematic Universe a superare le tre ore di durata.",
+    "https://www.marvel.com/movies/avengers-endgame"
+  ],
+  "Quanti minuti dura Pulp Fiction?": [
+    "Pulp Fiction racconta gli eventi fuori ordine: ricomponendo cronologicamente le scene, il film inizierebbe e finirebbe in punti molto diversi.",
+    "https://www.britannica.com/topic/Pulp-Fiction"
+  ],
+  "Quanti minuti dura Forrest Gump?": [
+    "In alcune sequenze di corsa, Jim Hanks sostituì suo fratello Tom come controfigura grazie alla loro notevole somiglianza.",
+    "https://www.paramount.com/movies/forrest-gump"
+  ],
+  "Quanti minuti dura La Grande Bellezza?": [
+    "La Grande Bellezza riportò in Italia l’Oscar per il miglior film straniero, quindici anni dopo La vita è bella.",
+    "https://www.oscars.org/oscars/ceremonies/2014"
+  ],
+  "Quanti minuti dura C'e ancora domani (circa)?": [
+    "C’è ancora domani, girato principalmente in bianco e nero, è l’esordio alla regia cinematografica di Paola Cortellesi.",
+    "https://www.visiondistribution.it/film/ce-ancora-domani/"
+  ],
+  "Quanti episodi totali ha Friends?": [
+    "Il divano arancione del Central Perk non fu progettato per la serie: lo scenografo lo trovò in un deposito degli studi Warner Bros.",
+    "https://www.warnerbros.com/tv/friends"
+  ],
+  "Quanti episodi ha Il Trono di Spade in totale?": [
+    "Il Trono di Spade fu girato in numerosi Paesi; Dubrovnik, in Croazia, divenne uno dei set principali di Approdo del Re.",
+    "https://www.hbo.com/game-of-thrones"
+  ],
+  "Quanti episodi totali ha I Simpson (circa)?": [
+    "I Simpson nacquero come brevi sketch nel Tracey Ullman Show prima di diventare una serie autonoma nel 1989.",
+    "https://www.britannica.com/topic/The-Simpsons"
+  ],
+  "Quanti minuti dura in media un episodio di Gomorra?": [
+    "Gomorra - La serie parte dal libro di Roberto Saviano, ma ha sviluppato personaggi e intrecci originali pensati per la televisione.",
+    "https://tg24.sky.it/spettacolo/serie-tv/gomorra"
+  ],
+  "Quanti secondi dura Bohemian Rhapsody?": [
+    "Bohemian Rhapsody non ha un ritornello tradizionale: è costruita come una suite che attraversa ballata, opera e hard rock.",
+    "https://www.britannica.com/topic/Bohemian-Rhapsody-song-by-Queen"
+  ],
+  "Quanti minuti dura The Dark Side of the Moon?": [
+    "The Dark Side of the Moon è rimasto nella classifica Billboard 200 per oltre 900 settimane complessive.",
+    "https://www.billboard.com/music/chart-beat/pink-floyd-dark-side-of-the-moon-billboard-200-1235042809/"
+  ],
+  "Quanti tasti ha un pianoforte a coda?": [
+    "Il pianoforte moderno standard ha 88 tasti: 52 bianchi e 36 neri, per un’estensione di poco superiore alle sette ottave.",
+    "https://www.britannica.com/art/piano-musical-instrument"
+  ],
+  "Quante corde ha un'arpa da concerto?": [
+    "Nell’arpa da concerto i Do sono rossi e i Fa scuri: i colori aiutano il musicista a orientarsi rapidamente tra decine di corde.",
+    "https://www.britannica.com/art/harp-musical-instrument"
+  ],
+  "Quanti anni aveva Mozart alla sua prima composizione?": [
+    "Mozart iniziò a comporre così presto che il padre Leopold trascrisse alcuni dei suoi primi brani al posto suo.",
+    "https://www.britannica.com/biography/Wolfgang-Amadeus-Mozart"
+  ],
+  "Quanti metri e alto il Burj Khalifa?": [
+    "Durante la costruzione era conosciuto come Burj Dubai: il nome Burj Khalifa fu annunciato soltanto all’inaugurazione del 2010.",
+    "https://www.britannica.com/topic/Burj-Khalifa"
+  ],
+  "Quanti secondi il record dei 100 metri di Bolt?": [
+    "Usain Bolt stabilì il record mondiale a Berlino nel 2009 e tagliò il traguardo con diversi metri di vantaggio sugli avversari.",
+    "https://worldathletics.org/records/by-progression/16647"
+  ],
+  "Quanti metri e il record del salto in lungo?": [
+    "Il salto di Mike Powell ai Mondiali di Tokyo 1991 superò il primato di Bob Beamon, che resisteva da 23 anni.",
+    "https://worldathletics.org/records/all-time-toplists/jumps/long-jump/outdoor/men/senior"
+  ],
+  "Quanti km e lunga una maratona?": [
+    "La distanza moderna della maratona fu standardizzata dopo i Giochi di Londra del 1908 e fissata definitivamente nel 1921.",
+    "https://worldathletics.org/disciplines/road-running/marathon"
+  ],
+  "Quanti metri e lunga una piscina olimpionica?": [
+    "Le grandi competizioni usano normalmente dieci corsie, ma le due esterne restano spesso libere per ridurre l’effetto delle onde sui concorrenti.",
+    "https://resources.fina.org/fina/document/2022/02/08/77c3058d-b549-4543-8524-ad51a857864e/210805-Facilities-Rules_clean.pdf"
+  ],
+  "Quanti grammi pesa una pallina da tennis (circa)?": [
+    "Una pallina da competizione deve rispettare non solo un intervallo di peso, ma anche precisi valori di diametro, deformazione e rimbalzo.",
+    "https://www.itftennis.com/media/7221/2024-rules-of-tennis-english.pdf"
+  ],
+  "Quanti grammi pesa un pallone da calcio regolamentare?": [
+    "Il regolamento specifica il peso del pallone all’inizio della partita: durante il gioco umidità e fango possono modificarlo.",
+    "https://www.theifab.com/laws/latest/the-ball/"
+  ],
+  "Quanti anni aveva la persona piu longeva mai documentata?": [
+    "Jeanne Calment incontrò Vincent van Gogh da ragazza e rimase in vita abbastanza a lungo da raccontarlo in televisione.",
+    "https://www.guinnessworldrecords.com/world-records/oldest-person"
+  ],
+  "Quanti giorni e rimasto sveglio il detentore del record senza dormire?": [
+    "Randy Gardner affrontò l’esperimento nel 1964 come progetto scolastico; il suo stato fu seguito anche dal ricercatore William Dement.",
+    "https://www.britannica.com/science/sleep-deprivation"
+  ],
+  "Quanti metri era alto l'uomo piu alto mai misurato?": [
+    "Robert Wadlow era ancora in crescita quando morì: la sua altezza eccezionale dipendeva da un’iperattività dell’ipofisi.",
+    "https://www.guinnessworldrecords.com/records/hall-of-fame/robert-wadlow-tallest-man-ever"
+  ],
+  "Quanti anni ha il piu antico albero vivente conosciuto (circa)?": [
+    "La posizione esatta di alcuni antichissimi pini delle White Mountains viene tenuta segreta per proteggerli dai visitatori.",
+    "https://www.fs.usda.gov/detail/inyo/specialplaces/?cid=stelprdb5129900"
+  ],
+  "Quante volte batte le ali un'ape in un secondo (circa)?": [
+    "Il ronzio delle api è prodotto proprio dal rapidissimo movimento delle ali e cambia frequenza durante alcuni comportamenti.",
+    "https://www.britannica.com/animal/bee"
+  ],
+  "Quanti cm e alto Lionel Messi?": [
+    "Da ragazzo Messi seguì una terapia per un deficit dell’ormone della crescita prima di trasferirsi al Barcellona.",
+    "https://www.britannica.com/biography/Lionel-Messi"
+  ],
+  "Quanti cm e alto Michael Jordan?": [
+    "Michael Jordan fu scelto soltanto con la terza chiamata al Draft NBA 1984, dopo Hakeem Olajuwon e Sam Bowie.",
+    "https://www.nba.com/history/legends/profiles/michael-jordan"
+  ],
+  "Quanti cm e alto Usain Bolt?": [
+    "Nella finale del record mondiale Bolt completò i 100 metri con circa 41 passi, molti meno rispetto a diversi rivali.",
+    "https://worldathletics.org/athletes/jamaica/usain-bolt-14201847"
+  ],
+  "Quante ore di video si caricano su YouTube ogni minuto?": [
+    "Il primo video caricato su YouTube, Me at the zoo, dura appena 19 secondi ed è ancora visibile sulla piattaforma.",
+    "https://blog.youtube/news-and-events/you-tube-at-15-my-personal-journey/"
+  ],
+  "Quante kcal ha una lattina di Coca-Cola da 330 ml?": [
+    "La ricetta e i valori nutrizionali possono variare tra mercati: per questo la confezione locale resta il riferimento più affidabile.",
+    "https://www.coca-cola.com/it/it/brands/coca-cola"
+  ],
+  "Quanti grammi di zucchero in una lattina di Fanta?": [
+    "La quantità di zucchero della Fanta cambia tra Paesi perché ricette e normative locali non sono identiche.",
+    "https://www.coca-cola.com/it/it/brands/fanta"
+  ],
+  "Quanti kg di pasta mangia un italiano in un anno (circa)?": [
+    "L’Italia è stabilmente il Paese con il più alto consumo pro capite di pasta e anche uno dei maggiori produttori mondiali.",
+    "https://internationalpasta.org/annual-report/"
+  ]
+};
+
+QUESTIONS.forEach(question=>{
+  const editorial=EDITORIAL_FACTS[question.q];
+  if(editorial){ question.f=editorial[0]; question.fs=editorial[1]; }
+});
+
 // icone per categoria (scelta categoria)
 const CAT_IC = {
   "Sport":"⚽","Cinema":"🎬","Musica":"🎵","Serie TV":"📺","Storia":"🏛️","Geografia":"🗺️",
@@ -1249,7 +1408,7 @@ function renderSetup(){
       </div>
       <p class="eyebrow" style="margin-top:12px">Categorie in gioco <span style="font-weight:400;text-transform:none;letter-spacing:0">(tocca per escludere)</span></p>
       <div class="cat-chips" id="setupCats">
-        ${CATEGORIES.map(c=>`<button type="button" class="cat-chip${OFFCATS.has(c)?' off':''}" data-cat="${esc(c)}">${CAT_IC[c]||""} ${esc(c)}</button>`).join("")}
+        ${curatedCats().map(c=>`<button type="button" class="cat-chip${OFFCATS.has(c)?' off':''}" data-cat="${esc(c)}">${CAT_IC[c]||""} ${esc(c)}</button>`).join("")}
       </div>
     </div>
 
@@ -1380,7 +1539,9 @@ function drawQuestion(){
 // pesca una domanda mai uscita; quando l'ambito si esaurisce, si riparte
 const USED_EVER = new Set(); // domande già uscite in QUESTA sessione (tra più partite)
 function drawFromPool(cat){
-  const pool = cat ? QUESTIONS.filter(q=>q.cat===cat) : QUESTIONS.filter(q=>!OFFCATS.has(q.cat));
+  const curated=QUESTIONS.filter(q=>q.f&&q.fs);
+  const pool = cat ? curated.filter(q=>q.cat===cat) : curated.filter(q=>!OFFCATS.has(q.cat));
+  if(pool.length===0) return drawFromPool(null);
   // prima scelta: mai uscita né in questa partita né nelle precedenti
   let avail = pool.filter(q=>!S.used.has(q) && !USED_EVER.has(q.q));
   // se la sessione ha esaurito l'ambito: accetta ripetizioni tra partite, mai nella stessa
@@ -1423,7 +1584,7 @@ function renderCategoryPick(chooser, source){
     ${boardCard()}
     ${scoreCard()}
   `;
-  $("#catList").innerHTML = CATEGORIES.map(c=>`
+  $("#catList").innerHTML = activeCats().map(c=>`
     <button type="button" class="choice" data-c="${esc(c)}">
       <span style="font-size:20px">${CAT_IC[c]||"❓"}</span> <b>${esc(c)}</b>
     </button>`).join("");
@@ -1787,135 +1948,12 @@ function questionFunFact(q){
     - Non generare frasi automatiche partendo soltanto da categoria o risposta.
   */
   if(q && typeof q.f==="string" && q.f.trim() && typeof q.fs==="string" && q.fs.trim()) return q.f.trim();
+  return ""; // fail closed: una domanda non curata non deve essere pescata
 
-  const VERIFIED_FACTS = {
-    "Quante pagine ha 1984 di George Orwell (circa)?":
-      "George Orwell terminò 1984 sull’isola scozzese di Jura. Il romanzo uscì nel 1949, pochi mesi prima della morte dello scrittore.",
-    "Quanti minuti dura Il Padrino?":
-      "Il Padrino uscì nel 1972. Marlon Brando registrò parte del provino con del cotone in bocca per immaginare la voce di Don Vito Corleone.",
-    "Quanti minuti dura Titanic?":
-      "Il Titanic reale impiegò circa due ore e quaranta minuti ad affondare: quasi quanto la durata del film di James Cameron.",
-    "Quanti Oscar ha vinto Titanic?":
-      "Titanic vinse 11 Oscar, eguagliando allora il primato di Ben-Hur. In seguito anche Il ritorno del re arrivò a 11.",
-    "Quanti episodi totali ha Friends?":
-      "Friends conta 236 episodi. L’ultimo, trasmesso nel 2004, fu seguito negli Stati Uniti da oltre 50 milioni di spettatori.",
-    "Quanti secondi dura Bohemian Rhapsody?":
-      "Bohemian Rhapsody non ha un ritornello tradizionale: è costruita come una piccola suite con ballata, parte operistica e sezione rock.",
-    "Quanti tasti ha un pianoforte a coda?":
-      "Il pianoforte moderno standard ha 88 tasti: 52 bianchi e 36 neri.",
-    "Quanti anni aveva Mozart alla sua prima composizione?":
-      "Mozart iniziò a comporre da bambino e il padre Leopold trascrisse alcuni dei suoi primi brani, perché Wolfgang era ancora troppo piccolo per scriverli con facilità.",
-    "Quanti episodi ha Il Trono di Spade in totale?":
-      "Il Trono di Spade è composto da 73 episodi distribuiti in otto stagioni.",
-    "Quanti metri e alto il Burj Khalifa?":
-      "Il Burj Khalifa supera gli 800 metri e il suo nome attuale fu annunciato soltanto durante l’inaugurazione del 2010.",
-    "Quanti secondi il record dei 100 metri di Bolt?":
-      "Usain Bolt stabilì il record mondiale di 9,58 secondi a Berlino nel 2009.",
-    "Quanti metri e il record del salto in lungo?":
-      "Mike Powell saltò 8,95 metri ai Mondiali di Tokyo del 1991, superando un record che durava da 23 anni.",
-    "Quanti km e lunga una maratona?":
-      "La distanza ufficiale della maratona è 42,195 km. Fu standardizzata dopo i Giochi di Londra del 1908.",
-    "Quanti metri e lunga una piscina olimpionica?":
-      "Una piscina olimpionica è lunga 50 metri; nelle competizioni internazionali le corsie sono normalmente dieci.",
-    "Quanti Oscar ha vinto Titanic?":
-      "Titanic vinse 11 Oscar, compresi miglior film e miglior regia.",
-    "Quante corde ha un'arpa da concerto?":
-      "Un’arpa da concerto moderna ha normalmente 47 corde e sette pedali, usati per modificare l’altezza delle note.",
-    "Quanti tasti ha un pianoforte a coda?":
-      "Gli 88 tasti del pianoforte standard coprono poco più di sette ottave.",
-    "Quanti episodi totali ha Friends?":
-      "Il celebre divano arancione del Central Perk fu trovato in un deposito degli studi Warner Bros.",
-    "Quanti minuti dura Avengers Endgame?":
-      "Avengers: Endgame fu il primo film del Marvel Cinematic Universe a superare le tre ore.",
-    "Quanti minuti dura Pulp Fiction?":
-      "Pulp Fiction racconta gli eventi fuori ordine cronologico: rimontando le scene, la storia segue una sequenza molto diversa.",
-    "Quanti minuti dura Forrest Gump?":
-      "Per alcune scene di corsa, il fratello di Tom Hanks lavorò come controfigura grazie alla loro somiglianza.",
-    "Quanti minuti dura La Grande Bellezza?":
-      "La Grande Bellezza vinse l’Oscar come miglior film in lingua straniera nel 2014.",
-    "Quanti minuti dura C'e ancora domani (circa)?":
-      "C’è ancora domani è stato girato principalmente in bianco e nero ed è l’esordio alla regia di Paola Cortellesi.",
-    "Quanti minuti dura The Dark Side of the Moon?":
-      "The Dark Side of the Moon rimase nella classifica Billboard 200 per oltre 900 settimane complessive.",
-    "Quante corde ha un'arpa da concerto?":
-      "Le corde dell’arpa hanno colori di riferimento: i Do sono rossi e i Fa sono scuri, così il musicista si orienta più rapidamente.",
-    "Quanti episodi totali ha I Simpson (circa)?":
-      "I Simpson debuttarono come brevi segmenti nel Tracey Ullman Show prima di diventare una serie autonoma nel 1989.",
-    "Quanti minuti dura in media un episodio di Gomorra?":
-      "Gomorra - La serie è ispirata al libro di Roberto Saviano, ma sviluppa personaggi e trame originali per la televisione.",
-    "Quante ore di video si caricano su YouTube ogni minuto?":
-      "YouTube nacque nel 2005; il primo video caricato, Me at the zoo, dura soltanto 19 secondi.",
-    "Quanti grammi pesa una pallina da tennis (circa)?":
-      "Le palline da tennis da competizione devono rispettare intervalli precisi di peso, diametro e rimbalzo.",
-    "Quanti grammi pesa un pallone da calcio regolamentare?":
-      "Un pallone regolamentare di misura 5 deve pesare tra 410 e 450 grammi all’inizio della partita.",
-    "Quanti anni aveva la persona piu longeva mai documentata?":
-      "Jeanne Calment visse 122 anni e 164 giorni ed è la persona con la maggiore longevità verificata.",
-    "Quanti giorni e rimasto sveglio il detentore del record senza dormire?":
-      "Randy Gardner rimase sveglio per circa 11 giorni nel 1964 durante un esperimento scolastico seguito da ricercatori.",
-    "Quanti metri era alto l'uomo piu alto mai misurato?":
-      "Robert Wadlow raggiunse 2,72 metri ed era ancora in crescita quando morì nel 1940.",
-    "Quanti km/h puo raggiungere uno starnuto umano?":
-      "La velocità di uno starnuto varia molto tra le misurazioni: per questo i valori divulgativi sono spesso approssimativi.",
-    "Quanti anni ha il piu antico albero vivente conosciuto (circa)?":
-      "Alcuni pini dai coni setolosi delle White Mountains hanno più di 4.800 anni; la posizione esatta degli esemplari più antichi viene protetta.",
-    "Quante volte batte le ali un'ape in un secondo (circa)?":
-      "Il ronzio dell’ape nasce proprio dal rapidissimo movimento delle ali.",
-    "Quanti cm e alto Lionel Messi?":
-      "Da ragazzo Lionel Messi seguì una terapia per un deficit dell’ormone della crescita prima di trasferirsi al Barcellona.",
-    "Quanti cm e alto Michael Jordan?":
-      "Michael Jordan fu scelto con la terza chiamata assoluta al Draft NBA del 1984.",
-    "Quanti cm e alto Usain Bolt?":
-      "L’altezza di Usain Bolt gli permetteva una falcata molto lunga: nella finale del record mondiale completò i 100 metri con circa 41 passi.",
-    "Quante kcal ha una lattina di Coca-Cola da 330 ml?":
-      "Le calorie della Coca-Cola classica provengono quasi interamente dagli zuccheri disciolti nella bevanda.",
-    "Quanti grammi di zucchero in una lattina di Fanta?":
-      "La quantità di zucchero può cambiare tra Paesi e ricette: per questo l’etichetta della lattina resta il riferimento più preciso.",
-    "Quanti kg di pasta mangia un italiano in un anno (circa)?":
-      "L’Italia è stabilmente tra i Paesi con il più alto consumo pro capite di pasta al mondo."
-  };
-
-  return numericalFunFact(q);
-}
-
-function numericalFunFact(q){
-  if(!q || !Number.isFinite(Number(q.a))) return "Un numero sorprendente da ricordare e raccontare al tavolo.";
-  const value=Number(q.a), unit=String(q.u||"").toLowerCase();
-  const shown=`${fmtNum(value)}${q.u?" "+q.u:""}`;
-  if((unit==="min"||unit.includes("minut")) && Math.abs(value)>=60){
-    const hours=Math.trunc(Math.abs(value)/60), minutes=Math.round(Math.abs(value)%60);
-    return `${shown} equivalgono a ${hours} ${hours===1?"ora":"ore"}${minutes?` e ${minutes} minuti`:""}: un modo più immediato per visualizzare la risposta.`;
-  }
-  if((unit==="sec"||unit.includes("second")) && Math.abs(value)>=60){
-    const minutes=Math.trunc(Math.abs(value)/60), seconds=Math.round(Math.abs(value)%60);
-    return `${shown} equivalgono a ${minutes} ${minutes===1?"minuto":"minuti"}${seconds?` e ${seconds} secondi`:""}.`;
-  }
-  if((unit==="cm"||unit.includes("centimetr")) && Math.abs(value)>=100){
-    return `${shown} corrispondono a ${fmtNum(value/100)} metri: la stessa misura, vista su una scala più facile da immaginare.`;
-  }
-  if((unit==="m"||unit.includes("metr")) && !unit.includes("metr quadr") && Math.abs(value)>=1000){
-    return `${shown} corrispondono a ${fmtNum(value/1000)} chilometri.`;
-  }
-  if((unit==="g"||unit.includes("gramm")) && Math.abs(value)>=1000){
-    return `${shown} equivalgono a ${fmtNum(value/1000)} chilogrammi.`;
-  }
-  if((unit==="kg"||unit.includes("chilogram")) && Math.abs(value)>=1000){
-    return `${shown} equivalgono a ${fmtNum(value/1000)} tonnellate.`;
-  }
-  if(unit.includes("ora")||unit.includes("ore")){
-    return `${shown} significano circa ${fmtNum(value*60)} minuti: una durata che cambia prospettiva quando la si converte.`;
-  }
-  if(unit.includes("giorn")){
-    return `${shown} equivalgono a circa ${fmtNum(value/365)} anni oppure ${fmtNum(value*24)} ore.`;
-  }
-  if(unit.includes("anno") && value>1000){
-    return `${shown} è l’anno da ricordare: collocarlo sulla linea del tempo rende la stima molto meno astratta.`;
-  }
-  return `Il valore da ricordare è ${shown}: è il riferimento preciso usato per valutare tutte le stime di questo round.`;
 }
 
 function questionFunFactSource(q){
-  return q&&q.fs?String(q.fs):"Conversione o contestualizzazione calcolata dal valore di risposta della domanda.";
+  return q&&q.fs?String(q.fs):"";
 }
 
 function renderReveal(){

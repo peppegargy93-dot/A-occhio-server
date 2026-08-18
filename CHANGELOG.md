@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.3.0 — revisione editoriale fail-closed
+
+- Eliminato il fallback con conversioni numeriche.
+- Aggiunto un archivio di curiosità legate alla domanda esatta, ciascuna con fonte HTTPS.
+- Attivate 37 domande curate distribuite in 9 categorie.
+- Escluse automaticamente dal sorteggio le 368 domande non ancora revisionate.
+- Nascondi le categorie senza almeno una domanda editoriale completa.
+- Aggiunti audit e test automatici della copertura editoriale.
+
 ## 2.2.0 — scelta Bonus e curiosità obbligatorie
 
 - Corretto il race condition mostrato nel test reale: l'anteprima Bonus/Malus viene ora inviata prima della richiesta interattiva e non può più sovrascrivere i pulsanti del giocatore autorizzato.

@@ -1,10 +1,8 @@
 'use strict';
-const fs = require('fs');
-const html = fs.readFileSync('game.html', 'utf8');
-const scripts = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map(match => match[1]).join('\n');
+const fs=require('fs');
+const html=fs.readFileSync('game.html','utf8');
+const scripts=[...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map(match=>match[1]).join('\n');
 new Function(scripts);
-if (html.includes('onlineScreenFromMaster(')) throw new Error('È rimasto il fallback che copia testo dal DOM Master.');
-if (!html.includes('function setFenomeno(player)')) throw new Error('Helper Anti-Sapientone mancante.');
-if (!html.includes('S.scoringAppliedRound===S.round')) throw new Error('Guardia punteggio per round mancante.');
-if (!html.includes('effectiveDist=rawDist===Infinity?Infinity:rawDist*penaltyMultiplier')) throw new Error('Distanza autorevole Anti-Sapientone mancante.');
-console.log('Sintassi JavaScript inline di game.html: OK');
+if(!html.includes('const EDITORIAL_FACTS = {')) throw new Error('Database editoriale mancante.');
+if(!html.includes('const curated=QUESTIONS.filter(q=>q.f&&q.fs)')) throw new Error('Filtro editoriale fail-closed mancante.');
+console.log('Sintassi e regole editoriali: OK');

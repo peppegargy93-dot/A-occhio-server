@@ -41,7 +41,8 @@ test('l’anteprima speciale precede sempre la scelta interattiva', () => {
   assert.ok(renderSpecial.indexOf('onlineSpecialFromMaster(type, lander, c)') < renderSpecial.indexOf('wireSpecial(type, lander)'));
 });
 
-test('ogni domanda dispone di una curiosità o contestualizzazione', () => {
-  assert.match(html, /return numericalFunFact\(q\)/);
-  assert.match(html, /function questionFunFactSource\(q\)/);
+test('nessuna domanda usa più il fallback numerico', () => {
+  const factFunction=html.match(/function questionFunFact\(q\)\{[\s\S]*?\n\}/)[0];
+  assert.doesNotMatch(factFunction,/numericalFunFact/);
+  assert.match(factFunction,/return ""/);
 });

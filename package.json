@@ -1,6 +1,6 @@
 {
   "name": "a-occhio-party-game",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "private": true,
   "description": "A OCCHIO! - party game multiplayer con master, timer server-side e modalit\u00e0 risposta a voce",
   "main": "server.js",
