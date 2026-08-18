@@ -46,10 +46,18 @@ function livePads(room) {
   );
 }
 
+function playerList(room) {
+  return [...room.pads.values()].map(pad => ({
+    name: pad.name,
+    connected: !!(pad.socket && pad.socket.readyState === WebSocket.OPEN)
+  }));
+}
+
 function notifyMaster(room) {
   send(room.masterSocket, {
     t: 'peer',
-    n: livePads(room).length
+    n: livePads(room).length,
+    players: playerList(room)
   });
 }
 
@@ -185,7 +193,7 @@ body{padding:12px 14px calc(24px + env(safe-area-inset-bottom))}.shell{width:100
 
     <section id="infoScreen" class="screen">
       <div class="hero"><div id="infoIcon" class="icon">📣</div><div id="infoTitle" class="eyebrow"></div></div>
-      <div class="event-card"><div id="infoSubject" class="event-subject"></div><div id="infoEffectTitle" class="event-title"></div><div id="infoText" class="event-desc"></div><div id="infoInstruction" class="instruction"></div></div>
+      <div class="event-card"><div id="infoSubject" class="event-subject"></div><div id="infoEffectTitle" class="event-title"></div><div id="infoText" class="event-desc"></div><div id="infoInstruction" class="instruction"></div><div id="choiceList" class="choice-list hidden"></div></div>
       <div id="infoContext" class="context-card hidden"><div class="section-title">Ultimo round</div><div class="context-head"><span>Risposta corretta</span><span id="contextAnswer" class="context-answer"></span></div><div id="contextFact" class="fact-card hidden"></div><div class="section-title">Classifica aggiornata</div><div id="contextScores"></div></div>
     </section>
 
@@ -201,7 +209,7 @@ const screens=['joinScreen','waitingScreen','questionScreen','lockedScreen','res
 function showScreen(id){screens.forEach(x=>$(x).classList.toggle('active',x===id));$('changeBtn').classList.toggle('hidden',id==='joinScreen');window.scrollTo({top:0,behavior:'smooth'})}
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function key(s){return String(s||'').trim().toLocaleLowerCase('it-IT')}
-function getSaved(){try{return JSON.parse(localStorage.getItem('aocchio_pad')||'null')}catch{return null}}function save(){try{localStorage.setItem('aocchio_pad',JSON.stringify({code:currentCode,name:currentName,token:padToken}))}catch{}}function clearSaved(){try{localStorage.removeItem('aocchio_pad')}catch{}}
+function getSaved(){try{return JSON.parse(localStorage.getItem('aocchio_pad')||'null')}catch{return null}}function save(){try{localStorage.setItem('aocchio_pad',JSON.stringify({code:currentCode,name:currentName,token:padToken}));localStorage.setItem('aocchio_nickname',currentName)}catch{}}function clearSaved(){try{const old=getSaved();localStorage.removeItem('aocchio_pad');if(old&&old.name)localStorage.setItem('aocchio_nickname',old.name)}catch{}}
 function connection(ok,text){$('connDot').classList.toggle('off',!ok);$('connText').textContent=text}
 function setRoom(){if(currentCode){$('roomBadge').textContent='Stanza '+currentCode;$('roomBadge').classList.remove('hidden')}else $('roomBadge').classList.add('hidden')}
 function stopTimer(){clearInterval(timerId);timerId=null}
@@ -251,7 +259,7 @@ function applyResult(v){
   $('resultEyebrow').textContent='Risultati del round '+(v.round||'');
   $('correctAnswer').textContent=v.answer||'—';
   $('resultQuestion').textContent=v.question||'';
-  if(v.funFact){$('funFact').innerHTML='<b>💡 Curiosità verificata</b>'+esc(v.funFact);$('funFact').classList.remove('hidden')}else{$('funFact').classList.add('hidden');$('funFact').innerHTML=''}
+  if(v.funFact){$('funFact').innerHTML='<b>💡 Curiosità</b>'+esc(v.funFact);$('funFact').classList.remove('hidden')}else{$('funFact').classList.add('hidden');$('funFact').innerHTML=''}
   const ranking=Array.isArray(v.ranking)?v.ranking:[];
   const scores=Array.isArray(v.scores)?v.scores:[];
   const mine=meIn(ranking),projected=meIn(scores);
@@ -271,8 +279,29 @@ function compactScores(scores,target){
   const sorted=(scores||[]).slice().sort((a,b)=>(b.score||0)-(a.score||0)||(b.pos||0)-(a.pos||0));
   $(target).innerHTML=sorted.map((p,i)=>'<div class="compact-score"><b>'+(i+1)+'°. '+esc(p.name)+(key(p.name)===key(currentName)?' · tu':'')+'</b><span>'+(p.score||0)+' pt · cas. '+(p.pos||0)+'</span></div>').join('');
 }
+function applyChoiceRequest(v){
+  stopTimer();showScreen('infoScreen');
+  $('infoIcon').textContent='👉';
+  $('infoTitle').textContent='Tocca a te';
+  $('infoSubject').textContent=v.subject||currentName;
+  $('infoEffectTitle').textContent=v.title||'Fai la tua scelta';
+  $('infoText').textContent=v.description||'Scegli una delle opzioni disponibili.';
+  $('infoInstruction').textContent='La scelta è personale e può essere inviata soltanto da questa lavagnetta.';
+  $('infoContext').classList.add('hidden');
+  const box=$('choiceList');
+  const options=Array.isArray(v.options)?v.options:[];
+  box.innerHTML=options.map(o=>'<button type="button" class="choice-btn" data-id="'+esc(o.id)+'"><b>'+esc(o.label)+'</b><span>'+esc(o.description||'')+'</span></button>').join('');
+  box.classList.remove('hidden');
+  box.querySelectorAll('.choice-btn').forEach(btn=>btn.addEventListener('click',()=>{
+    box.querySelectorAll('.choice-btn').forEach(b=>b.disabled=true);
+    ws.send(JSON.stringify({t:'choice_response',requestId:v.requestId,optionId:btn.dataset.id}));
+    $('infoInstruction').textContent='Scelta inviata. Attendi la conferma del gioco.';
+  }));
+  $('status').textContent='Questa scelta spetta a te.';
+}
 function applyInfo(v){
   stopTimer();showScreen('infoScreen');
+  $('choiceList').classList.add('hidden');$('choiceList').innerHTML='';
   $('infoIcon').textContent=v.icon||(v.kind==='special'?'🎲':'📣');
   $('infoTitle').textContent=v.title||'Aggiornamento';
   $('infoSubject').textContent=v.subject||'';
@@ -283,7 +312,7 @@ function applyInfo(v){
   if(result||map){
     $('infoContext').classList.remove('hidden');
     $('contextAnswer').textContent=result?.answer||'Risposta non ancora disponibile';
-    if(result?.funFact){$('contextFact').innerHTML='<b>💡 Curiosità verificata</b>'+esc(result.funFact);$('contextFact').classList.remove('hidden')}else{$('contextFact').classList.add('hidden');$('contextFact').innerHTML=''}
+    if(result?.funFact){$('contextFact').innerHTML='<b>💡 Curiosità</b>'+esc(result.funFact);$('contextFact').classList.remove('hidden')}else{$('contextFact').classList.add('hidden');$('contextFact').innerHTML=''}
     compactScores(v.scores||map?.scores||result?.scores||[],'contextScores');
   }else{
     $('infoContext').classList.add('hidden');$('contextScores').innerHTML='';
@@ -293,7 +322,7 @@ function applyInfo(v){
 function applyView(v){if(v.kind==='result')return applyResult(v);if(v.kind==='map')return applyMap(v);return applyInfo(v)}
 function applyState(s){if(s.view)applyView(s.view);else if(s.question)applyQuestion({...s.question,deadline:s.deadline,locked:s.locked,sent:s.sent});else showScreen('waitingScreen')}
 function closeSocket(){manualClose=true;clearTimeout(retry);try{ws&&ws.close()}catch{}ws=null;setTimeout(()=>manualClose=false,80)}
-function connect(mode){clearTimeout(retry);if(!currentCode||!currentName)return;connection(false,mode==='resume'?'Riconnessione…':'Connessione…');try{ws=new WebSocket(proto+location.host)}catch{return}$('status').textContent='';ws.onopen=()=>ws.send(JSON.stringify(mode==='resume'&&padToken?{t:'resume_pad',code:currentCode,token:padToken}:{t:'join',code:currentCode,name:currentName}));ws.onmessage=e=>{let m;try{m=JSON.parse(e.data)}catch{return}if(m.t==='ok'||m.t==='resumed_pad'){currentCode=m.code;padToken=m.token||padToken;save();retryMs=1000;setRoom();connection(true,'Collegato');$('changeBtn').classList.remove('hidden');if(m.state)applyState(m.state);else showScreen('waitingScreen')}else if(m.t==='q')applyQuestion(m);else if(m.t==='lock'){stopTimer();showScreen('lockedScreen');$('status').textContent=sent?'La tua stima è al sicuro.':'Tempo scaduto: nessuna stima inviata.'}else if(m.t==='view')applyView(m);else if(m.t==='accepted'){sent=true;$('estimate').disabled=true;$('sendBtn').disabled=true;$('sentBox').classList.remove('hidden');$('status').textContent='Risposta registrata.'}else if(m.t==='duplicate'){sent=true;$('estimate').disabled=true;$('sendBtn').disabled=true;$('sentBox').classList.remove('hidden');$('status').textContent='La risposta era già stata inviata.'}else if(m.t==='personal_timeout'){$('estimate').disabled=true;$('sendBtn').disabled=true;$('status').textContent=m.msg||'Tempo personale scaduto: la lavagnetta è bloccata.'}else if(m.t==='room_closed'){padToken='';clearSaved();currentCode='';setRoom();showScreen('joinScreen');$('status').textContent=m.msg||'La partita è terminata.'}else if(m.t==='replaced'){showScreen('joinScreen');$('status').textContent=m.msg||'Sessione aperta altrove.'}else if(m.t==='err'){if(m.reset){padToken='';clearSaved();showScreen('joinScreen')} $('status').textContent='⚠️ '+m.msg}};ws.onclose=()=>{connection(false,'Connessione interrotta');if(manualClose)return;retry=setTimeout(()=>connect('resume'),retryMs);retryMs=Math.min(10000,retryMs*2)}}
+function connect(mode){clearTimeout(retry);if(!currentCode||!currentName)return;connection(false,mode==='resume'?'Riconnessione…':'Connessione…');try{ws=new WebSocket(proto+location.host)}catch{return}$('status').textContent='';ws.onopen=()=>ws.send(JSON.stringify(mode==='resume'&&padToken?{t:'resume_pad',code:currentCode,token:padToken}:{t:'join',code:currentCode,name:currentName}));ws.onmessage=e=>{let m;try{m=JSON.parse(e.data)}catch{return}if(m.t==='ok'||m.t==='resumed_pad'){currentCode=m.code;padToken=m.token||padToken;save();retryMs=1000;setRoom();connection(true,'Collegato');$('changeBtn').classList.remove('hidden');if(m.state)applyState(m.state);else showScreen('waitingScreen')}else if(m.t==='q')applyQuestion(m);else if(m.t==='choice_request')applyChoiceRequest(m);else if(m.t==='lock'){stopTimer();showScreen('lockedScreen');$('status').textContent=sent?'La tua stima è al sicuro.':'Tempo scaduto: nessuna stima inviata.'}else if(m.t==='view')applyView(m);else if(m.t==='accepted'){sent=true;$('estimate').disabled=true;$('sendBtn').disabled=true;$('sentBox').classList.remove('hidden');$('status').textContent='Risposta registrata.'}else if(m.t==='duplicate'){sent=true;$('estimate').disabled=true;$('sendBtn').disabled=true;$('sentBox').classList.remove('hidden');$('status').textContent='La risposta era già stata inviata.'}else if(m.t==='choice_confirmed'){$('infoInstruction').textContent=m.msg||'Scelta confermata.';$('status').textContent='Scelta registrata.'}else if(m.t==='personal_timeout'){$('estimate').disabled=true;$('sendBtn').disabled=true;$('status').textContent=m.msg||'Tempo personale scaduto: la lavagnetta è bloccata.'}else if(m.t==='room_closed'){padToken='';clearSaved();currentCode='';setRoom();showScreen('joinScreen');$('status').textContent=m.msg||'La partita è terminata.'}else if(m.t==='replaced'){showScreen('joinScreen');$('status').textContent=m.msg||'Sessione aperta altrove.'}else if(m.t==='err'){if(m.reset){padToken='';clearSaved();showScreen('joinScreen')} $('status').textContent='⚠️ '+m.msg}};ws.onclose=()=>{connection(false,'Connessione interrotta');if(manualClose)return;retry=setTimeout(()=>connect('resume'),retryMs);retryMs=Math.min(10000,retryMs*2)}}
 function join(){const code=$('code').value.trim().toUpperCase(),name=$('name').value.trim();if(code.length!==4||!name){$('status').textContent='Inserisci un codice di quattro lettere e il tuo nome.';return}closeSocket();currentCode=code;currentName=name;padToken='';clearSaved();setRoom();setTimeout(()=>connect('join'),100)}
 function submit(){if(!ws||ws.readyState!==WebSocket.OPEN||sent)return;const value=$('estimate').value.trim();if(!value){$('status').textContent='Inserisci prima una stima.';return}ws.send(JSON.stringify({t:'est',value}))}
 $('joinBtn').addEventListener('click',join);$('sendBtn').addEventListener('click',submit);$('estimate').addEventListener('keydown',e=>{if(e.key==='Enter')submit()});$('code').addEventListener('input',()=>$('code').value=$('code').value.toUpperCase());$('toggleMap').addEventListener('click',()=>{mapExpanded=!mapExpanded;renderMap()});$('changeBtn').addEventListener('click',()=>{try{ws&&ws.send(JSON.stringify({t:'leave_pad'}))}catch{}closeSocket();currentCode='';padToken='';clearSaved();setRoom();showScreen('joinScreen');$('status').textContent='Inserisci il codice della nuova stanza.'});
@@ -340,7 +369,7 @@ wss.on('connection', ws => {
       rooms.set(code, room);
       ws._room = code;
       ws._role = 'master';
-      send(ws, { t: 'room', code, token: room.masterToken, n: 0 });
+      send(ws, { t: 'room', code, token: room.masterToken, n: 0, players: [] });
       return;
     }
 
@@ -354,7 +383,7 @@ wss.on('connection', ws => {
       room.masterSocket = ws;
       ws._room = code;
       ws._role = 'master';
-      send(ws, { t: 'resumed_master', code, n: livePads(room).length });
+      send(ws, { t: 'resumed_master', code, n: livePads(room).length, players: playerList(room) });
       return;
     }
 
@@ -369,8 +398,18 @@ wss.on('connection', ws => {
         });
       }
 
-      const name = String(m.name || '').trim();
+      const name = String(m.name || '').trim().slice(0, 18);
       if (!name) return send(ws, { t: 'err', msg: 'Inserisci il nome.' });
+
+      const duplicate = [...room.pads.values()].find(
+        p => p.name.toLocaleLowerCase('it-IT') === name.toLocaleLowerCase('it-IT')
+      );
+      if (duplicate) {
+        return send(ws, {
+          t: 'err',
+          msg: 'Questo nickname è già in uso nella stanza. Scegline un altro.'
+        });
+      }
 
       const pad = {
         token: makeToken(),
@@ -483,6 +522,47 @@ wss.on('connection', ws => {
       }
       room.lastView = payload;
       broadcastPads(room, payload);
+      return;
+    }
+
+
+    if (m.t === 'choice_request' && ws._role === 'master') {
+      const chooser = String(m.chooser || '').trim().toLocaleLowerCase('it-IT');
+      const pad = [...room.pads.values()].find(
+        p => p.name.trim().toLocaleLowerCase('it-IT') === chooser
+      );
+      if (!pad) {
+        return send(room.masterSocket, {
+          t: 'choice_unavailable',
+          requestId: m.requestId,
+          msg: 'La lavagnetta del giocatore non è collegata.'
+        });
+      }
+      send(pad.socket, {
+        t: 'choice_request',
+        requestId: m.requestId,
+        title: m.title || 'Fai la tua scelta',
+        subject: m.subject || '',
+        description: m.description || '',
+        options: Array.isArray(m.options) ? m.options : []
+      });
+      return;
+    }
+
+    if (m.t === 'choice_response' && ws._role === 'pad') {
+      const pad = room.pads.get(ws._padToken);
+      if (!pad) return;
+      send(room.masterSocket, {
+        t: 'choice_response',
+        requestId: m.requestId,
+        optionId: m.optionId,
+        chooser: pad.name
+      });
+      send(ws, {
+        t: 'choice_confirmed',
+        requestId: m.requestId,
+        msg: 'Scelta inviata al gioco.'
+      });
       return;
     }
 

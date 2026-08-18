@@ -1234,7 +1234,7 @@ function renderSetup(){
 
     <div class="card">
       <h2><span class="tick">📲</span> Collega le lavagnette</h2>
-      <p class="sub">Fallo prima di iniziare: gli altri giocatori scansionano il QR. Il primo nome della lista usa questo telefono ed è il Master.</p>
+      <p class="sub">Fallo prima di iniziare: gli altri giocatori scansionano il QR. Il primo nome della lista usa questo telefono ed è il Master. Gli altri scelgono il nickname dalla propria lavagnetta e compaiono qui automaticamente.</p>
       <div class="card flat mt-s" id="onlineBar" style="text-align:center"></div>
     </div>
 
@@ -1325,7 +1325,7 @@ function startGame(){
   if(S.count===2){ BOARD=BOARD_DUO; FINISH=BOARD.length; }
   else { BOARD=BOARD_FULL; FINISH=BOARD.length; }
   S.players.forEach((p,i)=>{ if(!p.name.trim()) p.name = "Giocatore "+(i+1); });
-  S.round=0; S.lastWinnerId=null; S.forcedCat=null;
+  S.round=0; S.lastWinnerId=null; S.forcedCat=null; S.scoringAppliedRound=-1;
   S.used=new Set();
   S.players.forEach(p=>{p.score=0;p.pos=0;p.streak=0;p.fenomeno=false;p.malus=[];p.bonus=[];p.doubleNext=false;p.cecchino=false;});S.twins=null;
   S.log=[];
@@ -1675,23 +1675,20 @@ function calcResults(){
     if(!Number.isNaN(val) && p.malus.some(m=>m.round10)){
       val = Math.round(val/10)*10;
     }
-    let dist = Number.isNaN(val)? Infinity : Math.abs(q.a - val);
-    // malus "Zavorra": la distanza pesa di più (anti-sapientone)
-    if(dist!==Infinity){
-      const pen = p.malus.reduce((f,m)=> m.penalty? f*m.penalty : f, 1);
-      dist = dist*pen;
-    }
-    return {id:p.id, name:p.name, color:p.color, est:val, dist};
+    const rawDist=Number.isNaN(val)?Infinity:Math.abs(q.a-val);
+    const penaltyMultiplier=p.malus.reduce((f,m)=>m.penalty?f*m.penalty:f,1);
+    const effectiveDist=rawDist===Infinity?Infinity:rawDist*penaltyMultiplier;
+    return {id:p.id,name:p.name,color:p.color,est:val,rawDist,effectiveDist,dist:effectiveDist,penaltyMultiplier};
   });
 
   // ordina per distanza (Infinity = nessuna stima, in fondo)
-  const ordered = entries.slice().sort((a,b)=> a.dist===b.dist?0:(a.dist<b.dist?-1:1));
+  const ordered=entries.slice().sort((a,b)=>a.effectiveDist===b.effectiveDist?S.players.findIndex(p=>p.id===a.id)-S.players.findIndex(p=>p.id===b.id):(a.effectiveDist<b.effectiveDist?-1:1));
 
   // individua i cluster di parità (stessa distanza finita) che toccano il podio (primi 3 validi)
   const clusters=[]; let i=0, validIdx=0;
   while(i<ordered.length){
     let j=i;
-    while(j+1<ordered.length && ordered[j+1].dist===ordered[i].dist) j++;
+    while(j+1<ordered.length && Math.abs(ordered[j+1].effectiveDist-ordered[i].effectiveDist)<1e-9) j++;
     const size=j-i+1;
     if(size>1 && ordered[i].dist!==Infinity && validIdx<3){
       clusters.push({start:i, end:j});
@@ -1865,7 +1862,7 @@ function renderReveal(){
   const rowsHtml = S.ranking.map((e,ix)=>{
     const podium = e.pts>0;
     const rcls = e.rank===1?"r1":e.rank===2?"r2":e.rank===3?"r3":"";
-    const distTxt = e.dist===Infinity? "nessuna stima" : `stima ${fmtNum(e.est)} · distanza ${fmtNum(e.dist)}`;
+    const distTxt=e.effectiveDist===Infinity?"nessuna stima":`stima ${fmtNum(e.est)} · distanza reale ${fmtNum(e.rawDist)}${e.penaltyMultiplier>1?` · distanza Anti-Sapientone ${fmtNum(e.effectiveDist)}`:""}`;
     return `
       <div class="res-row ${podium?'podium':''} res-in" style="animation-delay:${.35+ix*.18}s">
         <div class="rank ${rcls}">${e.pts>0? e.rank : "–"}</div>
@@ -1911,11 +1908,12 @@ function renderReveal(){
     question:q.q,
     answer:fmtNum(q.a)+(q.u?" "+q.u:""),
     funFact:questionFunFact(q),
+    funFactSource:q.fs||q.source||"",
     ranking:S.ranking.map(e=>({
       name:e.name,
       color:e.color,
       estimate:e.dist===Infinity?null:fmtNum(e.est),
-      distance:e.dist===Infinity?null:fmtNum(e.dist),
+      distance:e.effectiveDist===Infinity?null:fmtNum(e.effectiveDist),rawDistance:e.rawDist===Infinity?null:fmtNum(e.rawDist),penaltyMultiplier:e.penaltyMultiplier,
       points:e.pts,
       rank:e.rank
     })),
@@ -1928,6 +1926,8 @@ function renderReveal(){
    PUNTEGGIO + MOVIMENTO + FENOMENO
    ===================================================================== */
 function applyScoringAndMove(){
+  if(S.scoringAppliedRound===S.round)return;
+  S.scoringAppliedRound=S.round;
   let finaleReached=null;
   S.lastLanded=[];
   // 🔥 Posta Doppia
@@ -2110,28 +2110,26 @@ function renderSpecial(){
 
 function wireSpecial(type, lander){
   if(type==="bonus"){
-    const list=$("#bonusList");
-    const opts = shuffle(BONUS).slice(0,3);
-    list.innerHTML = opts.map((b,i)=>`<button type="button" class="choice" data-i="${i}">
-        <span style="font-size:20px">⭐</span>
-        <span><b>${b.nm}</b><br><span style="font-size:12px;color:#6c7d82">${b.desc}</span></span>
-      </button>`).join("");
-    $$(".choice",list).forEach((btn)=>{
-      btn.addEventListener("click",()=>{
-        const b = opts[+btn.dataset.i];
-        lander.bonus.push(b);
-        log(`⭐ ${esc(lander.name)} tiene il bonus "${b.nm}".`);
-        onlineBroadcastCardResolution({
-          icon:"⭐",
-          title:"Bonus assegnato",
-          subject:`${lander.name} · Casella ${S.special?.cell||"—"}`,
-          effectTitle:b.nm,
-          description:b.desc,
-          instruction:`${lander.name} conserva questa carta. L’effetto verrà applicato quando previsto dal gioco.`
-        });
-        setTimeout(nextSpecialOrPost,700);
-      });
+    const list=$("#bonusList"),opts=shuffle(BONUS).slice(0,3);
+    list.innerHTML=`<div class="card flat center">📲 ${esc(lander.name)} sceglierà il BONUS dalla propria lavagnetta.</div>`;
+    onlineRequestPlayerChoice({chooser:lander,title:"Scegli il BONUS",subject:`Casella BONUS · ${lander.name}`,description:"Scegli la carta da assegnare.",options:opts.map(b=>({id:b.id,label:`BONUS · ${b.nm}`,description:b.desc}))},(bonusId)=>{
+      const b=opts.find(x=>x.id===bonusId);
+      if(!b){list.innerHTML=opts.map((x,i)=>`<button class="choice fallback-bonus" data-i="${i}"><b>BONUS · ${esc(x.nm)}</b><br><span>${esc(x.desc)}</span></button>`).join("");$$(".fallback-bonus",list).forEach(btn=>btn.onclick=()=>askTarget(opts[+btn.dataset.i]));return;}
+      askTarget(b);
     });
+    function askTarget(b){
+      const targets=S.players.slice();
+      onlineRequestPlayerChoice({chooser:lander,title:"A chi vuoi dare il BONUS?",subject:`BONUS · ${b.nm}`,description:b.desc,options:targets.map(p=>({id:p.id,label:p.name,description:p.id===lander.id?"Tienilo per te.":"Assegna il BONUS a questo giocatore."}))},(id)=>{
+        const target=pById(id);
+        if(!target){list.innerHTML=targets.map(p=>`<button class="choice fallback-target" data-id="${p.id}"><b>${esc(p.name)}</b></button>`).join("");$$(".fallback-target",list).forEach(btn=>btn.onclick=()=>finish(b,pById(btn.dataset.id)));return;}
+        finish(b,target);
+      });
+    }
+    function finish(b,target=lander){
+      target.bonus.push(b);log(`⭐ ${esc(lander.name)} assegna il BONUS "${b.nm}" a ${esc(target.name)}.`);
+      onlineBroadcastCardResolution({icon:"⭐",title:"BONUS assegnato",subject:`Da ${lander.name} a ${target.name}`,effectTitle:b.nm,description:b.desc,instruction:`${target.name} conserva questa carta.`});
+      setTimeout(nextSpecialOrPost,700);
+    }
   }
   else if(type==="voce"){
     $("#voiceGo").addEventListener("click",()=>{
@@ -2141,43 +2139,20 @@ function wireSpecial(type, lander){
     });
   }
   else if(type==="malus"){
-    const m = pick(MALUS);
-    $("#malusCard").innerHTML = `<strong style="color:#a23a22">⛔ ${m.nm}</strong><div style="font-size:12px;color:#7a4536;margin-top:3px">${m.desc}</div>`;
-    const targets = S.players.filter(p=>p.id!==lander.id);
-    $("#malusTargets").innerHTML = targets.map(p=>`<button type="button" class="choice" data-id="${p.id}">
-        ${avatarHTML(p,26)} <b>${esc(p.name)}</b></button>`).join("");
-    $$("#malusTargets .choice").forEach(btn=>{
-      btn.addEventListener("click",()=>{
-        const tgt = pById(btn.dataset.id);
-        const scudoIdx = tgt.bonus.findIndex(b=>b.id==="scudo");
-        if(scudoIdx>=0){
-          tgt.bonus.splice(scudoIdx,1);
-          log(`🛡️ ${esc(tgt.name)} usa lo Scudo e blocca "${m.nm}"!`);
-          onlineBroadcastCardResolution({
-            icon:"🛡️",
-            title:"Malus bloccato",
-            subject:`${tgt.name} usa lo Scudo`,
-            effectTitle:m.nm,
-            description:`Il malus non viene applicato: ${tgt.name} ha consumato la carta Scudo.`,
-            instruction:"La partita prosegue senza questa penalità."
-          });
-        } else {
-          tgt.malus.push(m);
-          log(`⛔ ${esc(lander.name)} rifila "${m.nm}" a ${esc(tgt.name)}.`);
-          onlineBroadcastCardResolution({
-            icon:"⛔",
-            title:"Malus assegnato",
-            subject:`Da ${lander.name} a ${tgt.name}`,
-            effectTitle:m.nm,
-            description:m.desc,
-            instruction:m.time
-              ? `Nel prossimo round la lavagnetta di ${tgt.name} verrà bloccata automaticamente dopo ${m.time} secondi.`
-              : `L’effetto verrà applicato automaticamente a ${tgt.name} nel prossimo round.`
-          });
-        }
-        setTimeout(nextSpecialOrPost,850);
-      });
+    const m=pick(MALUS),targets=S.players.filter(p=>p.id!==lander.id);
+    $("#malusCard").innerHTML=`<strong style="color:#a23a22">⛔ MALUS · ${esc(m.nm)}</strong><div style="font-size:12px;color:#7a4536;margin-top:3px">${esc(m.desc)}</div>`;
+    $("#malusTargets").innerHTML=`<div class="card flat center">📲 ${esc(lander.name)} sceglierà il destinatario dalla propria lavagnetta.</div>`;
+    onlineRequestPlayerChoice({chooser:lander,title:"A chi vuoi dare il MALUS?",subject:`MALUS · ${m.nm}`,description:m.desc,options:targets.map(p=>({id:p.id,label:p.name,description:`${p.score} pt · casella ${p.pos}`}))},(id)=>{
+      const target=pById(id);
+      if(!target){$("#malusTargets").innerHTML=targets.map(p=>`<button class="choice fallback-malus" data-id="${p.id}"><b>${esc(p.name)}</b></button>`).join("");$$(".fallback-malus").forEach(btn=>btn.onclick=()=>finish(pById(btn.dataset.id)));return;}
+      finish(target);
     });
+    function finish(tgt){
+      const shield=tgt.bonus.findIndex(b=>b.id==="scudo");
+      if(shield>=0){tgt.bonus.splice(shield,1);log(`🛡️ ${esc(tgt.name)} blocca il MALUS "${m.nm}".`);onlineBroadcastCardResolution({icon:"🛡️",title:"MALUS bloccato",subject:tgt.name,effectTitle:m.nm,description:"La carta Scudo annulla il MALUS.",instruction:"La partita prosegue senza penalità."});}
+      else{tgt.malus.push(m);log(`⛔ ${esc(lander.name)} assegna il MALUS "${m.nm}" a ${esc(tgt.name)}.`);onlineBroadcastCardResolution({icon:"⛔",title:"MALUS assegnato",subject:`Da ${lander.name} a ${tgt.name}`,effectTitle:m.nm,description:m.desc,instruction:m.time?`La lavagnetta di ${tgt.name} si bloccherà dopo ${m.time} secondi.`:`Il MALUS verrà applicato automaticamente.`});}
+      setTimeout(nextSpecialOrPost,850);
+    }
   }
   else if(type==="alfabetica"){
     wireAlfabetica(lander);
@@ -2829,6 +2804,8 @@ function confirmAction(msg, onYes){
 function closeMenu(){ if(menuSheet){ menuSheet.hidden=true; } if(menuBtn){ menuBtn.setAttribute("aria-expanded","false"); } }
 let ONLINE=null;
 let ONLINE_RETRY=null;
+let ONLINE_CHOICE_SEQ=0;
+const ONLINE_CHOICE_CALLBACKS=new Map();
 function onlineScores(){
   return S.players.map(p=>({name:p.name,score:p.score,pos:p.pos,color:p.color}));
 }
@@ -2842,6 +2819,29 @@ function onlineMap(){
 function onlineBroadcastView(payload){
   if(!ONLINE || !ONLINE.ws || ONLINE.ws.readyState!==WebSocket.OPEN) return;
   try{ ONLINE.ws.send(JSON.stringify({t:"view",scores:onlineScores(),...payload})); }catch(e){}
+}
+
+function syncJoinedPlayers(joined){
+  if(!Array.isArray(joined) || S.phase!=="setup") return;
+  const masterName=S.players[0]?.name||"";
+  const masterAvatar=S.players[0]?.avatar||null;
+  const names=joined.map(x=>typeof x==="string"?x:x.name).filter(Boolean);
+  const desired=Math.max(2,Math.min(8,1+names.length));
+  if(S.count!==desired){S.count=desired;syncPlayers();}
+  if(S.players[0]){S.players[0].name=masterName;S.players[0].avatar=masterAvatar;}
+  names.slice(0,7).forEach((name,i)=>{if(S.players[i+1])S.players[i+1].name=name;});
+  const countVal=$("#countVal");if(countVal)countVal.textContent=S.count;
+  if($("#players"))renderPlayerInputs();
+}
+function onlineRequestPlayerChoice({chooser,title,subject,description,options},callback){
+  if(!ONLINE||!ONLINE.ws||ONLINE.ws.readyState!==WebSocket.OPEN){callback(null,{error:"offline"});return;}
+  const requestId=`choice_${Date.now()}_${++ONLINE_CHOICE_SEQ}`;
+  ONLINE_CHOICE_CALLBACKS.set(requestId,callback);
+  ONLINE.ws.send(JSON.stringify({t:"choice_request",requestId,chooser:chooser.name,title,subject,description,options}));
+}
+function resolveOnlineChoice(m){
+  const cb=ONLINE_CHOICE_CALLBACKS.get(m.requestId);if(!cb)return;
+  ONLINE_CHOICE_CALLBACKS.delete(m.requestId);cb(m.optionId,{chooser:m.chooser});
 }
 function cleanOnlineText(value){
   return String(value||"")
@@ -2859,15 +2859,15 @@ function onlineSpecialFromMaster(type, lander, cell){
       icon:"⭐",
       title:"Casella Bonus",
       effectTitle:`${playerName} pesca una carta Bonus`,
-      description:"Sul telefono principale compariranno tre carte. Il Master farà completare la scelta, mentre tutti possono leggere l’anteprima.",
+      description:"Sul telefono principale compariranno tre carte. il giocatore completerà la scelta dalla propria lavagnetta, mentre tutti possono leggere l’anteprima.",
       instruction:"La carta scelta verrà mostrata subito dopo a tutte le lavagnette."
     },
     malus:{
       icon:"⛔",
       title:"Casella Malus",
       effectTitle:`${playerName} pesca una carta Malus`,
-      description:"Il malus verrà mostrato in anteprima. Soltanto il Master potrà selezionare il giocatore che lo riceverà.",
-      instruction:"Attendi l’assegnazione: nessun pulsante di scelta comparirà sulla tua lavagnetta."
+      description:"Il malus verrà mostrato in anteprima. Il giocatore coinvolto sceglierà personalmente chi lo riceverà.",
+      instruction:"Attendi l’assegnazione: solo la lavagnetta del giocatore coinvolto mostrerà i pulsanti di scelta."
     },
     voce:{
       icon:"📢",
@@ -3021,18 +3021,18 @@ function onlineConnect(url, resume=false){
   };
   ws.onmessage=e=>{ let m; try{m=JSON.parse(e.data)}catch(err){return;}
     if(m.t==="room"){
-      ONLINE.code=m.code; ONLINE.masterToken=m.token||ONLINE.masterToken; ONLINE.n=m.n||0;
+      ONLINE.code=m.code; ONLINE.masterToken=m.token||ONLINE.masterToken; ONLINE.n=m.n||0; ONLINE.players=m.players||ONLINE.players||[]; syncJoinedPlayers(ONLINE.players);
       try{localStorage.setItem("aocchio_master",JSON.stringify({code:ONLINE.code,token:ONLINE.masterToken,url:ONLINE.url}));}catch(e){}
       renderOnlineBar();
       if(!resume) log("🌐 Stanza lavagnette aperta: <b>"+m.code+"</b>",0);
     }
     else if(m.t==="resumed_master"){
-      ONLINE.n=m.n||0; renderOnlineBar();
+      ONLINE.n=m.n||0; ONLINE.players=m.players||ONLINE.players||[]; syncJoinedPlayers(ONLINE.players); renderOnlineBar();
       const s2=$("#onlineSt"); if(s2) s2.textContent="Riconnesso ✓";
     }
-    else if(m.t==="peer"){ ONLINE.n=m.n; renderOnlineBar(); }
-    else if(m.t==="bye"){ ONLINE.n=m.n; renderOnlineBar(); }
-    else if(m.t==="est"){ ONLINE.est[(m.name||"").trim().toLowerCase()]=m.value; renderOnlineBar(); updateWriteRoster(); checkAllEstimates(); }
+    else if(m.t==="peer"){ ONLINE.n=m.n; ONLINE.players=m.players||[]; syncJoinedPlayers(ONLINE.players); renderOnlineBar(); }
+    else if(m.t==="bye"){ ONLINE.n=m.n; ONLINE.players=m.players||ONLINE.players||[]; syncJoinedPlayers(ONLINE.players); renderOnlineBar(); }
+    else if(m.t==="choice_response"){ resolveOnlineChoice(m); } else if(m.t==="choice_unavailable"){const cb=ONLINE_CHOICE_CALLBACKS.get(m.requestId);if(cb){ONLINE_CHOICE_CALLBACKS.delete(m.requestId);cb(null,{error:m.msg});}} else if(m.t==="est"){ ONLINE.est[(m.name||"").trim().toLowerCase()]=m.value; renderOnlineBar(); updateWriteRoster(); checkAllEstimates(); }
     else if(m.t==="err"){ const s2=$("#onlineSt"); if(s2) s2.textContent="⚠️ "+m.msg; }
   };
   ws.onclose=()=>{

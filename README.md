@@ -1,23 +1,27 @@
-# A OCCHIO! — Fix definitivo UI lavagnette
+# A OCCHIO! — GitHub Update v1.2
 
-Modifiche principali:
+## Implementazioni
+- Nickname scelto dal partecipante e inviato automaticamente alla lobby Master.
+- Nickname ricordato localmente.
+- Blocco dei nickname duplicati.
+- Chi atterra su BONUS sceglie carta e destinatario dalla propria lavagnetta.
+- Chi atterra su MALUS sceglie il destinatario dalla propria lavagnetta.
+- Le altre lavagnette restano in sola lettura.
+- Diciture BONUS e MALUS sempre complete.
 
-- risposta corretta, risultato, classifica e mappa sempre visibili;
-- bonus e malus inviati come dati strutturati, senza copiare testo grezzo dal Master;
-- anteprima leggibile di Bonus/Malus senza controlli di selezione sulle lavagnette;
-- carta scelta e destinatario mostrati dopo la conferma del Master;
-- curiosità automatiche inventate eliminate;
-- vengono mostrate soltanto curiosità curate nel campo `f` o nel dizionario verificato;
-- malus tempo aggiornati:
-  - Risposta lampo: 10 secondi;
-  - Copione: 15 secondi;
-- scadenza personale applicata e verificata anche dal server;
-- la lavagnetta viene disabilitata realmente alla scadenza personale;
-- il Master viene bloccato allo stesso modo quando subisce un malus tempo;
-- rotte Render preservate.
+## Fix Anti-Sapientone
+- Corretto errore JavaScript nella casella Fenomeno/Anti-Sapientone.
+- Distanza reale ed effettiva separate.
+- Classifica, punti e movimento usano lo stesso valore effettivo.
+- Protezione da doppia assegnazione dei punti.
+- Malus permanenti non duplicabili.
+
+## Curiosità
+Le domande supportano `f` per la curiosità specifica e `fs` per la fonte:
+`{cat:"...", q:"...", a:123, u:"...", f:"...", fs:"..."}`
+
+Il gioco non deve generare curiosità casuali: ogni voce va verificata editorialmente.
 
 ## Deploy
-
-Sostituire tutti i file nella root della repository e usare:
-
-Manual Deploy → Clear build cache & deploy
+Sostituire tutti i file nella root GitHub, poi su Render:
+Manual Deploy → Clear build cache & deploy.
