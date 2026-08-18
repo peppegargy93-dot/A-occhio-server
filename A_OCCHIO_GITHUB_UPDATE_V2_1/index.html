@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#20424e">
+  <title>A OCCHIO!</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main class="shell">
+    <header>
+      <div class="logo">👁 A OCCHIO!</div>
+      <p>Il party game delle risposte quasi giuste</p>
+    </header>
+
+    <section id="home" class="card">
+      <h1>Entra in partita</h1>
+      <label>Il tuo nome
+        <input id="name" maxlength="24" placeholder="Es. Andrea">
+      </label>
+      <button id="create" class="primary">Crea stanza e diventa Master</button>
+      <div class="divider">oppure</div>
+      <label>Codice stanza
+        <input id="code" maxlength="4" placeholder="ABCD">
+      </label>
+      <button id="join">Entra come giocatore</button>
+      <p id="homeStatus" class="status"></p>
+    </section>
+
+    <section id="lobby" class="card hidden">
+      <span class="eyebrow">Stanza <b id="roomCode"></b></span>
+      <h2>Partecipanti</h2>
+      <div id="players"></div>
+      <div id="masterControls" class="hidden">
+        <label>Domanda
+          <textarea id="question" rows="3" placeholder="Quanti chilometri misura...?"></textarea>
+        </label>
+        <div class="mode-grid">
+          <label class="mode">
+            <input type="radio" name="mode" value="secret" checked>
+            <span><b>🤫 Stima segreta</b><small>Tutti rispondono sul telefono.</small></span>
+          </label>
+          <label class="mode voice">
+            <input type="radio" name="mode" value="voice">
+            <span><b>📢 Infamata a voce</b><small>Chi attiva la casella dice subito la stima ad alta voce, influenzando gli altri.</small></span>
+          </label>
+        </div>
+        <button id="start" class="primary">Avvia 20 secondi</button>
+      </div>
+      <p id="lobbyHint" class="status"></p>
+    </section>
+
+    <section id="round" class="card hidden">
+      <span id="roundMode" class="eyebrow"></span>
+      <h2 id="roundQuestion"></h2>
+      <div class="timer"><b id="seconds">20</b><span>secondi</span></div>
+      <div id="voiceNotice" class="callout hidden">
+        📢 <b>Casella Infamata:</b> il giocatore che ci è finito deve pronunciare subito la propria stima ad alta voce. Poi tutti, compreso lui e il Master, la inviano comunque dall’app.
+      </div>
+      <label>La tua stima
+        <input id="estimate" type="text" inputmode="decimal" autocomplete="off" placeholder="Scrivi un numero">
+      </label>
+      <button id="submit" class="primary">Invia e blocca risposta</button>
+      <p id="roundStatus" class="status"></p>
+      <div id="progress" class="progress"></div>
+    </section>
+
+    <section id="results" class="card hidden">
+      <span class="eyebrow">Risposte bloccate</span>
+      <h2>Stime del round</h2>
+      <div id="answerList"></div>
+      <p id="closeReason" class="status"></p>
+      <button id="next" class="primary hidden">Nuovo round</button>
+    </section>
+
+    <section id="board" class="card hidden">
+      <h2>Tabellone demo · 30 caselle</h2>
+      <p class="status">La casella 18 sostituisce un precedente Malus.</p>
+      <div id="boardGrid" class="board"></div>
+    </section>
+  </main>
+  <script src="/app.js"></script>
+</body>
+</html>
