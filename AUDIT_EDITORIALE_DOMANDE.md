@@ -1,6 +1,6 @@
 # Audit editoriale domande
 
-Domande totali: 405. Attive e curate: 37. Escluse in attesa di revisione: 368.
+Domande totali: 411. Attive e curate: 43. Escluse in attesa di revisione: 368.
 
 ## Copertura attiva
 
@@ -9,7 +9,7 @@ Domande totali: 405. Attive e curate: 37. Escluse in attesa di revisione: 368.
 - Cibo e Calorie: 3
 - Sport: 6
 - Cinema: 8
-- Musica: 5
+- Musica: 11
 - Serie TV: 4
 - Internet: 1
 - Libri: 1

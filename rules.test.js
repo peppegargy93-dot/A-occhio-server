@@ -46,3 +46,10 @@ test('nessuna domanda usa più il fallback numerico', () => {
   assert.doesNotMatch(factFunction,/numericalFunFact/);
   assert.match(factFunction,/return ""/);
 });
+
+test('i miglioramenti ai minigiochi non cambiano la posta originale del Duello',()=>{
+  const duel=html.match(/else if\(type==="duello"\)\{\n    const targets[\s\S]*?\n  \}/)[0];
+  assert.match(duel,/stakes:"\+1 casella sul tabellone"/);
+  assert.match(duel,/win\.pos=Math\.min\(FINISH,win\.pos\+1\)/);
+  assert.doesNotMatch(duel,/win\.score\s*\+=/);
+});

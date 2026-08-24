@@ -458,6 +458,8 @@
     background:var(--paper-2);border:1.5px solid var(--line);border-radius:13px;padding:12px;font-weight:700;font-size:14px;color:var(--ink);
   }
   .choice:active{background:var(--line-soft);}
+  .stakes{display:inline-flex;align-items:center;gap:6px;margin:9px auto 2px;padding:6px 10px;border-radius:999px;background:#fff0c6;border:1px solid #e6c56f;color:#6a4b05;font-size:11px;font-weight:900;letter-spacing:.35px;text-transform:uppercase;}
+  .next-stop{display:block;margin-top:2px;font-size:9.5px;font-weight:800;color:var(--coral);white-space:nowrap;}
   .letter-inputs{display:flex;gap:10px;justify-content:center;margin:10px 0;}
   .letter-inputs input{width:60px;height:60px;text-align:center;font-size:30px;font-weight:900;text-transform:uppercase;
     border:2px solid var(--ink);border-radius:13px;background:var(--paper-2);color:var(--ink);font-family:inherit;}
@@ -927,7 +929,13 @@ const QUESTIONS = [
   {cat:"Tabù", q:"Quanti muscoli si attivano in un bacio appassionato (circa)?", a:34, u:"muscoli"},
   {cat:"Tabù", q:"Quanti giorni e durata la gravidanza umana piu lunga documentata?", a:375, u:"giorni"},
   {cat:"Tabù", q:"Quanti figli ha avuto la madre piu prolifica della storia?", a:69, u:"figli"},
-  {cat:"Tabù", q:"In che anno fu brevettato il primo vibratore elettrico?", a:1902, u:"anno"}
+  {cat:"Tabù", q:"In che anno fu brevettato il primo vibratore elettrico?", a:1902, u:"anno"},
+  {cat:"Musica", q:"Quante parole contiene in totale Rap God di Eminem?", a:1560, u:"parole", f:"In un passaggio di appena 15 secondi Eminem pronuncia 97 parole: circa 6,46 al secondo.", fs:"https://www.guinnessworldrecords.com/world-records/112754-most-words-in-a-hit-single"},
+  {cat:"Musica", q:"Quante parole contiene la versione album di Around the World dei Daft Punk?", a:432, u:"parole", f:"Il testo usa soltanto tre parole ripetute, mentre nel video di Michel Gondry ogni gruppo di ballerini rappresenta uno strumento della traccia.", fs:"https://en.wikipedia.org/wiki/Around_the_World_(Daft_Punk_song)"},
+  {cat:"Musica", q:"Quante parole vengono pronunciate in tutto in Tequila dei The Champs?", a:3, u:"parole", f:"Tequila nacque come una jam e finì sul lato B del singolo: un DJ iniziò a passarlo e lo trasformò nel vero successo del disco.", fs:"https://en.wikipedia.org/wiki/Tequila_(The_Champs_song)"},
+  {cat:"Musica", q:"Quante parole contiene la strofa standard di Happy Birthday to You, contando il nome come una parola?", a:16, u:"parole", f:"La melodia nacque come Good Morning to All, un saluto mattutino scritto dalle sorelle Hill per una classe di bambini.", fs:"https://time.com/3976577/happy-birthday-copyright-history/"},
+  {cat:"Musica", q:"Quante parole hanno le due frasi principali del ritornello di We Will Rock You, escluse le interiezioni?", a:12, u:"parole", f:"Nella registrazione originale non ci sono batterie nel celebre ritmo: i Queen usarono battiti di piedi e mani registrati insieme alla loro squadra di studio.", fs:"https://www.queenonline.com/news/watch-queen-the-greatest-live-we-will-rock-you-episode-22"},
+  {cat:"Musica", q:"Quante parole ha il ritornello di Nel blu dipinto di blu, senza contare gli oh?", a:11, u:"parole", f:"Nel blu dipinto di blu vinse sia Record of the Year sia Song of the Year alla primissima edizione dei Grammy.", fs:"https://www.grammy.com/awards/1st-annual-grammy-awards/"}
 ];
 
 // Schema editoriale uniforme. I campi vuoti restano espliciti finché una fonte
@@ -2144,7 +2152,7 @@ function renderSpecial(){
             <button type="button" class="btn ochre mt" id="cecGo">Carico il colpo 🔭</button>`;
   } else if(type==="tiroleader"){
     const ldr=S.players.slice().sort((a,b)=>b.score-a.score||b.pos-a.pos).find(p=>p.id!==lander.id);
-    const q=QUESTIONS[rnd(QUESTIONS.length)];
+    const curated=QUESTIONS.filter(q=>q.f&&q.fs),q=curated[rnd(curated.length)];
     S._duelQ=q; S._duelLdr=ldr;
     body = `<p class="sub center">🎯 <b>Tiro al Leader!</b> ${esc(lander.name)} sfida <b>${esc(ldr.name)}</b>: micro-stima secca ad alta voce. Se ${esc(lander.name)} è più vicino, gli ruba 1 punto.</p>
             <div class="qcard"><div class="qtext" style="font-size:17px">${esc(q.q)}</div></div>
@@ -2210,22 +2218,23 @@ function renderSpecial(){
 
 function wireSpecial(type, lander){
   if(type==="bonus"){
-    const list=$("#bonusList"),opts=shuffle(BONUS).slice(0,3);
+    const list=$("#bonusList"),opts=shuffle(BONUS).slice(0,3);let completed=false;
     list.innerHTML=`<div class="card flat center">📲 ${esc(lander.name)} sceglierà il BONUS dalla propria lavagnetta.</div>`;
     onlineRequestPlayerChoice({chooser:lander,title:"Scegli il BONUS",subject:`Casella BONUS · ${lander.name}`,description:"Scegli la carta da assegnare.",options:opts.map(b=>({id:b.id,label:`BONUS · ${b.nm}`,description:b.desc}))},(bonusId)=>{
       const b=opts.find(x=>x.id===bonusId);
-      if(!b){list.innerHTML=opts.map((x,i)=>`<button class="choice fallback-bonus" data-i="${i}"><b>BONUS · ${esc(x.nm)}</b><br><span>${esc(x.desc)}</span></button>`).join("");$$(".fallback-bonus",list).forEach(btn=>btn.onclick=()=>askTarget(opts[+btn.dataset.i]));return;}
+      if(!b){list.innerHTML=opts.map((x,i)=>`<button type="button" class="choice fallback-bonus" data-i="${i}"><b>BONUS · ${esc(x.nm)}</b><br><span>${esc(x.desc)}</span></button>`).join("");$$(".fallback-bonus",list).forEach(btn=>btn.onclick=()=>{list.querySelectorAll("button").forEach(x=>x.disabled=true);askTarget(opts[+btn.dataset.i])});return;}
       askTarget(b);
     });
     function askTarget(b){
       const targets=S.players.slice();
       onlineRequestPlayerChoice({chooser:lander,title:"A chi vuoi dare il BONUS?",subject:`BONUS · ${b.nm}`,description:b.desc,options:targets.map(p=>({id:p.id,label:p.name,description:p.id===lander.id?"Tienilo per te.":"Assegna il BONUS a questo giocatore."}))},(id)=>{
         const target=pById(id);
-        if(!target){list.innerHTML=targets.map(p=>`<button class="choice fallback-target" data-id="${p.id}"><b>${esc(p.name)}</b></button>`).join("");$$(".fallback-target",list).forEach(btn=>btn.onclick=()=>finish(b,pById(btn.dataset.id)));return;}
+        if(!target){list.innerHTML=targets.map(p=>`<button type="button" class="choice fallback-target" data-id="${p.id}"><b>${esc(p.name)}</b></button>`).join("");$$(".fallback-target",list).forEach(btn=>btn.onclick=()=>finish(b,pById(btn.dataset.id)));return;}
         finish(b,target);
       });
     }
     function finish(b,target=lander){
+      if(completed||!b||!target)return;completed=true;
       addUniqueEffect(target.bonus,b);log(`⭐ ${esc(lander.name)} assegna il BONUS "${b.nm}" a ${esc(target.name)}.`);
       onlineBroadcastCardResolution({icon:"⭐",title:"BONUS assegnato",subject:`Da ${lander.name} a ${target.name}`,effectTitle:b.nm,description:b.desc,instruction:`${target.name} conserva questa carta.`});
       setTimeout(nextSpecialOrPost,700);
@@ -2239,15 +2248,16 @@ function wireSpecial(type, lander){
     });
   }
   else if(type==="malus"){
-    const m=pick(MALUS),targets=S.players.filter(p=>p.id!==lander.id);
+    const m=pick(MALUS),targets=S.players.filter(p=>p.id!==lander.id);let completed=false;
     $("#malusCard").innerHTML=`<strong style="color:#a23a22">⛔ MALUS · ${esc(m.nm)}</strong><div style="font-size:12px;color:#7a4536;margin-top:3px">${esc(m.desc)}</div>`;
     $("#malusTargets").innerHTML=`<div class="card flat center">📲 ${esc(lander.name)} sceglierà il destinatario dalla propria lavagnetta.</div>`;
     onlineRequestPlayerChoice({chooser:lander,title:"A chi vuoi dare il MALUS?",subject:`MALUS · ${m.nm}`,description:m.desc,options:targets.map(p=>({id:p.id,label:p.name,description:`${p.score} pt · casella ${p.pos}`}))},(id)=>{
       const target=pById(id);
-      if(!target){$("#malusTargets").innerHTML=targets.map(p=>`<button class="choice fallback-malus" data-id="${p.id}"><b>${esc(p.name)}</b></button>`).join("");$$(".fallback-malus").forEach(btn=>btn.onclick=()=>finish(pById(btn.dataset.id)));return;}
+      if(!target){$("#malusTargets").innerHTML=targets.map(p=>`<button type="button" class="choice fallback-malus" data-id="${p.id}"><b>${esc(p.name)}</b></button>`).join("");$$(".fallback-malus").forEach(btn=>btn.onclick=()=>finish(pById(btn.dataset.id)));return;}
       finish(target);
     });
     function finish(tgt){
+      if(completed||!tgt)return;completed=true;
       const shield=tgt.bonus.findIndex(b=>b.id==="scudo");
       if(shield>=0){tgt.bonus.splice(shield,1);log(`🛡️ ${esc(tgt.name)} blocca il MALUS "${m.nm}".`);onlineBroadcastCardResolution({icon:"🛡️",title:"MALUS bloccato",subject:tgt.name,effectTitle:m.nm,description:"La carta Scudo annulla il MALUS.",instruction:"La partita prosegue senza penalità."});}
       else{addUniqueEffect(tgt.malus,m);log(`⛔ ${esc(lander.name)} assegna il MALUS "${m.nm}" a ${esc(tgt.name)}.`);onlineBroadcastCardResolution({icon:"⛔",title:"MALUS assegnato",subject:`Da ${lander.name} a ${tgt.name}`,effectTitle:m.nm,description:m.desc,instruction:m.time?`La lavagnetta di ${tgt.name} si bloccherà dopo ${m.time} secondi.`:`Il MALUS verrà applicato automaticamente.`});}
@@ -2264,7 +2274,7 @@ function wireSpecial(type, lander){
     $$("#duelTargets .choice").forEach(btn=>{
       btn.addEventListener("click",()=>{
         const opp = pById(btn.dataset.id);
-        diceRollWinner([lander, opp], {title:"Duello!", sub:`${esc(lander.name)} sfida ${esc(opp.name)} · +1 casella a chi fa più alto`}, (win)=>{
+        diceRollWinner([lander, opp], {title:"Duello!", sub:`${esc(lander.name)} sfida ${esc(opp.name)}`,stakes:"+1 casella sul tabellone"}, (win)=>{
           win.pos=Math.min(FINISH,win.pos+1);
           log(`⚔️ Duello vinto da <b>${esc(win.name)}</b>: +1 casella.`);
           renderStatus();
@@ -2287,8 +2297,10 @@ function wireSpecial(type, lander){
       $("#tlReveal").classList.add("hide");
       const g=$("#tlPick"); g.classList.remove("hide");
       g.innerHTML = `<p class="eyebrow center" style="grid-column:1/-1">Risposta: <b>${fmtNum(q.a)} ${esc(q.u)}</b> — chi era più vicino?</p>
+        <div class="card flat" style="grid-column:1/-1;background:#eef4f0;border-color:#c9ddd2;text-align:left;font-size:12.5px;line-height:1.45"><b>💡 Curiosità</b><br>${esc(q.f)}<div style="font-size:10px;color:#6b7c76;margin-top:5px">Fonte: ${esc(q.fs)}</div></div>
         <button type="button" class="choice" id="tlWin">🎯 ${esc(lander.name)}: ruba 1 punto</button>
         <button type="button" class="choice" id="tlDef">🛡️ ${esc(ldr.name)} si difende</button>`;
+      onlineBroadcastView({kind:"info",icon:"💡",title:"Tiro al Leader",subject:q.q,effectTitle:`Risposta: ${fmtNum(q.a)} ${q.u||""}`,description:q.f,instruction:"Il Master stabilisce chi era più vicino."});
       $("#tlWin").addEventListener("click",()=>{
         if(ldr.score>0){ ldr.score--; lander.score++; log(`🎯 Tiro al Leader: ${esc(lander.name)} ruba 1 punto a ${esc(ldr.name)}!`); }
         else log(`🎯 Tiro al Leader: ${esc(ldr.name)} non ha punti da rubare.`);
@@ -2742,7 +2754,8 @@ function diceRollWinner(players, opts, done){
     app.innerHTML = `
       <div class="card center">
         <div class="special-banner"><div class="ic">⚡</div><div class="ttl">${esc(opts.title)}</div>
-        ${opts.sub?`<div class="sub" style="margin:2px 0 0">${esc(opts.sub)}</div>`:""}</div>
+        ${opts.sub?`<div class="sub" style="margin:2px 0 0">${esc(opts.sub)}</div>`:""}
+        <div class="stakes">🏆 In palio: ${esc(opts.stakes||"vantaggio decisivo")}</div></div>
         <div class="vs-row">
           ${players.map((p,i)=>`<div class="vs-side" style="--pc:${p.color};animation-delay:${.1+i*.15}s">${avatarHTML(p,46)}<b>${esc(p.name)}</b></div>`).join('<div class="vs-badge">VS</div>')}
         </div>
@@ -2756,17 +2769,25 @@ function diceRollWinner(players, opts, done){
     app.innerHTML = `<div class="card center">
       <p class="eyebrow" style="color:var(--coral)">${esc(opts.title)}</p>
       <p class="sub center">Niente fortuna: il pareggio si decide con una sfida.</p>
+      <div class="stakes">🔥 Sfida secca · niente pareggio</div>
       <div class="choice-grid mt">
+        <button type="button" class="choice" id="tgRandom">🎰 <b>Sorte del tabellone</b> — il gioco sceglie una sfida diversa dall’ultima</button>
         <button type="button" class="choice" id="tgNcc">🔤 <b>Nomi &amp; Cose</b> — il più veloce vince</button>
         <button type="button" class="choice" id="tgLampo">⚡ <b>Stima Lampo</b> — nuova domanda, il più vicino vince</button>
         ${S.players.length>2?`<button type="button" class="choice" id="tgCrono">⏱️ <b>Cronometro del Master</b> — chi stima meglio il tempo</button>`:""}
       </div></div>`;
-    $("#tgNcc").addEventListener("click",ncc);
-    $("#tgLampo").addEventListener("click",lampo);
-    const tc=$("#tgCrono"); if(tc) tc.addEventListener("click",crono);
+    $("#tgRandom").addEventListener("click",roulette);
+    $("#tgNcc").addEventListener("click",()=>{S.lastMiniGame="ncc";ncc()});
+    $("#tgLampo").addEventListener("click",()=>{S.lastMiniGame="lampo";lampo()});
+    const tc=$("#tgCrono"); if(tc) tc.addEventListener("click",()=>{S.lastMiniGame="crono";crono()});
+  }
+  function roulette(){
+    const modes=["ncc","lampo",...(S.players.length>2?["crono"]:[])].filter(mode=>mode!==S.lastMiniGame);
+    const mode=pick(modes.length?modes:["ncc","lampo"]);S.lastMiniGame=mode;
+    ({ncc,lampo,crono})[mode]();
   }
   function lampo(){
-    const q=QUESTIONS[rnd(QUESTIONS.length)];
+    const curated=QUESTIONS.filter(q=>q.f&&q.fs),q=curated[rnd(curated.length)];
     app.innerHTML = `<div class="card">
       <p class="eyebrow center">⚡ Stima Lampo</p>
       <div class="qcard"><div class="qtext" style="font-size:17px">${esc(q.q)}</div>
@@ -2783,7 +2804,9 @@ function diceRollWinner(players, opts, done){
       app.innerHTML = `<div class="card center">
         <p class="eyebrow">La risposta era</p><div class="ans-pop" style="font-size:48px;font-weight:900;color:var(--coral)">${fmtNum(q.a)}${q.u?" <span style='font-size:18px'>"+esc(q.u)+"</span>":""}</div>
         <p class="sub center mt">${esc(best.name)} ci è andato più vicino (distanza ${fmtNum(bd)})!</p>
+        <div class="card flat mt" style="background:#eef4f0;border-color:#c9ddd2;text-align:left;font-size:12.5px;line-height:1.45"><b>💡 Curiosità</b><br>${esc(q.f)}<div style="font-size:10px;color:#6b7c76;margin-top:5px">Fonte: ${esc(q.fs)}</div></div>
         <button type="button" class="btn teal mt" id="lampoEnd">Continua →</button></div>`;
+      onlineBroadcastView({kind:"info",icon:"💡",title:"Stima Lampo",subject:q.q,effectTitle:`Risposta: ${fmtNum(q.a)} ${q.u||""}`,description:q.f,instruction:`${best.name} vince lo spareggio.`});
       $("#lampoEnd").addEventListener("click",()=>finish(best,"Stima Lampo"));
     });
   }
@@ -2857,11 +2880,18 @@ function scoreCard(){
           </div>
           <div class="pos">
             <span class="postxt">cas. ${p.pos}/${FINISH}</span>
+            ${nextSpecialAfter(p.pos)?`<span class="next-stop">prossima: ${CELL[nextSpecialAfter(p.pos).type].ic} cas. ${nextSpecialAfter(p.pos).n}</span>`:""}
             <i class="pbar"><b style="width:${Math.round(p.pos/FINISH*100)}%;background:${p.color}"></b></i>
           </div>
           <div class="pts">${p.score}</div>
         </div>`).join("")}
     </div>`;
+}
+function nextSpecialAfter(pos){
+  for(let n=Math.max(1,(Number(pos)||0)+1);n<=FINISH;n++){
+    const type=BOARD[n-1];if(type&&type!=="domanda")return {n,type};
+  }
+  return null;
 }
 function logCard(openByDefault){
   return `
@@ -2932,14 +2962,26 @@ function syncJoinedPlayers(joined){
   if($("#players"))renderPlayerInputs();
 }
 function onlineRequestPlayerChoice({chooser,title,subject,description,options},callback){
-  if(!ONLINE||!ONLINE.ws||ONLINE.ws.readyState!==WebSocket.OPEN){callback(null,{error:"offline"});return;}
+  const masterPlayer=S.players[0];
+  if(masterPlayer&&chooser&&chooser.id===masterPlayer.id){callback(null,{reason:"master_local"});return;}
+  if(!ONLINE||!ONLINE.ws||ONLINE.ws.readyState!==WebSocket.OPEN){callback(null,{error:"offline",reason:"master_fallback"});return;}
   const requestId=`choice_${Date.now()}_${++ONLINE_CHOICE_SEQ}`;
-  ONLINE_CHOICE_CALLBACKS.set(requestId,callback);
+  const timer=setTimeout(()=>{
+    const pending=ONLINE_CHOICE_CALLBACKS.get(requestId);if(!pending)return;
+    ONLINE_CHOICE_CALLBACKS.delete(requestId);
+    try{ONLINE.ws.send(JSON.stringify({t:"cancel_choice",requestId}))}catch(e){}
+    pending.callback(null,{error:"timeout",reason:"master_fallback"});
+  },12000);
+  ONLINE_CHOICE_CALLBACKS.set(requestId,{callback,timer,ready:false});
   ONLINE.ws.send(JSON.stringify({t:"choice_request",requestId,chooser:chooser.name,title,subject,description,options}));
 }
 function resolveOnlineChoice(m){
-  const cb=ONLINE_CHOICE_CALLBACKS.get(m.requestId);if(!cb)return;
-  ONLINE_CHOICE_CALLBACKS.delete(m.requestId);cb(m.optionId,{chooser:m.chooser});
+  const pending=ONLINE_CHOICE_CALLBACKS.get(m.requestId);if(!pending)return;
+  clearTimeout(pending.timer);ONLINE_CHOICE_CALLBACKS.delete(m.requestId);pending.callback(m.optionId,{chooser:m.chooser});
+}
+function fallbackOnlineChoice(m){
+  const pending=ONLINE_CHOICE_CALLBACKS.get(m.requestId);if(!pending)return;
+  clearTimeout(pending.timer);ONLINE_CHOICE_CALLBACKS.delete(m.requestId);pending.callback(null,{error:m.msg,reason:m.reason||"master_fallback"});
 }
 function onlineSpecialFromMaster(type, lander, cell){
   const playerName=lander?.name||"Il giocatore";
@@ -2950,7 +2992,7 @@ function onlineSpecialFromMaster(type, lander, cell){
       icon:"⭐",
       title:"Casella Bonus",
       effectTitle:`${playerName} pesca una carta Bonus`,
-      description:"Sul telefono principale compariranno tre carte. il giocatore completerà la scelta dalla propria lavagnetta, mentre tutti possono leggere l’anteprima.",
+      description:"Tutti vedono l’anteprima. Subito dopo, soltanto il giocatore coinvolto riceve sulla propria lavagnetta i pulsanti per scegliere.",
       instruction:"La carta scelta verrà mostrata subito dopo a tutte le lavagnette."
     },
     malus:{
@@ -3114,8 +3156,9 @@ function onlineConnect(url, resume=false){
     else if(m.t==="peer"){ ONLINE.n=m.n; ONLINE.players=m.players||[]; syncJoinedPlayers(ONLINE.players); renderOnlineBar(); }
     else if(m.t==="bye"){ ONLINE.n=m.n; ONLINE.players=m.players||ONLINE.players||[]; syncJoinedPlayers(ONLINE.players); renderOnlineBar(); }
     else if(m.t==="choice_response"){ resolveOnlineChoice(m); }
-    else if(m.t==="choice_unavailable" && m.reason==="disconnected"){const cb=ONLINE_CHOICE_CALLBACKS.get(m.requestId);if(cb){ONLINE_CHOICE_CALLBACKS.delete(m.requestId);cb(null,{error:m.msg,reason:m.reason});}}
-    else if(m.t==="choice_error"){const s2=$("onlineSt");if(s2)s2.textContent="⚠️ "+m.msg;}
+    else if(m.t==="choice_ready"){const pending=ONLINE_CHOICE_CALLBACKS.get(m.requestId);if(pending){pending.ready=true;const s2=$("onlineSt");if(s2)s2.textContent="Scelta aperta sulla lavagnetta ✓";}}
+    else if(m.t==="choice_unavailable"){fallbackOnlineChoice(m);}
+    else if(m.t==="choice_error"){const s2=$("onlineSt");if(s2)s2.textContent="⚠️ "+m.msg;fallbackOnlineChoice(m);}
     else if(m.t==="est"){ ONLINE.est[(m.name||"").trim().toLowerCase()]=m.value; renderOnlineBar(); updateWriteRoster(); checkAllEstimates(); }
     else if(m.t==="err"){ const s2=$("#onlineSt"); if(s2) s2.textContent="⚠️ "+m.msg; }
   };

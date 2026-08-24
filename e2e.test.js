@@ -38,6 +38,14 @@ before(async () => {
 });
 after(() => server?.kill());
 
+test('la pagina lavagnetta preserva la regex degli spazi e non cancella le lettere s',async()=>{
+  const response=await fetch(`http://127.0.0.1:${port}/lavagnetta`);
+  const padHtml=await response.text();
+  assert.equal(response.status,200);
+  assert.match(padHtml,/replace\(\/\\s\+\/g/);
+  assert.doesNotMatch(padHtml,/replace\(\/s\+\/g/);
+});
+
 test('flusso WebSocket con tre giocatori, scelta autorevole e riconnessione', async () => {
   const master = await open();
   const room = await command(master, { t: 'create' }, 'room');
@@ -74,12 +82,21 @@ test('flusso WebSocket con tre giocatori, scelta autorevole e riconnessione', as
   const request = next(pads[0].ws, 'choice_request');
   send(master, { t: 'choice_request', requestId: 'bonus-1', chooser: 'Anna', title: 'Scegli il BONUS', options: [{ id: 'scudo', label: 'BONUS · Scudo' }] });
   await request;
+  const ready = next(master, 'choice_ready');
+  send(pads[0].ws, { t: 'choice_ready', requestId: 'bonus-1' });
+  assert.equal((await ready).requestId, 'bonus-1');
   const forged = await command(pads[2].ws, { t: 'choice_response', requestId: 'bonus-1', optionId: 'scudo' }, 'err');
   assert.match(forged.msg, /non è valida/);
   const response = next(master, 'choice_response');
   await command(pads[0].ws, { t: 'choice_response', requestId: 'bonus-1', optionId: 'scudo' }, 'choice_confirmed');
   assert.equal((await response).optionId, 'scudo');
   assert.match((await command(pads[0].ws, { t: 'choice_response', requestId: 'bonus-1', optionId: 'scudo' }, 'err')).msg, /già stata/);
+
+  const requestCancelled = next(pads[1].ws, 'choice_request');
+  send(master, { t: 'choice_request', requestId: 'bonus-cancel', chooser: 'Berto', title: 'Scegli il BONUS', options: [{ id: 'scudo', label: 'BONUS · Scudo' }] });
+  await requestCancelled;
+  await command(master, { t: 'cancel_choice', requestId: 'bonus-cancel' }, 'choice_cancelled');
+  assert.match((await command(pads[1].ws, { t: 'choice_response', requestId: 'bonus-cancel', optionId: 'scudo' }, 'err')).msg, /già stata/);
 
   const request2 = next(pads[2].ws, 'choice_request');
   send(master, { t: 'choice_request', requestId: 'malus-1', chooser: 'Carla', title: 'Scegli il MALUS', options: [{ id: 'berto', label: 'Berto' }] });

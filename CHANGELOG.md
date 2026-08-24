@@ -1,5 +1,18 @@
 # Changelog
 
+## 2.4.0 — scelte sbloccate e affidabilità mobile
+
+- Corretto il blocco quando il Master termina su Bonus o Malus: la scelta viene ora eseguita localmente sul Master.
+- Aggiunti `choice_ready`, timeout di 12 secondi, annullamento e fallback per tutte le richieste remote non consegnate.
+- Resi idempotenti i due passaggi del Bonus e l’assegnazione del Malus.
+- Corretto il bug che trasformava `/\s+/` in `/s+/` nella pagina incorporata e cancellava le lettere “s” sulle lavagnette.
+- Sostituito lo spezzamento `anywhere` con una resa conservativa compatibile con Safari/iPhone e Android.
+- Rafforzata la riconnessione mobile con timeout di apertura, backoff con jitter, eventi `online`/`focus`/`pageshow` e heartbeat.
+- Aggiunte 6 domande musicali sul conteggio di parole, tutte con curiosità specifica e fonte.
+- Portato il mazzo editoriale attivo a 43 domande; 368 schede non curate restano escluse.
+- Aggiunta la “Sorte del tabellone”, la posta visibile nei minigiochi e l’indicazione della prossima casella speciale, senza cambiare i punteggi originali.
+- Aggiunti test di regressione mirati e ampliato l’end-to-end WebSocket con conferma e annullamento della scelta.
+
 ## 2.3.0 — revisione editoriale fail-closed
 
 - Eliminato il fallback con conversioni numeriche.

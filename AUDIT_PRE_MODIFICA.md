@@ -1,33 +1,29 @@
-# Audit pre-modifica — A OCCHIO!
+# Audit pre-modifica — A OCCHIO! v2.4
 
-Snapshot verificato: commit GitHub `c329f35` e ZIP `A_OCCHIO_GITHUB_UPDATE_V1_2.zip`, risultati identici file per file.
+Snapshot esaminato integralmente prima delle modifiche: branch `main`, commit GitHub `e9457300c7f07faf8e861698257f112fb31f7c0f`.
 
-## Struttura attuale
+## Struttura trovata
 
-- `server.js`: server HTTP/WebSocket, stanze in memoria, pagina lavagnetta incorporata come stringa HTML.
-- `game.html`: intero client Master, stato partita, 405 domande inline, punteggio, mappa ed eventi speciali.
-- `index.html`, `app.js`, `styles.css`: landing/demo separata dal flusso principale `/gioco`.
-- `package.json`: Node >=18 e sola dipendenza runtime `ws`; nessuna suite di test.
+- `server.js`: HTTP statico, stanze WebSocket in memoria e pagina lavagnetta incorporata in `PAD_HTML`.
+- `game.html`: client Master, stato di gioco, domande, punteggi, tabellone, minigiochi ed eventi speciali.
+- `index.html`, `app.js`, `styles.css`: landing separata dal gioco `/gioco`.
+- `scripts/`, `tests/`: nel repository remoto i relativi file erano stati caricati per errore nella root, mentre `package.json` li cercava nelle due directory.
+- Database iniziale: 405 domande, delle quali 37 abilitate perché complete di curiosità e fonte.
 
-## Cause reali rilevate prima delle modifiche
+## Cause reali dei problemi segnalati
 
-1. Le scelte speciali sono inoltrate dal server senza conservare una richiesta autorevole: non vengono verificati richiedente, opzioni, scadenza o unicità della risposta. Una lavagnetta può quindi inviare requestId/opzioni arbitrarie o ripetute.
-2. Il Master riceve lo stesso fallback sia quando il giocatore non esiste sia quando la lavagnetta è disconnessa. La disconnessione successiva alla richiesta non notifica inoltre il fallback.
-3. La UI lavagnetta usa un unico pannello con `overflow:hidden`, testi non spezzabili in più punti e nessun limite verticale specifico per la scelta; Safari iPhone può tagliare etichette e contenuti lunghi.
-4. Gli altri dispositivi ricevono correttamente una vista informativa, ma il server non associa formalmente la scelta al solo token del giocatore interessato.
-5. `Bonus` e `Malus` provengono da dati strutturati nelle nuove schermate, ma sopravvive `onlineScreenFromMaster`, che costruisce messaggi copiando `innerText` dal DOM Master. Questo può spezzare o fondere testi.
-6. Anti-Sapientone: il calcolo del round usa `effectiveDist`, ma la casella Fenomeno azzera subito il flag appena assegnato, inserisce nuovamente i malus persistenti e usa una variabile `m` fuori scope nel log. Esistono più punti che fanno `push` diretto dei malus senza deduplicazione.
-7. Il punteggio ha una guardia per round, ma il pulsante resta cliccabile e varie azioni speciali non hanno una guardia transazionale; il server non deduplica le scelte.
-8. Database: 405 domande, 17 categorie, nessuna domanda contiene i campi `f`/`fs`. Una tabella fallback contiene curiosità per poche chiavi, senza fonti e con chiavi duplicate. Quindi nessuna delle 405 curiosità è verificata secondo lo schema richiesto.
-9. La curiosità è già trasmessa nella vista risultato, ma per la maggioranza è vuota; sul Master viene comunque renderizzata una card vuota.
-10. Nickname: join, duplicati case-insensitive e riconnessione via token esistono. Manca una modifica del nickname dalla lavagnetta prima dell'inizio; il server non espone alcun evento di rename.
-11. Non esistono test automatici o end-to-end.
+1. **Blocco Bonus/Malus del Master.** `onlineRequestPlayerChoice` inoltrava sempre la richiesta a una lavagnetta cercata per nickname. Il primo giocatore è però il Master e non possiede un socket lavagnetta: il server rispondeva `choice_error`, il client mostrava soltanto l’errore e non richiamava il fallback. La schermata restava quindi sospesa per sempre.
+2. **Blocco per mancata consegna.** Non esistevano conferma di apertura, scadenza o annullamento client della scelta. Anche una risposta persa o un errore diverso dalla disconnessione lasciava pendente la callback.
+3. **Lettera “s” cancellata.** La lavagnetta è contenuta in un template literal server-side. La regex scritta come `/\s+/` perdeva il backslash quando il template veniva generato e arrivava al browser come `/s+/`, sostituendo realmente ogni `s` minuscola con uno spazio.
+4. **Testi fragili su mobile.** `overflow-wrap:anywhere` permetteva di spezzare le etichette in qualunque punto; su viewport strette aumentava la percezione di lettere mancanti e parole deformate.
+5. **Android intermittente.** La riconnessione dipendeva quasi soltanto da `close`/`pageshow`: mancavano timeout di apertura, gestione `online`/`focus`, jitter e heartbeat per individuare socket apparentemente aperti ma ormai inattivi.
+6. **Editor (situazione iniziale).** Il filtro fail-closed era corretto, ma il mazzo attivo era limitato a 37 schede e non conteneva la nuova serie richiesta sul conteggio delle parole nelle canzoni.
+7. **Dinamica.** Le regole erano coerenti, ma minigiochi e classifica comunicavano poco la posta e il prossimo evento del tabellone. Il miglioramento doveva restare presentazionale per non alterare il gameplay originale.
 
-## Strategia minima
+## Strategia applicata
 
-- Rendere il server autorevole per il ciclo di vita delle scelte e per la loro deduplicazione.
-- Correggere il Fenomeno con helper idempotenti e una sola sorgente di distanza effettiva.
-- Eliminare il recupero di testo dal DOM per le viste condivise.
-- Aggiungere rename pre-partita e layout mobile/safe-area dedicato.
-- Normalizzare lo schema domande e produrre un report completo delle curiosità non verificate, senza inventarne.
-- Aggiungere test WebSocket con tre giocatori e controlli statici/regole sul client.
+- Fallback locale immediato per il Master; conferma, timeout, annullamento e deduplicazione per le lavagnette.
+- Correzione della doppia escape nella pagina incorporata e regole tipografiche mobile più conservative.
+- Riconnessione mobile guidata dagli eventi di rete/pagina e heartbeat WebSocket.
+- Sei nuove domande musicali con criterio di conteggio esplicito, curiosità specifica e fonte.
+- Rafforzamento visivo dei minigiochi e del percorso senza cambiare l’assegnazione dei punti.

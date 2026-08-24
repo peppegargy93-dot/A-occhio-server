@@ -1,23 +1,25 @@
-# Bug risolti
+# Bug risolti nella v2.4
 
-- Anteprima della casella Bonus che sovrascriveva i pulsanti di scelta sull'iPhone autorizzato.
-- Curiosità assente nella maggioranza delle domande: ora esiste sempre almeno una contestualizzazione specifica della risposta.
-- Overflow/taglio delle opzioni di scelta su iPhone e testi lunghi sovrapposti.
-- Possibilità per una lavagnetta non autorizzata di inviare una scelta.
-- Doppia risposta/replay della stessa scelta speciale.
-- Opzioni arbitrarie non appartenenti alla richiesta del Master.
-- Fallback Master attivato per cause diverse dalla disconnessione.
-- Messaggi Bonus/Malus ricavati dal testo HTML del Master.
-- Fenomeno assegnato e subito annullato nello stesso handler.
-- Errore JavaScript nel log Fenomeno per variabile fuori scope.
-- Duplicazione dei malus permanenti e temporali.
-- Divergenza testuale Timer Challenge (5 secondi nel log, 10 reali).
-- Doppio click sull'assegnazione punteggi.
-- Modifica nickname assente prima della partita.
-- Riconnessione a round chiuso mostrata come domanda ancora compilabile.
+- Partita bloccata quando il Master arrivava su una casella Bonus/Malus.
+- Partita bloccata dopo errore di instradamento o richiesta di scelta non ricevuta.
+- Scelta remota senza conferma di apertura o scadenza.
+- Doppio click/doppia applicazione nei passaggi Bonus e Malus.
+- Lettere `s` cancellate dai testi informativi delle lavagnette.
+- Parole spezzate in punti arbitrari su viewport strette.
+- Socket Android rimasto in stato di connessione o non ripreso dopo cambio rete/focus.
+- Mancanza di heartbeat per individuare connessioni morte.
+- Assenza di domande sul conteggio delle parole nelle canzoni.
+- Audit editoriale che non conteggiava le curiosità scritte direttamente nella singola domanda.
+- File di test e script collocati nella root anziché nelle directory previste da `package.json`.
 
-# Problemi rimasti
+## Verifiche eseguite
 
-- Il database contiene 405 domande e nessuna ha ancora una coppia editoriale `curiosità + fonte esterna` verificata. Nell'attesa, il gioco mostra una contestualizzazione matematica corretta derivata dalla risposta e la dichiara come tale. L'elenco delle schede che richiedono ancora arricchimento editoriale esterno è in `DOMANDE_DA_VERIFICARE.md`.
-- Le stanze e lo stato autorevole vivono in memoria: un riavvio/deploy Render chiude le partite attive. Per persistenza cross-deploy serve un archivio esterno (per esempio Redis/Postgres), che sarebbe un cambiamento architetturale non minimo.
-- Il test automatico copre il protocollo multiplayer completo e le invarianti Anti-Sapientone; il gesto/tocco reale su Safari iPhone richiede comunque una prova su dispositivo fisico prima della pubblicazione.
+- Sintassi server e script Master.
+- 16 test automatici, incluso un flusso WebSocket con Master e tre giocatori: join, duplicati, rename, domanda, risposta unica, curiosità, scelta autorizzata, tentativo contraffatto, replay, annullamento, disconnessione, riconnessione e mappa.
+- Prova locale tramite interfaccia: lobby, domanda, risultati e curiosità su entrambi i dispositivi; Malus selezionabile soltanto da Anna mentre Berto vede l’attesa; Bonus del Master selezionabile direttamente sul Master.
+
+## Problemi rimasti
+
+- 368 domande storiche non hanno ancora una curiosità e una fonte verificate: sono elencate in `DOMANDE_DA_VERIFICARE.md` e non possono essere sorteggiate.
+- Stanze e stato partita risiedono in memoria. Un riavvio o deploy Render chiude le partite attive; la persistenza richiederebbe Redis/Postgres e un intervento architetturale separato.
+- Il test automatico verifica il protocollo; è comunque consigliato un collaudo finale su un iPhone Safari e almeno un Android reale dopo il deploy.
