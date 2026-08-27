@@ -1,49 +1,67 @@
-# A OCCHIO! — GitHub Update v2.4
+# A OCCHIO! — GitHub Update v2.6
 
-Party game multiplayer con un dispositivo Master e lavagnette WebSocket. La v2.4 risolve il blocco delle scelte Bonus/Malus, corregge la scomparsa della lettera **s** sulle lavagnette, rende più robusta la riconnessione mobile e amplia il mazzo editoriale senza modificare punteggi o regole fondamentali.
+Party game multiplayer con un dispositivo Master e fino a sette lavagnette WebSocket. La v2.6 conserva punteggi e percorso originali, ma rende autorevoli e leggibili sfide, distanze, punti, movimento e condizioni di vittoria.
 
 ## Avvio e verifica
 
 ```bash
 npm install
 npm run check
-npm run audit:questions
 npm test
+npm run audit:questions
+npm run simulate
 npm start
 ```
 
 - Master: `http://localhost:3000/gioco`
 - Lavagnetta: `http://localhost:3000/lavagnetta`
+- Stato server: `http://localhost:3000/health`
 
-## Cosa cambia nella v2.4
+## Cosa cambia nella v2.6
 
-- Se il giocatore coinvolto usa una lavagnetta, soltanto quella lavagnetta riceve i pulsanti; gli altri vedono l’attesa.
-- Se il giocatore coinvolto è il Master, la scelta compare subito sul Master e non viene più cercata una lavagnetta inesistente.
-- Mancata consegna, timeout o disconnessione aprono un fallback locale senza bloccare la partita.
-- La scelta viene accettata una sola volta e soltanto fra le opzioni autorizzate.
-- La lavagnetta riprova la connessione dopo timeout, ritorno online, focus e riapertura della pagina; il server usa un heartbeat.
-- Le parole non vengono più spezzate arbitrariamente e una regex incorporata non elimina più le lettere `s`.
-- Il mazzo attivo contiene 43 domande con curiosità e fonte, incluse 6 nuove domande sul numero di parole nelle canzoni.
-- I minigiochi mostrano chiaramente la posta; la “Sorte del tabellone” alterna automaticamente le sfide e la classifica indica la prossima casella speciale. I punteggi originali restano invariati.
+- Una parità nasce soltanto da una **distanza valida realmente uguale**. Master e lavagnette mostrano domanda, risposta corretta, stime, distanza reale, modificatori e formula usata.
+- Le caselle **Sfida** e **Minigioco** mostrano separatamente il motivo del confronto: giocatore arrivato, casella, avversario e carta estratta.
+- Il Mazzo Sfide contiene 10 minigiochi e usa uno shuffle-bag: tutte le carte vengono percorse prima di ricominciare, evitando anche la stessa famiglia consecutiva quando possibile.
+- Round e minigiochi numerici condividono un unico mazzo di domande. Una domanda non può ripetersi nella stessa partita e la memoria del ciclo resta nel browser anche fra partite successive.
+- Aggiunte **170 nuove domande**: esattamente 10 per ognuna delle 17 categorie, tutte con risposta numerica, curiosità specifica e fonte HTTPS.
+- Database: **581 domande totali**, **213 attive e curate**, **368 storiche escluse** finché non ricevono curiosità e fonte verificate.
+- Il Bonus **Paracadute** ora funziona davvero: se il proprietario ha la peggiore distanza valida, la dimezza automaticamente e si consuma una sola volta.
+- Punti e caselle passano dallo stesso registro autorevole. Il riepilogo indica ogni variazione e la sua origine, compresi effetti speciali.
+- L’avanzamento delle pedine viene animato in avanti e indietro; Master e lavagnette distinguono sempre **classifica punti** e **corsa sul tabellone**.
+- Le due condizioni di vittoria sono sempre visibili: Finale raggiunta = vittoria immediata; al termine del 15º round = vittoria ai punti.
+- Una chiusura manuale anticipata viene dichiarata esplicitamente e non viene confusa con il limite dei 15 round.
+- Il fallback Master per Bonus, Malus, destinatari e sfidanti compare soltanto per il Master stesso oppure dopo conferma del server che la lavagnetta autorizzata è indisponibile/disconnessa.
+- Una caduta breve della connessione non perde stime, timer personale o scelte già confermate: il server le riproduce al Master riconnesso. I nuovi ingressi dopo l’avvio sono bloccati, ma le lavagnette esistenti possono rientrare tramite token.
 
 ## Curiosità editoriali
 
-Ogni domanda giocabile possiede almeno:
+Ogni domanda giocabile usa questa struttura:
 
 ```js
 {cat:"...", q:"...", a:123, u:"...", f:"Curiosità specifica...", fs:"https://fonte..."}
 ```
 
-Una domanda senza `f` e `fs` resta nel database ma viene esclusa automaticamente dal sorteggio. In questo modo ogni risposta mostrata in partita è seguita da una curiosità reale sul soggetto della domanda, visibile sia sul Master sia sulle lavagnette.
+La curiosità racconta il fatto interessante dietro quella domanda; non viene generata dalla categoria e non deve giustificare artificialmente la stima. Una scheda senza `f` e `fs` resta nel database, ma viene esclusa automaticamente dal sorteggio.
 
-Situazione v2.4: 411 domande totali, 43 attive e curate, 368 ancora escluse. Esegui `npm run audit:questions` per rigenerare i due rapporti editoriali.
+Esegui `npm run audit:questions` per rigenerare `AUDIT_EDITORIALE_DOMANDE.md` e `DOMANDE_DA_VERIFICARE.md`.
+
+## Verifiche incluse
+
+- 32 test automatici, compreso un end-to-end WebSocket con Master e tre giocatori e cadute di connessione durante round/scelte.
+- 360 partite simulate con 3–6 giocatori e tre semi indipendenti.
+- 5.162 domande estratte senza duplicati interni alla partita.
+- 3.718 minigiochi estratti con ciclo completo del mazzo.
+- 2.600 parità autorevoli, 277 Paracadute, vittorie sia per Finale sia ai punti.
+- Collaudo browser con quattro giocatori: parità, carta Sfida, curiosità, avanzamento, scelta Bonus in due passaggi e avvio del round successivo.
+
+Vedi `SIMULATION_REPORT.md` e `PLAYTEST_REPORT.md` per i dettagli.
 
 ## Documentazione
 
-- `AUDIT_PRE_MODIFICA.md`: struttura e cause reali trovate nel commit di partenza.
+- `AUDIT_PRE_MODIFICA.md`: struttura e cause reali individuate prima della v2.6.
 - `AUDIT_EDITORIALE_DOMANDE.md`: copertura del mazzo attivo.
-- `DOMANDE_DA_VERIFICARE.md`: domande non ancora abilitate.
-- `CHANGELOG.md`: modifiche della versione.
-- `BUG_RISOLTI.md`: correzioni e limiti rimasti.
+- `DOMANDE_DA_VERIFICARE.md`: 368 domande storiche ancora escluse.
+- `MAZZO_SFIDE.md`: regole e attivazione dei dieci minigiochi.
+- `BUG_RISOLTI.md` e `CHANGELOG.md`: correzioni e modifiche.
 - `FILE_DA_CARICARE_GITHUB.md`: elenco esatto per GitHub.
-- `DEPLOY_RENDER.md`: pubblicazione e collaudo.
+- `DEPLOY_RENDER.md`: pubblicazione e collaudo su Render.

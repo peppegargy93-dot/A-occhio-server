@@ -4,6 +4,8 @@ const vm=require('vm');
 const html=fs.readFileSync('game.html','utf8');
 function between(start,end){const a=html.indexOf(start)+start.length;return html.slice(a,html.indexOf(end,a));}
 const questions=vm.runInNewContext(between('const QUESTIONS = ','\n];')+']');
+const added=html.includes('const QUESTIONS_V2_6 = ')?vm.runInNewContext(between('const QUESTIONS_V2_6 = ','\n];\nQUESTIONS.push(...QUESTIONS_V2_6)')+']'):[];
+questions.push(...added);
 const facts=vm.runInNewContext('({'+between('const EDITORIAL_FACTS = {','\n};')+'})');
 function editorial(question){
   if(question.f&&question.fs)return [question.f,question.fs];

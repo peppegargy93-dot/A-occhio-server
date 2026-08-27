@@ -12,9 +12,9 @@ test('il Master sceglie localmente senza attendere una lavagnetta inesistente',(
   assert.match(fn,/master_local/);
 });
 
-test('ogni richiesta remota ha conferma, timeout, annullamento e fallback',()=>{
-  assert.match(game,/ONLINE_CHOICE_CALLBACKS\.set\(requestId,\{callback,timer,ready:false\}\)/);
-  assert.match(game,/setTimeout\([\s\S]*?cancel_choice[\s\S]*?12000\)/);
+test('ogni richiesta remota ha conferma, annullamento e fallback soltanto su indisponibilità',()=>{
+  assert.match(game,/ONLINE_CHOICE_CALLBACKS\.set\(requestId,\{callback,ready:false\}\)/);
+  assert.doesNotMatch(game,/error:"timeout",reason:"master_fallback"/);
   assert.match(game,/m\.t==="choice_ready"/);
   assert.match(game,/m\.t==="choice_error"[\s\S]*?fallbackOnlineChoice\(m\)/);
   assert.match(server,/m\.t === 'choice_ready'/);
