@@ -1,5 +1,49 @@
 # Changelog
 
+## 2.7.0 — dieci minigiochi visibili e risposte sulle lavagnette
+
+- Verificato il deploy precedente: GitHub e Render servivano ancora il vecchio `game.html` con il menu dei soli tre minigiochi.
+- Reso visibile sulla carta Sfida l’elenco completo delle dieci carte del mazzo.
+- Confermato lo shuffle-bag: tutte le dieci carte vengono percorse prima del riuso.
+- Stima Lampo, Cronometro del Master, Alto o Basso, Intervallo Killer e Asta al Ribasso attivano soltanto le lavagnette degli sfidanti.
+- Gli altri telefoni restano spettatori e non possono inviare risposte contraffatte.
+- Il Master riceve le risposte già bloccate; se uno sfidante è il Master, risponde localmente. Il fallback di un giocatore remoto compare soltanto dopo la sua disconnessione.
+- Aggiunto protocollo server `mini_request`/`mini_response`, con token autorizzati, validazione, risposta unica e recupero alla riconnessione.
+- Suite portata a 33 test, incluso un end-to-end con due sfidanti attivi e una lavagnetta spettatrice.
+
+## 2.6.0 — stato autorevole, mazzi senza ripetizioni e 170 nuove domande
+
+- Le sfide da parità mostrano motivo, risposta corretta, stime, distanza reale, distanza valida e formula dei modificatori; una parità viene aperta soltanto per distanze valide uguali.
+- Le sfide da casella dichiarano invece casella, giocatore arrivato e avversario scelto, evitando di confonderle con i fotofinish del round.
+- Eliminato il contesto obsoleto del round precedente dalle schermate Sfida.
+- Unificata l’estrazione delle domande fra round, Stima Lampo, Tiro al Leader, Alto o Basso, Intervallo Killer e Asta al Ribasso.
+- Aggiunti shuffle-bag persistenti per domande, dieci minigiochi e carte speciali; nessuna domanda può ripetersi nella stessa partita.
+- Aggiunte 170 domande curate, 10 per ciascuna delle 17 categorie. Il database passa a 581 schede, delle quali 213 attive e 368 escluse.
+- Implementato il Bonus Paracadute sulla distanza valida, con consumo singolo e formula visibile.
+- Centralizzate tutte le variazioni di punti e caselle in un ledger autorevole, usato anche per riepilogo e animazione.
+- Separate classifica punti e corsa sul tabellone su Master e lavagnette; rese sempre visibili le due condizioni di vittoria.
+- Animati anche gli arretramenti prodotti dal Dado Caos.
+- Corretta la nuova partita affinché non conservi il vincitore precedente; distinta la fine manuale dal limite dei 15 round.
+- Rimosso il fallback Master a tempo: compare soltanto per il Master stesso o dopo indisponibilità/disconnessione confermata dal server.
+- Il server conserva stime del round, timer personale ed esiti delle scelte: dopo una caduta WebSocket il Master recupera gli eventi non ancora confermati e la lavagnetta non riottiene secondi extra.
+- I nuovi ingressi vengono rifiutati dopo l’avvio, mentre le riconnessioni tramite token restano ammesse; l’identità delle lavagnette usa il token e non il nickname.
+- Bonus e Malus già posseduti non vengono più annunciati come assegnati né duplicati; le opzioni propongono soltanto destinatari validi.
+- Le stime con suffissi non numerici vengono rifiutate; la vecchia pagina `index.html` reindirizza al client autorevole `/gioco`.
+- Aggiunti test del mazzo domande, del ledger, del Paracadute, delle motivazioni Sfida, del movimento bidirezionale, della vittoria e della riconnessione; suite portata a 32 test.
+- Aggiunto simulatore deterministico: 360 partite con 3–6 giocatori e report riproducibile.
+
+## 2.5.0 — Mazzo Sfide casuale
+
+- Unificati pareggi, casella Sfida e casella Minigioco in un unico Mazzo Sfide autorevole.
+- Rimossa la scelta manuale del tipo di minigioco: l’estrazione parte automaticamente nei pareggi.
+- Sulle caselle speciali, soltanto il giocatore arrivato sceglie avversario e pesca dalla propria lavagnetta; resta il fallback Master già protetto dalla disconnessione.
+- Portato il mazzo da 3 a 10 prove con Alto o Basso, Intervallo Killer, Ordine Impossibile, Indizio dopo Indizio, La Bomba, Asta al Ribasso e Timeline Flash.
+- Aggiunta una carta introduttiva responsive con tre regole, durata, criterio di vittoria, partecipanti e ricompensa.
+- Evitate ripetizioni consecutive della stessa prova e, quando possibile, della stessa famiglia.
+- Aggiunte carte editoriali con curiosità e fonte per i minigiochi basati su dati.
+- Reintrodotta nel percorso completo la casella Minigioco alla posizione 23; la casella 6 resta Sfida.
+- Aggiunti 6 test specifici del Mazzo Sfide; suite totale portata a 22 test.
+
 ## 2.4.0 — scelte sbloccate e affidabilità mobile
 
 - Corretto il blocco quando il Master termina su Bonus o Malus: la scelta viene ora eseguita localmente sul Master.

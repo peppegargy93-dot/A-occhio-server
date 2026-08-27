@@ -1,6 +1,6 @@
-# A OCCHIO! — GitHub Update v2.6
+# A OCCHIO! — GitHub Update v2.7
 
-Party game multiplayer con un dispositivo Master e fino a sette lavagnette WebSocket. La v2.6 conserva punteggi e percorso originali, ma rende autorevoli e leggibili sfide, distanze, punti, movimento e condizioni di vittoria.
+Party game multiplayer con un dispositivo Master e fino a sette lavagnette WebSocket. La v2.7 rende realmente interattivo il Mazzo Sfide sulle lavagnette, conservando punteggi e percorso originali.
 
 ## Avvio e verifica
 
@@ -17,7 +17,12 @@ npm start
 - Lavagnetta: `http://localhost:3000/lavagnetta`
 - Stato server: `http://localhost:3000/health`
 
-## Cosa cambia nella v2.6
+## Cosa cambia nella v2.7
+
+- Il Mazzo Sfide contiene e mostra chiaramente tutte le dieci carte: Stima Lampo, Cronometro del Master, Nomi & Cose, Alto o Basso, Intervallo Killer, Ordine Impossibile, Indizio dopo Indizio, La Bomba, Asta al Ribasso e Timeline Flash.
+- Per Stima Lampo, Cronometro, Alto o Basso, Intervallo Killer e Asta al Ribasso si attivano soltanto le lavagnette dei giocatori in sfida.
+- Le risposte vengono inviate e bloccate sul server; gli altri telefoni restano spettatori.
+- Se il Master è uno degli sfidanti, compila il proprio campo sul dispositivo principale. Il fallback per un altro giocatore compare soltanto dopo la disconnessione della sua lavagnetta.
 
 - Una parità nasce soltanto da una **distanza valida realmente uguale**. Master e lavagnette mostrano domanda, risposta corretta, stime, distanza reale, modificatori e formula usata.
 - Le caselle **Sfida** e **Minigioco** mostrano separatamente il motivo del confronto: giocatore arrivato, casella, avversario e carta estratta.
@@ -47,7 +52,7 @@ Esegui `npm run audit:questions` per rigenerare `AUDIT_EDITORIALE_DOMANDE.md` e 
 
 ## Verifiche incluse
 
-- 32 test automatici, compreso un end-to-end WebSocket con Master e tre giocatori e cadute di connessione durante round/scelte.
+- 33 test automatici, compreso un end-to-end WebSocket con due sfidanti attivi, uno spettatore e tentativi di risposta non autorizzati.
 - 360 partite simulate con 3–6 giocatori e tre semi indipendenti.
 - 5.162 domande estratte senza duplicati interni alla partita.
 - 3.718 minigiochi estratti con ciclo completo del mazzo.

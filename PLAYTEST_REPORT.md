@@ -1,4 +1,15 @@
-# Rapporto playtest v2.6
+# Rapporto playtest v2.7
+
+## Collaudo lavagnette delle mini sfide
+
+È stato eseguito un test reale del protocollo WebSocket e dell'interfaccia mobile con Anna e Berto in sfida e Carla spettatrice:
+
+- entrambe le lavagnette sfidanti hanno ricevuto il campo numerico di **Stima Lampo**;
+- la lavagnetta di Carla non ha ricevuto comandi di risposta;
+- una risposta contraffatta di Carla e il valore non numerico `40abc` sono stati rifiutati dal server;
+- il Master ha ricevuto una sola risposta valida per giocatore: Anna `40`, Berto `44`;
+- su viewport iPhone da 390 × 844 pixel il contenuto è rimasto entro i 390 pixel, senza overflow orizzontale;
+- dopo l'invio, i comandi sono stati bloccati per impedire doppio click e doppia risposta.
 
 ## Agenti simulati
 

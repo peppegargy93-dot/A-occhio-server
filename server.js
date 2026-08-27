@@ -108,6 +108,9 @@ function roomState(room, pad = null) {
         globalDeadline: room.deadline
       }
     : null;
+  const activeMini = pad && room.activeMini?.playerTokens.has(pad.token)
+    ? room.activeMini
+    : null;
   return {
     locked: room.locked,
     round: room.round,
@@ -116,7 +119,9 @@ function roomState(room, pad = null) {
     view: room.lastView,
     lastResult: room.lastResult || null,
     lastMap: room.lastMap || null,
-    sent: !!pad && pad.answeredRound === room.round
+    sent: !!pad && pad.answeredRound === room.round,
+    miniRequest: activeMini && !activeMini.responses.has(pad.token) ? activeMini.payload : null,
+    miniSent: !!activeMini && activeMini.responses.has(pad.token)
   };
 }
 
@@ -186,6 +191,7 @@ body{padding:12px 14px calc(24px + env(safe-area-inset-bottom))}.shell{width:100
 .win-rule{border:1px solid #c9ddd2;background:#eef4f0;border-radius:12px;padding:10px;font-size:11.5px;line-height:1.4;margin:10px 0}.movement-list{display:grid;gap:7px;margin:10px 0}.movement-row{border:1px solid var(--line);background:var(--paper2);border-radius:12px;padding:9px}.movement-head{display:flex;gap:7px;justify-content:space-between;align-items:center}.movement-deltas{display:flex;gap:5px}.movement-deltas b{border-radius:999px;padding:4px 6px;font-size:10px;background:#e4f1ed;color:var(--teal)}.movement-deltas b:last-child{background:#fff0c8;color:#806119}.movement-source{font-size:10.5px;color:#65787e;margin-top:4px}.dual-title{display:grid;grid-template-columns:1fr 1fr;gap:7px}.dual-title>div{border:1px solid var(--line);border-radius:12px;padding:8px}@media(max-width:380px){.dual-title{grid-template-columns:1fr}}
 .connection{display:flex;align-items:center;gap:6px;font-size:11px;color:#65787e;margin-top:9px;justify-content:center}.dot{width:7px;height:7px;border-radius:50%;background:var(--teal)}.dot.off{background:var(--coral)}
 .choice-list{display:grid;grid-template-columns:minmax(0,1fr);gap:9px;margin-top:12px;max-height:min(48dvh,430px);overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding:2px}.choice-btn{appearance:none;-webkit-appearance:none;width:100%;min-width:0;display:grid;gap:4px;text-align:left;border:1.5px solid var(--line);border-radius:14px;background:var(--paper);color:var(--ink);padding:12px 13px;font:inherit;touch-action:manipulation}.choice-btn b,.choice-btn span,.event-title,.event-desc,.instruction{min-width:0;overflow-wrap:break-word;word-break:normal;-webkit-hyphens:none;hyphens:none;font-variant-ligatures:none}.choice-btn b{font-size:14px;line-height:1.25}.choice-btn span{font-size:12px;line-height:1.35;color:#587078}.choice-btn:disabled{opacity:.5}.rename-box{margin-top:18px;padding-top:14px;border-top:1px dashed var(--line)}
+.mini-answer-form{display:grid;gap:10px;margin-top:12px}.mini-answer-field label{display:block;font-size:11px;font-weight:950;margin-bottom:5px}.mini-answer-field input{width:100%;min-width:0;border:2px solid var(--ink);background:var(--paper2);border-radius:13px;padding:13px;font:inherit;font-size:19px;font-weight:850;text-align:center;color:var(--ink)}.mini-answer-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.mini-answer-option{border:1.5px solid var(--line);border-radius:12px;background:var(--paper);color:var(--ink);padding:11px 8px;font:inherit;font-size:12px;font-weight:900}.mini-answer-option.selected{background:var(--petrol);border-color:var(--petrol);color:#fff}.mini-answer-submit{margin-top:2px}.mini-answer-note{font-size:11px;color:#587078;text-align:center;line-height:1.35}
 @supports not (height:100dvh){.choice-list{max-height:48vh}}
 @media(max-width:380px){body{padding-left:max(10px,env(safe-area-inset-left));padding-right:max(10px,env(safe-area-inset-right))}.panel{padding:14px;border-radius:18px}.event-title{font-size:18px}.choice-btn{padding:11px}.context-head,.compact-score{align-items:flex-start;flex-direction:column}.compact-score span{white-space:normal}}
 </style>
@@ -341,6 +347,30 @@ function applyChoiceRequest(v){
   }));
   $('status').textContent='Questa scelta spetta a te.';
 }
+function applyMiniRequest(v){
+  stopTimer();showScreen('infoScreen');
+  $('challengeDetail').classList.add('hidden');$('challengeDetail').innerHTML='';
+  $('infoIcon').textContent=v.icon||'⚡';$('infoTitle').textContent='Mini sfida · Tocca a te';
+  $('infoSubject').textContent=v.subject||currentName;$('infoEffectTitle').textContent=v.title||'Inserisci la tua risposta';
+  $('infoText').textContent=v.description||'La risposta viene inviata direttamente al Master.';
+  $('infoInstruction').textContent='Solo le lavagnette degli sfidanti sono attive. La risposta si blocca dopo l’invio.';
+  $('infoContext').classList.add('hidden');
+  const box=$('choiceList'),fields=Array.isArray(v.fields)?v.fields:[],values={};
+  box.innerHTML='<div class="mini-answer-form">'+fields.map(field=>{
+    if(field.type==='choice')return '<div class="mini-answer-field"><label>'+esc(field.label||'Scegli')+'</label><div class="mini-answer-options">'+(field.options||[]).map(option=>'<button type="button" class="mini-answer-option" data-field="'+esc(field.id)+'" data-value="'+esc(option.id)+'">'+esc(option.label)+'</button>').join('')+'</div></div>';
+    return '<div class="mini-answer-field"><label for="mini_'+esc(field.id)+'">'+esc(field.label||'Risposta')+'</label><input id="mini_'+esc(field.id)+'" class="mini-answer-input" data-field="'+esc(field.id)+'" inputmode="decimal" autocomplete="off" placeholder="'+esc(field.placeholder||'Scrivi un numero')+'"></div>';
+  }).join('')+'<button id="miniAnswerSubmit" type="button" class="btn mini-answer-submit">Invia e blocca</button><div class="mini-answer-note">Gli altri giocatori restano spettatori.</div></div>';
+  box.classList.remove('hidden');
+  box.querySelectorAll('.mini-answer-option').forEach(button=>button.addEventListener('click',()=>{values[button.dataset.field]=button.dataset.value;box.querySelectorAll('.mini-answer-option[data-field="'+button.dataset.field+'"]').forEach(item=>item.classList.toggle('selected',item===button))}));
+  $('miniAnswerSubmit').addEventListener('click',()=>{
+    fields.forEach(field=>{if(field.type!=='choice'){const input=box.querySelector('.mini-answer-input[data-field="'+field.id+'"]');values[field.id]=(input?.value||'').trim()}});
+    if(fields.some(field=>!String(values[field.id]??'').trim())){$('status').textContent='Completa tutti i campi prima di inviare.';return}
+    box.querySelectorAll('input,button').forEach(control=>control.disabled=true);
+    ws.send(JSON.stringify({t:'mini_response',requestId:v.requestId,values}));
+    $('infoInstruction').textContent='Risposta inviata. Attendi anche l’altro sfidante.';$('status').textContent='Risposta bloccata.';
+  });
+  $('status').textContent='La mini sfida è attiva sulla tua lavagnetta.';
+}
 function applyInfo(v){
   stopTimer();showScreen('infoScreen');
   $('choiceList').classList.add('hidden');$('choiceList').innerHTML='';
@@ -376,11 +406,11 @@ function applyInfo(v){
   $('status').textContent='Evento in corso. La situazione della partita resta visibile qui sotto.';
 }
 function applyView(v){if(v.kind==='result')return applyResult(v);if(v.kind==='map')return applyMap(v);return applyInfo(v)}
-function applyState(s){if(s.view)applyView(s.view);else if(s.question&&s.locked){stopTimer();showScreen('lockedScreen');$('status').textContent=s.sent?'La tua stima è al sicuro.':'Le risposte sono già chiuse.'}else if(s.question)applyQuestion({...s.question,deadline:s.deadline,locked:s.locked,sent:s.sent});else{$('renameName').value=currentName;showScreen('waitingScreen')}}
+function applyState(s){if(s.miniRequest)return applyMiniRequest(s.miniRequest);if(s.view)applyView(s.view);else if(s.question&&s.locked){stopTimer();showScreen('lockedScreen');$('status').textContent=s.sent?'La tua stima è al sicuro.':'Le risposte sono già chiuse.'}else if(s.question)applyQuestion({...s.question,deadline:s.deadline,locked:s.locked,sent:s.sent});else{$('renameName').value=currentName;showScreen('waitingScreen')}}
 let connectAttempt=0,openTimer=null;
 function closeSocket(){manualClose=true;clearTimeout(retry);clearTimeout(openTimer);try{ws&&ws.close()}catch{}ws=null;setTimeout(()=>manualClose=false,80)}
 function scheduleReconnect(){if(manualClose||retry)return;const wait=retryMs+Math.floor(Math.random()*350);retry=setTimeout(()=>{retry=null;connect('resume')},wait);retryMs=Math.min(10000,Math.round(retryMs*1.7))}
-function connect(mode){clearTimeout(retry);retry=null;if(!currentCode||!currentName)return;if(ws&&(ws.readyState===WebSocket.OPEN||ws.readyState===WebSocket.CONNECTING))return;const attempt=++connectAttempt;connection(false,mode==='resume'?'Riconnessione…':'Connessione…');try{ws=new WebSocket(proto+location.host)}catch{return scheduleReconnect()}const socket=ws;$('status').textContent='';openTimer=setTimeout(()=>{if(socket.readyState===WebSocket.CONNECTING)socket.close()},9000);socket.onopen=()=>{if(attempt!==connectAttempt)return socket.close();clearTimeout(openTimer);socket.send(JSON.stringify(mode==='resume'&&padToken?{t:'resume_pad',code:currentCode,token:padToken}:{t:'join',code:currentCode,name:currentName}))};socket.onmessage=e=>{let m;try{m=JSON.parse(e.data)}catch{return}if(m.t==='server_ping'){socket.send(JSON.stringify({t:'client_pong'}));return}if(m.t==='ok'||m.t==='resumed_pad'){currentCode=m.code;padToken=m.token||padToken;save();retryMs=1000;setRoom();connection(true,'Collegato');$('changeBtn').classList.remove('hidden');if(m.state)applyState(m.state);else{$('renameName').value=currentName;showScreen('waitingScreen')}}else if(m.t==='nickname_updated'){currentName=m.name;save();$('name').value=currentName;$('renameName').value=currentName;$('status').textContent='Nickname aggiornato.'}else if(m.t==='q')applyQuestion(m);else if(m.t==='choice_request')applyChoiceRequest(m);else if(m.t==='lock'){stopTimer();showScreen('lockedScreen');$('status').textContent=sent?'La tua stima è al sicuro.':'Tempo scaduto: nessuna stima inviata.'}else if(m.t==='view')applyView(m);else if(m.t==='accepted'){sent=true;$('estimate').disabled=true;$('sendBtn').disabled=true;$('sentBox').classList.remove('hidden');$('status').textContent='Risposta registrata.'}else if(m.t==='duplicate'){sent=true;$('estimate').disabled=true;$('sendBtn').disabled=true;$('sentBox').classList.remove('hidden');$('status').textContent='La risposta era già stata inviata.'}else if(m.t==='choice_confirmed'){$('infoInstruction').textContent=m.msg||'Scelta confermata.';$('status').textContent='Scelta registrata.'}else if(m.t==='personal_timeout'){$('estimate').disabled=true;$('sendBtn').disabled=true;$('status').textContent=m.msg||'Tempo personale scaduto: la lavagnetta è bloccata.'}else if(m.t==='room_closed'){padToken='';clearSaved();currentCode='';setRoom();showScreen('joinScreen');$('status').textContent=m.msg||'La partita è terminata.'}else if(m.t==='replaced'){showScreen('joinScreen');$('status').textContent=m.msg||'Sessione aperta altrove.'}else if(m.t==='err'){if(m.reset){padToken='';clearSaved();showScreen('joinScreen')} $('status').textContent='⚠️ '+m.msg}};socket.onerror=()=>{try{socket.close()}catch{}};socket.onclose=()=>{clearTimeout(openTimer);if(ws===socket)ws=null;connection(false,'Connessione interrotta');scheduleReconnect()}}
+function connect(mode){clearTimeout(retry);retry=null;if(!currentCode||!currentName)return;if(ws&&(ws.readyState===WebSocket.OPEN||ws.readyState===WebSocket.CONNECTING))return;const attempt=++connectAttempt;connection(false,mode==='resume'?'Riconnessione…':'Connessione…');try{ws=new WebSocket(proto+location.host)}catch{return scheduleReconnect()}const socket=ws;$('status').textContent='';openTimer=setTimeout(()=>{if(socket.readyState===WebSocket.CONNECTING)socket.close()},9000);socket.onopen=()=>{if(attempt!==connectAttempt)return socket.close();clearTimeout(openTimer);socket.send(JSON.stringify(mode==='resume'&&padToken?{t:'resume_pad',code:currentCode,token:padToken}:{t:'join',code:currentCode,name:currentName}))};socket.onmessage=e=>{let m;try{m=JSON.parse(e.data)}catch{return}if(m.t==='server_ping'){socket.send(JSON.stringify({t:'client_pong'}));return}if(m.t==='ok'||m.t==='resumed_pad'){currentCode=m.code;padToken=m.token||padToken;save();retryMs=1000;setRoom();connection(true,'Collegato');$('changeBtn').classList.remove('hidden');if(m.state)applyState(m.state);else{$('renameName').value=currentName;showScreen('waitingScreen')}}else if(m.t==='nickname_updated'){currentName=m.name;save();$('name').value=currentName;$('renameName').value=currentName;$('status').textContent='Nickname aggiornato.'}else if(m.t==='q')applyQuestion(m);else if(m.t==='choice_request')applyChoiceRequest(m);else if(m.t==='mini_request')applyMiniRequest(m);else if(m.t==='lock'){stopTimer();showScreen('lockedScreen');$('status').textContent=sent?'La tua stima è al sicuro.':'Tempo scaduto: nessuna stima inviata.'}else if(m.t==='view')applyView(m);else if(m.t==='accepted'){sent=true;$('estimate').disabled=true;$('sendBtn').disabled=true;$('sentBox').classList.remove('hidden');$('status').textContent='Risposta registrata.'}else if(m.t==='duplicate'){sent=true;$('estimate').disabled=true;$('sendBtn').disabled=true;$('sentBox').classList.remove('hidden');$('status').textContent='La risposta era già stata inviata.'}else if(m.t==='choice_confirmed'){$('infoInstruction').textContent=m.msg||'Scelta confermata.';$('status').textContent='Scelta registrata.'}else if(m.t==='mini_confirmed'){$('infoInstruction').textContent=m.msg||'Risposta della mini sfida registrata.';$('status').textContent='Risposta bloccata.'}else if(m.t==='mini_closed'){$('infoInstruction').textContent='Mini sfida conclusa. Attendi il risultato sul Master.'}else if(m.t==='personal_timeout'){$('estimate').disabled=true;$('sendBtn').disabled=true;$('status').textContent=m.msg||'Tempo personale scaduto: la lavagnetta è bloccata.'}else if(m.t==='room_closed'){padToken='';clearSaved();currentCode='';setRoom();showScreen('joinScreen');$('status').textContent=m.msg||'La partita è terminata.'}else if(m.t==='replaced'){showScreen('joinScreen');$('status').textContent=m.msg||'Sessione aperta altrove.'}else if(m.t==='err'){if(m.reset){padToken='';clearSaved();showScreen('joinScreen')} $('status').textContent='⚠️ '+m.msg}};socket.onerror=()=>{try{socket.close()}catch{}};socket.onclose=()=>{clearTimeout(openTimer);if(ws===socket)ws=null;connection(false,'Connessione interrotta');scheduleReconnect()}}
 function join(){const code=$('code').value.trim().toUpperCase(),name=$('name').value.trim();if(code.length!==4||!name){$('status').textContent='Inserisci un codice di quattro lettere e il tuo nome.';return}closeSocket();currentCode=code;currentName=name;padToken='';clearSaved();setRoom();setTimeout(()=>connect('join'),100)}
 function rename(){const name=$('renameName').value.trim();if(!name)return $('status').textContent='Inserisci il nuovo nickname.';if(!ws||ws.readyState!==WebSocket.OPEN)return $('status').textContent='Riconnessione in corso…';ws.send(JSON.stringify({t:'rename_pad',name}))}
 function submit(){if(!ws||ws.readyState!==WebSocket.OPEN||sent)return;const value=$('estimate').value.trim();if(!value){$('status').textContent='Inserisci prima una stima.';return}ws.send(JSON.stringify({t:'est',value}))}
@@ -394,7 +424,7 @@ function serveFile(res,name){fs.readFile(path.join(__dirname,name),(err,data)=>{
 const server = http.createServer((req,res)=>{
   const pathname=new URL(req.url,'http://localhost').pathname;
   if(pathname==='/lavagnetta'||pathname==='/lavagnetta/'){res.writeHead(200,{'Content-Type':'text/html; charset=utf-8','Cache-Control':'no-store, no-cache, must-revalidate'});return res.end(PAD)}
-  if(pathname==='/health'){res.writeHead(200,{'Content-Type':'application/json; charset=utf-8'});return res.end(JSON.stringify({ok:true,rooms:rooms.size}))}
+  if(pathname==='/health'){res.writeHead(200,{'Content-Type':'application/json; charset=utf-8'});return res.end(JSON.stringify({ok:true,version:'2.7.0',rooms:rooms.size}))}
   if(pathname==='/'||pathname==='/gioco'||pathname==='/gioco/'||pathname==='/game.html') return serveFile(res,'game.html');
   const routes={'/index.html':'index.html','/app.js':'app.js','/styles.css':'styles.css'};
   if(routes[pathname]) return serveFile(res,routes[pathname]);
@@ -430,6 +460,7 @@ wss.on('connection', ws => {
         estimates: new Map(),
         masterEvents: new Map(),
         activeChoice: null,
+        activeMini: null,
         deleteTimer: null
       };
       rooms.set(code, room);
@@ -671,6 +702,41 @@ wss.on('connection', ws => {
       return;
     }
 
+    if (m.t === 'mini_request' && ws._role === 'master') {
+      const requestId = String(m.requestId || '');
+      const playerTokens = [...new Set((Array.isArray(m.playerTokens) ? m.playerTokens : []).map(String))]
+        .filter(token => room.pads.has(token))
+        .slice(0, 8);
+      const fields = (Array.isArray(m.fields) ? m.fields : []).slice(0, 4).map(field => ({
+        id: String(field.id || '').slice(0, 30),
+        label: String(field.label || 'Risposta').slice(0, 80),
+        placeholder: String(field.placeholder || '').slice(0, 80),
+        type: field.type === 'choice' ? 'choice' : 'number',
+        options: (Array.isArray(field.options) ? field.options : []).slice(0, 10).map(option => ({id:String(option.id || '').slice(0,30),label:String(option.label || '').slice(0,80)}))
+      })).filter(field => field.id && (field.type !== 'choice' || field.options.length >= 2));
+      if (!requestId || !playerTokens.length || !fields.length) return send(ws, {t:'mini_error',requestId,msg:'Richiesta della mini sfida non valida.'});
+      const payload = {t:'mini_request',requestId,title:String(m.title||'Mini sfida').slice(0,100),subject:String(m.subject||'').slice(0,140),description:String(m.description||'').slice(0,300),icon:String(m.icon||'⚡').slice(0,8),fields};
+      room.activeMini = {requestId,playerTokens:new Set(playerTokens),fields,responses:new Map(),unavailableSent:new Set(),payload};
+      for (const token of playerTokens) {
+        const pad=room.pads.get(token);
+        if (pad.socket?.readyState === WebSocket.OPEN) send(pad.socket,payload);
+        else {
+          room.activeMini.unavailableSent.add(token);
+          queueMasterEvent(room,{t:'mini_unavailable',requestId,playerId:token,name:pad.name,msg:`La lavagnetta di ${pad.name} non è collegata.`});
+        }
+      }
+      return;
+    }
+
+    if (m.t === 'mini_cancel' && ws._role === 'master') {
+      const active=room.activeMini;
+      if(active&&active.requestId===String(m.requestId||'')){
+        for(const token of active.playerTokens)send(room.pads.get(token)?.socket,{t:'mini_closed',requestId:active.requestId});
+        room.activeMini=null;
+      }
+      return;
+    }
+
     if (m.t === 'cancel_choice' && ws._role === 'master') {
       const choice = room.activeChoice;
       if (choice && choice.requestId === String(m.requestId || '')) {
@@ -711,6 +777,23 @@ wss.on('connection', ws => {
         msg: 'Scelta inviata al gioco.'
       });
       room.activeChoice = null;
+      return;
+    }
+
+    if (m.t === 'mini_response' && ws._role === 'pad') {
+      const pad=room.pads.get(ws._padToken),active=room.activeMini,requestId=String(m.requestId||'');
+      if(!pad||!active||active.requestId!==requestId||!active.playerTokens.has(pad.token)||active.responses.has(pad.token))return send(ws,{t:'err',msg:'Questa risposta della mini sfida non è valida o è già stata registrata.'});
+      const incoming=m.values&&typeof m.values==='object'?m.values:{},values={};
+      for(const field of active.fields){
+        const value=String(incoming[field.id]??'').trim();
+        if(field.type==='number'){
+          if(!/^[+-]?(?:\d+(?:[.,]\d*)?|[.,]\d+)$/.test(value))return send(ws,{t:'err',msg:`Inserisci un numero valido per ${field.label}.`});
+        }else if(!field.options.some(option=>option.id===value))return send(ws,{t:'err',msg:`Seleziona una risposta valida per ${field.label}.`});
+        values[field.id]=value;
+      }
+      active.responses.set(pad.token,values);
+      queueMasterEvent(room,{t:'mini_response',requestId,playerId:pad.token,name:pad.name,values});
+      send(ws,{t:'mini_confirmed',requestId,msg:'Risposta della mini sfida registrata e bloccata.'});
       return;
     }
 
@@ -762,6 +845,11 @@ wss.on('connection', ws => {
       }
       if (room.activeChoice?.chooserToken === ws._padToken) {
         choiceFallback(room, room.activeChoice);
+      }
+      const activeMini=room.activeMini;
+      if(activeMini?.playerTokens.has(ws._padToken)&&!activeMini.responses.has(ws._padToken)&&!activeMini.unavailableSent.has(ws._padToken)){
+        activeMini.unavailableSent.add(ws._padToken);
+        queueMasterEvent(room,{t:'mini_unavailable',requestId:activeMini.requestId,playerId:ws._padToken,name:pad?.name||'Giocatore',msg:'La lavagnetta dello sfidante si è disconnessa.'});
       }
       notifyMaster(room);
     }

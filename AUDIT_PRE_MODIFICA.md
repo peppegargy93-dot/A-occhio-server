@@ -1,29 +1,45 @@
-# Audit pre-modifica — A OCCHIO! v2.4
+# Audit pre-modifica — A OCCHIO! v2.6
 
-Snapshot esaminato integralmente prima delle modifiche: branch `main`, commit GitHub `e9457300c7f07faf8e861698257f112fb31f7c0f`.
+Base esaminata integralmente prima della modifica: pacchetto v2.5 derivato dal repository `A-occhio-server`.
 
 ## Struttura trovata
 
-- `server.js`: HTTP statico, stanze WebSocket in memoria e pagina lavagnetta incorporata in `PAD_HTML`.
-- `game.html`: client Master, stato di gioco, domande, punteggi, tabellone, minigiochi ed eventi speciali.
+- `server.js`: server HTTP, stanze WebSocket in memoria e pagina lavagnetta incorporata nella costante `PAD`.
+- `game.html`: intero client Master, stato partita, database domande, punteggi, tabellone, eventi speciali e dieci minigiochi.
 - `index.html`, `app.js`, `styles.css`: landing separata dal gioco `/gioco`.
-- `scripts/`, `tests/`: nel repository remoto i relativi file erano stati caricati per errore nella root, mentre `package.json` li cercava nelle due directory.
-- Database iniziale: 405 domande, delle quali 37 abilitate perché complete di curiosità e fonte.
+- `scripts/`: controlli di sintassi e audit editoriale.
+- `tests/`: regressioni scelte, protocollo WebSocket, editoriale, minigiochi e regole.
+- Database v2.5: 411 domande totali, 43 curate e attive, 368 escluse.
 
-## Cause reali dei problemi segnalati
+## Cause reali individuate prima di intervenire
 
-1. **Blocco Bonus/Malus del Master.** `onlineRequestPlayerChoice` inoltrava sempre la richiesta a una lavagnetta cercata per nickname. Il primo giocatore è però il Master e non possiede un socket lavagnetta: il server rispondeva `choice_error`, il client mostrava soltanto l’errore e non richiamava il fallback. La schermata restava quindi sospesa per sempre.
-2. **Blocco per mancata consegna.** Non esistevano conferma di apertura, scadenza o annullamento client della scelta. Anche una risposta persa o un errore diverso dalla disconnessione lasciava pendente la callback.
-3. **Lettera “s” cancellata.** La lavagnetta è contenuta in un template literal server-side. La regex scritta come `/\s+/` perdeva il backslash quando il template veniva generato e arrivava al browser come `/s+/`, sostituendo realmente ogni `s` minuscola con uno spazio.
-4. **Testi fragili su mobile.** `overflow-wrap:anywhere` permetteva di spezzare le etichette in qualunque punto; su viewport strette aumentava la percezione di lettere mancanti e parole deformate.
-5. **Android intermittente.** La riconnessione dipendeva quasi soltanto da `close`/`pageshow`: mancavano timeout di apertura, gestione `online`/`focus`, jitter e heartbeat per individuare socket apparentemente aperti ma ormai inattivi.
-6. **Editor (situazione iniziale).** Il filtro fail-closed era corretto, ma il mazzo attivo era limitato a 37 schede e non conteneva la nuova serie richiesta sul conteggio delle parole nelle canzoni.
-7. **Dinamica.** Le regole erano coerenti, ma minigiochi e classifica comunicavano poco la posta e il prossimo evento del tabellone. Il miglioramento doveva restare presentazionale per non alterare il gameplay originale.
+1. **Sfide apparentemente fra distanze diverse.** Il calcolo usava correttamente la distanza effettiva dopo i Malus, ma alcune schermate esponevano soltanto la distanza reale. Due giocatori potevano quindi risultare pari nello stato autorevole e diversi a video.
+2. **Due motivi di sfida confusi.** Un fotofinish nasce da distanze valide uguali; la casella Sfida nasce invece dal percorso, indipendentemente dalla risposta. La UI non distingueva abbastanza i due ingressi.
+3. **Motivazione persa.** Il risolutore riceveva solo i giocatori; domanda, stime, risposta corretta e modificatori non viaggiavano in uno snapshot strutturato verso le lavagnette.
+4. **Contesto obsoleto.** Il server allegava il risultato precedente anche ad alcuni aggiornamenti di sfida, facendo sembrare che la nuova carta derivasse da dati vecchi.
+5. **Paracadute non applicato.** La carta era definita e assegnabile, ma nessun percorso di calcolo ne consumava o applicava l’effetto.
+6. **Randomizzazione frammentata.** Round, Stima Lampo e altri minigiochi pescavano con chiamate casuali indipendenti; dopo una nuova partita una domanda poteva ricomparire subito.
+7. **Mazzi speciali senza ciclo.** Lettere, categorie e carte dati potevano ripetersi prima che le alternative fossero state percorse.
+8. **Stato punti/caselle disperso.** Le mutazioni erano distribuite fra round ed eventi speciali. Lo stato finale era corretto nei casi semplici, ma non esisteva un unico registro per animazione, log e payload lavagnette.
+9. **Paracadute e Anti-Sapientone non condividevano una formula visibile.** Il punteggio poteva essere coerente senza permettere al tavolo di ricostruire la distanza valida.
+10. **Classifica e tabellone mescolati.** Una singola riga accostava punti e casella senza spiegare che la Finale vince immediatamente, mentre i punti decidono soltanto al limite dei 15 round.
+11. **Movimento incompleto.** L’animazione copriva l’avanzamento base ma non tutte le variazioni speciali; inoltre gli arretramenti del Dado Caos non venivano animati.
+12. **Fine partita riutilizzabile.** `startGame()` non azzerava esplicitamente il precedente `winnerFinal`; una partita successiva poteva quindi ereditare un esito vecchio in un percorso di chiusura anticipata.
+13. **Copertura editoriale limitata.** Le 43 domande curate erano corrette, ma troppo poche rispetto alle 17 categorie e al numero di partite richiesto.
 
 ## Strategia applicata
 
-- Fallback locale immediato per il Master; conferma, timeout, annullamento e deduplicazione per le lavagnette.
-- Correzione della doppia escape nella pagina incorporata e regole tipografiche mobile più conservative.
-- Riconnessione mobile guidata dagli eventi di rete/pagina e heartbeat WebSocket.
-- Sei nuove domande musicali con criterio di conteggio esplicito, curiosità specifica e fonte.
-- Rafforzamento visivo dei minigiochi e del percorso senza cambiare l’assegnazione dei punti.
+- Distanza effettiva unica (`effectiveDist`) con formula, tolleranza numerica e motivazione Sfida strutturata.
+- Ledger centrale per ogni variazione di punti e posizione.
+- Shuffle-bag condiviso per domande e dedicato per carte/minigiochi, con memoria persistente delle estrazioni recenti.
+- 170 nuove schede curate, 10 per categoria, mantenendo fail-closed le 368 incomplete.
+- Due classifiche distinte, animazione ledger, regole di vittoria sempre visibili e fine manuale esplicita.
+- Fallback delle scelte soltanto su indisponibilità confermata; nessuna scadenza arbitraria che sottragga la decisione al giocatore collegato.
+- Test statici, test dinamici del protocollo, simulazioni deterministiche e collaudo browser Master/lavagnette.
+
+## Vincoli mantenuti
+
+- Punteggio base e movimento base restano 3/2/1 nelle partite da almeno tre giocatori.
+- La casella Sfida conserva la ricompensa di +1 casella; Minigioco conserva +1 punto e +1 casella.
+- In modalità a due giocatori resta la regola Duello già esistente.
+- Nessuna curiosità viene inventata dalla categoria o ricavata copiando HTML dal Master.

@@ -1,6 +1,6 @@
 # Domande prive di curiosità verificata
 
-Totale database: 411. Complete di curiosità e fonte: 43. Da verificare: 368.
+Totale database: 581. Complete di curiosità e fonte: 213. Da verificare: 368.
 
 Una domanda resta fuori dal mazzo finché non possiede entrambi i campi `f` (curiosità specifica) e `fs` (fonte HTTPS).
 

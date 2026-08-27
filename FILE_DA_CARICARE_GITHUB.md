@@ -1,6 +1,15 @@
 # File da aggiornare su GitHub
 
-Carica **il contenuto** di `A_OCCHIO_GITHUB_UPDATE_V2_4` nella root del repository `A-occhio-server`. Non caricare la cartella come sottocartella.
+Carica **il contenuto** di `A_OCCHIO_FILE_DA_CARICARE_GITHUB_V2_7` nella root del repository `A-occhio-server`. Non caricare la cartella v2.7 come sottocartella.
+
+## Correzione indispensabile
+
+Il sito attualmente online sta ancora servendo il vecchio `game.html`, riconoscibile dal menu con soli tre minigiochi: **Stima Lampo**, **Nomi & Cose** e **Cronometro del Master**. Per rendere effettiva questa correzione devi almeno sostituire nella root GitHub questi due file:
+
+- `game.html`
+- `server.js`
+
+Per evitare errori è inclusa anche la cartella `A_OCCHIO_SOSTITUISCI_QUESTI_2_FILE_V2_7`, che contiene soltanto quei due file. Non lasciare i file nuovi dentro una sottocartella: devono sostituire gli omonimi già visibili nella pagina principale del repository.
 
 ## File applicativi da sostituire
 
@@ -9,17 +18,20 @@ Carica **il contenuto** di `A_OCCHIO_GITHUB_UPDATE_V2_4` nella root del reposito
 - `package.json`
 - `pnpm-lock.yaml`
 
-`index.html`, `app.js` e `styles.css` sono inclusi nel pacchetto per avere una root completa, ma in questa versione non contengono la correzione principale.
+Per una root completa sono inclusi anche `index.html`, `app.js` e `styles.css`; puoi sostituirli insieme agli altri file.
 
-## Directory da caricare
+## Directory da sostituire integralmente
 
 - `scripts/`
   - `audit-questions.js`
   - `check-game.js`
+  - `simulate-games.js`
 - `tests/`
   - `choice-regression.test.js`
   - `e2e.test.js`
   - `editorial.test.js`
+  - `minigames.test.js`
+  - `question-deck.test.js`
   - `rules.test.js`
 
 ## Documenti da sostituire
@@ -32,10 +44,19 @@ Carica **il contenuto** di `A_OCCHIO_GITHUB_UPDATE_V2_4` nella root del reposito
 - `BUG_RISOLTI.md`
 - `DEPLOY_RENDER.md`
 - `FILE_DA_CARICARE_GITHUB.md`
+- `MAZZO_SFIDE.md`
+- `SIMULATION_REPORT.md`
+- `PLAYTEST_REPORT.md`
 
-## Vecchie copie da eliminare dalla root
+## Cosa eliminare dalla root GitHub
 
-Nel commit di partenza questi file erano nella posizione sbagliata. Dopo aver caricato le directory, elimina soltanto le copie nella root:
+Se sono ancora presenti, elimina le vecchie cartelle caricate per errore come contenitori:
+
+- `A_OCCHIO_GITHUB_UPDATE_V2_1/`
+- `A_OCCHIO_GITHUB_UPDATE_V2_2/`
+- qualsiasi altra cartella `A_OCCHIO_GITHUB_UPDATE_V*/`
+
+Elimina inoltre le vecchie copie dei test/script rimaste direttamente nella root:
 
 - `audit-questions.js`
 - `check-game.js`
@@ -43,4 +64,24 @@ Nel commit di partenza questi file erano nella posizione sbagliata. Dopo aver ca
 - `editorial.test.js`
 - `rules.test.js`
 
-Non eliminare `scripts/`, `tests/` né gli altri file applicativi. Un deploy Render usa direttamente la root del repository.
+Non eliminare `scripts/`, `tests/` o i file applicativi. Alla fine `game.html`, `server.js`, `package.json`, `scripts/` e `tests/` devono trovarsi direttamente nella root del repository.
+
+## Controllo prima del commit
+
+```bash
+npm install
+npm run check
+npm test
+npm run audit:questions
+npm run simulate
+```
+
+Risultato atteso: 33 test superati, 213 domande curate, 368 escluse e 360 partite simulate con stato `OK`.
+
+## Controllo dopo il caricamento
+
+1. Apri `game.html` direttamente su GitHub e cerca `A OCCHIO! v2.7.0`.
+2. Nello stesso file cerca `Vedi tutte le 10 carte del Mazzo Sfide`.
+3. Dopo il deploy, apri `/health`: deve comparire `"version":"2.7.0"`.
+
+Se uno di questi controlli fallisce, GitHub o Render stanno ancora usando i file precedenti.

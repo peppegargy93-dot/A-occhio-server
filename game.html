@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- A OCCHIO! v2.7.0 · Mazzo Sfide da 10 carte + risposte sulle lavagnette -->
 <html lang="it">
 <head>
 <meta charset="UTF-8">
@@ -121,6 +122,8 @@
     box-shadow:var(--shadow);
     padding:16px;
     margin:12px 0;
+    min-width:0;
+    overflow-wrap:break-word;
   }
   .card.flat{box-shadow:none;}
   .card h2{
@@ -400,6 +403,9 @@
   #app > .card:nth-child(3){animation-delay:.14s;}
   #app > .card:nth-child(4){animation-delay:.2s;}
   .score-row .pts{font-weight:900;font-size:17px;color:var(--ink);width:34px;text-align:right;}
+  .win-rule{border:1.5px solid #c9ddd2;background:#eef4f0;border-radius:14px;padding:11px 12px;font-size:12px;line-height:1.4;color:#3f5d55;margin:10px 0;}
+  .win-rule b{color:var(--ink)}
+  .movement-list{display:grid;gap:8px;margin-top:10px}.movement-row{border:1px solid var(--line-soft);background:var(--paper-2);border-radius:13px;padding:10px}.movement-head{display:flex;align-items:center;gap:7px}.movement-head b{flex:1}.movement-delta{display:flex;gap:6px}.movement-delta span{border-radius:999px;padding:4px 7px;font-size:11px;font-weight:900;background:#e4f1ed;color:var(--teal)}.movement-delta span.cell-delta{background:#fff1cd;color:#806119}.movement-source{font-size:10.5px;color:#66787d;line-height:1.35;margin-top:5px}.dual-standing{display:grid;grid-template-columns:1fr 1fr;gap:10px}.standing-box{border:1px solid var(--line-soft);border-radius:13px;padding:9px}.standing-title{font-size:10px;font-weight:900;letter-spacing:.8px;text-transform:uppercase;margin-bottom:4px}.standing-line{display:flex;justify-content:space-between;gap:6px;padding:5px 1px;border-bottom:1px dashed var(--line-soft);font-size:11.5px}.standing-line:last-child{border-bottom:0}@media(max-width:520px){.dual-standing{grid-template-columns:1fr}}
 
   /* ---------- special / dice ---------- */
   .dice{
@@ -460,6 +466,52 @@
   .choice:active{background:var(--line-soft);}
   .stakes{display:inline-flex;align-items:center;gap:6px;margin:9px auto 2px;padding:6px 10px;border-radius:999px;background:#fff0c6;border:1px solid #e6c56f;color:#6a4b05;font-size:11px;font-weight:900;letter-spacing:.35px;text-transform:uppercase;}
   .next-stop{display:block;margin-top:2px;font-size:9.5px;font-weight:800;color:var(--coral);white-space:nowrap;}
+  .mini-card{position:relative;overflow:hidden;border:2px solid var(--ink);background:linear-gradient(145deg,#fffaf0,#f5ead0);border-radius:18px;padding:16px;text-align:left;box-shadow:0 12px 28px -22px rgba(32,66,78,.7);}
+  .mini-card::after{content:"";position:absolute;width:100px;height:100px;border-radius:50%;right:-42px;top:-42px;background:var(--ochre);opacity:.18;}
+  .mini-head{display:flex;align-items:center;gap:10px;position:relative;z-index:1;}
+  .mini-icon{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;background:#fff;font-size:26px;border:1.5px solid var(--line);flex:0 0 auto;}
+  .mini-title{font-size:20px;font-weight:900;line-height:1.05;}
+  .mini-kicker{font-size:9.5px;font-weight:900;letter-spacing:1.2px;text-transform:uppercase;color:var(--coral);margin-bottom:3px;}
+  .mini-rules{display:grid;gap:7px;margin:13px 0 5px;padding:0;list-style:none;}
+  .mini-rules li{display:grid;grid-template-columns:24px 1fr;gap:7px;align-items:start;font-size:12.5px;line-height:1.35;}
+  .mini-rules i{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--petrol);color:#fff;font-style:normal;font-size:10px;font-weight:900;}
+  .mini-meta{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:11px;}
+  .mini-meta div{background:rgba(255,255,255,.72);border:1px solid var(--line);border-radius:11px;padding:8px 9px;}
+  .mini-meta small{display:block;font-size:8.5px;font-weight:900;letter-spacing:.8px;text-transform:uppercase;color:#7a6f55;}
+  .mini-meta b{font-size:12px;line-height:1.25;display:block;margin-top:2px;}
+  .mini-round{display:inline-flex;padding:5px 9px;border-radius:999px;background:var(--petrol);color:#fff;font-size:10px;font-weight:900;letter-spacing:.5px;text-transform:uppercase;}
+  .mini-question{font-size:19px;font-weight:900;line-height:1.18;text-align:center;margin:12px 0;}
+  .mini-reference{font-size:36px;font-weight:900;color:var(--coral);text-align:center;line-height:1;}
+  .mini-player-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;padding:9px 2px;border-bottom:1px dashed var(--line-soft);}
+  .mini-player-row .who{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:900;min-width:0;}
+  .mini-picks{display:flex;gap:5px;}
+  .mini-pick{border:1.5px solid var(--petrol);background:#fff;color:var(--petrol);border-radius:10px;padding:8px 10px;font-weight:900;font-size:12px;}
+  .mini-pick.selected{background:var(--petrol);color:#fff;}
+  .mini-pick:disabled{opacity:.58;}
+  .mini-inputs{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
+  .mini-inputs input,.mini-lock-row input,.mini-player-row>input{width:100%;min-width:0;box-sizing:border-box;border:1.5px solid var(--line);border-radius:10px;background:#fff;padding:9px;font:inherit;font-size:15px;font-weight:800;text-align:center;color:var(--ink);}
+  .mini-sequence{display:grid;gap:7px;margin:11px 0;}
+  .mini-sequence .item{display:grid;grid-template-columns:28px 1fr;gap:8px;align-items:center;padding:9px 10px;border:1.5px solid var(--line);border-radius:11px;background:#fff;font-size:12.5px;font-weight:800;}
+  .mini-sequence .item b{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--ochre);font-size:11px;}
+  .mini-clue{padding:11px 12px;border-left:4px solid var(--ochre);border-radius:0 11px 11px 0;background:#fff8df;font-size:13px;font-weight:800;line-height:1.35;margin:7px 0;}
+  .mini-clue.locked{border-left-color:var(--teal);background:#e7f2ee;}
+  .mini-lock-row{display:grid;grid-template-columns:minmax(0,1fr) 112px;gap:8px;align-items:center;padding:8px 0;border-bottom:1px dashed var(--line-soft);}
+  .bomb-display{width:150px;height:150px;border-radius:50%;margin:12px auto;display:grid;place-items:center;background:radial-gradient(circle at 35% 30%,#ff9a7f,var(--coral) 55%,#9a2d1b);color:#fff;border:5px solid #4f251b;box-shadow:0 0 0 8px #f7d39b,0 14px 28px -18px #401;}
+  .bomb-display b{font-size:42px;line-height:1;}
+  .bomb-display span{display:block;font-size:9px;text-transform:uppercase;letter-spacing:1px;font-weight:900;margin-top:4px;}
+  .mini-fact{background:#eef4f0;border:1.5px solid #c9ddd2;border-radius:12px;padding:11px 12px;text-align:left;font-size:12.5px;line-height:1.42;margin-top:10px;overflow-wrap:break-word;}
+  .challenge-why{border:1.5px solid #e3c36e;background:#fff5d8;border-radius:15px;padding:12px;margin:10px 0 13px;text-align:left;}
+  .challenge-why h3{margin:0 0 5px;font-size:12px;letter-spacing:.8px;text-transform:uppercase;color:#76560d;}
+  .challenge-why p{margin:0;font-size:12.5px;line-height:1.4;color:#4f5e61;}
+  .challenge-answer{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-top:9px;padding-top:8px;border-top:1px dashed #dec980;font-size:11px;}
+  .challenge-answer b{font-size:16px;color:var(--coral);white-space:nowrap;}
+  .challenge-evidence{display:grid;gap:6px;margin-top:8px;}
+  .challenge-evidence .ev{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;background:rgba(255,255,255,.72);border-radius:10px;padding:8px 9px;font-size:11.5px;}
+  .challenge-evidence .ev{min-width:0}.challenge-evidence .ev span{min-width:0;overflow-wrap:break-word}
+  .challenge-evidence .ev strong{display:block;font-size:12.5px;}
+  .challenge-evidence .ev span:last-child{text-align:right;font-weight:850;}
+  .same-answer{display:inline-flex;margin-top:8px;padding:5px 8px;border-radius:999px;background:#e5f2ee;color:#326c61;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.55px;}
+  @media(max-width:420px){.mini-card{padding:13px}.mini-title{font-size:18px}.mini-meta{grid-template-columns:1fr}.mini-player-row{grid-template-columns:1fr}.mini-picks{width:100%}.mini-pick{flex:1}.mini-lock-row{grid-template-columns:1fr}.mini-question{font-size:17px}.mini-reference{font-size:31px}.challenge-evidence .ev{grid-template-columns:1fr}.challenge-evidence .ev span:last-child{text-align:left}}
   .letter-inputs{display:flex;gap:10px;justify-content:center;margin:10px 0;}
   .letter-inputs input{width:60px;height:60px;text-align:center;font-size:30px;font-weight:900;text-transform:uppercase;
     border:2px solid var(--ink);border-radius:13px;background:var(--paper-2);color:var(--ink);font-family:inherit;}
@@ -938,6 +990,182 @@ const QUESTIONS = [
   {cat:"Musica", q:"Quante parole ha il ritornello di Nel blu dipinto di blu, senza contare gli oh?", a:11, u:"parole", f:"Nel blu dipinto di blu vinse sia Record of the Year sia Song of the Year alla primissima edizione dei Grammy.", fs:"https://www.grammy.com/awards/1st-annual-grammy-awards/"}
 ];
 
+/* 170 nuove carte v2.6: 10 per ciascuna categoria, con curiosità e fonte. */
+const QUESTIONS_V2_6 = [
+  {"cat":"Sport","q":"Quanti metri misura la larghezza interna di una porta da calcio regolamentare?","a":7.32,"u":"m","f":"La chicca: la misura nasce dalle 8 iarde britanniche ed è rimasta identica nel calcio internazionale. Una porta certificata viene anche sottoposta a prove di stabilità e resistenza.","fs":"https://football-technology.fifa.com/innovation/standards/football-goals/football-goal-testing-process"},
+  {"cat":"Sport","q":"Quanti metri separano il terreno dal bordo inferiore della traversa in una porta da calcio regolamentare?","a":2.44,"u":"m","f":"Dietro la misura: 2,44 metri equivalgono esattamente a 8 piedi. FIFA controlla anche che pali e traversa non presentino spigoli o fissaggi pericolosi.","fs":"https://football-technology.fifa.com/innovation/standards/football-goals/football-goal-testing-process"},
+  {"cat":"Sport","q":"Quanti giocatori al massimo può schierare in campo una squadra di rugby union durante il gioco?","a":15,"u":"giocatori","f":"Non tutti hanno lo stesso compito: i numeri dall'1 all'8 identificano tradizionalmente gli avanti, mentre dal 9 al 15 giocano i trequarti. L'organizzatore può autorizzare incontri con meno di 15 giocatori.","fs":"https://passport.world.rugby/laws-of-the-game/laws-by-number/3-team/"},
+  {"cat":"Sport","q":"Quante riserve può nominare al massimo una nazionale in una partita internazionale di rugby a 15?","a":8,"u":"riserve","f":"Il dettaglio tattico: in una rosa internazionale da 23, almeno sei giocatori devono poter coprire i ruoli specialistici della prima linea. Le sostituzioni avvengono soltanto a gioco fermo e con il permesso dell'arbitro.","fs":"https://passport.world.rugby/laws-of-the-game/laws-by-number/3-team/"},
+  {"cat":"Sport","q":"Quanti metri è lungo un campo regolamentare di pallavolo?","a":18,"u":"m","f":"Il campo è diviso in due quadrati perfetti di 9 metri per lato. Nelle competizioni FIVB deve inoltre essere circondato da una zona libera molto più ampia di quella minima prevista nelle partite comuni.","fs":"https://www.fivb.com/wp-content/uploads/2024/03/FIVB_Volleyball_Rules_2015-2016_EN_V3_20150205.pdf"},
+  {"cat":"Sport","q":"Quanti metri è lungo il rettangolo di gioco di un campo FIBA di pallacanestro?","a":28,"u":"m","f":"Il parquet misura 28 per 15 metri, ma l'intera area libera consigliata arriva almeno a 32 per 19. Le linee regolamentari sono larghe 5 centimetri.","fs":"https://www.venueguide.fiba.basketball/vanue-design"},
+  {"cat":"Sport","q":"Quanti metri è lungo un campo regolamentare di pallamano indoor?","a":40,"u":"m","f":"È lungo quanto quattro autobus urbani messi quasi in fila e largo 20 metri. Davanti a ciascuna porta c'è un'area di 6 metri riservata al portiere in difesa.","fs":"https://www.ihf.info/media-center/news/how-did-we-get-here-evolution-indoor-handball"},
+  {"cat":"Sport","q":"Quanti giocatori per squadra sono contemporaneamente in campo nella pallamano indoor, portiere compreso?","a":7,"u":"giocatori","f":"La formazione è composta da sei giocatori di movimento e un portiere. Nel moderno attacco sette contro sei, il portiere può essere sostituito temporaneamente da un altro giocatore di movimento.","fs":"https://www.ihf.info/media-center/news/how-did-we-get-here-evolution-indoor-handball"},
+  {"cat":"Sport","q":"Quanti piedi misura ciascun lato del quadrato interno di un campo da baseball MLB?","a":90,"u":"piedi","f":"La misura di 90 piedi fu fissata nel 1857. Dal 2023 le basi sono più grandi, ma la distanza regolamentare si misura ancora dagli stessi punti geometrici del diamante.","fs":"https://www.mlb.com/glossary/rules/field-dimensions"},
+  {"cat":"Sport","q":"Quanti piedi decimali separano la pedana del lanciatore dalla punta posteriore di casa base nella MLB?","a":60.5,"u":"piedi","f":"La formula tradizionale è 60 piedi e 6 pollici: quei 6 pollici valgono mezzo piede. Il monte del lanciatore è inoltre alto 10 pollici rispetto a casa base.","fs":"https://www.mlb.com/official-information/basics/field"},
+  {"cat":"Cinema","q":"Quante candidature agli Oscar ricevette Ben-Hur alla cerimonia del 1960?","a":12,"u":"candidature","f":"Ben-Hur trasformò quasi ogni candidatura in una statuetta: ne vinse 11. Tra i premi ci furono miglior film, regia, attore protagonista e attore non protagonista.","fs":"https://www.oscars.org/oscars/ceremonies/1960"},
+  {"cat":"Cinema","q":"Quanti Oscar vinse Il Signore degli Anelli: Il ritorno del re alla cerimonia del 2004?","a":11,"u":"Oscar","f":"Fu un percorso perfetto: 11 vittorie su 11 candidature. Conquistò anche miglior film, un risultato rarissimo per un fantasy e per il capitolo conclusivo di una trilogia.","fs":"https://www.oscars.org/oscars/ceremonies/2004"},
+  {"cat":"Cinema","q":"Quante candidature agli Oscar ottenne La La Land alla cerimonia del 2017?","a":14,"u":"candidature","f":"La La Land eguagliò il massimo storico di 14 candidature, ma vinse 6 premi. Quella fu anche la serata del celebre scambio di buste che assegnò inizialmente il miglior film al titolo sbagliato.","fs":"https://www.oscars.org/oscars/ceremonies/2017"},
+  {"cat":"Cinema","q":"Quanti Oscar vinse Everything Everywhere All at Once alla cerimonia del 2023?","a":7,"u":"Oscar","f":"Il film vinse 7 premi su 11 candidature, compresi miglior film e regia. Tre dei suoi interpreti conquistarono una statuetta nella stessa serata.","fs":"https://www.oscars.org/oscars/ceremonies/2023"},
+  {"cat":"Cinema","q":"Quanti Oscar vinse Parasite alla cerimonia del 2020?","a":4,"u":"Oscar","f":"Parasite divenne il primo film non in lingua inglese a vincere l'Oscar al miglior film. Portò a casa anche film internazionale, regia e sceneggiatura originale.","fs":"https://www.oscars.org/oscars/ceremonies/2020"},
+  {"cat":"Cinema","q":"Quanti Oscar vinse Oppenheimer alla cerimonia del 2024?","a":7,"u":"Oscar","f":"Dalle sue 13 candidature arrivarono 7 vittorie, tra cui miglior film, regia e attore protagonista. Robert Downey Jr. ottenne in quella serata il suo primo Oscar.","fs":"https://www.oscars.org/oscars/ceremonies/2024"},
+  {"cat":"Cinema","q":"Quanti Oscar vinse Mad Max: Fury Road alla cerimonia del 2016?","a":6,"u":"Oscar","f":"Fu il film più premiato della serata pur senza vincere miglior film. Le sei statuette celebrarono soprattutto il lavoro tecnico: montaggio, costumi, trucco, scenografia, sonoro e montaggio sonoro.","fs":"https://www.oscars.org/oscars/ceremonies/2016"},
+  {"cat":"Cinema","q":"Quanti Oscar vinse Gravity alla cerimonia del 2014?","a":7,"u":"Oscar","f":"Gravity dominò le categorie tecniche e fece vincere ad Alfonso Cuarón l'Oscar per la regia. Il premio al miglior film andò invece a 12 anni schiavo.","fs":"https://www.oscars.org/oscars/ceremonies/2014"},
+  {"cat":"Cinema","q":"Quanti Oscar vinse West Side Story alla cerimonia del 1962?","a":10,"u":"Oscar","f":"Vinse 10 delle sue 11 candidature, inclusi miglior film e regia. Rita Moreno e George Chakiris furono premiati entrambi come interpreti non protagonisti.","fs":"https://www.oscars.org/oscars/ceremonies/1962"},
+  {"cat":"Cinema","q":"Quanti Oscar vinse Cabaret alla cerimonia del 1973?","a":8,"u":"Oscar","f":"Cabaret vinse 8 premi ma non quello per il miglior film, assegnato a Il padrino. È uno dei casi più clamorosi di grande raccolto di statuette senza il premio principale.","fs":"https://www.oscars.org/oscars/ceremonies/1973"},
+  {"cat":"Musica","q":"Quante volte Taylor Swift aveva vinto il Grammy per l'Album dell'anno dopo l'edizione 2024?","a":4,"u":"volte","f":"È la prima artista nella storia dei Grammy a raggiungere quattro vittorie in questa categoria. Gli album sono Fearless, 1989, Folklore e Midnights.","fs":"https://www.grammy.com/artists/taylor-swift/15450/"},
+  {"cat":"Musica","q":"Quanti Grammy risultano vinti da Stevie Wonder nel profilo ufficiale aggiornato ai Grammy 2026?","a":25,"u":"Grammy","f":"Stevie Wonder è anche uno dei soli tre artisti ad aver vinto tre volte l'Album dell'anno. Il suo primo grande raccolto fu di cinque Grammy per la stagione di Innervisions.","fs":"https://www.grammy.com/artists/stevie-wonder/8257/"},
+  {"cat":"Musica","q":"Quanti Grammy vinse Bruno Mars su altrettante candidature alla cerimonia del 2018?","a":6,"u":"Grammy","f":"Fu un en plein: sei candidature e sei vittorie. 24K Magic conquistò Album dell'anno, mentre la title track e That's What I Like dominarono le categorie principali e R&B.","fs":"https://www.grammy.com/artists/bruno-mars/5082/"},
+  {"cat":"Musica","q":"Quanti anni aveva Billie Eilish quando conquistò in una sola notte le quattro categorie principali dei Grammy 2020?","a":18,"u":"anni","f":"A soli 18 anni vinse Album, Registrazione e Canzone dell'anno, oltre a Miglior nuovo artista. Fu la più giovane a completare il cosiddetto Big Four nella stessa serata.","fs":"https://www.grammy.com/artists/billie-eilish/251741/"},
+  {"cat":"Musica","q":"Quanti Grammy risultano vinti da Adele nel profilo ufficiale aggiornato ai Grammy 2026?","a":16,"u":"Grammy","f":"I primi due arrivarono nel 2009, con Miglior nuovo artista e Miglior performance pop vocale femminile. Il suo album 21 fu anche il primo a raggiungere il numero uno negli Stati Uniti.","fs":"https://www.grammy.com/artists/adele/528/"},
+  {"cat":"Musica","q":"Quanti Grammy risultano vinti da Ed Sheeran nel profilo ufficiale aggiornato ai Grammy 2026?","a":4,"u":"Grammy","f":"I primi due arrivarono nella stessa edizione grazie a Thinking Out Loud. Prima di affermarsi come interprete, Sheeran scrisse anche brani per One Direction, Taylor Swift e Justin Bieber.","fs":"https://www.grammy.com/artists/ed-sheeran/6178/"},
+  {"cat":"Musica","q":"Quanti Grammy ha vinto Madonna secondo il suo profilo ufficiale della Recording Academy?","a":7,"u":"Grammy","f":"Il suo primo Grammy non premiò una registrazione audio, ma il video lungo del Blonde Ambition World Tour. La prima vittoria in una categoria musicale arrivò con Ray of Light.","fs":"https://www.grammy.com/artists/madonna/5068/"},
+  {"cat":"Musica","q":"Quanti Grammy risultano vinti da Kendrick Lamar dopo l'edizione 2026?","a":27,"u":"Grammy","f":"Con cinque vittorie nel 2026, Kendrick Lamar è diventato il rapper con più Grammy della storia. Le sue prime statuette erano arrivate per il brano i.","fs":"https://www.grammy.com/artists/kendrick-lamar/17949/"},
+  {"cat":"Musica","q":"Quanti Grammy vinse Donna Summer nell'arco della sua carriera?","a":5,"u":"Grammy","f":"Le sue vittorie attraversarono generi molto diversi: dance, rock, R&B e musica inspirational. Nel 1998 vinse la prima categoria Grammy dedicata alla dance con Carry On.","fs":"https://www.grammy.com/artists/donna-summer/14046/"},
+  {"cat":"Musica","q":"Quanti Grammy ha vinto Lorde secondo il suo profilo ufficiale della Recording Academy?","a":2,"u":"Grammy","f":"Entrambi arrivarono grazie a Royals: Canzone dell'anno e Miglior performance pop solista. Il singolo trasformò una giovane artista neozelandese in un successo mondiale.","fs":"https://www.grammy.com/artists/lorde/17976/"},
+  {"cat":"Serie TV","q":"Quanti Emmy ha vinto complessivamente Game of Thrones secondo la Television Academy?","a":59,"u":"Emmy","f":"Le 59 vittorie arrivarono da ben 159 candidature. Molti premi celebrarono costumi, effetti visivi, trucco e scenografia che costruirono materialmente il mondo di Westeros.","fs":"https://www.televisionacademy.com/shows/game-thrones"},
+  {"cat":"Serie TV","q":"Quanti Emmy ha vinto complessivamente Breaking Bad secondo la Television Academy?","a":16,"u":"Emmy","f":"Le vittorie includono due premi consecutivi come miglior serie drammatica. Bryan Cranston fu premiato quattro volte come protagonista per Walter White.","fs":"https://www.televisionacademy.com/shows/breaking-bad"},
+  {"cat":"Serie TV","q":"Quanti Emmy ha vinto complessivamente The Crown secondo la Television Academy?","a":24,"u":"Emmy","f":"La serie raccolse 87 candidature lungo il racconto di più epoche della monarchia britannica. Nell'ultima annata Elizabeth Debicki vinse per la sua interpretazione di Diana.","fs":"https://www.televisionacademy.com/shows/crown"},
+  {"cat":"Serie TV","q":"Quanti Emmy ha vinto complessivamente I Soprano secondo la Television Academy?","a":21,"u":"Emmy","f":"La serie ottenne 112 candidature e vinse due volte come miglior drama. Anche l'ultimo episodio, Made in America, fu premiato per la sceneggiatura di David Chase.","fs":"https://www.televisionacademy.com/shows/sopranos"},
+  {"cat":"Serie TV","q":"Quanti Emmy ha vinto complessivamente Succession secondo la Television Academy?","a":19,"u":"Emmy","f":"La famiglia Roy portò alla serie 75 candidature. L'episodio Connor's Wedding dell'ultima stagione vinse per la regia di Mark Mylod.","fs":"https://www.televisionacademy.com/shows/succession"},
+  {"cat":"Serie TV","q":"Quanti Emmy ha vinto complessivamente Mad Men secondo la Television Academy?","a":16,"u":"Emmy","f":"Mad Men accumulò 116 candidature. Jon Hamm dovette attendere l'ultima stagione per vincere finalmente come protagonista nel ruolo di Don Draper.","fs":"https://www.televisionacademy.com/shows/mad-men"},
+  {"cat":"Serie TV","q":"Quanti Emmy ha vinto complessivamente The Office secondo la Television Academy?","a":5,"u":"Emmy","f":"La serie ricevette 42 candidature e vinse anche come miglior commedia. L'ultimo premio arrivò al montaggio dell'episodio finale nel 2013.","fs":"https://www.televisionacademy.com/shows/office"},
+  {"cat":"Serie TV","q":"Quanti Emmy ha vinto complessivamente Chernobyl secondo la Television Academy?","a":10,"u":"Emmy","f":"La miniserie vinse più della metà delle sue 19 candidature. Oltre al premio principale, furono riconosciuti regia, scrittura, fotografia, musica, suono ed effetti visivi.","fs":"https://www.televisionacademy.com/shows/chernobyl"},
+  {"cat":"Serie TV","q":"Quanti Emmy ha vinto complessivamente Fleabag secondo la Television Academy?","a":6,"u":"Emmy","f":"Sei vittorie su 11 candidature, tutte concentrate nel 2019. Phoebe Waller-Bridge vinse sia come protagonista sia come autrice della commedia.","fs":"https://www.televisionacademy.com/shows/fleabag"},
+  {"cat":"Serie TV","q":"Quanti Emmy ha vinto complessivamente Schitt's Creek secondo la Television Academy?","a":9,"u":"Emmy","f":"Nel 2020 la stagione finale completò una storica raccolta nelle principali categorie comedy. Eugene, Daniel Levy e Catherine O'Hara furono tutti premiati nella stessa annata.","fs":"https://www.televisionacademy.com/shows/schitts-creek"},
+  {"cat":"Storia","q":"In quale anno iniziò la costruzione del Taj Mahal secondo la cronologia UNESCO?","a":1632,"u":"anno","f":"Shah Jahan lo fece costruire in memoria della moglie Mumtaz Mahal. Al cantiere lavorarono artigiani provenienti dall'intero impero, dall'Asia centrale e dall'Iran.","fs":"https://whc.unesco.org/en/list/252"},
+  {"cat":"Storia","q":"In quale anno fu completato il mausoleo principale del Taj Mahal secondo l'UNESCO?","a":1648,"u":"anno","f":"La parte principale era pronta nel 1648, ma moschea, foresteria, portale e cortile furono completati entro il 1653. Le iscrizioni arabe hanno aiutato gli studiosi a ricostruire la cronologia del complesso.","fs":"https://whc.unesco.org/en/list/252"},
+  {"cat":"Storia","q":"Quanti ettari misura circa il giardino mughal in cui sorge il Taj Mahal?","a":17,"u":"ettari","f":"Il mausoleo non è isolato: fa parte di un paesaggio progettato sulla riva destra del fiume Yamuna. Il complesso è protetto anche da una vasta zona di controllo dell'inquinamento.","fs":"https://whc.unesco.org/en/list/252"},
+  {"cat":"Storia","q":"Quanti chilometri quadrati copre circa il Parco archeologico di Angkor?","a":400,"u":"km²","f":"Angkor non è un singolo tempio: comprende antiche capitali, strade, bacini, dighe e canali. Angkor Wat e il Bayon sono soltanto due elementi di un'enorme città idraulica.","fs":"https://whc.unesco.org/en/list/668"},
+  {"cat":"Storia","q":"In quale anno Angkor fu iscritto nella Lista del Patrimonio Mondiale UNESCO?","a":1992,"u":"anno","f":"Dopo un vasto programma internazionale di tutela, Angkor uscì dalla lista dei patrimoni in pericolo nel 2004. Il sito continua però a richiedere un equilibrio delicato tra conservazione e turismo.","fs":"https://whc.unesco.org/en/list/668"},
+  {"cat":"Storia","q":"In quale anno fu emessa la prima versione della Magna Carta?","a":1215,"u":"anno","f":"Non fu firmata da re Giovanni: venne autenticata con un sigillo di cera. Mise per iscritto un principio rivoluzionario per l'epoca, cioè che anche il sovrano non era al di sopra della legge.","fs":"https://www.parliament.uk/magnacarta/"},
+  {"cat":"Storia","q":"Quanti articoli contiene la Dichiarazione universale dei diritti umani del 1948?","a":30,"u":"articoli","f":"La delegata indiana Hansa Mehta contribuì a sostituire la formula 'tutti gli uomini' con 'tutti gli esseri umani' nell'articolo 1. Quel cambiamento rese il testo più realmente universale.","fs":"https://www.un.org/en/about-us/universal-declaration-of-human-rights"},
+  {"cat":"Storia","q":"Quanti delegati firmarono infine la Dichiarazione d'indipendenza degli Stati Uniti?","a":56,"u":"firmatari","f":"Non firmarono tutti il 4 luglio: la copia in pergamena iniziò a essere sottoscritta il 2 agosto 1776 e alcuni nomi furono aggiunti più tardi. La firma enorme di John Hancock aprì la sequenza.","fs":"https://www.archives.gov/milestone-documents/declaration-of-independence"},
+  {"cat":"Storia","q":"Quanti astronauti componevano l'equipaggio dell'Apollo 11?","a":3,"u":"astronauti","f":"Neil Armstrong e Buzz Aldrin scesero sulla Luna, mentre Michael Collins rimase in orbita nel modulo Columbia. Durante l'escursione furono lasciati messaggi miniaturizzati provenienti da 73 Paesi.","fs":"https://www.nasa.gov/history/apollo-11-mission-overview/"},
+  {"cat":"Storia","q":"Quanti giorni interi durò la missione Apollo 11, arrotondando per difetto la durata ufficiale?","a":8,"u":"giorni","f":"La durata registrata fu di 8 giorni, 3 ore, 18 minuti e 35 secondi. In quel viaggio la navicella percorse complessivamente più di 953.000 miglia.","fs":"https://www.nasa.gov/missions/apollo/apollo-11/apollo-11-mission-overview/"},
+  {"cat":"Geografia","q":"Quanti Stati membri compongono le Nazioni Unite?","a":193,"u":"Stati","f":"L'ONU partì da 51 membri nel 1945 e oggi ne conta 193. Il membro più recente è il Sud Sudan, entrato nel luglio 2011.","fs":"https://www.un.org/en/about-us"},
+  {"cat":"Geografia","q":"Quante bandiere nazionali sventolano davanti alla sede ONU di New York contando membri e Stati osservatori?","a":195,"u":"bandiere","f":"Sono le bandiere dei 193 Stati membri più quelle dei due Stati osservatori, Santa Sede e Stato di Palestina. Vengono disposte secondo l'ordine alfabetico inglese.","fs":"https://www.un.org/en/model-united-nations/un-glance"},
+  {"cat":"Geografia","q":"Quante province ha il Canada?","a":10,"u":"province","f":"Province e territori non sono la stessa cosa: le province hanno poteri riconosciuti dalla Costituzione, i territori esercitano poteri delegati dal governo federale. Il Canada nacque nel 1867 dall'unione di tre colonie.","fs":"https://www.canada.ca/en/intergovernmental-affairs/services/provinces-territories.html"},
+  {"cat":"Geografia","q":"Quanti territori ha il Canada?","a":3,"u":"territori","f":"Yukon, Territori del Nord-Ovest e Nunavut si trovano soprattutto a nord del 60° parallelo. Coprono circa il 40% della superficie canadese ma ospitano solo una piccola frazione della popolazione.","fs":"https://www.canada.ca/en/intergovernmental-affairs/services/provinces-territories.html"},
+  {"cat":"Geografia","q":"Quanti cantoni compongono la Confederazione Svizzera?","a":26,"u":"cantoni","f":"Ogni cantone conserva una forte autonomia e dispone di proprie istituzioni. Quattro sono ufficialmente plurilingui: Berna, Friburgo, Vallese e Grigioni.","fs":"https://www.efd.admin.ch/dam/en/sd-web/txwWkgSPXcpj/buku-2024-en.pdf"},
+  {"cat":"Geografia","q":"Quante comunità autonome ha la Spagna?","a":17,"u":"comunità","f":"A queste si aggiungono le due città autonome di Ceuta e Melilla. Gli statuti delle 17 comunità furono approvati in una rapida fase tra il 1979 e il 1983.","fs":"https://www.lamoncloa.gob.es/espana/organizacionestado/Paginas/index.aspx"},
+  {"cat":"Geografia","q":"Quanti Länder, cioè Stati federati, compongono la Germania?","a":16,"u":"Länder","f":"I Länder gestiscono direttamente settori come scuola, cultura e amministrazione locale. Partecipano anche alla legislazione federale attraverso il Bundesrat.","fs":"https://interactive.deutschland.de/epapertued/epaper-2023_Tatsachen_EN/epaper/ausgabe.pdf"},
+  {"cat":"Geografia","q":"Quante province compongono i Paesi Bassi?","a":12,"u":"province","f":"Le province coordinano pianificazione territoriale, natura, trasporti regionali ed economia. I Paesi Bassi hanno inoltre speciali autorità idriche, una forma di governo locale nata per convivere con l'acqua.","fs":"https://www.government.nl/themes/nature-and-the-environment/environment/roles-and-responsibilities-of-provincial-government-municipal-governments-and-water-authorities"},
+  {"cat":"Geografia","q":"Quanti metri è profondo circa il lago Baikal nel suo punto massimo?","a":1600,"u":"m","f":"Il Baikal è il lago d'acqua dolce più profondo e anche uno dei più antichi del pianeta. Sotto il fondale, i sedimenti raggiungono spessori superiori a 7 chilometri.","fs":"https://pubs.usgs.gov/fs/baikal/"},
+  {"cat":"Geografia","q":"Quanti chilometri cubi d'acqua contiene circa il lago Baikal?","a":23000,"u":"km³","f":"È circa un quinto di tutta l'acqua dolce liquida presente sulla superficie terrestre. Il volume è paragonabile a quello complessivo dei Grandi Laghi nordamericani.","fs":"https://pubs.usgs.gov/fs/baikal/"},
+  {"cat":"Cultura Pop","q":"Qual è il numero di Mew nel Pokédex Nazionale ufficiale?","a":151,"u":"numero","f":"Mew chiude la generazione originale di Kanto subito dopo Mewtwo, numero 150. L'espansione Pokémon 151 fu costruita proprio come omaggio a quel primo gruppo.","fs":"https://www.pokemon.com/us/pokedex/"},
+  {"cat":"Cultura Pop","q":"Qual è il numero di Gholdengo nel Pokédex Nazionale ufficiale?","a":1000,"u":"numero","f":"Non è casuale che il millesimo Pokémon sia legato a monete e tesori. La sua posizione nel Pokédex trasformò una semplice numerazione in un traguardo della saga.","fs":"https://www.pokemon.com/us/pokedex/"},
+  {"cat":"Cultura Pop","q":"Qual è il numero di Pecharunt nel Pokédex Nazionale ufficiale?","a":1025,"u":"numero","f":"Pecharunt chiude l'elenco ufficiale consultato nell'agosto 2026. È un Pokémon di tipo Veleno/Spettro arrivato dopo Terapagos, numero 1024.","fs":"https://www.pokemon.com/us/pokedex/"},
+  {"cat":"Cultura Pop","q":"Quanti milioni di forme di comunicazione conosce C-3PO secondo il databank ufficiale di Star Wars?","a":7,"u":"milioni","f":"Dietro tutta quella competenza c'è un dettaglio domestico: C-3PO fu costruito da Anakin Skywalker quando era ancora bambino. È programmato per protocollo ed etichetta, non per l'avventura.","fs":"https://www.starwars.com/databank/c-3po/"},
+  {"cat":"Cultura Pop","q":"Quanti metri è alto C-3PO secondo il databank ufficiale di Star Wars?","a":1.77,"u":"m","f":"La sua altezza ufficiale è 1,77 metri, ma la caratteristica più fuori scala resta la conoscenza di oltre sette milioni di forme di comunicazione. Il suo compagno R2-D2, invece, comunica soprattutto con segnali elettronici.","fs":"https://www.starwars.com/databank/c-3po/"},
+  {"cat":"Cultura Pop","q":"In quanti film numerati della saga degli Skywalker, dagli Episodi I a IX, compare R2-D2?","a":9,"u":"film","f":"R2-D2 attraversa tutte e tre le trilogie, servendo Padmé, Anakin e Luke. È uno dei rarissimi personaggi a collegare direttamente l'intero arco cinematografico I-IX.","fs":"https://www.starwars.com/databank/r2-d2"},
+  {"cat":"Cultura Pop","q":"In quale anno uscì Steamboat Willie, data celebrata come compleanno di Topolino?","a":1928,"u":"anno","f":"La data simbolica è il 18 novembre 1928, quando il corto fu proiettato al Colony Theatre di New York. Disney usa quella première come compleanno ufficiale di Mickey Mouse.","fs":"https://thewaltdisneycompany.com/press-releases/disney-celebrates-90-years-mickey-mouse-worldwide-festivities/"},
+  {"cat":"Cultura Pop","q":"In quale anno aprì Disneyland in California?","a":1955,"u":"anno","f":"Disneyland aprì il 17 luglio su 54 acri ad Anaheim. Il castello della Bella Addormentata era già presente, ma il percorso interno fu aperto soltanto nel 1957.","fs":"https://disneyland.disney.go.com/en-ca/attractions/disneyland/sleeping-beauty-castle-walkthrough/"},
+  {"cat":"Cultura Pop","q":"In quale anno debuttò la minifigure LEGO con braccia e gambe mobili?","a":1978,"u":"anno","f":"Le prime minifigure avevano due semplici punti per gli occhi e un sorriso nero. I loro stampi erano così precisi che pezzi del 1978 possono ancora combinarsi con quelli moderni.","fs":"https://www.lego.com/en-us/aboutus/news/2019/october/minifigure-40"},
+  {"cat":"Cultura Pop","q":"In quale anno uscì il primo Super Mario Bros. per Famicom in Giappone?","a":1985,"u":"anno","f":"La data giapponese fu il 13 settembre 1985. Nel manuale originale, i Koopa trasformano gli abitanti del Regno dei Funghi persino in pietre, mattoni e piante.","fs":"https://www.nintendo.com/en-gb/Iwata-Asks/Super-Mario-Bros-25th-Anniversary/Vol-1-Itoi-asks-Miyamoto/1-Expressing-the-Inexpressible/1-Expressing-the-Inexpressible-217174.html"},
+  {"cat":"Internet","q":"In quale anno Tim Berners-Lee inventò il World Wide Web al CERN?","a":1989,"u":"anno","f":"Il Web nacque per facilitare lo scambio automatico di informazioni tra scienziati. Non coincide con Internet: è uno dei servizi costruiti sopra la rete.","fs":"https://home.cern/science/computing/the-birth-of-the-web/"},
+  {"cat":"Internet","q":"In quale anno il CERN mise il software del World Wide Web nel pubblico dominio?","a":1993,"u":"anno","f":"Il 30 aprile 1993 il CERN rese il software liberamente disponibile. Quella scelta evitò licenze proprietarie e permise al Web di diffondersi senza pedaggi tecnologici.","fs":"https://home.cern/science/computing/the-birth-of-the-web/"},
+  {"cat":"Internet","q":"In quale anno fu scritto il primo browser WorldWideWeb?","a":1990,"u":"anno","f":"Il primo browser era anche un editor: si potevano non solo leggere, ma creare pagine. Girava sul computer NeXT di Tim Berners-Lee, che ospitò anche il primo server web.","fs":"https://home.cern/science/computing/the-birth-of-the-web/"},
+  {"cat":"Internet","q":"Quanti computer host erano collegati alla prima ARPANET entro la fine del 1969?","a":4,"u":"computer","f":"I quattro nodi erano UCLA, Stanford Research Institute, UC Santa Barbara e University of Utah. Il primo messaggio tra host fu inviato da UCLA a Stanford.","fs":"https://www.internetsociety.org/internet/history-internet/brief-history-internet/"},
+  {"cat":"Internet","q":"In quale anno si tenne la prima grande dimostrazione pubblica di ARPANET?","a":1972,"u":"anno","f":"La dimostrazione avvenne alla International Computer Communication Conference. Nello stesso anno l'email divenne la prima applicazione davvero popolare della rete.","fs":"https://www.internetsociety.org/internet/history-internet/brief-history-internet/"},
+  {"cat":"Internet","q":"Quanti gigabyte gratuiti offriva Gmail al lancio nel 2004?","a":1,"u":"GB","f":"Era circa cento volte lo spazio tipico delle webmail gratuite dell'epoca. La data del lancio, il primo aprile, fece pensare a molti che fosse uno scherzo.","fs":"https://blog.google/products-and-platforms/products/gmail/hitting-send-on-the-next-15-years-of-gmail/"},
+  {"cat":"Internet","q":"In quale anno fu lanciato Gmail?","a":2004,"u":"anno","f":"Gmail debuttò il primo aprile con ricerca integrata e messaggi raggruppati in conversazioni. Il suo gigabyte gratuito obbligò il mercato a ripensare il concetto di spazio nella posta elettronica.","fs":"https://blog.google/products-and-platforms/products/gmail/email-is-50-years-old-and-still-where-its/"},
+  {"cat":"Internet","q":"Quanti secondi dura Me at the zoo, il primo video caricato su YouTube?","a":19,"u":"secondi","f":"Il cofondatore Jawed Karim parla davanti agli elefanti dello zoo di San Diego. Quel frammento a bassa risoluzione è oggi conservato anche come oggetto di storia digitale dal Victoria and Albert Museum.","fs":"https://blog.youtube/news-and-events/va-museum-youtube-first-video/"},
+  {"cat":"Internet","q":"Quanti miliardi di ore di YouTube venivano guardate ogni giorno nel traguardo annunciato nel 2017?","a":1,"u":"miliardi di ore","f":"Guardare un miliardo di ore in sequenza richiederebbe più di centomila anni. YouTube scelse il tempo di visione, non il semplice numero di clic, come misura centrale del coinvolgimento.","fs":"https://blog.youtube/news-and-events/you-know-whats-cool-billion-hours/"},
+  {"cat":"Internet","q":"A quanti caratteri fu esteso il limite standard dei tweet nel 2017 per molte lingue?","a":280,"u":"caratteri","f":"Dopo il lancio, soltanto il 5% dei tweet superava i vecchi 140 caratteri. Cinese, giapponese e coreano mantennero il limite precedente perché concentrano più informazione in ogni carattere.","fs":"https://blog.x.com/en_us/topics/product/2017/tweetingmadeeasier"},
+  {"cat":"Scienza","q":"A quanti chilometri orari orbita circa il Sistema Solare attorno al centro della Via Lattea?","a":829000,"u":"km/h","f":"Anche a questa velocità vertiginosa, un giro della galassia richiede circa 230 milioni di anni. Il Sole si trova nel Braccio di Orione, una struttura minore della Via Lattea.","fs":"https://science.nasa.gov/solar-system/solar-system-facts/"},
+  {"cat":"Scienza","q":"Quanti milioni di anni impiega circa il Sistema Solare per completare un'orbita della Via Lattea?","a":230,"u":"milioni di anni","f":"Un giro galattico viene chiamato talvolta anno cosmico. Dalla formazione del Sole, il Sistema Solare ne avrebbe completati soltanto una ventina.","fs":"https://science.nasa.gov/solar-system/solar-system-facts/"},
+  {"cat":"Scienza","q":"Quanti pianeti nani hanno un nome ufficialmente riconosciuto nel Sistema Solare secondo la NASA?","a":5,"u":"pianeti nani","f":"Plutone è solo il più famoso e risulta persino più piccolo della nostra Luna. Oltre Nettuno, nella fascia di Kuiper, orbitano moltissimi altri mondi ghiacciati.","fs":"https://science.nasa.gov/solar-system/solar-system-facts/"},
+  {"cat":"Scienza","q":"Quanti pianeti compongono ufficialmente il Sistema Solare?","a":8,"u":"pianeti","f":"I primi quattro sono mondi rocciosi; più lontano troviamo due giganti gassosi e due giganti ghiacciati. Venere è il più caldo, anche se Mercurio è più vicino al Sole.","fs":"https://science.nasa.gov/solar-system/solar-system-facts/"},
+  {"cat":"Scienza","q":"Oltre quale percentuale della materia originaria del Sistema Solare è concentrata nel Sole secondo la NASA?","a":99,"u":"%","f":"Il Sole raccolse oltre il 99% della materia disponibile nella nube originaria. Tutti i pianeti, le lune, gli asteroidi e le comete condividono quindi meno dell'1% restante.","fs":"https://science.nasa.gov/solar-system/solar-system-facts/"},
+  {"cat":"Scienza","q":"Quante lune orbitano attorno a Plutone?","a":5,"u":"lune","f":"Caronte è così grande rispetto a Plutone da farlo oscillare durante l'orbita. È un rapporto eccezionale tra un mondo e il suo satellite principale.","fs":"https://science.nasa.gov/solar-system/solar-system-facts/"},
+  {"cat":"Scienza","q":"Quanti giorni terrestri impiega la Luna per completare un'orbita attorno alla Terra, secondo il valore medio NASA?","a":27.3,"u":"giorni","f":"Durante quell'orbita la Luna resta a una distanza media di circa 384.400 chilometri dalla Terra. Mostra quasi sempre lo stesso emisfero perché rotazione e rivoluzione sono sincronizzate.","fs":"https://science.nasa.gov/learn/basics-of-space-flight/chapter1-2/"},
+  {"cat":"Scienza","q":"Quanti giorni terrestri dura un anno su Marte?","a":687,"u":"giorni","f":"L'anno marziano è quasi doppio di quello terrestre, mentre il giorno è sorprendentemente simile al nostro. Questa combinazione produce stagioni molto più lunghe.","fs":"https://pubs.usgs.gov/of/1998/0507a/report.pdf"},
+  {"cat":"Scienza","q":"Quanti minuti oltre le 24 ore dura mediamente un giorno solare su Marte?","a":37,"u":"minuti","f":"Il giorno marziano, chiamato sol, dura circa 24 ore e 37 minuti. Per chi controlla i rover dalla Terra, quell'ora di inizio slitta ogni giorno di oltre mezz'ora.","fs":"https://pubs.usgs.gov/of/1998/0507a/report.pdf"},
+  {"cat":"Scienza","q":"Quanti chilometri misura circa il raggio medio di Giove secondo la NASA?","a":69911,"u":"km","f":"Giove ha un diametro circa undici volte quello terrestre. Il Sole, a sua volta, ha un diametro approssimativamente dieci volte quello di Giove.","fs":"https://science.nasa.gov/resource/solar-system-sizes/"}
+  ,
+  {"cat":"Animali","q":"Quanti cuori ha un polpo?","a":3,"u":"cuori","f":"Due cuori spingono il sangue verso le branchie, mentre il terzo lo distribuisce al resto del corpo. Il sangue è blu perché usa emocianina, una molecola a base di rame.","fs":"https://ocean.si.edu/ocean-life/invertebrates/octopuses-squids-and-relatives"},
+  {"cat":"Animali","q":"Quanti metri misurava il calamaro gigante più lungo mai documentato scientificamente?","a":13,"u":"m","f":"Nonostante la mole, il calamaro gigante resta elusivo: il primo esemplare fu filmato nel suo ambiente naturale soltanto nel 2012. Gran parte di ciò che sappiamo proviene da carcasse trovate in superficie.","fs":"https://ocean.si.edu/ocean-life/invertebrates/giant-squid"},
+  {"cat":"Animali","q":"Qual era, in anni, il limite inferiore dell'età stimata per la femmina di squalo della Groenlandia più grande analizzata nello studio citato dalla NOAA?","a":272,"u":"anni","f":"Per stimarne l'età, i ricercatori hanno datato al carbonio proteine del cristallino formate prima della nascita. L'intervallo completo stimato per quella femmina era addirittura 272-512 anni.","fs":"https://oceanservice.noaa.gov/facts/greenland-shark.html"},
+  {"cat":"Animali","q":"A quanti metri arrivò l'immersione record documentata di un pinguino imperatore della colonia di Auster nel 1994?","a":564,"u":"m","f":"Quel pinguino effettuò 11 immersioni oltre i 500 metri e 61 oltre i 400 in appena sei giorni. È una profondità eccezionale persino per questa specie specializzata.","fs":"https://repository.library.noaa.gov/view/noaa/28060/noaa_28060_DS1.pdf"},
+  {"cat":"Animali","q":"Quanti centimetri può estendere fuori dalla bocca la lingua di un formichiere gigante?","a":61,"u":"cm","f":"La lingua è collegata allo sterno e può scattare circa 150 volte al minuto. Il formichiere non ha denti: cattura gli insetti grazie alla saliva appiccicosa.","fs":"https://animaldiversity.org/accounts/Myrmecophaga_tridactyla/"},
+  {"cat":"Animali","q":"Quante uova depone in media una tartaruga liuto in una covata?","a":105,"u":"uova","f":"Una parte delle uova è priva di tuorlo e non si svilupperà. Dopo aver coperto il nido con la sabbia, la madre torna in mare e non presta altre cure parentali.","fs":"https://animaldiversity.org/accounts/Dermochelys_coriacea/"},
+  {"cat":"Animali","q":"A quanti chilometri orari possono nuotare sott'acqua i pinguini, secondo la NOAA?","a":40,"u":"km/h","f":"I pinguini non volano nell'aria, ma sott'acqua usano le ali come pinne. La loro sagoma compatta riduce la resistenza e li trasforma in nuotatori velocissimi.","fs":"https://oceanservice.noaa.gov/facts/penguinsfly.html"},
+  {"cat":"Animali","q":"Quanti compartimenti ha lo stomaco di una mucca?","a":4,"u":"compartimenti","f":"La mucca ha un solo stomaco, diviso in rumine, reticolo, omaso e abomaso. Nel rumine, microrganismi specializzati rendono digeribile la fibra vegetale.","fs":"https://www.ars.usda.gov/ARSUserFiles/50901500/EducationalMaterialsMarch2012/rumens%20are%20special.pdf"},
+  {"cat":"Animali","q":"Quanti giorni dura in media la gravidanza di un elefante asiatico?","a":659,"u":"giorni","f":"Sono circa 18-22 mesi, la gestazione più lunga del regno animale. Alla nascita un cucciolo può già pesare tra 68 e 158 chilogrammi.","fs":"https://nationalzoo.si.edu/animals/asian-elephant-faqs"},
+  {"cat":"Animali","q":"Quanti insetti grandi come zanzare può catturare in un'ora un piccolo vespertilio bruno?","a":1200,"u":"insetti","f":"Questo pipistrello localizza le prede con l'ecolocalizzazione, trasformando gli echi in una mappa sonora. Una colonia può così offrire un enorme servizio naturale di controllo degli insetti.","fs":"https://www.nps.gov/noca/learn/nature/bats.htm"},
+  {"cat":"Libri","q":"In quanti capitoli è diviso Alice nel Paese delle Meraviglie?","a":12,"u":"capitoli","f":"Il manoscritto Alice's Adventures Under Ground ne aveva soltanto quattro. Lewis Carroll ampliò la storia a più del doppio, creando dodici capitoli più brevi e intitolati.","fs":"https://searcharchives.bl.uk/catalog/032-002102746"},
+  {"cat":"Libri","q":"Quanti sonetti comprende la raccolta di Shakespeare pubblicata nel 1609?","a":154,"u":"sonetti","f":"L'edizione del 1609 si apre con una dedica all'enigmatico «Mr. W.H.», la cui identità non è mai stata stabilita. Solo una piccola parte dei sonetti specifica il genere della persona amata.","fs":"https://www.folger.edu/explore/shakespeares-works/shakespeares-sonnets/about-shakespeares-sonnets/"},
+  {"cat":"Libri","q":"Quante righe conta Amleto nell'edizione Folger, il dramma più lungo di Shakespeare?","a":4167,"u":"righe","f":"Il conteggio Folger rende Amleto il testo teatrale shakespeariano più lungo. La sua ampiezza contribuisce alle grandi differenze di durata tra le varie messe in scena.","fs":"https://www.folger.edu/explore/shakespeares-works/frequently-asked-questions/"},
+  {"cat":"Libri","q":"Quante righe conta La commedia degli errori nell'edizione Folger?","a":1898,"u":"righe","f":"È il dramma più breve attribuito a Shakespeare secondo il conteggio Folger. La trama concentra scambi d'identità e caos comico attorno a due coppie di gemelli.","fs":"https://www.folger.edu/explore/shakespeares-works/frequently-asked-questions/"},
+  {"cat":"Libri","q":"Quante opere teatrali di Shakespeare sono note oggi soltanto perché incluse nel First Folio del 1623?","a":18,"u":"opere","f":"Alla morte di Shakespeare, circa metà dei suoi drammi non era mai stata stampata. Senza il First Folio, capolavori come Macbeth e La tempesta avrebbero potuto andare perduti.","fs":"https://www.folger.edu/explore/shakespeare-in-print/publishing-shakespeare/"},
+  {"cat":"Libri","q":"Quanti romanzi scrisse Charles Dickens tra il 1836 e il 1870?","a":15,"u":"romanzi","f":"Dickens usò spesso la pubblicazione a puntate, trasformando l'attesa dei lettori in parte dell'esperienza. Nei suoi libri denunciò povertà e squilibri sociali dell'età vittoriana.","fs":"https://dickensmuseum.com/pages/about-us"},
+  {"cat":"Libri","q":"In quante settimane Charles Dickens scrisse Canto di Natale?","a":6,"u":"settimane","f":"L'idea nacque dalla lettura di un rapporto sulle condizioni dei bambini nelle miniere. Dickens trasformò l'indignazione in una storia capace di raggiungere molti più lettori di un pamphlet politico.","fs":"https://dickensmuseum.com/blogs/charles-dickens-museum/10-surprising-facts-about-charles-dickens"},
+  {"cat":"Libri","q":"In quanti libri è tradizionalmente suddivisa l'Iliade?","a":24,"u":"libri","f":"La divisione richiama le 24 lettere dell'alfabeto greco ed è condivisa anche dall'Odissea. L'Iliade, però, concentra il racconto su un breve tratto dell'ultimo anno della guerra di Troia.","fs":"https://www.poetryfoundation.org/poets/george-chapman"},
+  {"cat":"Libri","q":"In quanti libri interni è organizzato Il Signore degli Anelli, oltre alle appendici?","a":6,"u":"libri","f":"L'opera è spesso venduta in tre volumi, ma la struttura narrativa è in sei libri. Tolkien ne sviluppò il testo dal 1937 fino al completamento nel 1949.","fs":"https://www.tolkienestate.com/writing/david-bratman-the-history-of-middle-earth/"},
+  {"cat":"Libri","q":"Quanti anni aveva Rudyard Kipling quando ricevette il Nobel per la Letteratura nel 1907?","a":41,"u":"anni","f":"Nato il 30 dicembre 1865, non aveva ancora compiuto 42 anni al momento del premio. Il Nobel celebrò il talento narrativo dell'autore che aveva già reso celebre Il libro della giungla.","fs":"https://www.nobelprize.org/prizes/literature/1907/kipling/facts/"},
+  {"cat":"Arte","q":"Quanti centimetri è alta la Venere di Milo?","a":204,"u":"cm","f":"La statua è scolpita in marmo di Paro e fu ritrovata sull'isola di Milo nel 1820. È composta da due grandi blocchi uniti all'altezza dei fianchi.","fs":"https://collections.louvre.fr/en/ark:/53355/cl010277627"},
+  {"cat":"Arte","q":"Quanti centimetri è alta la tela Las Meninas di Velázquez?","a":318,"u":"cm","f":"La tela è monumentale, ma la sua vera vertigine è concettuale: Velázquez raffigura sé stesso mentre dipinge. Specchi, sguardi e spazio trasformano il quadro in una riflessione sulla pittura.","fs":"https://www.museodelprado.es/en/whats-on/exhibition/meta-painting-a-journey-to-the-idea-of-art/1d0500f9-5f3c-4ad0-a345-5626e65fa702"},
+  {"cat":"Arte","q":"Quanti centimetri è larga La persistenza della memoria di Salvador Dalí?","a":33,"u":"cm","f":"Il celebre paesaggio degli orologi molli è sorprendentemente piccolo, poco più largo di un foglio A4. Le formiche sul quadrante dorato sono un simbolo di decomposizione ricorrente nell'opera di Dalí.","fs":"https://www.moma.org/collection/works/79018"},
+  {"cat":"Arte","q":"Quanti centimetri è alta La ragazza con l'orecchino di perla di Vermeer?","a":44.5,"u":"cm","f":"Non è un ritratto commissionato, ma una «tronie»: lo studio di un volto immaginario. La perla è resa con pochissime pennellate luminose e potrebbe essere un gioiello di fantasia.","fs":"https://www.mauritshuis.nl/en/our-collection/artworks/670-girl-with-a-pearl-earring/"},
+  {"cat":"Arte","q":"Quanti centimetri è larga La nascita di Venere di Botticelli?","a":278.5,"u":"cm","f":"A differenza della Primavera, l'opera è dipinta su tela, supporto insolito per una grande pittura fiorentina del Quattrocento. Nei capelli della dea furono aggiunti riflessi dorati.","fs":"https://www.uffizi.it/en/artworks/birth-of-venus"},
+  {"cat":"Arte","q":"Quanti centimetri è alto l'Autoritratto con tavolozza di Van Gogh conservato alla National Gallery of Art di Washington?","a":57.79,"u":"cm","f":"Van Gogh lo dipinse nel 1889 durante la convalescenza dopo una crisi. I blu vorticosi dello sfondo contrastano con i toni ramati di capelli e barba.","fs":"https://www.nga.gov/artworks/106382-self-portrait"},
+  {"cat":"Arte","q":"Quanti centimetri è alto American Gothic di Grant Wood?","a":78,"u":"cm","f":"I due modelli non erano una coppia: Wood scelse sua sorella e il proprio dentista. La casa dell'Iowa, con la finestra ad arco, diede al dipinto il titolo e l'idea iniziale.","fs":"https://archive.artic.edu/homer_exhb/assets/Rsrc_001087.pdf"},
+  {"cat":"Arte","q":"Quanti centimetri è largo Il bacio di Gustav Klimt?","a":180,"u":"cm","f":"La tela è perfettamente quadrata e occupa oltre tre metri quadrati. Klimt unì pittura a olio, foglia d'oro e metalli per trasformare l'abbraccio in una superficie luminosa.","fs":"https://print.belvedere.at/en/p/gustav-klimt-the-kiss-lovers/"},
+  {"cat":"Arte","q":"Quanti centimetri è alta la Venere Italica di Antonio Canova conservata agli Uffizi?","a":171.5,"u":"cm","f":"Canova ricevette l'incarico dopo che la Venere de' Medici era stata requisita dai francesi. Invece di copiarla, ideò una dea più dinamica e alta quasi quanto una persona reale.","fs":"https://www.uffizi.it/en/artworks/canova-venus-italica"},
+  {"cat":"Arte","q":"Quanti centimetri è larga La maja desnuda di Francisco Goya?","a":191,"u":"cm","f":"Il dipinto fu realizzato prima del 1800 e ha quasi la stessa larghezza di una persona distesa. Goya dipinse anche una versione vestita nella medesima posa.","fs":"https://www.museodelprado.es/en/whats-on/exhibition/didactic-exhibition-the-prado-in-fuengirola/1086a3ef-aa21-43ed-80f4-51dbab98a32c"},
+  {"cat":"Cibo e Calorie","q":"Quante chilocalorie forniscono 100 grammi di banana fresca secondo le tabelle CREA?","a":76,"u":"kcal","f":"La stessa quantità apporta circa 350 milligrammi di potassio e 16 di vitamina C. La parte edibile indicata dal CREA è il 65% del frutto intero.","fs":"https://www.alimentinutrizione.it/tabelle-nutrizionali/007510"},
+  {"cat":"Cibo e Calorie","q":"Quante chilocalorie forniscono 100 grammi di mela fresca con la buccia secondo le tabelle CREA?","a":44,"u":"kcal","f":"Una porzione da 150 grammi arriva a circa 65 chilocalorie. Il dato considera la buccia e stima come edibile l'85% del frutto acquistato.","fs":"https://www.alimentinutrizione.it/tabelle-nutrizionali/007120"},
+  {"cat":"Cibo e Calorie","q":"Quante chilocalorie forniscono 100 grammi di ceci secchi bolliti e scolati secondo le tabelle CREA?","a":132,"u":"kcal","f":"Quei 100 grammi contengono circa 7 grammi di proteine e 45 microgrammi di folati. La cottura del campione è avvenuta senza aggiunta di sale.","fs":"https://www.alimentinutrizione.it/tabelle-nutrizionali/004005"},
+  {"cat":"Cibo e Calorie","q":"Quante chilocalorie forniscono 100 grammi di avocado fresco secondo le tabelle CREA?","a":238,"u":"kcal","f":"Il valore energetico dipende soprattutto dai 23 grammi di lipidi presenti. Nella stessa quantità il CREA registra circa 450 milligrammi di potassio.","fs":"https://www.alimentinutrizione.it/tabelle-nutrizionali/007490"},
+  {"cat":"Cibo e Calorie","q":"Quante chilocalorie forniscono 100 grammi di carote crude secondo le tabelle CREA?","a":41,"u":"kcal","f":"Le carote sono costituite per circa il 90% da acqua e apportano 3,1 grammi di fibra ogni 100 grammi. Il colore arancio è legato ai carotenoidi.","fs":"https://www.alimentinutrizione.it/tabelle-nutrizionali/005150"},
+  {"cat":"Cibo e Calorie","q":"Quante chilocalorie fornisce la porzione edibile da 50 grammi di un uovo di gallina intero secondo le tabelle CREA?","a":64,"u":"kcal","f":"Un uovo intero pesa mediamente 55 grammi: circa 5 sono guscio, 35 albume e 15 tuorlo. La porzione edibile da 50 grammi contiene circa 6,2 grammi di proteine.","fs":"https://www.alimentinutrizione.it/tabelle-nutrizionali/181100"},
+  {"cat":"Cibo e Calorie","q":"Quante chilocalorie fornisce una porzione da 50 grammi di Parmigiano Reggiano DOP secondo le tabelle CREA?","a":199,"u":"kcal","f":"La porzione contiene circa 16,2 grammi di proteine. Il dato CREA riguarda un Parmigiano di media stagionatura, quindi rende esplicito il prodotto di riferimento.","fs":"https://www.alimentinutrizione.it/tabelle-nutrizionali/166000"},
+  {"cat":"Cibo e Calorie","q":"Quante chilocalorie forniscono 10 grammi di olio extravergine d'oliva secondo le tabelle CREA?","a":90,"u":"kcal","f":"Dieci grammi sono all'incirca un cucchiaio scarso e corrispondono quasi interamente a lipidi. L'olio vegetale non contiene colesterolo.","fs":"https://www.alimentinutrizione.it/tabelle-nutrizionali/009210"},
+  {"cat":"Cibo e Calorie","q":"Quante chilocalorie forniscono 100 grammi di salmone crudo secondo le tabelle CREA?","a":185,"u":"kcal","f":"La stessa quantità contiene circa 18,4 grammi di proteine e 12 grammi di lipidi. La parte edibile stimata è il 65% del pesce intero.","fs":"https://www.alimentinutrizione.it/tabelle-nutrizionali/122400"},
+  {"cat":"Cibo e Calorie","q":"Quante chilocalorie forniscono 100 grammi di lenticchie secche bollite e scolate secondo le tabelle CREA?","a":109,"u":"kcal","f":"Quei 100 grammi apportano circa 8,3 grammi di fibra e 3 milligrammi di ferro. Il campione è stato bollito senza sale e poi scolato.","fs":"https://www.alimentinutrizione.it/tabelle-nutrizionali/004505"},
+  {"cat":"Spazio & Tempo","q":"Quanti metri è lungo complessivamente il Golden Gate Bridge, includendo gli accessi tra le due spalle?","a":2737,"u":"m","f":"La sola campata principale tra le torri misura 1.280 metri. Quando aprì nel 1937 stabilì il record mondiale per la campata sospesa più lunga.","fs":"https://www.goldengate.org/bridge/history-research/statistics-data/design-construction-stats/"},
+  {"cat":"Spazio & Tempo","q":"Quanti metri è alta la Tokyo Skytree?","a":634,"u":"m","f":"Le cifre 6-3-4 possono essere lette in giapponese come «Mu-sa-shi», antico nome della regione. Dal 2011 Guinness la riconosce come la torre autoportante più alta del mondo.","fs":"https://www.tokyo-skytree.jp/about/spec/"},
+  {"cat":"Spazio & Tempo","q":"Quanti chilometri misura approssimativamente il Canale di Panama tra Atlantico e Pacifico?","a":80,"u":"km","f":"Il canale non attraversa Panama in linea perfettamente retta: sfrutta laghi artificiali e chiuse per superare il dislivello. La scorciatoia evita alle navi il lungo giro attorno al Sud America.","fs":"https://pancanal.com/en/history-of-the-panama-canal/"},
+  {"cat":"Spazio & Tempo","q":"Quanti metri raggiunge la torre centrale di Gesù della Sagrada Família?","a":172.5,"u":"m","f":"Con l'installazione del braccio superiore della croce nel 2026, la basilica ha raggiunto il suo punto più alto. La croce è rivestita di ceramica bianca smaltata e vetro, materiali scelti per riflettere la luce.","fs":"https://blog.sagradafamilia.org/en/phases-construction-jesus-tower/"},
+  {"cat":"Spazio & Tempo","q":"Quanti minuti impiega la luce del Sole a raggiungere la Terra secondo il valore NASA di sola andata?","a":8.35,"u":"min","f":"Guardare il Sole significa quindi vederlo com'era poco più di otto minuti prima. La distanza media indicata dalla NASA è di circa 150,2 milioni di chilometri.","fs":"https://science.nasa.gov/earth/facts/"},
+  {"cat":"Spazio & Tempo","q":"Quanti secondi impiega la luce per andare dalla Terra alla Luna?","a":1.3,"u":"secondi","f":"Una comunicazione Terra-Luna richiede quindi almeno 2,6 secondi tra andata e ritorno del segnale. Questo ritardo era percepibile nei dialoghi con gli astronauti Apollo.","fs":"https://nightsky.jpl.nasa.gov/docs/moonmission05.pdf"},
+  {"cat":"Spazio & Tempo","q":"Quante ore dura una rotazione completa della Terra rispetto alle stelle, nel valore sintetico indicato dalla NASA?","a":23.9,"u":"ore","f":"Il giorno astronomico non coincide esattamente con le 24 ore dell'orologio civile. Mentre ruota, la Terra avanza anche lungo la propria orbita attorno al Sole.","fs":"https://science.nasa.gov/earth/facts/"},
+  {"cat":"Spazio & Tempo","q":"Quanti giorni impiega la Terra a completare un'orbita attorno al Sole, secondo la NASA?","a":365.25,"u":"giorni","f":"Il quarto di giorno che avanza ogni anno è il motivo per cui aggiungiamo periodicamente il 29 febbraio. Il calendario riallinea così le date al ciclo delle stagioni.","fs":"https://science.nasa.gov/earth/facts/"},
+  {"cat":"Spazio & Tempo","q":"Quanti minuti impiega circa la Stazione Spaziale Internazionale a completare un'orbita terrestre?","a":90,"u":"min","f":"In un giorno la ISS completa circa 16 orbite, facendo assistere l'equipaggio a 16 albe e 16 tramonti. Viaggia a quasi 28.000 chilometri orari.","fs":"https://www.nasa.gov/international-space-station/space-station-facts-and-figures/"},
+  {"cat":"Spazio & Tempo","q":"A quanti chilometri sopra la Terra orbita approssimativamente la Stazione Spaziale Internazionale?","a":400,"u":"km","f":"A quella quota esiste ancora una tenue atmosfera che rallenta gradualmente la stazione. Per questo la ISS deve essere periodicamente riportata su un'orbita più alta.","fs":"https://www.nasa.gov/humans-in-space/why-do-research-on-the-international-space-station/"},
+  {"cat":"Dati da Bar","q":"Quanti residenti stranieri risultavano in Italia al 31 dicembre 2024 secondo il Censimento Istat?","a":5371251,"u":"persone","f":"Rappresentavano il 9,1% della popolazione residente. Rispetto al 2023, il loro numero era cresciuto del 22,4 per mille.","fs":"https://www.istat.it/comunicato-stampa/censimento-e-dinamica-della-popolazione-anno-2024/"},
+  {"cat":"Dati da Bar","q":"Quanti bambini residenti sono nati in Italia nel 2024 secondo il dato definitivo Istat?","a":369944,"u":"nati","f":"Sono quasi 10.000 in meno dell'anno precedente. Dal picco del 2008, l'Italia ha perso circa 207.000 nascite annue, una riduzione del 35,8%.","fs":"https://www.istat.it/comunicato-stampa/natalita-e-fecondita-della-popolazione-residente-anno-2024/"},
+  {"cat":"Dati da Bar","q":"Qual è stato il numero medio di figli per donna in Italia nel 2024 secondo Istat?","a":1.18,"u":"figli","f":"È il minimo storico registrato nel Paese, sotto il precedente 1,19 del 1995. Il calo dipende sia dalla fecondità sia dalla riduzione delle generazioni in età fertile.","fs":"https://www.istat.it/comunicato-stampa/natalita-e-fecondita-della-popolazione-residente-anno-2024/"},
+  {"cat":"Dati da Bar","q":"Qual era l'età media della popolazione italiana al 1° gennaio 2025 secondo Istat?","a":46.8,"u":"anni","f":"L'età media sintetizza un Paese sempre più anziano. Nella stessa fotografia demografica, solo l'11,9% dei residenti aveva meno di 15 anni.","fs":"https://www.istat.it/infografiche/giornata-mondiale-della-popolazione-2025/"},
+  {"cat":"Dati da Bar","q":"Quale percentuale della popolazione italiana aveva almeno 65 anni al 1° gennaio 2025 secondo Istat?","a":24.7,"u":"%","f":"Quasi un residente su quattro rientrava nella fascia 65 anni e oltre. La fascia tra 15 e 64 anni rappresentava invece il 63,4% del totale.","fs":"https://www.istat.it/infografiche/giornata-mondiale-della-popolazione-2025/"},
+  {"cat":"Dati da Bar","q":"Quale percentuale della popolazione italiana aveva almeno 85 anni al 1° gennaio 2025 secondo Istat?","a":4.1,"u":"%","f":"Gli ultraottantacinquenni erano più di quattro persone ogni cento. In questa fascia d'età, sei residenti su dieci erano donne.","fs":"https://www.istat.it/infografiche/giornata-mondiale-della-popolazione-2025/"},
+  {"cat":"Dati da Bar","q":"Quanti anni era la speranza di vita media alla nascita in Italia nel 2024 secondo Istat?","a":83.4,"u":"anni","f":"Il valore era salito di circa cinque mesi rispetto al 2023. La media nascondeva una differenza: 81,4 anni per gli uomini e 85,5 per le donne.","fs":"https://www.istat.it/produzione-editoriale/rapporto-sdgs-2025-informazioni-statistiche-per-lagenda-2030-in-italia/"},
+  {"cat":"Dati da Bar","q":"Quanti componenti aveva in media una famiglia italiana nel biennio 2024-2025 secondo Istat?","a":2.2,"u":"componenti","f":"Vent'anni prima la media era 2,6. Nel 2024-2025 le persone che vivevano sole rappresentavano il 16,9% dell'intera popolazione.","fs":"https://www.istat.it/comunicato-stampa/indicatori-demografici-anno-2025/"},
+  {"cat":"Dati da Bar","q":"Quanti milioni di occupati risultavano in media in Italia nel 2024 secondo Istat?","a":23.932,"u":"milioni","f":"Gli occupati aumentarono di 352.000 in un anno, pari all'1,5%. Il totale superava di 823.000 unità il livello del 2019.","fs":"https://www.istat.it/wp-content/uploads/2025/05/Rapporto-Annuale-2025-integrale.pdf"},
+  {"cat":"Dati da Bar","q":"Qual è stato il tasso medio di disoccupazione in Italia nel 2024 secondo Istat?","a":6.5,"u":"%","f":"Il tasso scese di 1,1 punti rispetto al 2023. Nello stesso anno, quello di occupazione tra 15 e 64 anni salì al 62,2%.","fs":"https://www.istat.it/comunicato-stampa/il-mercato-del-lavoro-iv-trimestre-2024/"},
+  {"cat":"Record Assurdi","q":"Quanti centimetri misurava la lingua maschile da Guinness di Nick Stoeberl, verificata nel 2012?","a":10.1,"u":"cm","f":"La misura va dalla punta della lingua al centro del labbro superiore chiuso. Nick ha trasformato il primato in una specialità, arrivando perfino a dipingere con la lingua.","fs":"https://www.guinnessworldrecords.com/news/2023/3/man-with-longest-tongue-in-the-world-laps-up-new-record-title-740894"},
+  {"cat":"Record Assurdi","q":"Quante magliette indossò contemporaneamente Ted Hastings nel record Guinness del 2019?","a":260,"u":"magliette","f":"Le taglie andavano dalla M fino alla gigantesca 20X. L'impresa raccolse fondi per il parco giochi di una scuola canadese.","fs":"https://www.guinnessworldrecords.com/world-records/most-t-shirts-worn-at-once"},
+  {"cat":"Record Assurdi","q":"Quanti centimetri di diametro raggiunse la bolla di gomma da masticare record di Chad Fell nel 2004?","a":50.8,"u":"cm","f":"La bolla fu realizzata senza usare le mani e doveva restare intatta per cinque secondi. Chad usò tre pezzi di gomma e li masticò a lungo per ridurne lo zucchero.","fs":"https://www.guinnessworldrecords.com/news/2025/10/he-blew-away-the-competition-the-bubblegum-record-no-ones-been-able-to-pop"},
+  {"cat":"Record Assurdi","q":"Quanti centimetri misurava il naso da Guinness di Mehmet Özyürek, ricontrollato nel 2021?","a":8.8,"u":"cm","f":"La misura andava dal ponte alla punta ed era identica a quella rilevata vent'anni prima. Il controllo ha anche smentito, nel suo caso, il mito che il naso continui a crescere per sempre.","fs":"https://www.guinnessworldrecords.com/news/2021/11/i-have-been-blessed-mehmet-ozyurek-on-his-record-breaking-nose-683648"},
+  {"cat":"Record Assurdi","q":"Quanti cucchiai riuscì a tenere contemporaneamente sul corpo Abolfazl Saber Mokhtari nel record Guinness del 2025?","a":96,"u":"cucchiai","f":"Aveva già detenuto il record con 85 e poi 88 cucchiai. Durante il tentativo doveva restare immobile mentre un assistente disponeva con pazienza ogni posata.","fs":"https://www.guinnessworldrecords.com/news/2025/5/man-balances-96-spoons-on-body-to-break-own-record-i-can-stick-any-object-to-my-skin"},
+  {"cat":"Record Assurdi","q":"Quanti metri di diametro aveva l'hula hoop più grande fatto ruotare da un uomo nel record Guinness del 2019?","a":5.4,"u":"m","f":"Per essere valido, Yuya Yamada dovette completare tre rotazioni consecutive. Ci riuscì al primo tentativo nonostante il freddo e una leggera pioggia.","fs":"https://www.guinnessworldrecords.com/world-records/largest-hula-hoop-spun"},
+  {"cat":"Record Assurdi","q":"In quanti secondi Ryusei Yonee corse 100 metri a quattro zampe nel record Guinness del 2025?","a":14.55,"u":"secondi","f":"Yonee studiò il movimento di cani, gatti e scimmie, poi adattò la tecnica alla pista. Migliorò di oltre un secondo il precedente 15,66 del 2022.","fs":"https://www.guinnessworldrecords.com/news/2025/9/japanese-man-runs-100-m-on-all-fours-in-blistering-time-after-studying-way-animals-move"},
+  {"cat":"Record Assurdi","q":"Quante volte Thaneswar Guragai attraversò una tavoletta del WC in un minuto nel record Guinness del 2018?","a":10,"u":"passaggi","f":"Il concorrente portò personalmente la tavoletta dal Nepal alla sede londinese di Guinness. La prova richiedeva di passare l'intero corpo attraverso l'apertura a ogni ripetizione.","fs":"https://www.guinnessworldrecords.com/world-records/most-times-to-pass-through-a-toilet-seat-in-one-minute"},
+  {"cat":"Record Assurdi","q":"Quanti hula hoop fece ruotare contemporaneamente attorno al collo Lucy Benson nel record Guinness del 2022?","a":17,"u":"hula hoop","f":"La preparazione richiese mesi di forza e condizionamento, perché il peso degli attrezzi gravava su una zona delicata. Dopo la prova furono necessari giorni di recupero e stretching.","fs":"https://www.guinnessworldrecords.com/world-records/84077-most-hula-hoops-spun-simultaneously-around-the-neck"},
+  {"cat":"Record Assurdi","q":"Quanti chilogrammi pesava la scultura di zucchero filato a forma di coniglio citata da Guinness nel 2024?","a":16.78,"u":"kg","f":"La scultura era interamente di zucchero filato ai gusti vaniglia rosa e lampone. Per darle forma servì una squadra di otto persone.","fs":"https://kids.guinnessworldrecords.com/news/2024/1/sugary-records-you-will-love-if-you-have-a-sweet-tooth-762582"},
+  {"cat":"Tabù","q":"Qual è la percentuale di efficacia del preservativo esterno contro la gravidanza con uso perfetto, secondo il NHS?","a":98,"u":"%","f":"«Uso perfetto» significa impiegarlo correttamente ogni volta, dall'inizio del rapporto. Nell'uso tipico il valore scende all'82%, soprattutto per errori, rotture o sfilamenti.","fs":"https://www.nhs.uk/contraception/choosing-contraception/how-well-it-works-at-preventing-pregnancy/"},
+  {"cat":"Tabù","q":"Qual è la percentuale di efficacia del preservativo interno contro la gravidanza con uso perfetto, secondo il NHS?","a":95,"u":"%","f":"Il preservativo interno riveste la vagina e crea una barriera prima del rapporto. Nell'uso tipico, che comprende errori pratici, l'efficacia indicata è del 79%.","fs":"https://www.nhs.uk/contraception/choosing-contraception/how-well-it-works-at-preventing-pregnancy/"},
+  {"cat":"Tabù","q":"Quanti giorni dura il ciclo mestruale medio usato come riferimento dall'ACOG?","a":28,"u":"giorni","f":"È una media, non una regola valida per ogni persona o per ogni mese. In quel modello l'ovulazione avviene circa 14 giorni prima della mestruazione successiva.","fs":"https://www.acog.org/womens-health/faqs/fertility-awareness-based-methods-of-family-planning"},
+  {"cat":"Tabù","q":"Per quante ore circa può sopravvivere un ovulo nella tuba dopo l'ovulazione, secondo l'ACOG?","a":24,"u":"ore","f":"La finestra fertile è più ampia della vita dell'ovulo perché gli spermatozoi possono restare vitali per più giorni. Per questo il concepimento può derivare da un rapporto precedente all'ovulazione.","fs":"https://www.acog.org/womens-health/faqs/fertility-awareness-based-methods-of-family-planning"},
+  {"cat":"Tabù","q":"Fino a quanti giorni possono sopravvivere gli spermatozoi nel corpo femminile, secondo l'ACOG?","a":5,"u":"giorni","f":"La sopravvivenza più comune indicata è circa tre giorni, ma in condizioni favorevoli può arrivare a cinque. È questo a estendere la finestra fertile prima dell'ovulazione.","fs":"https://www.acog.org/womens-health/faqs/fertility-awareness-based-methods-of-family-planning"},
+  {"cat":"Tabù","q":"A quanti anni si raggiunge in media la menopausa negli Stati Uniti, secondo il National Institute on Aging?","a":52,"u":"anni","f":"La transizione comincia spesso tra 45 e 55 anni e può durare diversi anni. La menopausa si conferma dopo dodici mesi consecutivi senza mestruazioni o spotting.","fs":"https://www.nia.nih.gov/health/menopause/what-menopause"},
+  {"cat":"Tabù","q":"Quanti giorni dura in media una gravidanza calcolata dal primo giorno dell'ultima mestruazione, secondo l'ACOG?","a":280,"u":"giorni","f":"Corrispondono a 40 settimane e includono circa due settimane precedenti al concepimento. La data presunta del parto è quindi una guida, non un appuntamento esatto.","fs":"https://www.acog.org/womens-health/faqs/when-pregnancy-goes-past-your-due-date"},
+  {"cat":"Tabù","q":"Entro quante ore da un rapporto può essere inserita una spirale al rame come contraccezione d'emergenza, secondo il NHS?","a":120,"u":"ore","f":"Sono cinque giorni, ma prima si interviene meglio è. La spirale al rame è indicata dal NHS come il metodo di contraccezione d'emergenza più efficace.","fs":"https://www.nhs.uk/contraception/emergency-contraception/"},
+  {"cat":"Tabù","q":"Fino a quale età il CDC raccomanda il recupero della vaccinazione HPV a chi non è stato vaccinato adeguatamente prima?","a":26,"u":"anni","f":"Il vaccino previene nuove infezioni ma non cura quelle già presenti. Funziona meglio prima dell'esposizione e la vaccinazione di routine è raccomandata a 11-12 anni.","fs":"https://www.cdc.gov/hpv/hcp/vaccination-considerations/"},
+  {"cat":"Tabù","q":"Quale percentuale delle verruche genitali è causata complessivamente dai tipi HPV 6 e 11, secondo il CDC?","a":90,"u":"%","f":"I tipi 6 e 11 sono distinti dai principali tipi oncogeni 16 e 18. Il vaccino nonavalente protegge contro tutti e quattro, oltre ad altri cinque tipi ad alto rischio.","fs":"https://www.cdc.gov/std/treatment-guidelines/hpv.htm"}
+];
+QUESTIONS.push(...QUESTIONS_V2_6);
+
 // Schema editoriale uniforme. I campi vuoti restano espliciti finché una fonte
 // verificabile non viene aggiunta: il gioco non inventa curiosità di categoria.
 QUESTIONS.forEach(question=>{
@@ -1134,14 +1362,51 @@ const TESI_CARDS = [
     tesi:"Sì, a un certo punto non è un romanzo, è arredamento.", antitesi:"No, se la storia regge, 600 pagine volano."},
 ];
 
+// Mazzo Sfide: una sola sorgente per i pareggi e per le caselle Duello.
+// Il gioco estrae sempre la carta; nessun giocatore deve scegliere il tipo.
+const MINI_GAME_META = {
+  lampo:{icon:"⚡",name:"Stima Lampo",family:"stima",duration:"40–60 secondi",win:"La stima più vicina",rules:["Il Master legge una nuova domanda numerica.","Ogni sfidante comunica una sola stima.","Si rivela la risposta: chi è più vicino vince."]},
+  crono:{icon:"⏱️",name:"Cronometro del Master",family:"tempo",duration:"30–45 secondi",win:"La stima del tempo più precisa",rules:["Gli sfidanti si girano e non guardano lo schermo.","Il Master avvia e ferma il cronometro quando vuole.","Ognuno stima i secondi trascorsi."]},
+  ncc:{icon:"🔤",name:"Nomi & Cose",family:"voce",duration:"20–40 secondi",win:"La prima risposta valida",rules:["Compare una lettera insieme a una categoria.","Gli sfidanti rispondono ad alta voce.","Il Master assegna la vittoria alla prima risposta valida."]},
+  altobasso:{icon:"↕️",name:"Alto o Basso",family:"riflessi",duration:"3 manche rapide",win:"Più risposte corrette",rules:["Per ogni domanda compare un valore di riferimento.","Tutti dichiarano insieme: più alto oppure più basso.","Dopo tre manche vince chi ha più risposte corrette."]},
+  intervallo:{icon:"🎯",name:"Intervallo Killer",family:"stima",duration:"45 secondi",win:"L’intervallo valido più stretto",rules:["Ogni sfidante indica un valore minimo e uno massimo.","La risposta deve cadere dentro l’intervallo.","Vince l’intervallo valido più stretto; se tutti sbagliano, chi arriva più vicino."]},
+  ordine:{icon:"🪜",name:"Ordine Impossibile",family:"ordine",duration:"45 secondi",win:"La sequenza completa corretta",rules:["Compaiono quattro elementi mescolati.","Bisogna ordinarli dal valore più piccolo al più grande.","Il Master rivela l’ordine e indica chi ha indovinato meglio."]},
+  indizi:{icon:"🕵️",name:"Indizio dopo Indizio",family:"stima",duration:"Massimo 3 indizi",win:"Più vicino, usando meno indizi",rules:["Il numero misterioso viene accompagnato da tre indizi progressivi.","Dopo ogni indizio si può bloccare definitivamente una stima.","Vince chi è più vicino; a parità, chi ha usato meno indizi."]},
+  bomba:{icon:"💣",name:"La Bomba",family:"voce",duration:"Manche da 7–12 secondi",win:"L’ultimo giocatore rimasto",rules:["Dite a turno un elemento valido della categoria mostrata.","Dopo ogni risposta il Master passa la bomba al giocatore successivo.","Chi ha la bomba quando esplode viene eliminato."]},
+  asta:{icon:"🔨",name:"Asta al Ribasso",family:"rischio",duration:"45–60 secondi",win:"La promessa più coraggiosa mantenuta",rules:["Ogni sfidante dichiara una stima e un margine massimo di errore.","I margini più piccoli vengono controllati per primi.","Vince la prima promessa rispettata; se falliscono tutte, la stima più vicina."]},
+  timeline:{icon:"🗓️",name:"Timeline Flash",family:"ordine",duration:"45 secondi",win:"La cronologia più corretta",rules:["Compaiono quattro eventi in ordine casuale.","Gli sfidanti li dispongono mentalmente dal più vecchio al più recente.","Il Master rivela gli anni e assegna la vittoria."]}
+};
+const MINI_GAME_KEYS = Object.keys(MINI_GAME_META);
+const MINI_ORDER_CARDS = [
+  {title:"Film: dal più breve al più lungo",items:[{label:"C’è ancora domani",v:118},{label:"Pulp Fiction",v:154},{label:"Il Padrino",v:175},{label:"Titanic",v:195}],unit:"min",fact:"Il Titanic reale impiegò circa due ore e quaranta minuti ad affondare: quasi quanto il film di James Cameron.",source:"https://www.britannica.com/topic/Titanic"},
+  {title:"Canzoni: da meno a più parole",items:[{label:"Tequila",v:3},{label:"Nel blu dipinto di blu — ritornello",v:11},{label:"Happy Birthday — strofa standard",v:16},{label:"Around the World — versione album",v:432}],unit:"parole",fact:"Tequila nacque come una jam e finì sul lato B del singolo, prima che i DJ la trasformassero nel vero successo.",source:"https://en.wikipedia.org/wiki/Tequila_(The_Champs_song)"},
+  {title:"Misure: dalla più corta alla più lunga",items:[{label:"Altezza di Robert Wadlow",v:2.72},{label:"Record del salto in lungo",v:8.95},{label:"Piscina olimpionica",v:50},{label:"Burj Khalifa",v:828}],unit:"m",fact:"Durante la costruzione il Burj Khalifa era chiamato Burj Dubai: il nome definitivo fu annunciato soltanto all’inaugurazione.",source:"https://www.britannica.com/topic/Burj-Khalifa"},
+  {title:"Cinema: dal più breve al più lungo",items:[{label:"C’è ancora domani",v:118},{label:"La Grande Bellezza",v:141},{label:"Forrest Gump",v:142},{label:"Avengers: Endgame",v:181}],unit:"min",fact:"C’è ancora domani, girato principalmente in bianco e nero, è l’esordio alla regia cinematografica di Paola Cortellesi.",source:"https://www.visiondistribution.it/film/ce-ancora-domani/"}
+];
+const MINI_TIMELINE_CARDS = [
+  {title:"Cinema",items:[{label:"Esce Il Padrino",year:1972},{label:"Esce Pulp Fiction",year:1994},{label:"Esce Titanic",year:1997},{label:"Esce Avengers: Endgame",year:2019}],fact:"Titanic eguagliò il record di Ben-Hur vincendo 11 Oscar.",source:"https://www.oscars.org/oscars/ceremonies/1998"},
+  {title:"Album che hanno fatto epoca",items:[{label:"Abbey Road",year:1969},{label:"Thriller",year:1982},{label:"Nevermind",year:1991},{label:"Homework dei Daft Punk",year:1997}],fact:"La copertina di Abbey Road fu fotografata sulle strisce pedonali davanti agli studi EMI, poi ribattezzati Abbey Road Studios.",source:"https://www.abbeyroad.com/news/abbey-road-album-cover-the-story-behind-the-iconic-photo-3254"},
+  {title:"Serie televisive",items:[{label:"Debutta Friends",year:1994},{label:"Debuttano I Soprano",year:1999},{label:"Debutta Il Trono di Spade",year:2011},{label:"Debutta Stranger Things",year:2016}],fact:"Friends nacque nel 1994 e arrivò a un totale di 236 episodi in dieci stagioni.",source:"https://www.warnerbros.com/tv/friends"},
+  {title:"Internet e piattaforme",items:[{label:"Nasce Google",year:1998},{label:"Nasce Wikipedia",year:2001},{label:"Viene caricato il primo video su YouTube",year:2005},{label:"Viene lanciato Instagram",year:2010}],fact:"Il primo video di YouTube, Me at the zoo, dura appena 19 secondi ed è ancora disponibile.",source:"https://blog.youtube/news-and-events/you-tube-at-15-my-personal-journey/"}
+];
+const MINI_CLUE_CARDS = [
+  {title:"Un gigante a Dubai",answer:828,unit:"metri",clues:["Si trova negli Emirati Arabi Uniti.","Fu inaugurato nel 2010 e durante i lavori era chiamato Burj Dubai.","È l’altezza del Burj Khalifa."],fact:"Il nome Burj Khalifa fu annunciato soltanto durante la cerimonia d’inaugurazione.",source:"https://www.britannica.com/topic/Burj-Khalifa"},
+  {title:"La distanza leggendaria",answer:42.195,unit:"km",clues:["È una gara di corsa su strada.","Il suo nome richiama una località dell’antica Grecia.","È la distanza ufficiale della maratona."],fact:"La distanza moderna fu standardizzata dopo i Giochi di Londra del 1908 e fissata definitivamente nel 1921.",source:"https://worldathletics.org/disciplines/road-running/marathon"},
+  {title:"Sei amici a New York",answer:236,unit:"episodi",clues:["La serie è ambientata soprattutto a Manhattan.","Uno dei luoghi simbolo è il Central Perk.","È il numero totale di episodi di Friends."],fact:"Il celebre divano arancione del Central Perk fu trovato dallo scenografo in un deposito degli studi Warner Bros.",source:"https://www.warnerbros.com/tv/friends"},
+  {title:"Bianco e nero",answer:88,unit:"tasti",clues:["Lo strumento copre poco più di sette ottave.","I suoi tasti standard sono 52 bianchi e 36 neri.","È il totale dei tasti di un pianoforte moderno."],fact:"Il pianoforte standard divide gli 88 tasti in 52 bianchi e 36 neri.",source:"https://www.britannica.com/art/piano-musical-instrument"},
+  {title:"Una valanga di rime",answer:1560,unit:"parole",clues:["Il brano è di Eminem.","Un passaggio contiene 97 parole in appena 15 secondi.","È il totale riconosciuto per Rap God."],fact:"Nel passaggio più rapido Eminem pronuncia circa 6,46 parole al secondo.",source:"https://www.guinnessworldrecords.com/world-records/112754-most-words-in-a-hit-single"},
+  {title:"Un colossal oceanico",answer:195,unit:"minuti",clues:["È un film diretto da James Cameron.","La storia unisce una nave realmente esistita e due protagonisti immaginari.","È la durata cinematografica di Titanic."],fact:"Titanic eguagliò il record di Ben-Hur vincendo 11 Oscar.",source:"https://www.oscars.org/oscars/ceremonies/1998"}
+];
+const MINI_BOMB_CATEGORIES = ["Film con almeno due parole nel titolo","Città italiane","Cantanti o band","Animali che vivono in acqua","Cibi che si mangiano con le mani","Serie TV","Oggetti presenti in cucina","Sport con una palla","Personaggi dei cartoni","Cose che porteresti in vacanza"];
+
 // Tabellone da 30 caselle: partite più rapide (cap a 15 round).
 let BOARD = [
-  // 30 caselle. Distribuzione: 8 domanda, 4 bonus, 4 malus, 3 timer, 2 duello,
-  // 2 random/categoria, 2 dado caos, 1 alfabetica, 1 tesi, 1 penitenza, 1 fenomeno, 1 finale.
+  // Le due tappe del Mazzo Sfide sono separate: Sfida (cas. 6) e Minigioco (cas. 23).
+  // Entrambe estraggono una prova casuale; cambia soltanto la ricompensa indicata a schermo.
   "domanda","bonus","malus","timer","domanda","duello",
   "azzardo","domanda","cecchino","tiroleader","malus","domanda",
   "gemelli","dadocaos","postadoppia","domanda","bonus","voce",
-  "domanda","fenomeno","timer","azzardo","duello","domanda",
+  "domanda","fenomeno","timer","azzardo","alfabetica","domanda",
   "cecchino","penitenza","domanda","dadocaos","malus","finale"
 ];
 const BOARD_FULL = BOARD.slice();
@@ -1155,7 +1420,7 @@ const CELL = {
   malus:{ic:"⛔",nm:"Malus"},
   voce:{ic:"📢",nm:"Infamata a voce"},
   timer:{ic:"⏱️",nm:"Timer Challenge"},
-  duello:{ic:"⚔️",nm:"Duello"},
+  duello:{ic:"⚔️",nm:"Sfida"},
   dadocaos:{ic:"🎲",nm:"Dado Caos"},
   random:{ic:"🌀",nm:"Random / Categoria"},
   azzardo:{ic:"🎰",nm:"Azzardo"},
@@ -1166,7 +1431,7 @@ const CELL = {
   dispensa:{ic:"🍫",nm:"Cibo e Calorie"},
   penitenza:{ic:"🗡️",nm:"Vendetta"},
   fenomeno:{ic:"👑",nm:"Fenomeno / Sapientone"},
-  alfabetica:{ic:"🔤",nm:"Nomi & Cose"},
+  alfabetica:{ic:"🎴",nm:"Minigioco"},
   tesi:{ic:"⚖️",nm:"Tesi & Antitesi"},
   finale:{ic:"🏆",nm:"Finale"},
 };
@@ -1188,7 +1453,7 @@ const FENOMENO_MALUS = [
 const BONUS = [
   {id:"scudo",   nm:"Scudo",          desc:"Blocca il prossimo malus che ti danno."},
   {id:"catpref", nm:"Categoria preferita", desc:"Scegli tu la categoria di un round."},
-  {id:"paracadute",nm:"Paracadute",   desc:"La tua peggior distanza viene dimezzata, una volta."},
+  {id:"paracadute",nm:"Paracadute",   desc:"Se in un round hai la distanza valida peggiore, si attiva automaticamente: la dimezza, una volta."},
 ];
 
 function addUniqueEffect(list, effect){
@@ -1223,9 +1488,15 @@ const S = {
   lastWinnerId:null,
   special:null,          // {type, cell}
   specialQueue:[],       // caselle speciali da attivare per i giocatori che hanno segnato
-  used:new Set(),        // domande già pescate (anti-ripetizione)
+  used:new Set(),        // ID delle domande già pescate in questa partita
+  questionBag:[],        // shuffle-bag condivisa fra round e minigiochi
+  cardBags:{},           // shuffle-bag delle carte speciali
+  ledger:[],             // unica sorgente delle variazioni di punti e caselle
   catMode:"random",      // random | turno
   chosenCat:null,        // categoria scelta per il round corrente
+  lastQuestionCat:null,  // evita categorie consecutive nella modalità casuale
+  lastMiniGame:null,
+  lastMiniFamily:null,
   log:[],
   timer:{id:null,left:0,total:25},
 };
@@ -1242,6 +1513,12 @@ const $$ = (sel,root)=> Array.from((root||document).querySelectorAll(sel));
 const rnd = (n)=> Math.floor(Math.random()*n);
 const pick = (arr)=> arr[rnd(arr.length)];
 function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=rnd(i+1);[a[i],a[j]]=[a[j],a[i]];}return a;}
+function drawDeckCard(name,cards){
+  if(!Array.isArray(cards)||!cards.length)return null;
+  let bag=S.cardBags[name];
+  if(!Array.isArray(bag)||!bag.length)bag=S.cardBags[name]=shuffle(cards.map((_,i)=>i));
+  return cards[bag.shift()];
+}
 function fmtNum(n){
   if(n===null||n===undefined||Number.isNaN(n)) return "—";
   return new Intl.NumberFormat("it-IT").format(n);
@@ -1288,6 +1565,28 @@ function spinDie(el, finalVal, pips, done){
 function log(msg, round){
   S.log.unshift({msg, round: round!==undefined?round:S.round});
   if(S.log.length>60) S.log.pop();
+}
+function beginLedger(){S.ledger=[];}
+function applyPlayerDelta(player,change={}){
+  if(!player)return null;
+  const scoreFrom=player.score,posFrom=player.pos;
+  const requestedScore=Number(change.score)||0,requestedPos=Number(change.pos)||0;
+  player.score=Math.max(0,scoreFrom+requestedScore);
+  player.pos=Math.max(0,Math.min(FINISH,posFrom+requestedPos));
+  const item={playerId:player.id,name:player.name,color:player.color,scoreFrom,scoreTo:player.score,posFrom,posTo:player.pos,scoreDelta:player.score-scoreFrom,posDelta:player.pos-posFrom,source:change.source||"Partita",detail:change.detail||""};
+  if(item.scoreDelta||item.posDelta)S.ledger.push(item);
+  return item;
+}
+function consumeLedger(){const out=S.ledger.slice();S.ledger=[];return out;}
+function aggregateLedger(items){
+  const byId=new Map();
+  (items||[]).forEach(item=>{
+    let row=byId.get(item.playerId);
+    if(!row){row={playerId:item.playerId,name:item.name,color:item.color,scoreFrom:item.scoreFrom,scoreTo:item.scoreTo,posFrom:item.posFrom,posTo:item.posTo,scoreDelta:0,posDelta:0,sources:[]};byId.set(item.playerId,row);}
+    row.scoreTo=item.scoreTo;row.posTo=item.posTo;row.scoreDelta=row.scoreTo-row.scoreFrom;row.posDelta=row.posTo-row.posFrom;
+    row.sources.push({label:item.source,detail:item.detail,scoreDelta:item.scoreDelta,posDelta:item.posDelta});
+  });
+  return [...byId.values()];
 }
 
 /* =====================================================================
@@ -1350,8 +1649,9 @@ function renderSplash(){
 const TUTORIAL = [
   {ic:"🎯", t:"Tira a indovinare", x:"A OCCHIO! non è un quiz. Esce una domanda con un numero come risposta e tu provi a indovinarlo: non devi saperlo davvero, ti basta avvicinarti."},
   {ic:"✍️", t:"Scrivi in 25 secondi", x:"Parte il timer e ognuno scrive il suo numero in segreto, su carta o lavagnetta. Quando il tempo finisce le risposte si bloccano, e uno di voi le inserisce nel telefono."},
-  {ic:"🥇", t:"Più sei vicino, più punti", x:"Chi si avvicina di più vince il round: 3 punti al primo, 2 al secondo, 1 al terzo. Con i punti avanzi sul tabellone, tra caselle che regalano premi o piccoli scherzi."},
-  {ic:"⚡", t:"Vince chi ci va vicino", x:"Se due sono pari, li separa un minigioco lampo di intuito. E chi vince troppo si becca qualche malus simpatico: così resta in gioco anche chi non sa tutto."},
+  {ic:"🥇", t:"Punti e caselle", x:"Chi si avvicina di più prende 3 punti e avanza di 3 caselle; il secondo fa +2 e il terzo +1. Bonus e sfide possono cambiare punti o percorso: il riepilogo mostra sempre da dove arriva ogni variazione."},
+  {ic:"🏆", t:"Due modi per vincere", x:"Raggiungi per primo la casella Finale e vinci subito. Se dopo 15 round nessuno ha finito il percorso, vince chi ha più punti. Le due classifiche restano sempre separate e visibili."},
+  {ic:"⚡", t:"Parità? Carta Sfida", x:"Una sfida parte soltanto per una vera parità di distanza valida o per una casella Sfida. Il gioco mostra il motivo, pesca automaticamente il minigioco e spiega subito regole e posta."},
 ];
 function renderTutorial(i){
   S.phase="tutorial";
@@ -1458,6 +1758,7 @@ function syncPlayers(){
       name: prev? prev.name : "",
       color: COLORS[i],
       avatar: prev? prev.avatar : null,
+      onlineToken: prev? prev.onlineToken : null,
       score:0, pos:0, streak:0, fenomeno:false,
       malus:[], bonus:[], voiceNext:false,
     });
@@ -1513,8 +1814,21 @@ function startGame(){
   if(S.count===2){ BOARD=BOARD_DUO; FINISH=BOARD.length; }
   else { BOARD=BOARD_FULL; FINISH=BOARD.length; }
   S.players.forEach((p,i)=>{ if(!p.name.trim()) p.name = "Giocatore "+(i+1); });
-  S.round=0; S.lastWinnerId=null; S.forcedCat=null; S.scoringAppliedRound=-1;
-  S.used=new Set();
+  const seenNames=new Set();
+  const duplicateName=S.players.find(p=>{
+    const key=(p.name||"").trim().replace(/\s+/g," ").toLocaleLowerCase("it-IT");
+    if(seenNames.has(key))return true;
+    seenNames.add(key);return false;
+  });
+  if(duplicateName){
+    alert(`Il nickname "${duplicateName.name}" è già usato. Ogni giocatore, compreso il Master, deve avere un nome diverso.`);
+    renderSetup();
+    return;
+  }
+  S.round=0; S.lastWinnerId=null; S.forcedCat=null; S.scoringAppliedRound=-1;S.lastQuestionCat=null;
+  S.winnerFinal=null;S.gameEndReason=null;S.mapFull=false;S._becameFenomeno=false;
+  S.lastMiniGame=null; S.lastMiniFamily=null;
+  S.used=new Set(); S.questionBag=[];S.cardBags={};S.ledger=[];
   S.players.forEach(p=>{p.score=0;p.pos=0;p.streak=0;p.fenomeno=false;p.malus=[];p.bonus=[];p.doubleNext=false;p.cecchino=false;});S.twins=null;
   S.log=[];
   log("Partita avviata con "+S.players.length+" giocatori · categoria "+(S.catMode==="turno"?"a turno":"a sorteggio")+"."+(S.count===2?" ⚔️ Modalità Duello: tabellone da "+FINISH+" caselle. Segna solo il più vicino: +2 se entro il 30% della risposta, +1 se oltre.":""),0);
@@ -1544,22 +1858,63 @@ function drawQuestion(){
   finalizeDraw(null);
 }
 
-// pesca una domanda mai uscita; quando l'ambito si esaurisce, si riparte
-const USED_EVER = new Set(); // domande già uscite in QUESTA sessione (tra più partite)
-function drawFromPool(cat){
-  const curated=QUESTIONS.filter(q=>q.f&&q.fs);
-  const pool = cat ? curated.filter(q=>q.cat===cat) : curated.filter(q=>!OFFCATS.has(q.cat));
-  if(pool.length===0) return drawFromPool(null);
-  // prima scelta: mai uscita né in questa partita né nelle precedenti
-  let avail = pool.filter(q=>!S.used.has(q) && !USED_EVER.has(q.q));
-  // se la sessione ha esaurito l'ambito: accetta ripetizioni tra partite, mai nella stessa
-  if(avail.length===0) avail = pool.filter(q=>!S.used.has(q));
-  if(avail.length===0){
-    pool.forEach(q=>S.used.delete(q));   // azzera solo questo ambito
-    avail = pool.slice();
+// Un solo shuffle-bag autorevole per round, Stima Lampo e minigiochi numerici.
+// La memoria del ciclo sopravvive a "Nuova partita" e, quando possibile, anche
+// alla riapertura della pagina: niente estrazioni casuali indipendenti.
+const QUESTION_MEMORY_KEY="aocchio_question_cycle_v2";
+const QUESTION_RECENT_LIMIT=40;
+const questionId=q=>`${q.cat}\u241f${q.q}`;
+function loadQuestionMemory(){
+  try{
+    const raw=JSON.parse(localStorage.getItem(QUESTION_MEMORY_KEY)||"{}");
+    return {used:new Set(Array.isArray(raw.used)?raw.used:[]),recent:Array.isArray(raw.recent)?raw.recent:[]};
+  }catch(e){return {used:new Set(),recent:[]};}
+}
+const QUESTION_MEMORY=loadQuestionMemory();
+function saveQuestionMemory(){
+  try{localStorage.setItem(QUESTION_MEMORY_KEY,JSON.stringify({used:[...QUESTION_MEMORY.used],recent:QUESTION_MEMORY.recent.slice(-QUESTION_RECENT_LIMIT)}));}catch(e){}
+}
+function curatedQuestions(){return QUESTIONS.filter(q=>q.f&&q.fs);}
+function pruneQuestionMemory(curated){
+  const valid=new Set(curated.map(questionId));
+  QUESTION_MEMORY.used=new Set([...QUESTION_MEMORY.used].filter(id=>valid.has(id)));
+  QUESTION_MEMORY.recent=QUESTION_MEMORY.recent.filter(id=>valid.has(id)).slice(-QUESTION_RECENT_LIMIT);
+}
+function refillQuestionBag(curated,scope){
+  let candidates=scope.filter(q=>!S.used.has(questionId(q))&&!QUESTION_MEMORY.used.has(questionId(q)));
+  if(!candidates.length){
+    // Il ciclo della selezione attiva è terminato: lo riapriamo senza toccare
+    // le domande già uscite nella partita in corso e tenendo fuori le più recenti.
+    const scopeIds=new Set(scope.map(questionId));
+    QUESTION_MEMORY.used=new Set([...QUESTION_MEMORY.used].filter(id=>!scopeIds.has(id)));
+    candidates=scope.filter(q=>!S.used.has(questionId(q))&&!QUESTION_MEMORY.recent.includes(questionId(q)));
+    if(!candidates.length)candidates=scope.filter(q=>!S.used.has(questionId(q)));
   }
-  const q = pick(avail);
-  S.used.add(q); USED_EVER.add(q.q);
+  S.questionBag=shuffle(candidates.map(questionId));
+  saveQuestionMemory();
+  return S.questionBag.length>0;
+}
+function drawFromPool(cat,context="round"){
+  const curated=curatedQuestions();pruneQuestionMemory(curated);
+  const byId=new Map(curated.map(q=>[questionId(q),q]));
+  let scope=cat?curated.filter(q=>q.cat===cat):curated.filter(q=>!OFFCATS.has(q.cat));
+  if(!cat&&S.lastQuestionCat){const alternate=scope.filter(q=>q.cat!==S.lastQuestionCat);if(alternate.length)scope=alternate;}
+  if(!scope.length)scope=curated.filter(q=>!OFFCATS.has(q.cat));
+  const usable=id=>{const q=byId.get(id);return q&&!S.used.has(id)&&scope.includes(q)&&!QUESTION_MEMORY.used.has(id);};
+  let index=S.questionBag.findIndex(usable);
+  if(index<0){refillQuestionBag(curated,scope);index=S.questionBag.findIndex(id=>byId.has(id)&&!S.used.has(id));}
+  // Se una categoria è stata consumata durante la stessa partita, si passa a
+  // un'altra categoria attiva invece di ripetere una domanda.
+  if(index<0&&cat){
+    const fallback=curated.filter(q=>!OFFCATS.has(q.cat)&&!S.used.has(questionId(q)));
+    if(fallback.length){refillQuestionBag(curated,fallback);index=0;}
+  }
+  if(index<0)throw new Error("Mazzo domande esaurito: nessuna ripetizione consentita nella stessa partita.");
+  const id=S.questionBag.splice(index,1)[0],q=byId.get(id);
+  S.used.add(id);QUESTION_MEMORY.used.add(id);QUESTION_MEMORY.recent.push(id);QUESTION_MEMORY.recent=QUESTION_MEMORY.recent.slice(-QUESTION_RECENT_LIMIT);saveQuestionMemory();
+  if(cat&&q.cat!==cat)log(`🔀 Categoria ${esc(cat)} esaurita senza ripetizioni: il mazzo passa a ${esc(q.cat)}.`);
+  if(context!=="round")log(`🎴 ${esc(context)} pesca una domanda nuova dal mazzo condiviso.`);
+  if(context==="round")S.lastQuestionCat=q.cat;
   return q;
 }
 
@@ -1683,11 +2038,11 @@ function startWriting(){
 function renderWriting(){
   const q = S.question;
   const master = S.players[0];
-  const masterKey = (master.name||"").trim().toLowerCase();
+  const masterKey = onlineEstimateKey(master);
   const roster = S.players.map((p,i)=>{
     const lim = playerLimit(p);
     const reduced = lim<25;
-    const sent = ONLINE && ONLINE.est[(p.name||"").trim().toLowerCase()]!=null;
+    const sent = onlineEstimateFor(p)!=null;
     return `<div class="write-row">
         ${avatarHTML(p,28)}
         <span class="wr-nm">${esc(p.name)}${i===0?' <span class="master-badge">Master</span>':''}${p.fenomeno?" 👑":""}</span>
@@ -1735,7 +2090,7 @@ function renderWriting(){
 
 function checkAllEstimates(){
   if(S.phase!=="writing" || !ONLINE) return;
-  const all = S.players.every(p=> ONLINE.est[(p.name||"").trim().toLowerCase()]!=null);
+  const all = S.players.every(p=> onlineEstimateFor(p)!=null);
   if(all){ stopTimer(); pensGiu(); }
 }
 
@@ -1767,14 +2122,13 @@ function updateWriteRoster(){
   const elapsed = S.timer.total - S.timer.left;
   S.players.forEach((p,i)=>{
     const cell=$("#ws"+i); if(!cell) return;
-    const key=(p.name||"").trim().toLowerCase();
-    if(ONLINE && ONLINE.est[key]!=null){ cell.textContent="INVIATA ✓"; cell.classList.add("down"); cell.classList.remove("urgent","reduced"); return; }
+    if(onlineEstimateFor(p)!=null){ cell.textContent="INVIATA ✓"; cell.classList.add("down"); cell.classList.remove("urgent","reduced"); return; }
     const personal = Math.max(0, playerLimit(p) - elapsed);
     if(personal<=0){
       if(!cell.classList.contains("down")){ cell.textContent="PENNA GIÙ ✋"; cell.classList.add("down"); cell.classList.remove("urgent"); if(playerLimit(p)<25) beep(300,180); }
       if(i===0){
         const masterInput=$("#masterEstimate"), masterButton=$("#masterSubmit"), masterStatus=$("#masterStatus");
-        if(masterInput && !(ONLINE && ONLINE.est[key]!=null)){
+        if(masterInput && onlineEstimateFor(p)==null){
           masterInput.disabled=true;
           if(masterButton) masterButton.disabled=true;
           if(masterStatus) masterStatus.textContent="Tempo personale scaduto: la lavagnetta del Master è bloccata.";
@@ -1835,7 +2189,7 @@ function renderInput(){
         ${avatarHTML(p,30)}
         <span class="nm">${esc(p.name)}</span>
       </div>
-      <input class="ans-in" type="text" inputmode="decimal" id="ans${i}" data-pname="${esc(p.name)}" placeholder="stima" autocomplete="off">
+      <input class="ans-in" type="text" inputmode="decimal" id="ans${i}" data-player-id="${p.id}" placeholder="stima" autocomplete="off">
     </div>
     ${tags?`<div class="mini-tags" style="margin:-4px 0 6px 26px">${tags}</div>`:""}`;
   }).join("");
@@ -1850,9 +2204,34 @@ function renderInput(){
 function parseEstimate(raw){
   if(raw===null||raw===undefined) return NaN;
   let s = String(raw).trim().replace(/\s/g,"").replace(/\.(?=\d{3}\b)/g,"").replace(",",".");
-  if(s==="") return NaN;
-  const v = parseFloat(s);
+  if(s===""||!/^[+-]?(?:\d+(?:\.\d*)?|\.\d+)$/.test(s)) return NaN;
+  const v = Number(s);
   return Number.isFinite(v)? v : NaN;
+}
+function sameScoreDistance(a,b){
+  if(!Number.isFinite(a)||!Number.isFinite(b))return false;
+  const tolerance=Number.EPSILON*Math.max(1,Math.abs(a),Math.abs(b))*8;
+  return Math.abs(a-b)<=tolerance;
+}
+function distanceFormula(entry){
+  if(!Number.isFinite(entry.effectiveDist))return "—";
+  const parts=[fmtNum(entry.rawDist)];
+  if(entry.penaltyMultiplier>1)parts.push(`× ${fmtNum(entry.penaltyMultiplier)}`);
+  if(entry.parachuteApplied)parts.push("÷ 2");
+  return `${parts.join(" ")} = ${fmtNum(entry.effectiveDist)}`;
+}
+function buildTieReason(entries,q){
+  const finite=entries.filter(e=>Number.isFinite(e.effectiveDist));
+  const sameEstimate=finite.length>1&&finite.every(e=>e.est===finite[0].est);
+  return {
+    type:"distance_tie",
+    title:sameEstimate?"Avete dato la stessa risposta":"La distanza valida è identica",
+    question:q.q,
+    correctAnswer:fmtNum(q.a)+(q.u?" "+q.u:""),
+    distance:finite.length?fmtNum(finite[0].effectiveDist):"—",
+    sameEstimate,
+    players:finite.map(e=>({id:e.id,name:e.name,estimate:fmtNum(e.est),rawDistance:fmtNum(e.rawDist),scoreDistance:fmtNum(e.effectiveDist),penaltyMultiplier:e.penaltyMultiplier,parachuteApplied:!!e.parachuteApplied,formula:distanceFormula(e)}))
+  };
 }
 
 function calcResults(){
@@ -1868,7 +2247,19 @@ function calcResults(){
     const rawDist=Number.isNaN(val)?Infinity:Math.abs(q.a-val);
     const penaltyMultiplier=p.malus.reduce((f,m)=>m.penalty?f*m.penalty:f,1);
     const effectiveDist=rawDist===Infinity?Infinity:rawDist*penaltyMultiplier;
-    return {id:p.id,name:p.name,color:p.color,est:val,rawDist,effectiveDist,dist:effectiveDist,penaltyMultiplier};
+    return {id:p.id,name:p.name,color:p.color,est:val,rawDist,effectiveDist,dist:effectiveDist,penaltyMultiplier,parachuteApplied:false};
+  });
+
+  // Paracadute: la regola è automatica e verificabile. Si consuma soltanto per
+  // chi, prima del suo effetto, ha la peggiore distanza valida del round.
+  const finiteBeforeParachute=entries.filter(e=>Number.isFinite(e.effectiveDist));
+  const worstDistance=finiteBeforeParachute.length?Math.max(...finiteBeforeParachute.map(e=>e.effectiveDist)):null;
+  entries.forEach(e=>{
+    const p=pById(e.id),bonusIndex=p?p.bonus.findIndex(b=>b.id==="paracadute"):-1;
+    if(bonusIndex>=0&&worstDistance!==null&&sameScoreDistance(e.effectiveDist,worstDistance)){
+      e.effectiveDist/=2;e.dist=e.effectiveDist;e.parachuteApplied=true;p.bonus.splice(bonusIndex,1);
+      log(`🪂 Paracadute: la distanza valida di ${esc(p.name)} viene dimezzata automaticamente (${distanceFormula(e)}).`);
+    }
   });
 
   // ordina per distanza (Infinity = nessuna stima, in fondo)
@@ -1878,10 +2269,10 @@ function calcResults(){
   const clusters=[]; let i=0, validIdx=0;
   while(i<ordered.length){
     let j=i;
-    while(j+1<ordered.length && Math.abs(ordered[j+1].effectiveDist-ordered[i].effectiveDist)<1e-9) j++;
+    while(j+1<ordered.length && sameScoreDistance(ordered[j+1].effectiveDist,ordered[i].effectiveDist)) j++;
     const size=j-i+1;
     if(size>1 && ordered[i].dist!==Infinity && validIdx<3){
-      clusters.push({start:i, end:j});
+      clusters.push({start:i,end:j,reason:buildTieReason(ordered.slice(i,j+1),q)});
     }
     if(ordered[i].dist!==Infinity) validIdx += size;
     i=j+1;
@@ -1934,7 +2325,7 @@ function calcResults(){
     const c=clusters[k];
     const slice = ordered.slice(c.start, c.end+1);
     const group = slice.map(e=>pById(e.id));
-    diceOrder(group, {title:"Fotofinish!", sub:"Stessa distanza: sfida di spareggio"}, (orderedPlayers)=>{
+    diceOrder(group, {title:"Fotofinish!",sub:"Stessa distanza valida: sfida di spareggio",reason:c.reason}, (orderedPlayers)=>{
       const byId={}; slice.forEach(e=> byId[e.id]=e);
       const newSlice = orderedPlayers.map(p=>byId[p.id]);
       for(let z=0; z<newSlice.length; z++) ordered[c.start+z]=newSlice[z];
@@ -1969,7 +2360,8 @@ function renderReveal(){
   const rowsHtml = S.ranking.map((e,ix)=>{
     const podium = e.pts>0;
     const rcls = e.rank===1?"r1":e.rank===2?"r2":e.rank===3?"r3":"";
-    const distTxt=e.effectiveDist===Infinity?"nessuna stima":`stima ${fmtNum(e.est)} · distanza reale ${fmtNum(e.rawDist)}${e.penaltyMultiplier>1?` · distanza Anti-Sapientone ${fmtNum(e.effectiveDist)}`:""}`;
+    const hasModifier=e.penaltyMultiplier>1||e.parachuteApplied;
+    const distTxt=e.effectiveDist===Infinity?"nessuna stima":`stima ${fmtNum(e.est)} · distanza reale ${fmtNum(e.rawDist)}${hasModifier?` · distanza valida ${distanceFormula(e)}`:""}`;
     return `
       <div class="res-row ${podium?'podium':''} res-in" style="animation-delay:${.35+ix*.18}s">
         <div class="rank ${rcls}">${e.pts>0? e.rank : "–"}</div>
@@ -2020,7 +2412,7 @@ function renderReveal(){
       name:e.name,
       color:e.color,
       estimate:e.dist===Infinity?null:fmtNum(e.est),
-      distance:e.effectiveDist===Infinity?null:fmtNum(e.effectiveDist),rawDistance:e.rawDist===Infinity?null:fmtNum(e.rawDist),penaltyMultiplier:e.penaltyMultiplier,
+      distance:e.effectiveDist===Infinity?null:fmtNum(e.effectiveDist),rawDistance:e.rawDist===Infinity?null:fmtNum(e.rawDist),penaltyMultiplier:e.penaltyMultiplier,parachuteApplied:e.parachuteApplied,formula:e.effectiveDist===Infinity?null:distanceFormula(e),
       points:e.pts,
       rank:e.rank
     })),
@@ -2035,14 +2427,15 @@ function renderReveal(){
 function applyScoringAndMove(){
   if(S.scoringAppliedRound===S.round)return;
   S.scoringAppliedRound=S.round;
+  beginLedger();
   let finaleReached=null;
   S.lastLanded=[];
   // 🔥 Posta Doppia
   S.players.forEach(p=>{
     if(p.doubleNext){
       const e=S.ranking.find(r=>r.id===p.id);
-      if(e && e.pts>0){ p.score+=e.pts; log(`🔥 Posta Doppia: ${esc(p.name)} raddoppia (+${e.pts} extra)!`); }
-      else { p.score=Math.max(0,p.score-1); log(`🔥 Posta Doppia: ${esc(p.name)} resta fuori dal podio e perde 1 punto.`); }
+      if(e && e.pts>0){ applyPlayerDelta(p,{score:e.pts,source:"Posta Doppia",detail:`+${e.pts} punti extra`}); log(`🔥 Posta Doppia: ${esc(p.name)} raddoppia (+${e.pts} extra)!`); }
+      else { applyPlayerDelta(p,{score:-1,source:"Posta Doppia",detail:"Fuori dal podio: −1 punto"}); log(`🔥 Posta Doppia: ${esc(p.name)} resta fuori dal podio e perde 1 punto.`); }
       p.doubleNext=false;
     }
   });
@@ -2050,19 +2443,16 @@ function applyScoringAndMove(){
   if(S.twins){
     const ea=S.ranking.find(r=>r.id===S.twins.a), eb=S.ranking.find(r=>r.id===S.twins.b);
     if(ea&&eb&&ea.pts>0&&eb.pts>0){
-      pById(S.twins.a).score++; pById(S.twins.b).score++;
+      applyPlayerDelta(pById(S.twins.a),{score:1,source:"Gemelli",detail:"Entrambi a podio"});
+      applyPlayerDelta(pById(S.twins.b),{score:1,source:"Gemelli",detail:"Entrambi a podio"});
       log(`🤝 Gemelli: doppio podio! +1 extra a testa.`);
     } else log(`🤝 Gemelli: patto fallito, nessun bonus.`);
     S.twins=null;
   }
-  const movers=[];
   S.ranking.forEach(e=>{
     if(e.pts>0){
       const p = pById(e.id);
-      const from = p.pos;
-      p.score += e.pts;
-      p.pos = Math.min(FINISH, p.pos + e.pts);
-      movers.push({id:p.id, from, to:p.pos});
+      applyPlayerDelta(p,{score:e.pts,pos:e.pts,source:`Round ${S.round}`,detail:`${e.rank}º posto: +${e.pts} punti e +${e.pts} caselle`});
       S.lastLanded.push(p.pos);
       if(p.pos>=FINISH && !finaleReached) finaleReached=p;
     }
@@ -2108,11 +2498,19 @@ function applyScoringAndMove(){
     });
     nextSpecialOrPost();
   };
-  return animateBoardMove(movers, afterMove);
+  return animateLedger(consumeLedger(), afterMove, `Avanzamento del round ${S.round}`);
 }
 
 // passa alla prossima casella speciale in coda, o chiude il round
-function nextSpecialOrPost(){
+function nextSpecialOrPost(skipTransition){
+  if(!skipTransition&&S.ledger&&S.ledger.length){
+    const ledger=consumeLedger();
+    return animateLedger(ledger,()=>{
+      const finalist=ledger.map(item=>pById(item.playerId)).find(p=>p&&p.pos>=FINISH);
+      if(finalist){S.winnerFinal=finalist;return renderGameOver();}
+      nextSpecialOrPost(true);
+    },"Effetto della casella speciale");
+  }
   if(S.specialQueue && S.specialQueue.length){
     S.special = S.specialQueue.shift();
     return renderSpecial();
@@ -2125,6 +2523,7 @@ function nextSpecialOrPost(){
    ===================================================================== */
 function renderSpecial(){
   S.phase="special";
+  beginLedger();
   const {type, landerId} = S.special;
   const lander = pById(landerId);
   const c = CELL[type];
@@ -2142,17 +2541,17 @@ function renderSpecial(){
             <p class="eyebrow center mt">A chi lo dai?</p>
             <div class="choice-grid" id="malusTargets"></div>`;
   } else if(type==="alfabetica"){
-    body = renderAlfabeticaBody(lander);
+    body = `<p class="sub center">${esc(lander.name)} sceglie un avversario e pesca una carta casuale dal <b>Mazzo Sfide</b>. Chi vince guadagna +1 punto e +1 casella.</p>
+            <div class="choice-grid" id="alfTargets"></div>`;
   } else if(type==="duello"){
-    body = `<p class="sub center">${esc(lander.name)} sfida un avversario in un <b>minigioco lampo</b>: chi vince guadagna +1 casella.</p>
-            <p class="eyebrow center">Scegli lo sfidante</p>
+    body = `<p class="sub center">${esc(lander.name)} sceglie un avversario e pesca una carta casuale dal <b>Mazzo Sfide</b>. Chi vince guadagna +1 casella.</p>
             <div class="choice-grid" id="duelTargets"></div>`;
   } else if(type==="cecchino"){
     body = `<p class="sub center">🔭 <b>Cecchino!</b> Nel prossimo round ${esc(lander.name)} punta al colpo perfetto: se azzecca la risposta <b>ESATTA</b>, fa <b>+4 punti</b>. Altrimenti, punti normali.</p>
             <button type="button" class="btn ochre mt" id="cecGo">Carico il colpo 🔭</button>`;
   } else if(type==="tiroleader"){
     const ldr=S.players.slice().sort((a,b)=>b.score-a.score||b.pos-a.pos).find(p=>p.id!==lander.id);
-    const curated=QUESTIONS.filter(q=>q.f&&q.fs),q=curated[rnd(curated.length)];
+    const q=drawFromPool(null,"Tiro al Leader");
     S._duelQ=q; S._duelLdr=ldr;
     body = `<p class="sub center">🎯 <b>Tiro al Leader!</b> ${esc(lander.name)} sfida <b>${esc(ldr.name)}</b>: micro-stima secca ad alta voce. Se ${esc(lander.name)} è più vicino, gli ruba 1 punto.</p>
             <div class="qcard"><div class="qtext" style="font-size:17px">${esc(q.q)}</div></div>
@@ -2218,7 +2617,14 @@ function renderSpecial(){
 
 function wireSpecial(type, lander){
   if(type==="bonus"){
-    const list=$("#bonusList"),opts=shuffle(BONUS).slice(0,3);let completed=false;
+    const list=$("#bonusList"),opts=shuffle(BONUS.filter(b=>S.players.some(p=>!p.bonus.some(owned=>owned.id===b.id)))).slice(0,3);let completed=false;
+    if(!opts.length){
+      completed=true;
+      list.innerHTML=`<div class="card flat center"><b>Nessun BONUS assegnabile</b><br><span>Tutti possiedono già le carte disponibili: nessuna carta viene duplicata.</span></div>`;
+      log(`⭐ ${esc(lander.name)} non assegna un BONUS: tutte le carte disponibili sono già possedute.`);
+      onlineBroadcastCardResolution({icon:"⭐",title:"BONUS non assegnato",subject:lander.name,effectTitle:"Mazzo già completo",description:"Tutti i giocatori possiedono già le carte disponibili.",instruction:"Nessun effetto è stato duplicato; la partita prosegue."});
+      setTimeout(nextSpecialOrPost,850);return;
+    }
     list.innerHTML=`<div class="card flat center">📲 ${esc(lander.name)} sceglierà il BONUS dalla propria lavagnetta.</div>`;
     onlineRequestPlayerChoice({chooser:lander,title:"Scegli il BONUS",subject:`Casella BONUS · ${lander.name}`,description:"Scegli la carta da assegnare.",options:opts.map(b=>({id:b.id,label:`BONUS · ${b.nm}`,description:b.desc}))},(bonusId)=>{
       const b=opts.find(x=>x.id===bonusId);
@@ -2226,7 +2632,13 @@ function wireSpecial(type, lander){
       askTarget(b);
     });
     function askTarget(b){
-      const targets=S.players.slice();
+      const targets=S.players.filter(p=>!p.bonus.some(owned=>owned.id===b.id));
+      if(!targets.length){
+        completed=true;
+        list.innerHTML=`<div class="card flat center">Il BONUS <b>${esc(b.nm)}</b> è già posseduto da tutti: nessuna copia aggiunta.</div>`;
+        onlineBroadcastCardResolution({icon:"⭐",title:"BONUS non assegnato",subject:lander.name,effectTitle:b.nm,description:"La carta è già posseduta da tutti i giocatori.",instruction:"Nessun effetto è stato duplicato; la partita prosegue."});
+        setTimeout(nextSpecialOrPost,850);return;
+      }
       onlineRequestPlayerChoice({chooser:lander,title:"A chi vuoi dare il BONUS?",subject:`BONUS · ${b.nm}`,description:b.desc,options:targets.map(p=>({id:p.id,label:p.name,description:p.id===lander.id?"Tienilo per te.":"Assegna il BONUS a questo giocatore."}))},(id)=>{
         const target=pById(id);
         if(!target){list.innerHTML=targets.map(p=>`<button type="button" class="choice fallback-target" data-id="${p.id}"><b>${esc(p.name)}</b></button>`).join("");$$(".fallback-target",list).forEach(btn=>btn.onclick=()=>finish(b,pById(btn.dataset.id)));return;}
@@ -2235,8 +2647,14 @@ function wireSpecial(type, lander){
     }
     function finish(b,target=lander){
       if(completed||!b||!target)return;completed=true;
-      addUniqueEffect(target.bonus,b);log(`⭐ ${esc(lander.name)} assegna il BONUS "${b.nm}" a ${esc(target.name)}.`);
-      onlineBroadcastCardResolution({icon:"⭐",title:"BONUS assegnato",subject:`Da ${lander.name} a ${target.name}`,effectTitle:b.nm,description:b.desc,instruction:`${target.name} conserva questa carta.`});
+      const assigned=addUniqueEffect(target.bonus,b);
+      if(assigned){
+        log(`⭐ ${esc(lander.name)} assegna il BONUS "${b.nm}" a ${esc(target.name)}.`);
+        onlineBroadcastCardResolution({icon:"⭐",title:"BONUS assegnato",subject:`Da ${lander.name} a ${target.name}`,effectTitle:b.nm,description:b.desc,instruction:`${target.name} conserva questa carta.`});
+      }else{
+        log(`⭐ BONUS "${b.nm}" non duplicato: ${esc(target.name)} lo possiede già.`);
+        onlineBroadcastCardResolution({icon:"⭐",title:"BONUS non assegnato",subject:target.name,effectTitle:b.nm,description:"Il giocatore possiede già questa carta.",instruction:"Nessun effetto è stato duplicato; la partita prosegue."});
+      }
       setTimeout(nextSpecialOrPost,700);
     }
   }
@@ -2248,7 +2666,19 @@ function wireSpecial(type, lander){
     });
   }
   else if(type==="malus"){
-    const m=pick(MALUS),targets=S.players.filter(p=>p.id!==lander.id);let completed=false;
+    let m=null,targets=[];let completed=false;
+    for(let attempt=0;attempt<MALUS.length;attempt++){
+      const candidate=drawDeckCard("malus",MALUS);
+      const eligible=S.players.filter(p=>p.id!==lander.id&&(p.bonus.some(b=>b.id==="scudo")||!p.malus.some(owned=>owned.id===candidate.id)));
+      if(eligible.length){m=candidate;targets=eligible;break;}
+    }
+    if(!m){
+      $("#malusCard").innerHTML=`<strong>⛔ Nessun MALUS assegnabile</strong><div style="font-size:12px;margin-top:3px">Tutti gli avversari possiedono già i malus disponibili.</div>`;
+      $("#malusTargets").innerHTML=`<div class="card flat center">Nessun effetto viene duplicato.</div>`;
+      log(`⛔ ${esc(lander.name)} non assegna un MALUS: tutti gli effetti sono già attivi sugli avversari.`);
+      onlineBroadcastCardResolution({icon:"⛔",title:"MALUS non assegnato",subject:lander.name,effectTitle:"Nessun effetto disponibile",description:"Tutti gli avversari possiedono già i malus disponibili.",instruction:"Nessun malus è stato duplicato; la partita prosegue."});
+      setTimeout(nextSpecialOrPost,850);return;
+    }
     $("#malusCard").innerHTML=`<strong style="color:#a23a22">⛔ MALUS · ${esc(m.nm)}</strong><div style="font-size:12px;color:#7a4536;margin-top:3px">${esc(m.desc)}</div>`;
     $("#malusTargets").innerHTML=`<div class="card flat center">📲 ${esc(lander.name)} sceglierà il destinatario dalla propria lavagnetta.</div>`;
     onlineRequestPlayerChoice({chooser:lander,title:"A chi vuoi dare il MALUS?",subject:`MALUS · ${m.nm}`,description:m.desc,options:targets.map(p=>({id:p.id,label:p.name,description:`${p.score} pt · casella ${p.pos}`}))},(id)=>{
@@ -2260,28 +2690,24 @@ function wireSpecial(type, lander){
       if(completed||!tgt)return;completed=true;
       const shield=tgt.bonus.findIndex(b=>b.id==="scudo");
       if(shield>=0){tgt.bonus.splice(shield,1);log(`🛡️ ${esc(tgt.name)} blocca il MALUS "${m.nm}".`);onlineBroadcastCardResolution({icon:"🛡️",title:"MALUS bloccato",subject:tgt.name,effectTitle:m.nm,description:"La carta Scudo annulla il MALUS.",instruction:"La partita prosegue senza penalità."});}
-      else{addUniqueEffect(tgt.malus,m);log(`⛔ ${esc(lander.name)} assegna il MALUS "${m.nm}" a ${esc(tgt.name)}.`);onlineBroadcastCardResolution({icon:"⛔",title:"MALUS assegnato",subject:`Da ${lander.name} a ${tgt.name}`,effectTitle:m.nm,description:m.desc,instruction:m.time?`La lavagnetta di ${tgt.name} si bloccherà dopo ${m.time} secondi.`:`Il MALUS verrà applicato automaticamente.`});}
+      else{
+        const assigned=addUniqueEffect(tgt.malus,m);
+        if(assigned){log(`⛔ ${esc(lander.name)} assegna il MALUS "${m.nm}" a ${esc(tgt.name)}.`);onlineBroadcastCardResolution({icon:"⛔",title:"MALUS assegnato",subject:`Da ${lander.name} a ${tgt.name}`,effectTitle:m.nm,description:m.desc,instruction:m.time?`La lavagnetta di ${tgt.name} si bloccherà dopo ${m.time} secondi.`:`Il MALUS verrà applicato automaticamente.`});}
+        else{log(`⛔ MALUS "${m.nm}" non duplicato: ${esc(tgt.name)} lo possiede già.`);onlineBroadcastCardResolution({icon:"⛔",title:"MALUS non assegnato",subject:tgt.name,effectTitle:m.nm,description:"Il giocatore possiede già questo effetto.",instruction:"Nessun malus è stato duplicato; la partita prosegue."});}
+      }
       setTimeout(nextSpecialOrPost,850);
     }
   }
   else if(type==="alfabetica"){
-    wireAlfabetica(lander);
+    wireRandomChallenge(lander,"#alfTargets",{
+      title:"Minigioco!",stakes:"+1 punto e +1 casella",logIcon:"🎴",
+      reward(win){applyPlayerDelta(win,{score:1,pos:1,source:"Casella Minigioco",detail:"Vittoria nella carta Sfida"});}
+    });
   }
   else if(type==="duello"){
-    const targets = S.players.filter(p=>p.id!==lander.id);
-    $("#duelTargets").innerHTML = targets.map(p=>`<button type="button" class="choice" data-id="${p.id}">
-        ${avatarHTML(p,26)} <b>${esc(p.name)}</b></button>`).join("");
-    $$("#duelTargets .choice").forEach(btn=>{
-      btn.addEventListener("click",()=>{
-        const opp = pById(btn.dataset.id);
-        diceRollWinner([lander, opp], {title:"Duello!", sub:`${esc(lander.name)} sfida ${esc(opp.name)}`,stakes:"+1 casella sul tabellone"}, (win)=>{
-          win.pos=Math.min(FINISH,win.pos+1);
-          log(`⚔️ Duello vinto da <b>${esc(win.name)}</b>: +1 casella.`);
-          renderStatus();
-          if(win.pos>=FINISH){ S.winnerFinal=win; return renderGameOver(); }
-          nextSpecialOrPost();
-        });
-      });
+    wireRandomChallenge(lander,"#duelTargets",{
+      title:"Sfida!",stakes:"+1 casella sul tabellone",logIcon:"⚔️",
+      reward(win){applyPlayerDelta(win,{pos:1,source:"Casella Sfida",detail:"Vittoria nella carta Sfida"});}
     });
   }
   else if(type==="cecchino"){
@@ -2302,11 +2728,12 @@ function wireSpecial(type, lander){
         <button type="button" class="choice" id="tlDef">🛡️ ${esc(ldr.name)} si difende</button>`;
       onlineBroadcastView({kind:"info",icon:"💡",title:"Tiro al Leader",subject:q.q,effectTitle:`Risposta: ${fmtNum(q.a)} ${q.u||""}`,description:q.f,instruction:"Il Master stabilisce chi era più vicino."});
       $("#tlWin").addEventListener("click",()=>{
-        if(ldr.score>0){ ldr.score--; lander.score++; log(`🎯 Tiro al Leader: ${esc(lander.name)} ruba 1 punto a ${esc(ldr.name)}!`); }
+        $("#tlWin").disabled=true;$("#tlDef").disabled=true;
+        if(ldr.score>0){ applyPlayerDelta(ldr,{score:-1,source:"Tiro al Leader",detail:`Punto rubato da ${lander.name}`});applyPlayerDelta(lander,{score:1,source:"Tiro al Leader",detail:`Punto rubato a ${ldr.name}`}); log(`🎯 Tiro al Leader: ${esc(lander.name)} ruba 1 punto a ${esc(ldr.name)}!`); }
         else log(`🎯 Tiro al Leader: ${esc(ldr.name)} non ha punti da rubare.`);
         renderStatus(); nextSpecialOrPost();
       });
-      $("#tlDef").addEventListener("click",()=>{ log(`🛡️ Tiro al Leader: ${esc(ldr.name)} si difende.`); nextSpecialOrPost(); });
+      $("#tlDef").addEventListener("click",()=>{ $("#tlWin").disabled=true;$("#tlDef").disabled=true;log(`🛡️ Tiro al Leader: ${esc(ldr.name)} si difende.`); nextSpecialOrPost(); });
     });
   }
   else if(type==="postadoppia"){
@@ -2333,7 +2760,7 @@ function wireSpecial(type, lander){
           b.classList.remove("ochre"); b.classList.add("teal"); b.replaceWith(b.cloneNode(true));
           $("#rollAzz").addEventListener("click",nextSpecialOrPost); };
         if(r<3){
-          lander.score=Math.max(0,lander.score-1);
+          applyPlayerDelta(lander,{score:-1,source:"Azzardo",detail:`Dado ${r}: −1 punto`});
           log(`🎰 Azzardo: ${esc(lander.name)} fa ${r} e perde 1 punto. 😬`);
           renderStatus(); goOn("Che sfortuna");
         } else if(r===3){
@@ -2345,8 +2772,9 @@ function wireSpecial(type, lander){
           g.innerHTML = `<p class="eyebrow center" style="grid-column:1/-1">Hai fatto ${r}: a chi togli 1 punto?</p>`+
             S.players.filter(p=>p.id!==lander.id).map(p=>`<button type="button" class="choice" data-id="${p.id}">${avatarHTML(p,26)} <b>${esc(p.name)}</b> <span style="font-size:11px;color:#8a7f63">${p.score} pt</span></button>`).join("");
           $$("#azzPick .choice").forEach(btn=>btn.addEventListener("click",()=>{
+            $$("#azzPick .choice").forEach(choice=>choice.disabled=true);
             const tgt=pById(btn.dataset.id);
-            tgt.score=Math.max(0,tgt.score-1);
+            applyPlayerDelta(tgt,{score:-1,source:"Azzardo",detail:`${lander.name} ha ottenuto ${r}`});
             log(`🎰 Azzardo: ${esc(lander.name)} fa ${r} e toglie 1 punto a ${esc(tgt.name)}. 😈`);
             renderStatus(); nextSpecialOrPost();
           }));
@@ -2365,10 +2793,9 @@ function wireSpecial(type, lander){
           {t:"+2 caselle!",d:2},{t:"+1 casella",d:1},{t:"niente succede",d:0},
           {t:"niente succede",d:0},{t:"-1 casella",d:-1},{t:"-2 caselle!",d:-2}
         ][r-1];
-        lander.pos = Math.max(0,Math.min(FINISH,lander.pos+fx.d));
+        applyPlayerDelta(lander,{pos:fx.d,source:"Dado Caos",detail:`Tiro ${r}: ${fx.t}`});
         log(`🎲 Dado Caos (${r}) per ${esc(lander.name)}: ${fx.t}.`);
         renderStatus();
-        if(lander.pos>=FINISH){ S.winnerFinal=lander; return renderGameOver(); }
         const btn=$("#rollCaos"); btn.disabled=false; btn.textContent="Caos: "+fx.t+" — Prosegui →";
         btn.classList.remove("ochre"); btn.classList.add("teal");
         btn.replaceWith(btn.cloneNode(true));
@@ -2379,7 +2806,7 @@ function wireSpecial(type, lander){
   else if(type==="random"){
     $("#rollRandomCat").addEventListener("click",()=>{
       const die=$("#catDie"); die.classList.remove("roll"); void die.offsetWidth; die.classList.add("roll");
-      const cat = pick(activeCats());
+      const cat = drawDeckCard("categorie-speciali",activeCats());
       setTimeout(()=>{
         die.textContent = CAT_IC[cat]||"🌀";
         S.forcedCat = cat;
@@ -2412,7 +2839,7 @@ function wireSpecial(type, lander){
     });
   }
   else if(type==="penitenza"){
-    const m = pick(MALUS);
+    const m = drawDeckCard("malus",MALUS);
     $("#vendCard").innerHTML = `<div style="font-weight:900">${esc(m.nm)}</div><div style="font-size:12.5px;color:#6b5040">${esc(m.desc)}</div>`;
     let targets = S.players.filter(p=> p.id!==lander.id && p.pos>lander.pos);
     if(targets.length===0) targets = S.players.filter(p=> p.id!==lander.id); // se sei in testa, colpisci chi vuoi
@@ -2443,53 +2870,38 @@ function wireSpecial(type, lander){
   }
 }
 
-/* ---------- Sfida Alfabetica ---------- */
-function renderAlfabeticaBody(lander){
-  const opp = S.players.filter(p=>p.id!==lander.id);
-  return `
-    <p class="sub center">🔤 <b>Nomi & Cose!</b> ${esc(lander.name)} sfida un avversario: una lettera, una categoria, vince chi risponde per primo ad alta voce (+1 punto, +1 casella).</p>
-    <p class="eyebrow center">Sfidante</p>
-    <div class="choice-grid" id="alfTargets">
-      ${opp.map(p=>`<button type="button" class="choice" data-id="${p.id}">${avatarHTML(p,26)} <b>${esc(p.name)}</b></button>`).join("")}
-    </div>
-    <div id="alfGame" class="hide"></div>`;
-}
-function wireAlfabetica(lander){
-  $$("#alfTargets .choice").forEach(btn=>{
-    btn.addEventListener("click",()=>{
-      const opp = pById(btn.dataset.id);
-      startAlfabeticaGame(lander, opp);
-    });
+function wireRandomChallenge(lander,rootSelector,cfg){
+  const root=$(rootSelector),targets=S.players.filter(p=>p.id!==lander.id);let drawing=false,started=false;
+  root.innerHTML=`<div class="card flat center">📲 ${esc(lander.name)} sceglie lo sfidante dalla propria lavagnetta.</div>`;
+  onlineRequestPlayerChoice({chooser:lander,title:"Scegli lo sfidante",subject:`${cfg.title} · ${lander.name}`,description:"Dopo la scelta pescherai una carta Sfida totalmente casuale.",options:targets.map(p=>({id:p.id,label:p.name,description:`${p.score} pt · casella ${p.pos}`}))},id=>{
+    const opponent=pById(id);
+    if(!opponent){
+      root.innerHTML=targets.map(p=>`<button type="button" class="choice challenge-target" data-id="${p.id}">${avatarHTML(p,26)} <b>${esc(p.name)}</b></button>`).join("");
+      $$(".challenge-target",root).forEach(btn=>btn.onclick=()=>askDraw(pById(btn.dataset.id)));
+      return;
+    }
+    askDraw(opponent);
   });
-}
-function startAlfabeticaGame(lander, opp){
-  const LETTERS="ABCDEFGILMNOPRSTV";
-  const L=LETTERS[rnd(LETTERS.length)];
-  const cat=pick(["Nome di persona","Città","Animale","Cibo o piatto","Film o serie TV","Cantante o band","Marca famosa","Oggetto di casa","Mestiere","Calciatore"]);
-  $("#alfTargets").classList.add("hide");
-  const g=$("#alfGame"); g.classList.remove("hide");
-  g.innerHTML = `
-    <div class="card flat center" style="background:var(--paper-2)">
-      <div class="alf-target"><b>${esc(lander.name)}</b> vs <b>${esc(opp.name)}</b></div>
-      <div class="ncc-letter ans-pop">${L}</div>
-      <div class="ncc-cat res-in" style="animation-delay:.3s">${esc(cat)}</div>
-      <p class="sub center" style="margin-top:10px">Il primo che urla un <b>${esc(cat).toLowerCase()}</b> valido con la <b>${L}</b> vince. Decide il master.</p>
-      <div class="choice-grid mt">
-        <button type="button" class="choice" id="nccW1">🏆 Vince ${esc(lander.name)}</button>
-        <button type="button" class="choice" id="nccW2">🏆 Vince ${esc(opp.name)}</button>
-        <button type="button" class="choice" id="nccNo">😶 Nessuno risponde</button>
-      </div>
-    </div>`;
-  const winFn=(w)=>{
-    w.score+=1; w.pos=Math.min(FINISH,w.pos+1);
-    log(`🔤 Nomi & Cose (${L} · ${esc(cat)}): vince ${esc(w.name)} (+1 pt, +1 casella).`);
-    renderStatus();
-    if(w.pos>=FINISH){ S.winnerFinal=w; return renderGameOver(); }
-    nextSpecialOrPost();
-  };
-  $("#nccW1").addEventListener("click",()=>winFn(lander));
-  $("#nccW2").addEventListener("click",()=>winFn(opp));
-  $("#nccNo").addEventListener("click",()=>{ log(`🔤 Nomi & Cose (${L} · ${esc(cat)}): silenzio imbarazzante, nessun vincitore. 😬`); nextSpecialOrPost(); });
+  function askDraw(opponent){
+    if(!opponent||drawing||started)return;drawing=true;
+    root.innerHTML=`<div class="card flat center">🎴 ${esc(lander.name)} sta per pescare una carta dal Mazzo Sfide.<br><span style="font-size:11px;color:#6c7d82">Il minigioco verrà scelto automaticamente.</span></div>`;
+    onlineRequestPlayerChoice({chooser:lander,title:"Pesca la carta Sfida",subject:`${lander.name} VS ${opponent.name}`,description:"Tocca per avviare l’estrazione casuale. Non dovrai scegliere il minigioco.",options:[{id:"draw",label:"🎴 Pesca una carta casuale",description:"Il gioco esclude la sfida appena disputata."}]},id=>{
+      if(id!=="draw"){
+        root.innerHTML=`<button type="button" class="choice" id="masterDrawChallenge"><b>🎴 Pesca una carta casuale</b><span>Fallback sul Master: la lavagnetta non è disponibile.</span></button>`;
+        $("#masterDrawChallenge").onclick=()=>start(opponent);
+        return;
+      }
+      start(opponent);
+    });
+  }
+  function start(opponent){
+    if(started||!opponent)return;started=true;
+    const reason={type:"board_cell",title:`${lander.name} ha raggiunto la casella ${S.special?.cell||"Sfida"}`,text:`Ha scelto ${opponent.name} come avversario. Il Mazzo Sfide decide ora la prova.`,cell:S.special?.cell||null,players:[{id:lander.id,name:lander.name},{id:opponent.id,name:opponent.name}]};
+    diceRollWinner([lander,opponent],{title:cfg.title,sub:`${lander.name} sfida ${opponent.name}`,stakes:cfg.stakes,source:"cell",reason},win=>{
+      cfg.reward(win);log(`${cfg.logIcon} ${cfg.title} Vince <b>${esc(win.name)}</b>: ${esc(cfg.stakes)}.`);renderStatus();
+      nextSpecialOrPost();
+    });
+  }
 }
 
 function renderTesiBody(lander){
@@ -2504,13 +2916,13 @@ function renderTesiBody(lander){
 }
 
 function startTesi(challenger, opponent){
-  const card = pick(TESI_CARDS);
+  const card = drawDeckCard("tesi",TESI_CARDS);
   // ruoli assegnati a caso
   let tesiP, antiP;
   if(rnd(2)){ tesiP=challenger; antiP=opponent; } else { tesiP=opponent; antiP=challenger; }
   const tt=$("#tesiTargets"); if(tt) tt.classList.add("hide");
   const root=$("#tesiGame");
-  let iv=null;
+  let iv=null,resolved=false;
 
   function reading(){
     if(iv){clearInterval(iv);iv=null;}
@@ -2573,11 +2985,11 @@ function startTesi(challenger, opponent){
   }
 
   function resolve(winner, sideName){
+    if(resolved)return;resolved=true;
     if(winner){
-      winner.score+=1; winner.pos=Math.min(FINISH,winner.pos+1);
+      applyPlayerDelta(winner,{score:1,pos:1,source:"Tesi & Antitesi",detail:`Vince la ${sideName}`});
       log(`⚖️ Tesi & Antitesi (${esc(card.tema)}): vince la ${sideName} di <b>${esc(winner.name)}</b>. +1 punto, +1 casella.`);
       renderStatus();
-      if(winner.pos>=FINISH){ S.winnerFinal=winner; return renderGameOver(); }
     } else {
       log(`⚖️ Tesi & Antitesi (${esc(card.tema)}): nessuno convince. <b>Penitenza bipartisan</b>. 🤝`);
     }
@@ -2597,7 +3009,8 @@ function diceOrder(players, opts, done){
   (function step(){
     if(remaining.length<=1){ if(remaining.length) result.push(remaining[0]); return done(result); }
     const place=result.length+1;
-    diceRollWinner(remaining, {title:opts.title, sub:(opts.sub?opts.sub+" · ":"")+"in palio il "+place+"º posto"}, w=>{
+    const reason=opts.reason?{...opts.reason,players:(opts.reason.players||[]).filter(item=>remaining.some(p=>p.id===item.id))}:null;
+    diceRollWinner(remaining, {title:opts.title,sub:(opts.sub?opts.sub+" · ":"")+"in palio il "+place+"º posto",stakes:place+"º posto nel round",reason}, w=>{
       result.push(w); remaining=remaining.filter(p=>p.id!==w.id); step();
     });
   })();
@@ -2631,7 +3044,11 @@ function renderPostRound(){
     ${logCard()}
   `;
   const nb=$("#nextBtn"); if(nb) nb.addEventListener("click", drawQuestion);
-  $("#endBtn").addEventListener("click", ()=>{ S.winnerFinal=null; renderGameOver(); });
+  $("#endBtn").addEventListener("click", ()=>{
+    S.winnerFinal=null;
+    S.gameEndReason=capReached?"round_limit":"manual";
+    renderGameOver();
+  });
   wireBoardLog();
 }
 function renderGameOver(){
@@ -2639,8 +3056,21 @@ function renderGameOver(){
   if(typeof haltAll==="function") haltAll();
   renderStatus();
   const ranked = S.players.slice().sort((a,b)=> b.score-a.score || b.pos-a.pos);
+  const boardRanked=S.players.slice().sort((a,b)=>b.pos-a.pos||b.score-a.score);
   const champ = S.winnerFinal || ranked[0];
-  log(`🏁 Partita finita. Vince ${esc(champ.name)} con ${champ.score} punti.`);
+  const victoryMode=S.winnerFinal?"finish":"points";
+  const endedAtLimit=S.gameEndReason==="round_limit"||S.round>=MAX_ROUNDS;
+  const victoryReason=victoryMode==="finish"
+    ? `${champ.name} ha raggiunto per primo la casella Finale ${FINISH}.`
+    : endedAtLimit
+      ? `Dopo ${MAX_ROUNDS} round, ${champ.name} è primo nella classifica punti con ${champ.score} punti.`
+      : `Partita terminata dal Master al round ${S.round}: ${champ.name} è primo nella classifica punti con ${champ.score} punti.`;
+  const finalWinRule=victoryMode==="finish"
+    ? "Finale raggiunta: vittoria immediata, indipendentemente dai punti."
+    : endedAtLimit
+      ? `Nessuno ha raggiunto la Finale entro ${MAX_ROUNDS} round: decide il totale punti.`
+      : `Partita chiusa dal Master al round ${S.round}: classifica determinata dai punti accumulati fino a questo momento.`;
+  log(`🏁 Partita finita. ${esc(victoryReason)}`);
   app.innerHTML = `
     <div class="confetti" aria-hidden="true">${Array.from({length:26},(_,i)=>`<i style="left:${(i*4+2)%100}%;background:${COLORS[i%COLORS.length]};animation-delay:${(i%9)*.14}s;animation-duration:${2.4+(i%5)*.35}s"></i>`).join("")}</div>
     <div class="card center">
@@ -2650,10 +3080,11 @@ function renderGameOver(){
         ${avatarHTML(champ,30)}
         <div style="font-size:26px;font-weight:900;letter-spacing:-.5px">${esc(champ.name)}</div>
       </div>
-      <p class="tagline">ci è andato più vicino di tutti.</p>
+      <p class="tagline">${esc(victoryReason)}</p>
     </div>
     <div class="card">
-      <h2><span class="tick">📊</span> Classifica</h2>
+      <div class="win-rule"><b>Regola applicata:</b> ${esc(finalWinRule)}</div>
+      <h2><span class="tick">📊</span> Classifica punti</h2>
       ${ranked.map((p,i)=>`
         <div class="score-row res-in" style="animation-delay:${.25+i*.14}s">
           <div class="rank ${i===0?'r1':i===1?'r2':i===2?'r3':''}">${i+1}</div>
@@ -2661,6 +3092,8 @@ function renderGameOver(){
           <div class="pos">cas. ${p.pos}</div>
           <div class="pts">${p.score}</div>
         </div>`).join("")}
+      <h2 class="mt"><span class="tick">🗺️</span> Corsa sul tabellone</h2>
+      ${boardRanked.map((p,i)=>`<div class="standing-line"><span>${i+1}°. ${avatarHTML(p,22)} ${esc(p.name)}</span><b>cas. ${p.pos}/${FINISH}</b></div>`).join("")}
     </div>
     <button type="button" class="btn coral" id="againBtn">Nuova partita ↺</button>
     <button type="button" class="btn ghost mt-s" id="setupBtn">Cambia giocatori</button>
@@ -2669,21 +3102,41 @@ function renderGameOver(){
   $("#againBtn").addEventListener("click", startGame);
   $("#setupBtn").addEventListener("click", renderSetup);
   wireBoardLog();
-  onlineBroadcastView({kind:"map",title:"Partita conclusa",text:`Vince ${champ.name} con ${champ.score} punti.`,scores:onlineScores(),map:onlineMap(),round:S.round});
+  onlineBroadcastView({kind:"map",title:"Partita conclusa",text:victoryReason,scores:onlineScores(),map:onlineMap(),round:S.round,victoryMode,champion:{id:champ.id,name:champ.name,score:champ.score,pos:champ.pos},winRule:finalWinRule});
 }
 const prefersReducedMotion = ()=> window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-function animateBoardMove(movers, done){
+function nextBoardStep(from,to){
+  return from===to?from:from+(from<to?1:-1);
+}
+function movementRows(rows){
+  return `<div class="movement-list">${rows.map(row=>`<div class="movement-row"><div class="movement-head">${avatarHTML(pById(row.playerId),26)}<b>${esc(row.name)}</b><div class="movement-delta"><span>${row.scoreDelta>=0?"+":""}${row.scoreDelta} pt</span><span class="cell-delta">${row.posDelta>=0?"+":""}${row.posDelta} cas.</span></div></div><div class="movement-source">${row.sources.map(source=>`<b>${esc(source.label)}</b>${source.detail?` · ${esc(source.detail)}`:""}`).join("<br>")}</div></div>`).join("")}</div>`;
+}
+function animateLedger(items,done,title){
+  const rows=aggregateLedger(items);
+  if(!rows.length)return done();
+  const movers=rows.filter(row=>row.posDelta!==0).map(row=>({id:row.playerId,from:row.posFrom,to:row.posTo}));
+  onlineBroadcastView({kind:"map",title:title||"Punti e pedine aggiornati",text:"Ogni variazione deriva dallo stesso registro autorevole del Master.",scores:onlineScores(),map:onlineMap(),round:S.round,movement:rows,winRule:"Raggiungi per primo la Finale per vincere subito. Se nessuno ci arriva entro 15 round, vince chi ha più punti."});
+  app.innerHTML=`<div class="card"><p class="eyebrow">Aggiornamento della partita</p><h2><span class="tick">🏁</span> ${esc(title||"Punti e pedine")}</h2><div class="win-rule"><b>Due strade per vincere:</b> raggiungi per primo la Finale; se nessuno ci arriva entro il round ${MAX_ROUNDS}, vince chi ha più punti.</div>${movementRows(rows)}</div>${boardCard(Object.fromEntries(S.players.map(p=>[p.id,(rows.find(row=>row.playerId===p.id)||{}).posFrom??p.pos])))}`;
+  wireMapToggle();
+  const finish=()=>setTimeout(done,prefersReducedMotion()?250:850);
+  if(!movers.length||prefersReducedMotion()||document.hidden)return finish();
+  return animateBoardMove(movers,finish,true);
+}
+function animateBoardMove(movers, done,keepSummary){
   if(prefersReducedMotion() || !movers || movers.length===0 || document.hidden){ return done(); }
   S.phase="moving";
   const positions = {}; S.players.forEach(p=> positions[p.id]=p.pos);
   movers.forEach(m=> positions[m.id]=m.from);
   renderMoveBoard(positions);
-  const maxSteps = Math.max(...movers.map(m=>m.to-m.from), 0);
+  const maxSteps = Math.max(...movers.map(m=>Math.abs(m.to-m.from)), 0);
   let step=0;
   function tick(){
     step++;
     let anyMoved=false;
-    movers.forEach(m=>{ if(positions[m.id] < m.to){ positions[m.id]++; anyMoved=true; } });
+    movers.forEach(m=>{
+      const next=nextBoardStep(positions[m.id],m.to);
+      if(next!==positions[m.id]){positions[m.id]=next;anyMoved=true;}
+    });
     S.lastLanded = movers.filter(m=>positions[m.id]===m.to).map(m=>m.to);
     renderMoveBoard(positions, movers.map(m=>m.id));
     if(step<maxSteps && anyMoved){ setTimeout(tick, 220); }
@@ -2749,142 +3202,184 @@ function wireMapToggle(){
     if(box){ box.outerHTML=boardCard(); wireMapToggle(); }
   });
 }
-function diceRollWinner(players, opts, done){
-  if(!opts._skipIntro){
-    app.innerHTML = `
-      <div class="card center">
-        <div class="special-banner"><div class="ic">⚡</div><div class="ttl">${esc(opts.title)}</div>
-        ${opts.sub?`<div class="sub" style="margin:2px 0 0">${esc(opts.sub)}</div>`:""}
-        <div class="stakes">🏆 In palio: ${esc(opts.stakes||"vantaggio decisivo")}</div></div>
-        <div class="vs-row">
-          ${players.map((p,i)=>`<div class="vs-side" style="--pc:${p.color};animation-delay:${.1+i*.15}s">${avatarHTML(p,46)}<b>${esc(p.name)}</b></div>`).join('<div class="vs-badge">VS</div>')}
-        </div>
-        <button type="button" class="btn coral mt" id="vsGo">Alla sfida! ⚡</button>
-      </div>`;
-    $("#vsGo").addEventListener("click", ()=> diceRollWinner(players, Object.assign({}, opts, {_skipIntro:true}), done));
-    return;
+function diceRollWinner(players,opts,done){
+  players=(players||[]).filter(Boolean);if(players.length<2)return done(players[0]);
+  let finished=false;
+  const curated=()=>curatedQuestions();
+  const factBlock=q=>q&&q.f?`<div class="mini-fact"><b>💡 Curiosità</b><br>${esc(q.f)}${q.fs?`<div style="font-size:10px;color:#6b7c76;margin-top:5px">Fonte: ${esc(q.fs)}</div>`:""}</div>`:"";
+  const playerNameList=list=>list.map(p=>esc(p.name)).join(" · ");
+  function finish(w,how){if(finished||!w)return;finished=true;log(`⚡ ${esc(how)}: vince ${esc(w.name)}.`);done(w);}
+  function chooseMode(){
+    let bag=S.cardBags["mini-games"];
+    if(!Array.isArray(bag)||!bag.length)bag=S.cardBags["mini-games"]=shuffle(MINI_GAME_KEYS);
+    let index=bag.findIndex(key=>key!==S.lastMiniGame&&MINI_GAME_META[key].family!==S.lastMiniFamily);
+    if(index<0)index=bag.findIndex(key=>key!==S.lastMiniGame);
+    if(index<0)index=0;
+    const mode=bag.splice(index,1)[0];S.lastMiniGame=mode;S.lastMiniFamily=MINI_GAME_META[mode].family;return mode;
   }
-  function finish(w,how){ log(`⚡ Spareggio (${how}): la spunta ${esc(w.name)}.`); done(w); }
-  function menu(){
-    app.innerHTML = `<div class="card center">
-      <p class="eyebrow" style="color:var(--coral)">${esc(opts.title)}</p>
-      <p class="sub center">Niente fortuna: il pareggio si decide con una sfida.</p>
-      <div class="stakes">🔥 Sfida secca · niente pareggio</div>
-      <div class="choice-grid mt">
-        <button type="button" class="choice" id="tgRandom">🎰 <b>Sorte del tabellone</b> — il gioco sceglie una sfida diversa dall’ultima</button>
-        <button type="button" class="choice" id="tgNcc">🔤 <b>Nomi &amp; Cose</b> — il più veloce vince</button>
-        <button type="button" class="choice" id="tgLampo">⚡ <b>Stima Lampo</b> — nuova domanda, il più vicino vince</button>
-        ${S.players.length>2?`<button type="button" class="choice" id="tgCrono">⏱️ <b>Cronometro del Master</b> — chi stima meglio il tempo</button>`:""}
-      </div></div>`;
-    $("#tgRandom").addEventListener("click",roulette);
-    $("#tgNcc").addEventListener("click",()=>{S.lastMiniGame="ncc";ncc()});
-    $("#tgLampo").addEventListener("click",()=>{S.lastMiniGame="lampo";lampo()});
-    const tc=$("#tgCrono"); if(tc) tc.addEventListener("click",()=>{S.lastMiniGame="crono";crono()});
+  function contendersHtml(list=players){return `<div class="vs-row">${list.map((p,i)=>`<div class="vs-side" style="--pc:${p.color};animation-delay:${.08+i*.1}s">${avatarHTML(p,40)}<b>${esc(p.name)}</b></div>`).join('<div class="vs-badge">VS</div>')}</div>`;}
+  function reasonHtml(reason){
+    if(!reason)return "";
+    if(reason.type==="distance_tie"){
+      const evidence=(reason.players||[]).map(item=>`<div class="ev"><span><strong>${esc(item.name)}</strong>Stima ${esc(item.estimate)}</span><span>${esc(item.formula||item.scoreDistance)}</span></div>`).join("");
+      return `<div class="challenge-why"><h3>🔎 Perché parte la sfida</h3><p><b>${esc(reason.title)}</b>. La sfida usa la distanza valida per la classifica, dopo eventuali modificatori.</p><div class="challenge-answer"><span>Risposta corretta</span><b>${esc(reason.correctAnswer)}</b></div><div class="challenge-evidence">${evidence}</div>${reason.sameEstimate?`<span class="same-answer">Stessa risposta inserita</span>`:""}</div>`;
+    }
+    return `<div class="challenge-why"><h3>🗺️ Perché parte la sfida</h3><p><b>${esc(reason.title||"Casella Sfida")}</b><br>${esc(reason.text||"")}</p></div>`;
   }
-  function roulette(){
-    const modes=["ncc","lampo",...(S.players.length>2?["crono"]:[])].filter(mode=>mode!==S.lastMiniGame);
-    const mode=pick(modes.length?modes:["ncc","lampo"]);S.lastMiniGame=mode;
-    ({ncc,lampo,crono})[mode]();
+  function showRules(mode){
+    const meta=MINI_GAME_META[mode];
+    app.innerHTML=`<div class="card">
+      <p class="eyebrow center">🎴 Carta Sfida estratta automaticamente</p>
+      ${reasonHtml(opts.reason)}
+      <div class="mini-card">
+        <div class="mini-head"><div class="mini-icon">${meta.icon}</div><div><div class="mini-kicker">Mazzo Sfide</div><div class="mini-title">${esc(meta.name)}</div></div></div>
+        <ul class="mini-rules">${meta.rules.map((rule,i)=>`<li><i>${i+1}</i><span>${esc(rule)}</span></li>`).join("")}</ul>
+        <div class="mini-meta"><div><small>Durata</small><b>${esc(meta.duration)}</b></div><div><small>Come si vince</small><b>${esc(meta.win)}</b></div></div>
+      </div>
+      ${contendersHtml()}
+      <div class="stakes">🏆 In palio: ${esc(opts.stakes||"vantaggio decisivo")}</div>
+      <details class="logbox mt-s"><summary>🎴 Vedi tutte le 10 carte del Mazzo Sfide</summary><div class="log">${MINI_GAME_KEYS.map(key=>`<div class="e">${MINI_GAME_META[key].icon} <b>${esc(MINI_GAME_META[key].name)}</b></div>`).join("")}</div></details>
+      <button type="button" class="btn coral mt" id="miniStart">Ho capito, iniziamo →</button>
+    </div>`;
+    onlineBroadcastView({kind:"challenge",icon:meta.icon,title:"Carta Sfida",subject:meta.name,effectTitle:`${playerNameList(players)} · ${opts.stakes||"sfida decisiva"}`,description:meta.rules.join(" "),instruction:"Se la prova richiede una risposta, si attiveranno soltanto le lavagnette degli sfidanti.",challenge:{reason:opts.reason||null,game:{key:mode,name:meta.name,icon:meta.icon,rules:meta.rules,duration:meta.duration,win:meta.win,stakes:opts.stakes||"sfida decisiva"},players:players.map(p=>({id:p.id,name:p.name,color:p.color}))}});
+    $("#miniStart").onclick=()=>games[mode]();
   }
-  function lampo(){
-    const curated=QUESTIONS.filter(q=>q.f&&q.fs),q=curated[rnd(curated.length)];
-    app.innerHTML = `<div class="card">
-      <p class="eyebrow center">⚡ Stima Lampo</p>
-      <div class="qcard"><div class="qtext" style="font-size:17px">${esc(q.q)}</div>
-      ${q.u?`<div class="qhint">risposta in ${esc(q.u)}</div>`:""}</div>
-      <p class="sub center" style="margin-top:8px">Scrivete la stima di ogni sfidante, poi rivelate.</p>
-      ${players.map(p=>`<div class="score-row"><div class="nm">${avatarHTML(p,26)}<span class="nmtxt">${esc(p.name)}</span></div>
-        <input type="text" inputmode="decimal" class="lin" data-id="${p.id}" style="width:110px;font-size:18px;font-weight:800;text-align:right;border:2px solid var(--ink);border-radius:10px;padding:8px" placeholder="stima"></div>`).join("")}
-      <button type="button" class="btn coral mt" id="lampoGo">Rivela la risposta →</button></div>`;
-    $("#lampoGo").addEventListener("click",()=>{
-      let best=null,bd=Infinity;
-      $$(".lin").forEach(inp=>{ const v=parseFloat((inp.value||"").replace(",","."));
-        const d=isNaN(v)?Infinity:Math.abs(v-q.a); if(d<bd){bd=d;best=pById(inp.dataset.id);} });
-      if(!best) return;
-      app.innerHTML = `<div class="card center">
-        <p class="eyebrow">La risposta era</p><div class="ans-pop" style="font-size:48px;font-weight:900;color:var(--coral)">${fmtNum(q.a)}${q.u?" <span style='font-size:18px'>"+esc(q.u)+"</span>":""}</div>
-        <p class="sub center mt">${esc(best.name)} ci è andato più vicino (distanza ${fmtNum(bd)})!</p>
-        <div class="card flat mt" style="background:#eef4f0;border-color:#c9ddd2;text-align:left;font-size:12.5px;line-height:1.45"><b>💡 Curiosità</b><br>${esc(q.f)}<div style="font-size:10px;color:#6b7c76;margin-top:5px">Fonte: ${esc(q.fs)}</div></div>
-        <button type="button" class="btn teal mt" id="lampoEnd">Continua →</button></div>`;
-      onlineBroadcastView({kind:"info",icon:"💡",title:"Stima Lampo",subject:q.q,effectTitle:`Risposta: ${fmtNum(q.a)} ${q.u||""}`,description:q.f,instruction:`${best.name} vince lo spareggio.`});
-      $("#lampoEnd").addEventListener("click",()=>finish(best,"Stima Lampo"));
+  function outcomeButton(id,winners,how){
+    $(id).onclick=()=>winners.length===1?finish(winners[0],how):altoBasso(winners,1,true);
+  }
+  function lowest(entries,field="metric",second="secondary"){
+    const valid=entries.filter(e=>Number.isFinite(e[field]));if(!valid.length)return [];
+    valid.sort((a,b)=>a[field]-b[field]||(a[second]||0)-(b[second]||0));
+    const first=valid[0];return valid.filter(e=>e[field]===first[field]&&(e[second]||0)===(first[second]||0)).map(e=>e.player);
+  }
+  function winnerLabel(winners){return winners.length===1?`Vince ${esc(winners[0].name)}`:`Parità fra ${winners.map(p=>esc(p.name)).join(" e ")}: parte un Alto o Basso secco`;}
+  function broadcastQuestionFact(title,q,instruction){onlineBroadcastView({kind:"info",icon:"💡",title,subject:q.q,effectTitle:`Risposta: ${fmtNum(q.a)} ${q.u||""}`,description:q.f,instruction});}
+  function connectedRemote(roster=players){return ONLINE?.ws?.readyState===WebSocket.OPEN?roster.filter(player=>player.onlineToken):[];}
+  function remoteStatus(player,remoteIds){return `<span class="nowin-note remote-mini-status" data-id="${player.id}">${remoteIds.has(player.id)?"📲 Attendo la sua lavagnetta":""}</span>`;}
+  function startRemoteFields({roster=players,title,subject,description,icon,fields,selectors,onUpdate}){
+    const remote=connectedRemote(roster),remoteIds=new Set(remote.map(player=>player.id));
+    remote.forEach(player=>Object.values(selectors).forEach(selector=>{const input=$(`${selector}[data-id="${player.id}"]`);if(input){input.disabled=true;input.placeholder="Risponde dalla lavagnetta";}}));
+    const bridge=onlineRequestMiniInputs({players:remote,title,subject,description,icon,fields},(player,values)=>{
+      for(const field of fields){const input=$(`${selectors[field.id]}[data-id="${player.id}"]`);if(input){input.value=values[field.id];input.disabled=true;}}
+      const status=$(`.remote-mini-status[data-id="${player.id}"]`);if(status)status.textContent="✅ Risposta ricevuta";
+      onUpdate?.();
+    },(player,message)=>{
+      for(const field of fields){const input=$(`${selectors[field.id]}[data-id="${player.id}"]`);if(input){input.disabled=false;input.placeholder=field.placeholder||"Risposta";}}
+      const status=$(`.remote-mini-status[data-id="${player.id}"]`);if(status)status.textContent="⚠️ Lavagnetta scollegata: inserisci qui";
+      onUpdate?.(message);
     });
+    return {bridge,remoteIds};
   }
-  function ncc(){
-    const L="ABCDEFGILMNOPRSTV"[rnd(17)];
-    const cat=pick(["Nome di persona","Città","Animale","Cibo o piatto","Film o serie TV","Cantante o band","Marca famosa","Oggetto di casa","Mestiere","Calciatore"]);
-    app.innerHTML = `<div class="card center">
-      <div class="ncc-letter ans-pop">${L}</div>
-      <div class="ncc-cat res-in" style="animation-delay:.25s">${esc(cat)}</div>
-      <p class="sub center" style="margin-top:10px">Il primo che urla una risposta valida vince lo spareggio.</p>
-      <div class="choice-grid mt">
-        ${players.map(p=>`<button type="button" class="choice nccW" data-id="${p.id}">🏆 ${avatarHTML(p,24)} ${esc(p.name)}</button>`).join("")}
-        <button type="button" class="choice" id="nccRedo">🔁 Nessuno risponde: cambia lettera</button>
-      </div></div>`;
-    $$(".nccW").forEach(b=>b.addEventListener("click",()=>finish(pById(b.dataset.id),"Nomi & Cose")));
-    $("#nccRedo").addEventListener("click",ncc);
+
+  function lampo(){
+    const q=drawFromPool(null,"Stima Lampo"),remoteIds=new Set(connectedRemote().map(player=>player.id));let remoteBridge=null;
+    app.innerHTML=`<div class="card"><span class="mini-round">⚡ Stima Lampo</span><div class="mini-question">${esc(q.q)}</div><div class="qhint center">Risposta in ${esc(q.u||"numero")}</div><p class="sub center">Le lavagnette dei due sfidanti sono attive. Il Master vede arrivare le risposte già bloccate.</p>
+      ${players.map(p=>`<div class="mini-player-row"><div class="who">${avatarHTML(p,26)} ${esc(p.name)}${remoteStatus(p,remoteIds)}</div><input type="number" step="any" inputmode="decimal" class="lin" data-id="${p.id}" placeholder="stima"></div>`).join("")}
+      <button type="button" class="btn coral mt" id="lampoGo" disabled>Attendo le due risposte…</button></div>`;
+    const update=()=>{const ready=$$(".lin").every(input=>Number.isFinite(parseFloat((input.value||"").replace(",","."))));$("#lampoGo").disabled=!ready;$("#lampoGo").textContent=ready?"Rivela la risposta →":"Attendo le due risposte…";};
+    const remote=startRemoteFields({title:"Stima Lampo",subject:q.q,description:`Inserisci una sola stima in ${q.u||"numero"}.`,icon:"⚡",fields:[{id:"estimate",label:"La tua stima",placeholder:"Scrivi la stima",type:"number"}],selectors:{estimate:".lin"},onUpdate:update});remoteBridge=remote.bridge;
+    $$(".lin").filter(input=>!input.disabled).forEach(input=>input.addEventListener("input",update));update();
+    $("#lampoGo").onclick=()=>{
+      const entries=$$(".lin").map(inp=>{const value=parseFloat((inp.value||"").replace(",","."));return{player:pById(inp.dataset.id),value,metric:Number.isFinite(value)?Math.abs(value-q.a):Infinity,secondary:0}});
+      if(entries.some(e=>!Number.isFinite(e.value)))return;
+      closeOnlineMini(remoteBridge?.requestId);
+      const winners=lowest(entries);
+      app.innerHTML=`<div class="card center"><span class="mini-round">⚡ Stima Lampo</span><p class="eyebrow mt">La risposta era</p><div class="mini-reference">${fmtNum(q.a)} <small style="font-size:14px">${esc(q.u||"")}</small></div><p class="sub center mt">${winnerLabel(winners)}</p>${factBlock(q)}<button type="button" class="btn teal mt" id="lampoEnd">Continua →</button></div>`;
+      broadcastQuestionFact("Stima Lampo",q,winnerLabel(winners));outcomeButton("#lampoEnd",winners,"Stima Lampo");
+    };
   }
   function crono(){
-    let t0=null, iv=null;
-    app.innerHTML = `<div class="card center">
-      <p class="eyebrow">⏱️ Cronometro del Master</p>
-      <p class="sub center">🙈 <b>Gli sfidanti si girano!</b> Solo il master guarda: i secondi scorrono sul suo schermo. Avvia, ferma quando vuole (sentite i beep), poi ognuno stima quanti secondi sono passati.</p>
-      <div class="timer-num" id="cronoQ" style="margin:14px 0">0.0</div>
-      <button type="button" class="btn coral" id="cronoBtn">▶︎ Avvia</button></div>`;
-    $("#cronoBtn").addEventListener("click",()=>{
-      const b=$("#cronoBtn");
-      if(t0===null){
-        t0=performance.now(); beep(880,140); b.textContent="◼︎ Ferma";
-        const el=$("#cronoQ"); el.classList.add("warn");
-        iv=setInterval(()=>{ const e2=$("#cronoQ"); if(e2) e2.textContent=((performance.now()-t0)/1000).toFixed(1); },100);
-        track(iv);
-      } else {
-        clearInterval(iv);
-        const sec=(performance.now()-t0)/1000; beep(392,220); cronoInputs(sec);
-      }
-    });
+    let startedAt=null,iv=null;
+    app.innerHTML=`<div class="card center"><span class="mini-round">⏱️ Cronometro del Master</span><p class="sub center mt">Gli sfidanti si girano. Il Master avvia e ferma il tempo senza annunciare la durata.</p><div class="timer-num" id="cronoQ" style="margin:14px 0">0.0</div><button type="button" class="btn coral" id="cronoBtn">▶︎ Avvia</button></div>`;
+    $("#cronoBtn").onclick=()=>{const button=$("#cronoBtn");if(startedAt===null){startedAt=performance.now();beep(880,140);button.textContent="◼︎ Ferma";iv=track(setInterval(()=>{const el=$("#cronoQ");if(el)el.textContent=((performance.now()-startedAt)/1000).toFixed(1)},100));}else{clearInterval(iv);const sec=(performance.now()-startedAt)/1000;beep(392,220);cronoInputs(sec)}};
   }
   function cronoInputs(sec){
-    app.innerHTML = `<div class="card">
-      <p class="eyebrow center">⏱️ Quanti secondi sono passati?</p>
-      ${players.map(p=>`<div class="score-row"><div class="nm">${avatarHTML(p,26)}<span class="nmtxt">${esc(p.name)}</span></div>
-        <input type="number" step="0.1" inputmode="decimal" class="cin" data-id="${p.id}" style="width:110px;font-size:18px;font-weight:800;text-align:right;border:2px solid var(--ink);border-radius:10px;padding:8px" placeholder="sec"></div>`).join("")}
-      <button type="button" class="btn coral mt" id="cronoGo">Rivela il tempo →</button></div>`;
-    $("#cronoGo").addEventListener("click",()=>{
-      let best=null,bd=Infinity;
-      $$(".cin").forEach(inp=>{ const v=parseFloat((inp.value||"").replace(",","."));
-        const d=isNaN(v)?Infinity:Math.abs(v-sec); if(d<bd){bd=d;best=pById(inp.dataset.id);} });
-      if(!best) return;
-      app.innerHTML = `<div class="card center">
-        <p class="eyebrow">Il tempo era</p><div class="ans-pop" style="font-size:52px;font-weight:900;color:var(--coral)">${sec.toFixed(2)}s</div>
-        <p class="sub center mt">${esc(best.name)} ci è andato più vicino (±${bd===Infinity?"—":bd.toFixed(2)}s)!</p>
-        <button type="button" class="btn teal mt" id="cronoEnd">Continua →</button></div>`;
-      $("#cronoEnd").addEventListener("click",()=>finish(best,"Cronometro Cieco"));
-    });
+    const remoteIds=new Set(connectedRemote().map(player=>player.id));let remoteBridge=null;
+    app.innerHTML=`<div class="card"><span class="mini-round">⏱️ Cronometro del Master</span><div class="mini-question">Quanti secondi sono passati?</div><p class="sub center">Ogni sfidante risponde dalla propria lavagnetta.</p>${players.map(p=>`<div class="mini-player-row"><div class="who">${avatarHTML(p,26)} ${esc(p.name)}${remoteStatus(p,remoteIds)}</div><input type="number" step="0.1" inputmode="decimal" class="cin" data-id="${p.id}" placeholder="secondi"></div>`).join("")}<button type="button" class="btn coral mt" id="cronoGo" disabled>Attendo le due risposte…</button></div>`;
+    const update=()=>{const ready=$$(".cin").every(input=>Number.isFinite(parseFloat((input.value||"").replace(",","."))));$("#cronoGo").disabled=!ready;$("#cronoGo").textContent=ready?"Rivela il tempo →":"Attendo le due risposte…";};
+    const remote=startRemoteFields({title:"Cronometro del Master",subject:"Quanti secondi sono passati?",description:"Inserisci la tua stima del tempo trascorso.",icon:"⏱️",fields:[{id:"seconds",label:"Secondi stimati",placeholder:"Es. 8,5",type:"number"}],selectors:{seconds:".cin"},onUpdate:update});remoteBridge=remote.bridge;
+    $$(".cin").filter(input=>!input.disabled).forEach(input=>input.addEventListener("input",update));update();
+    $("#cronoGo").onclick=()=>{const entries=$$(".cin").map(inp=>{const value=parseFloat((inp.value||"").replace(",","."));return{player:pById(inp.dataset.id),value,metric:Number.isFinite(value)?Math.abs(value-sec):Infinity,secondary:0}});if(entries.some(e=>!Number.isFinite(e.value)))return;closeOnlineMini(remoteBridge?.requestId);const winners=lowest(entries);app.innerHTML=`<div class="card center"><span class="mini-round">⏱️ Cronometro del Master</span><p class="eyebrow mt">Il tempo era</p><div class="mini-reference">${sec.toFixed(2)}s</div><p class="sub center mt">${winnerLabel(winners)}</p><button type="button" class="btn teal mt" id="cronoEnd">Continua →</button></div>`;outcomeButton("#cronoEnd",winners,"Cronometro del Master")};
   }
-  menu();
+  function ncc(){
+    const letters="ABCDEFGILMNOPRSTV".split(""),letter=drawDeckCard("nomi-cose-lettere",letters),category=drawDeckCard("nomi-cose-categorie",["Nome di persona","Città","Animale","Cibo o piatto","Film o serie TV","Cantante o band","Marca famosa","Oggetto di casa","Mestiere","Calciatore"]);
+    app.innerHTML=`<div class="card center"><span class="mini-round">🔤 Nomi & Cose</span><div class="ncc-letter ans-pop">${letter}</div><div class="ncc-cat res-in" style="animation-delay:.2s">${esc(category)}</div><p class="sub center mt">Rispondete ad alta voce. Il Master tocca subito il vincitore.</p><div class="choice-grid mt">${players.map(p=>`<button type="button" class="choice nccW" data-id="${p.id}">🏆 ${avatarHTML(p,24)} ${esc(p.name)}</button>`).join("")}<button type="button" class="choice" id="nccRedo">🔁 Nessuna risposta valida: nuova carta</button></div></div>`;
+    $$(".nccW").forEach(button=>button.onclick=()=>finish(pById(button.dataset.id),"Nomi & Cose"));$("#nccRedo").onclick=ncc;
+  }
+  function friendlyThreshold(value){const factor=pick([.55,.7,.82,1.18,1.35,1.6]);let n=value*factor;if(Math.abs(n)>=100)n=Math.round(n/10)*10;else if(Math.abs(n)>=10)n=Math.round(n);else n=Math.round(n*10)/10;if(n===value)n+=Math.abs(value)>=10?1:.1;return n;}
+  function altoBasso(roster=players,total=3,sudden=false){
+    const scores=new Map(roster.map(p=>[p.id,0])),used=new Set();let round=0;
+    function next(){
+      if(round>=total){const top=Math.max(...scores.values()),winners=roster.filter(p=>scores.get(p.id)===top);app.innerHTML=`<div class="card center"><span class="mini-round">↕️ ${sudden?"Spareggio secco":"Alto o Basso"}</span><div class="mini-question">Punteggio finale</div><div class="mini-sequence">${roster.map(p=>`<div class="item"><b>${scores.get(p.id)}</b><span>${esc(p.name)}</span></div>`).join("")}</div><p class="sub center">${winnerLabel(winners)}</p><button type="button" class="btn teal mt" id="abEnd">Continua →</button></div>`;outcomeButton("#abEnd",winners,"Alto o Basso");return;}
+      const q=drawFromPool(null,"Alto o Basso");used.add(q.q);const threshold=friendlyThreshold(q.a),correct=q.a>threshold?"up":"down",answers=new Map(),remotePlayers=connectedRemote(roster),remoteIds=new Set(remotePlayers.map(player=>player.id));let remoteBridge=null;round++;
+      app.innerHTML=`<div class="card"><span class="mini-round">↕️ ${sudden?"Spareggio secco":`Manche ${round}/${total}`}</span><div class="mini-question">${esc(q.q)}</div><p class="sub center">La risposta reale è più alta o più bassa di:</p><div class="mini-reference">${fmtNum(threshold)} <small style="font-size:14px">${esc(q.u||"")}</small></div><div class="mt">${roster.map(p=>`<div class="mini-player-row"><div class="who">${avatarHTML(p,26)} ${esc(p.name)}${remoteStatus(p,remoteIds)}</div><div class="mini-picks"><button type="button" class="mini-pick abPick" data-id="${p.id}" data-v="up" ${remoteIds.has(p.id)?"disabled":""}>▲ Più alta</button><button type="button" class="mini-pick abPick" data-id="${p.id}" data-v="down" ${remoteIds.has(p.id)?"disabled":""}>▼ Più bassa</button></div></div>`).join("")}</div><button type="button" class="btn coral mt" id="abReveal" disabled>Attendo le due scelte…</button></div>`;
+      const applyAnswer=(player,value)=>{answers.set(player.id,value);$$(`.abPick[data-id="${player.id}"]`).forEach(button=>button.classList.toggle("selected",button.dataset.v===value));const status=$(`.remote-mini-status[data-id="${player.id}"]`);if(status)status.textContent="✅ Scelta ricevuta";$("#abReveal").disabled=answers.size<roster.length;$("#abReveal").textContent=answers.size===roster.length?"Rivela →":"Attendo le due scelte…";};
+      $$(".abPick").filter(button=>!button.disabled).forEach(button=>button.onclick=()=>applyAnswer(pById(button.dataset.id),button.dataset.v));
+      const bridge=onlineRequestMiniInputs({players:remotePlayers,title:"Alto o Basso",subject:q.q,description:`La risposta è maggiore o minore di ${fmtNum(threshold)} ${q.u||""}?`,icon:"↕️",fields:[{id:"direction",label:"Scegli",type:"choice",options:[{id:"up",label:"▲ Più alta"},{id:"down",label:"▼ Più bassa"}]}]},(player,values)=>applyAnswer(player,values.direction),(player)=>{const status=$(`.remote-mini-status[data-id="${player.id}"]`);if(status)status.textContent="⚠️ Lavagnetta scollegata: scegli qui";$$(`.abPick[data-id="${player.id}"]`).forEach(button=>{button.disabled=false;button.onclick=()=>applyAnswer(player,button.dataset.v)})});remoteBridge=bridge;
+      $("#abReveal").onclick=()=>{closeOnlineMini(remoteBridge?.requestId);roster.forEach(p=>{if(answers.get(p.id)===correct)scores.set(p.id,scores.get(p.id)+1)});app.innerHTML=`<div class="card center"><span class="mini-round">↕️ Alto o Basso</span><p class="eyebrow mt">Risposta corretta</p><div class="mini-reference">${fmtNum(q.a)} <small style="font-size:14px">${esc(q.u||"")}</small></div><p class="sub center">Era <b>${correct==="up"?"più alta ▲":"più bassa ▼"}</b> del riferimento.</p>${factBlock(q)}<button type="button" class="btn teal mt" id="abNext">${round<total?"Prossima manche →":"Vedi il risultato →"}</button></div>`;broadcastQuestionFact("Alto o Basso",q,round<total?"La sfida continua.":"Il Master mostra il punteggio finale.");$("#abNext").onclick=next};
+    }
+    next();
+  }
+  function intervallo(){
+    const q=drawFromPool(null,"Intervallo Killer"),remoteIds=new Set(connectedRemote().map(player=>player.id));let remoteBridge=null;
+    app.innerHTML=`<div class="card"><span class="mini-round">🎯 Intervallo Killer</span><div class="mini-question">${esc(q.q)}</div><p class="sub center">Ogni sfidante inserisce minimo e massimo sulla propria lavagnetta.</p>${players.map(p=>`<div class="mini-player-row"><div class="who">${avatarHTML(p,26)} ${esc(p.name)}${remoteStatus(p,remoteIds)}</div><div class="mini-inputs"><input type="number" step="any" inputmode="decimal" class="intMin" data-id="${p.id}" placeholder="min"><input type="number" step="any" inputmode="decimal" class="intMax" data-id="${p.id}" placeholder="max"></div></div>`).join("")}<button type="button" class="btn coral mt" id="intGo" disabled>Attendo i due intervalli…</button></div>`;
+    const update=()=>{const ready=players.every(p=>Number.isFinite(parseFloat(($(`.intMin[data-id="${p.id}"]`).value||"").replace(",",".")))&&Number.isFinite(parseFloat(($(`.intMax[data-id="${p.id}"]`).value||"").replace(",","."))));$("#intGo").disabled=!ready;$("#intGo").textContent=ready?"Rivela la risposta →":"Attendo i due intervalli…";};
+    const remote=startRemoteFields({title:"Intervallo Killer",subject:q.q,description:`Indica l’intervallo più stretto che secondo te contiene la risposta, in ${q.u||"numero"}.`,icon:"🎯",fields:[{id:"min",label:"Valore minimo",placeholder:"Minimo",type:"number"},{id:"max",label:"Valore massimo",placeholder:"Massimo",type:"number"}],selectors:{min:".intMin",max:".intMax"},onUpdate:update});remoteBridge=remote.bridge;
+    $$(".intMin,.intMax").filter(input=>!input.disabled).forEach(input=>input.addEventListener("input",update));update();
+    $("#intGo").onclick=()=>{const entries=players.map(p=>{const lo=parseFloat(($(`.intMin[data-id="${p.id}"]`).value||"").replace(",",".")),hi=parseFloat(($(`.intMax[data-id="${p.id}"]`).value||"").replace(",","."));const min=Math.min(lo,hi),max=Math.max(lo,hi),valid=Number.isFinite(min)&&Number.isFinite(max)&&q.a>=min&&q.a<=max;const gap=!Number.isFinite(min)||!Number.isFinite(max)?Infinity:q.a<min?min-q.a:q.a>max?q.a-max:0;return{player:p,min,max,valid,width:max-min,gap}});if(entries.some(e=>!Number.isFinite(e.min)||!Number.isFinite(e.max)))return;closeOnlineMini(remoteBridge?.requestId);const valid=entries.filter(e=>e.valid),ranked=valid.length?valid.map(e=>({...e,metric:e.width,secondary:0})):entries.map(e=>({...e,metric:e.gap,secondary:e.width}));const winners=lowest(ranked);app.innerHTML=`<div class="card center"><span class="mini-round">🎯 Intervallo Killer</span><p class="eyebrow mt">La risposta era</p><div class="mini-reference">${fmtNum(q.a)} <small style="font-size:14px">${esc(q.u||"")}</small></div><div class="mini-sequence">${entries.map(e=>`<div class="item"><b>${e.valid?"✓":"×"}</b><span>${esc(e.player.name)} · ${Number.isFinite(e.min)?fmtNum(e.min):"—"} – ${Number.isFinite(e.max)?fmtNum(e.max):"—"}</span></div>`).join("")}</div><p class="sub center">${winnerLabel(winners)}</p>${factBlock(q)}<button type="button" class="btn teal mt" id="intEnd">Continua →</button></div>`;broadcastQuestionFact("Intervallo Killer",q,winnerLabel(winners));outcomeButton("#intEnd",winners,"Intervallo Killer")};
+  }
+  function manualSequence(mode,card,valueKey,unit){
+    const shuffled=shuffle(card.items),isTimeline=mode==="timeline",meta=MINI_GAME_META[mode];
+    app.innerHTML=`<div class="card"><span class="mini-round">${meta.icon} ${esc(meta.name)}</span><div class="mini-question">${esc(card.title)}</div><p class="sub center">Memorizzate l’ordine; quando siete pronti il Master rivela la soluzione.</p><div class="mini-sequence">${shuffled.map((item,i)=>`<div class="item"><b>?</b><span>${esc(item.label)}</span></div>`).join("")}</div><button type="button" class="btn coral mt" id="seqReveal">Rivela l’ordine corretto →</button></div>`;
+    $("#seqReveal").onclick=()=>{const ordered=card.items.slice().sort((a,b)=>a[valueKey]-b[valueKey]);app.innerHTML=`<div class="card"><span class="mini-round">${meta.icon} ${esc(meta.name)}</span><div class="mini-question">Ordine corretto</div><div class="mini-sequence">${ordered.map((item,i)=>`<div class="item"><b>${i+1}</b><span>${esc(item.label)} · <strong>${item[valueKey]}${isTimeline?"":" "+esc(unit||"")}</strong></span></div>`).join("")}</div><div class="mini-fact"><b>💡 Curiosità</b><br>${esc(card.fact)}<div style="font-size:10px;color:#6b7c76;margin-top:5px">Fonte: ${esc(card.source)}</div></div><p class="eyebrow center mt">Chi ha ricostruito meglio la sequenza?</p><div class="choice-grid">${players.map(p=>`<button type="button" class="choice seqWin" data-id="${p.id}">🏆 ${avatarHTML(p,24)} ${esc(p.name)}</button>`).join("")}</div></div>`;onlineBroadcastView({kind:"info",icon:meta.icon,title:meta.name,subject:card.title,effectTitle:"Ordine corretto rivelato",description:card.fact,instruction:"Il Master assegna la vittoria a chi ha ricostruito meglio la sequenza."});$$(".seqWin").forEach(button=>button.onclick=()=>finish(pById(button.dataset.id),meta.name))};
+  }
+  function ordine(){const card=drawDeckCard("ordine",MINI_ORDER_CARDS);manualSequence("ordine",card,"v",card.unit);}
+  function timeline(){manualSequence("timeline",drawDeckCard("timeline",MINI_TIMELINE_CARDS),"year","");}
+  function indizi(){
+    const card=drawDeckCard("indizi",MINI_CLUE_CARDS),locked=new Map();let step=0;
+    function render(){
+      const last=step===card.clues.length-1;
+      app.innerHTML=`<div class="card"><span class="mini-round">🕵️ Indizio ${step+1}/${card.clues.length}</span><div class="mini-question">${esc(card.title)}</div>${card.clues.slice(0,step+1).map((clue,i)=>`<div class="mini-clue${i<step?" locked":""}"><b>${i+1}.</b> ${esc(clue)}</div>`).join("")}<p class="sub center mt-s">Chi vuole può bloccare adesso una stima. Una stima bloccata non si cambia.</p>${players.map(p=>{const saved=locked.get(p.id);return saved?`<div class="mini-lock-row"><div class="who">${avatarHTML(p,24)} <b>${esc(p.name)}</b></div><div class="mini-clue locked">🔒 ${fmtNum(saved.value)} ${esc(card.unit)} · indizio ${saved.step}</div></div>`:`<div class="mini-lock-row"><div class="who">${avatarHTML(p,24)} <b>${esc(p.name)}</b></div><div class="mini-inputs"><input type="number" step="any" inputmode="decimal" class="clueValue" data-id="${p.id}" placeholder="stima"><button type="button" class="mini-pick clueLock" data-id="${p.id}">Blocca</button></div></div>`}).join("")}<button type="button" class="btn coral mt" id="clueNext">${last?"Blocca le ultime e rivela →":"Mostra un altro indizio →"}</button></div>`;
+      $$(".clueLock").forEach(button=>button.onclick=()=>{const input=$(`.clueValue[data-id="${button.dataset.id}"]`),value=parseFloat((input.value||"").replace(",","."));if(!Number.isFinite(value))return;locked.set(button.dataset.id,{value,step:step+1});render()});
+      $("#clueNext").onclick=()=>{if(!last){step++;render();return}for(const p of players){if(locked.has(p.id))continue;const input=$(`.clueValue[data-id="${p.id}"]`),value=parseFloat((input&&input.value||"").replace(",","."));if(!Number.isFinite(value))return;locked.set(p.id,{value,step:step+1})}reveal()};
+    }
+    function reveal(){const entries=players.map(p=>{const item=locked.get(p.id);return{player:p,value:item.value,metric:Math.abs(item.value-card.answer),secondary:item.step}}),winners=lowest(entries);app.innerHTML=`<div class="card center"><span class="mini-round">🕵️ Indizio dopo Indizio</span><p class="eyebrow mt">Il numero misterioso era</p><div class="mini-reference">${fmtNum(card.answer)} <small style="font-size:14px">${esc(card.unit)}</small></div><div class="mini-sequence">${entries.map(e=>`<div class="item"><b>${e.secondary}</b><span>${esc(e.player.name)} · ${fmtNum(e.value)} ${esc(card.unit)} · distanza ${fmtNum(e.metric)}</span></div>`).join("")}</div><p class="sub center">${winnerLabel(winners)}</p><div class="mini-fact"><b>💡 Curiosità</b><br>${esc(card.fact)}<div style="font-size:10px;color:#6b7c76;margin-top:5px">Fonte: ${esc(card.source)}</div></div><button type="button" class="btn teal mt" id="clueEnd">Continua →</button></div>`;onlineBroadcastView({kind:"info",icon:"🕵️",title:"Indizio dopo Indizio",subject:card.title,effectTitle:`Risposta: ${fmtNum(card.answer)} ${card.unit}`,description:card.fact,instruction:winnerLabel(winners)});outcomeButton("#clueEnd",winners,"Indizio dopo Indizio")}
+    render();
+  }
+  function bomba(){
+    let alive=players.slice(),round=0;
+    function nextRound(){if(alive.length===1)return finish(alive[0],"La Bomba");round++;const category=drawDeckCard("bomba",MINI_BOMB_CATEGORIES),startIndex=rnd(alive.length);let current=startIndex,running=false,timer=null;
+      app.innerHTML=`<div class="card center"><span class="mini-round">💣 La Bomba · manche ${round}</span><div class="mini-question">${esc(category)}</div><div class="bomb-display"><div><b>💣</b><span id="bombTick">Miccia pronta</span></div></div><p class="sub center">Parte <b id="bombWho">${esc(alive[current].name)}</b>. Dite un elemento valido e il Master passa subito la bomba.</p><button type="button" class="btn coral" id="bombStart">Accendi la miccia</button><button type="button" class="btn teal mt hide" id="bombPass">Risposta valida → passa</button></div>`;
+      $("#bombStart").onclick=()=>{if(running)return;running=true;$("#bombStart").classList.add("hide");$("#bombPass").classList.remove("hide");$("#bombTick").textContent="TIC TAC";beep(720,100);timer=track(setTimeout(explode,7000+rnd(5001)))};
+      $("#bombPass").onclick=()=>{if(!running)return;current=(current+1)%alive.length;$("#bombWho").textContent=alive[current].name;beep(920,60)};
+      function explode(){if(!running)return;running=false;const eliminated=alive[current];beep(180,450);alive=alive.filter(p=>p.id!==eliminated.id);app.innerHTML=`<div class="card center"><span class="mini-round">💥 BOOM!</span><div class="bomb-display"><div><b>💥</b><span>Eliminato</span></div></div><div class="mini-question">${esc(eliminated.name)}</div><p class="sub center">Restano: ${alive.map(p=>esc(p.name)).join(" · ")}</p><button type="button" class="btn coral mt" id="bombAgain">${alive.length===1?"Mostra il vincitore →":"Nuova miccia →"}</button></div>`;$("#bombAgain").onclick=nextRound}
+    }
+    nextRound();
+  }
+  function asta(){
+    const q=drawFromPool(null,"Asta al Ribasso"),remoteIds=new Set(connectedRemote().map(player=>player.id));let remoteBridge=null;
+    app.innerHTML=`<div class="card"><span class="mini-round">🔨 Asta al Ribasso</span><div class="mini-question">${esc(q.q)}</div><p class="sub center">Ogni sfidante invia dalla propria lavagnetta una stima e il massimo errore promesso.</p>${players.map(p=>`<div class="mini-player-row"><div class="who">${avatarHTML(p,26)} ${esc(p.name)}${remoteStatus(p,remoteIds)}</div><div class="mini-inputs"><input type="number" step="any" inputmode="decimal" class="auctionEst" data-id="${p.id}" placeholder="stima"><input type="number" min="0" step="any" inputmode="decimal" class="auctionMargin" data-id="${p.id}" placeholder="margine ±"></div></div>`).join("")}<button type="button" class="btn coral mt" id="auctionGo" disabled>Attendo le due offerte…</button></div>`;
+    const update=()=>{const ready=players.every(p=>Number.isFinite(parseFloat(($(`.auctionEst[data-id="${p.id}"]`).value||"").replace(",",".")))&&Number.isFinite(parseFloat(($(`.auctionMargin[data-id="${p.id}"]`).value||"").replace(",","."))));$("#auctionGo").disabled=!ready;$("#auctionGo").textContent=ready?"Chiudi l’asta e rivela →":"Attendo le due offerte…";};
+    const remote=startRemoteFields({title:"Asta al Ribasso",subject:q.q,description:`Inserisci la stima in ${q.u||"numero"} e il margine massimo di errore che prometti.`,icon:"🔨",fields:[{id:"estimate",label:"La tua stima",placeholder:"Stima",type:"number"},{id:"margin",label:"Margine massimo ±",placeholder:"Margine",type:"number"}],selectors:{estimate:".auctionEst",margin:".auctionMargin"},onUpdate:update});remoteBridge=remote.bridge;
+    $$(".auctionEst,.auctionMargin").filter(input=>!input.disabled).forEach(input=>input.addEventListener("input",update));update();
+    $("#auctionGo").onclick=()=>{const entries=players.map(p=>{const estimate=parseFloat(($(`.auctionEst[data-id="${p.id}"]`).value||"").replace(",",".")),margin=Math.abs(parseFloat(($(`.auctionMargin[data-id="${p.id}"]`).value||"").replace(",","."))),distance=Number.isFinite(estimate)?Math.abs(estimate-q.a):Infinity;return{player:p,estimate,margin,distance,kept:Number.isFinite(margin)&&distance<=margin}});if(entries.some(e=>!Number.isFinite(e.estimate)||!Number.isFinite(e.margin)))return;closeOnlineMini(remoteBridge?.requestId);const kept=entries.filter(e=>e.kept),ranked=kept.length?kept.map(e=>({...e,metric:e.margin,secondary:e.distance})):entries.map(e=>({...e,metric:e.distance,secondary:e.margin})),winners=lowest(ranked);app.innerHTML=`<div class="card center"><span class="mini-round">🔨 Asta al Ribasso</span><p class="eyebrow mt">La risposta era</p><div class="mini-reference">${fmtNum(q.a)} <small style="font-size:14px">${esc(q.u||"")}</small></div><div class="mini-sequence">${entries.map(e=>`<div class="item"><b>${e.kept?"✓":"×"}</b><span>${esc(e.player.name)} · stima ${Number.isFinite(e.estimate)?fmtNum(e.estimate):"—"} · promessa ±${Number.isFinite(e.margin)?fmtNum(e.margin):"—"}</span></div>`).join("")}</div><p class="sub center">${winnerLabel(winners)}</p>${factBlock(q)}<button type="button" class="btn teal mt" id="auctionEnd">Continua →</button></div>`;broadcastQuestionFact("Asta al Ribasso",q,winnerLabel(winners));outcomeButton("#auctionEnd",winners,"Asta al Ribasso")};
+  }
+  const games={lampo,crono,ncc,altobasso:()=>altoBasso(),intervallo,ordine,indizi,bomba,asta,timeline};
+  showRules(chooseMode());
 }
 function scoreCard(){
-  const ranked = S.players.slice().sort((a,b)=> b.score-a.score || b.pos-a.pos);
+  const byPoints = S.players.slice().sort((a,b)=> b.score-a.score || b.pos-a.pos);
+  const byBoard = S.players.slice().sort((a,b)=> b.pos-a.pos || b.score-a.score);
   const scored={}; (S.ranking||[]).forEach(e=>{ if(e.pts>0) scored[e.id]=e.pts; });
   return `
     <div class="card">
-      <h2><span class="tick">📊</span> Punteggi</h2>
-      ${ranked.map((p,i)=>`
-        <div class="score-row res-in${i===0?' lead':''}" style="animation-delay:${i*.07}s">
-          <div class="nm">${avatarHTML(p,26)}
-            <span class="nmtxt">${esc(p.name)}</span>${p.fenomeno?" 👑":""}
-            ${scored[p.id]?`<span class="chip-pts">+${scored[p.id]}</span>`:""}${p.cecchino?' 🔭':''}
-            ${p.bonus.map(b=>`<span class="tag bonus">${b.nm}</span>`).join("")}
-            ${p.malus.map(m=>`<span class="tag malus">${m.nm}</span>`).join("")}
-          </div>
-          <div class="pos">
-            <span class="postxt">cas. ${p.pos}/${FINISH}</span>
-            ${nextSpecialAfter(p.pos)?`<span class="next-stop">prossima: ${CELL[nextSpecialAfter(p.pos).type].ic} cas. ${nextSpecialAfter(p.pos).n}</span>`:""}
-            <i class="pbar"><b style="width:${Math.round(p.pos/FINISH*100)}%;background:${p.color}"></b></i>
-          </div>
-          <div class="pts">${p.score}</div>
-        </div>`).join("")}
+      <h2><span class="tick">📊</span> Due classifiche, due funzioni</h2>
+      <div class="win-rule"><b>Vittoria:</b> chi raggiunge per primo la casella ${FINISH} vince subito. Se nessuno arriva alla Finale entro ${MAX_ROUNDS} round, decide la classifica punti.</div>
+      <div class="dual-standing">
+        <div class="standing-box"><div class="standing-title">📊 Classifica punti</div>${byPoints.map((p,i)=>`<div class="standing-line"><span>${i+1}°. ${avatarHTML(p,18)} ${esc(p.name)}${scored[p.id]?` <b>+${scored[p.id]}</b>`:""}</span><b>${p.score} pt</b></div>`).join("")}</div>
+        <div class="standing-box"><div class="standing-title">🗺️ Corsa sul tabellone</div>${byBoard.map((p,i)=>`<div class="standing-line"><span>${i+1}°. ${avatarHTML(p,18)} ${esc(p.name)}</span><b>cas. ${p.pos}/${FINISH}</b></div>`).join("")}</div>
+      </div>
+      <div class="mt-s">${byPoints.map(p=>{const effects=[...p.bonus.map(b=>`<span class="tag bonus">${esc(b.nm)}</span>`),...p.malus.map(m=>`<span class="tag malus">${esc(m.nm)}</span>`)];return effects.length?`<div style="font-size:11px;margin:4px 0"><b>${esc(p.name)}:</b> ${effects.join(" ")}</div>`:""}).join("")}</div>
     </div>`;
 }
 function nextSpecialAfter(pos){
@@ -2904,7 +3399,7 @@ function logCard(openByDefault){
 }
 function wireBoardLog(){
   wireMapToggle();
-  wireMapToggle(); /* i details/log non richiedono listener; placeholder per estensioni future */ }
+  /* i details/log non richiedono listener; placeholder per estensioni future */ }
 
 /* =====================================================================
    BOOT
@@ -2934,6 +3429,8 @@ let ONLINE=null;
 let ONLINE_RETRY=null;
 let ONLINE_CHOICE_SEQ=0;
 const ONLINE_CHOICE_CALLBACKS=new Map();
+let ONLINE_MINI_SEQ=0;
+const ONLINE_MINI_CALLBACKS=new Map();
 function onlineScores(){
   return S.players.map(p=>({name:p.name,score:p.score,pos:p.pos,color:p.color}));
 }
@@ -2949,15 +3446,51 @@ function onlineBroadcastView(payload){
   try{ ONLINE.ws.send(JSON.stringify({t:"view",scores:onlineScores(),...payload})); }catch(e){}
 }
 
+function onlineEstimateKey(player){
+  if(!player)return "";
+  return player.onlineToken
+    ? `id:${player.onlineToken}`
+    : `name:${(player.name||"").trim().toLocaleLowerCase("it-IT")}`;
+}
+function onlineEstimateFor(player){
+  if(!ONLINE||!ONLINE.est)return null;
+  const key=onlineEstimateKey(player);
+  return Object.prototype.hasOwnProperty.call(ONLINE.est,key)?ONLINE.est[key]:null;
+}
+function storeOnlineEstimate(message){
+  if(!ONLINE)return;
+  if(!ONLINE.est)ONLINE.est={};
+  const key=message.playerId
+    ? `id:${message.playerId}`
+    : `name:${(message.name||"").trim().toLocaleLowerCase("it-IT")}`;
+  ONLINE.est[key]=message.value;
+}
+function refreshOnlineEstimates(){
+  renderOnlineBar();
+  updateWriteRoster();
+  checkAllEstimates();
+}
+function acknowledgeOnlineMasterEvent(message){
+  if(!message.eventId||!ONLINE?.ws||ONLINE.ws.readyState!==WebSocket.OPEN)return;
+  ONLINE.ws.send(JSON.stringify({t:"master_event_ack",eventId:message.eventId}));
+}
+function handleOnlineMasterEvent(message){
+  if(message.t==="choice_response")resolveOnlineChoice(message);
+  else if(message.t==="choice_unavailable")fallbackOnlineChoice(message);
+  else if(message.t==="mini_response")resolveOnlineMiniResponse(message);
+  else if(message.t==="mini_unavailable")fallbackOnlineMiniResponse(message);
+  acknowledgeOnlineMasterEvent(message);
+}
+
 function syncJoinedPlayers(joined){
   if(!Array.isArray(joined) || S.phase!=="setup") return;
   const masterName=S.players[0]?.name||"";
   const masterAvatar=S.players[0]?.avatar||null;
-  const names=joined.map(x=>typeof x==="string"?x:x.name).filter(Boolean);
-  const desired=Math.max(2,Math.min(8,1+names.length));
+  const entries=joined.map(x=>typeof x==="string"?{id:null,name:x}:x).filter(x=>x&&x.name);
+  const desired=Math.max(2,Math.min(8,1+entries.length));
   if(S.count!==desired){S.count=desired;syncPlayers();}
   if(S.players[0]){S.players[0].name=masterName;S.players[0].avatar=masterAvatar;}
-  names.slice(0,7).forEach((name,i)=>{if(S.players[i+1])S.players[i+1].name=name;});
+  entries.slice(0,7).forEach((entry,i)=>{if(S.players[i+1]){S.players[i+1].name=entry.name;S.players[i+1].onlineToken=entry.id||null;}});
   const countVal=$("#countVal");if(countVal)countVal.textContent=S.count;
   if($("#players"))renderPlayerInputs();
 }
@@ -2966,14 +3499,10 @@ function onlineRequestPlayerChoice({chooser,title,subject,description,options},c
   if(masterPlayer&&chooser&&chooser.id===masterPlayer.id){callback(null,{reason:"master_local"});return;}
   if(!ONLINE||!ONLINE.ws||ONLINE.ws.readyState!==WebSocket.OPEN){callback(null,{error:"offline",reason:"master_fallback"});return;}
   const requestId=`choice_${Date.now()}_${++ONLINE_CHOICE_SEQ}`;
-  const timer=setTimeout(()=>{
-    const pending=ONLINE_CHOICE_CALLBACKS.get(requestId);if(!pending)return;
-    ONLINE_CHOICE_CALLBACKS.delete(requestId);
-    try{ONLINE.ws.send(JSON.stringify({t:"cancel_choice",requestId}))}catch(e){}
-    pending.callback(null,{error:"timeout",reason:"master_fallback"});
-  },12000);
-  ONLINE_CHOICE_CALLBACKS.set(requestId,{callback,timer,ready:false});
-  ONLINE.ws.send(JSON.stringify({t:"choice_request",requestId,chooser:chooser.name,title,subject,description,options}));
+  // Nessuna scadenza arbitraria: il fallback Master viene aperto soltanto se
+  // il server conferma che la lavagnetta autorizzata non è disponibile.
+  ONLINE_CHOICE_CALLBACKS.set(requestId,{callback,ready:false});
+  ONLINE.ws.send(JSON.stringify({t:"choice_request",requestId,chooser:chooser.name,chooserToken:chooser.onlineToken||"",title,subject,description,options}));
 }
 function resolveOnlineChoice(m){
   const pending=ONLINE_CHOICE_CALLBACKS.get(m.requestId);if(!pending)return;
@@ -2982,6 +3511,27 @@ function resolveOnlineChoice(m){
 function fallbackOnlineChoice(m){
   const pending=ONLINE_CHOICE_CALLBACKS.get(m.requestId);if(!pending)return;
   clearTimeout(pending.timer);ONLINE_CHOICE_CALLBACKS.delete(m.requestId);pending.callback(null,{error:m.msg,reason:m.reason||"master_fallback"});
+}
+function onlineRequestMiniInputs({players,title,subject,description,icon,fields},onResponse,onUnavailable){
+  const remote=(players||[]).filter(player=>player&&player.onlineToken);
+  if(!remote.length||!ONLINE?.ws||ONLINE.ws.readyState!==WebSocket.OPEN)return null;
+  const requestId=`mini_${Date.now()}_${++ONLINE_MINI_SEQ}`;
+  ONLINE_MINI_CALLBACKS.set(requestId,{onResponse,onUnavailable,players:new Map(remote.map(player=>[player.onlineToken,player]))});
+  ONLINE.ws.send(JSON.stringify({t:"mini_request",requestId,playerTokens:remote.map(player=>player.onlineToken),title,subject,description,icon,fields}));
+  return {requestId,remoteIds:new Set(remote.map(player=>player.id))};
+}
+function resolveOnlineMiniResponse(message){
+  const pending=ONLINE_MINI_CALLBACKS.get(message.requestId);if(!pending)return;
+  const player=pending.players.get(message.playerId);if(player)pending.onResponse?.(player,message.values||{});
+}
+function fallbackOnlineMiniResponse(message){
+  const pending=ONLINE_MINI_CALLBACKS.get(message.requestId);if(!pending)return;
+  const player=pending.players.get(message.playerId);if(player)pending.onUnavailable?.(player,message.msg||"Lavagnetta non disponibile.");
+}
+function closeOnlineMini(requestId){
+  if(!requestId)return;
+  ONLINE_MINI_CALLBACKS.delete(requestId);
+  if(ONLINE?.ws?.readyState===WebSocket.OPEN)ONLINE.ws.send(JSON.stringify({t:"mini_cancel",requestId}));
 }
 function onlineSpecialFromMaster(type, lander, cell){
   const playerName=lander?.name||"Il giocatore";
@@ -3074,10 +3624,17 @@ function onlineSpecialFromMaster(type, lander, cell){
     },
     duello:{
       icon:"⚔️",
-      title:"Duello",
-      effectTitle:`${playerName} sfida un avversario`,
-      description:"Il Master sceglierà lo sfidante. Le lavagnette abilitate verranno indicate dalla sfida.",
-      instruction:"Chi non partecipa resta spettatore."
+      title:"Casella Sfida",
+      effectTitle:`${playerName} pesca dal Mazzo Sfide`,
+      description:"Il giocatore coinvolto sceglierà l’avversario e avvierà dalla propria lavagnetta l’estrazione casuale del minigioco.",
+      instruction:"Gli altri dispositivi restano spettatori; nessuno sceglie il tipo di minigioco."
+    },
+    alfabetica:{
+      icon:"🎴",
+      title:"Casella Minigioco",
+      effectTitle:`${playerName} pesca dal Mazzo Sfide`,
+      description:"Dopo aver scelto l’avversario, il giocatore avvierà una carta totalmente casuale.",
+      instruction:"Il risultato della carta verrà mostrato a tutti."
     },
     tiroleader:{
       icon:"🎯",
@@ -3151,15 +3708,20 @@ function onlineConnect(url, resume=false){
     }
     else if(m.t==="resumed_master"){
       ONLINE.n=m.n||0; ONLINE.players=m.players||ONLINE.players||[]; syncJoinedPlayers(ONLINE.players); renderOnlineBar();
+      (m.estimates||[]).forEach(storeOnlineEstimate);
+      refreshOnlineEstimates();
+      (m.masterEvents||[]).forEach(handleOnlineMasterEvent);
       const s2=$("#onlineSt"); if(s2) s2.textContent="Riconnesso ✓";
     }
     else if(m.t==="peer"){ ONLINE.n=m.n; ONLINE.players=m.players||[]; syncJoinedPlayers(ONLINE.players); renderOnlineBar(); }
     else if(m.t==="bye"){ ONLINE.n=m.n; ONLINE.players=m.players||ONLINE.players||[]; syncJoinedPlayers(ONLINE.players); renderOnlineBar(); }
-    else if(m.t==="choice_response"){ resolveOnlineChoice(m); }
+    else if(m.t==="choice_response"){ handleOnlineMasterEvent(m); }
     else if(m.t==="choice_ready"){const pending=ONLINE_CHOICE_CALLBACKS.get(m.requestId);if(pending){pending.ready=true;const s2=$("onlineSt");if(s2)s2.textContent="Scelta aperta sulla lavagnetta ✓";}}
-    else if(m.t==="choice_unavailable"){fallbackOnlineChoice(m);}
+    else if(m.t==="choice_unavailable"){handleOnlineMasterEvent(m);}
     else if(m.t==="choice_error"){const s2=$("onlineSt");if(s2)s2.textContent="⚠️ "+m.msg;fallbackOnlineChoice(m);}
-    else if(m.t==="est"){ ONLINE.est[(m.name||"").trim().toLowerCase()]=m.value; renderOnlineBar(); updateWriteRoster(); checkAllEstimates(); }
+    else if(m.t==="mini_response"||m.t==="mini_unavailable"){handleOnlineMasterEvent(m);}
+    else if(m.t==="mini_error"){const s2=$("onlineSt");if(s2)s2.textContent="⚠️ "+m.msg;}
+    else if(m.t==="est"){ storeOnlineEstimate(m); refreshOnlineEstimates(); }
     else if(m.t==="err"){ const s2=$("#onlineSt"); if(s2) s2.textContent="⚠️ "+m.msg; }
   };
   ws.onclose=()=>{
@@ -3172,6 +3734,8 @@ function onlineConnect(url, resume=false){
 
 function onlineStartFreshRoom(){
   clearTimeout(ONLINE_RETRY);
+  ONLINE_CHOICE_CALLBACKS.clear();
+  ONLINE_MINI_CALLBACKS.clear();
   const old=ONLINE;
   if(old && old.ws){
     try{
@@ -3207,8 +3771,9 @@ function renderOnlineBar(){
 function onlineFill(){
   if(!ONLINE) return;
   $$(".ans-in").forEach(inp=>{
-    const nm=(inp.dataset.pname||"").trim().toLowerCase();
-    if(ONLINE.est[nm]!=null && inp.value==="") inp.value=ONLINE.est[nm];
+    const player=pById(inp.dataset.playerId);
+    const value=onlineEstimateFor(player);
+    if(value!=null && inp.value==="") inp.value=value;
   });
 }
 function initCatChips(){
@@ -3216,7 +3781,7 @@ function initCatChips(){
     const chip=e.target.closest(".cat-chip"); if(!chip) return;
     const c=chip.dataset.cat;
     if(OFFCATS.has(c)) OFFCATS.delete(c);
-    else { if(CATEGORIES.length-OFFCATS.size<=3){ chip.classList.add("shake"); setTimeout(()=>chip.classList.remove("shake"),300); return; } OFFCATS.add(c); }
+    else { if(curatedCats().filter(cat=>!OFFCATS.has(cat)).length<=3){ chip.classList.add("shake"); setTimeout(()=>chip.classList.remove("shake"),300); return; } OFFCATS.add(c); }
     chip.classList.toggle("off", OFFCATS.has(c));
   });
 }

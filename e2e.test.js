@@ -47,7 +47,7 @@ test('la pagina lavagnetta preserva la regex degli spazi e non cancella le lette
 });
 
 test('flusso WebSocket con tre giocatori, scelta autorevole e riconnessione', async () => {
-  const master = await open();
+  let master = await open();
   const room = await command(master, { t: 'create' }, 'room');
   const pads = [];
   for (const name of ['Anna', 'Bruno', 'Carla']) {
@@ -65,19 +65,70 @@ test('flusso WebSocket con tre giocatori, scelta autorevole e riconnessione', as
   assert.equal(renamed.name, 'Berto');
 
   const questions = pads.map(pad => next(pad.ws, 'q'));
-  send(master, { t: 'q', seconds: 2, text: 'Quanto?', cat: 'Test', unit: 'unità', playerLimits: { berto: 1 } });
+  send(master, { t: 'q', seconds: 8, text: 'Quanto?', cat: 'Test', unit: 'unità', playerLimits: { berto: 5 } });
   const q = await Promise.all(questions);
-  assert.equal(q[1].seconds, 1);
-  assert.equal(q[0].seconds, 2);
+  assert.equal(q[1].seconds, 5);
+  assert.equal(q[0].seconds, 8);
+
+  pads[1].ws.close();
+  const resumedBerto = await open();
+  const bertoState = await command(resumedBerto, { t: 'resume_pad', code: room.code, token: pads[1].token }, 'resumed_pad');
+  assert.equal(bertoState.state.question.seconds, 5);
+  assert.equal(bertoState.state.question.limited, true);
+  assert.equal(bertoState.state.deadline, q[1].deadline);
+  pads[1].ws = resumedBerto;
 
   const estimate = next(master, 'est');
   await command(pads[0].ws, { t: 'est', value: '42' }, 'accepted');
-  assert.equal((await estimate).value, '42');
+  const annaEstimate=await estimate;
+  assert.equal(annaEstimate.value, '42');
+  assert.equal(annaEstimate.playerId, pads[0].token);
   assert.equal((await command(pads[0].ws, { t: 'est', value: '43' }, 'duplicate')).t, 'duplicate');
+
+  await new Promise(resolve=>{master.once('close',resolve);master.close()});
+  await command(pads[1].ws, { t: 'est', value: '41' }, 'accepted');
+  master=await open();
+  const masterState=await command(master,{t:'resume_master',code:room.code,token:room.token},'resumed_master');
+  assert.deepEqual(masterState.estimates.map(row=>row.name).sort(),['Anna','Berto']);
+
+  const late=await open();
+  const lateError=await command(late,{t:'join',code:room.code,name:'Dopo'},'err');
+  assert.match(lateError.msg,/già iniziata/);
+  late.close();
 
   const views = pads.map(pad => next(pad.ws, 'view'));
   send(master, { t: 'view', kind: 'result', answer: '42', funFact: 'Curiosità specifica', scores: [] });
   assert.ok((await Promise.all(views)).every(view => view.funFact === 'Curiosità specifica'));
+
+  const challengeViews=pads.map(pad=>next(pad.ws,'view'));
+  send(master,{t:'view',kind:'challenge',challenge:{reason:{type:'distance_tie',correctAnswer:'42',players:[{name:'Anna',estimate:'40',formula:'2 = 2'},{name:'Berto',estimate:'44',formula:'2 = 2'}]},game:{name:'Stima Lampo',rules:['Una regola'],duration:'40 secondi',win:'Più vicino'}},scores:[]});
+  const receivedChallenges=await Promise.all(challengeViews);
+  assert.ok(receivedChallenges.every(view=>view.challenge.game.name==='Stima Lampo'));
+  assert.ok(receivedChallenges.every(view=>!view.contextResult),'La sfida non deve mostrare il risultato del round precedente');
+
+  let spectatorMini=false;
+  const spectatorListener=data=>{if(JSON.parse(data.toString()).t==='mini_request')spectatorMini=true};
+  pads[2].ws.on('message',spectatorListener);
+  const miniRequests=[next(pads[0].ws,'mini_request'),next(pads[1].ws,'mini_request')];
+  send(master,{t:'mini_request',requestId:'mini-lampo-1',playerTokens:[pads[0].token,pads[1].token],title:'Stima Lampo',subject:'Quanti?',icon:'⚡',fields:[{id:'estimate',label:'La tua stima',type:'number'}]});
+  const receivedMini=await Promise.all(miniRequests);
+  assert.ok(receivedMini.every(message=>message.title==='Stima Lampo'));
+  await new Promise(resolve=>setTimeout(resolve,30));
+  assert.equal(spectatorMini,false,'La lavagnetta spettatrice non deve ricevere gli input');
+  pads[2].ws.off('message',spectatorListener);
+  assert.match((await command(pads[2].ws,{t:'mini_response',requestId:'mini-lampo-1',values:{estimate:'99'}},'err')).msg,/non è valida/);
+  assert.match((await command(pads[0].ws,{t:'mini_response',requestId:'mini-lampo-1',values:{estimate:'40abc'}},'err')).msg,/numero valido/);
+  const annaMini=next(master,'mini_response');
+  await command(pads[0].ws,{t:'mini_response',requestId:'mini-lampo-1',values:{estimate:'40'}},'mini_confirmed');
+  const annaMiniMessage=await annaMini;
+  assert.equal(annaMiniMessage.values.estimate,'40');
+  send(master,{t:'master_event_ack',eventId:annaMiniMessage.eventId});
+  const bertoMini=next(master,'mini_response');
+  await command(pads[1].ws,{t:'mini_response',requestId:'mini-lampo-1',values:{estimate:'44'}},'mini_confirmed');
+  const bertoMiniMessage=await bertoMini;
+  assert.equal(bertoMiniMessage.values.estimate,'44');
+  send(master,{t:'master_event_ack',eventId:bertoMiniMessage.eventId});
+  send(master,{t:'mini_cancel',requestId:'mini-lampo-1'});
 
   const request = next(pads[0].ws, 'choice_request');
   send(master, { t: 'choice_request', requestId: 'bonus-1', chooser: 'Anna', title: 'Scegli il BONUS', options: [{ id: 'scudo', label: 'BONUS · Scudo' }] });
@@ -89,8 +140,30 @@ test('flusso WebSocket con tre giocatori, scelta autorevole e riconnessione', as
   assert.match(forged.msg, /non è valida/);
   const response = next(master, 'choice_response');
   await command(pads[0].ws, { t: 'choice_response', requestId: 'bonus-1', optionId: 'scudo' }, 'choice_confirmed');
-  assert.equal((await response).optionId, 'scudo');
+  const bonusResponse=await response;
+  assert.equal(bonusResponse.optionId, 'scudo');
+  send(master,{t:'master_event_ack',eventId:bonusResponse.eventId});
   assert.match((await command(pads[0].ws, { t: 'choice_response', requestId: 'bonus-1', optionId: 'scudo' }, 'err')).msg, /già stata/);
+
+  const secondStage=next(pads[0].ws,'choice_request');
+  send(master,{t:'choice_request',requestId:'bonus-target',chooser:'Anna',title:'A chi dai il Bonus?',options:[{id:'berta',label:'Berto'}]});
+  await secondStage;
+  const targetResponse=next(master,'choice_response');
+  await command(pads[0].ws,{t:'choice_response',requestId:'bonus-target',optionId:'berta'},'choice_confirmed');
+  const targetMessage=await targetResponse;
+  assert.equal(targetMessage.optionId,'berta');
+  send(master,{t:'master_event_ack',eventId:targetMessage.eventId});
+
+  const replayRequest=next(pads[0].ws,'choice_request');
+  send(master,{t:'choice_request',requestId:'bonus-replay',chooserToken:pads[0].token,chooser:'nome non autorevole',title:'Replay',options:[{id:'paracadute',label:'Paracadute'}]});
+  await replayRequest;
+  await new Promise(resolve=>{master.once('close',resolve);master.close()});
+  await command(pads[0].ws,{t:'choice_response',requestId:'bonus-replay',optionId:'paracadute'},'choice_confirmed');
+  master=await open();
+  const replayedState=await command(master,{t:'resume_master',code:room.code,token:room.token},'resumed_master');
+  const replayedChoice=replayedState.masterEvents.find(event=>event.requestId==='bonus-replay');
+  assert.equal(replayedChoice.optionId,'paracadute');
+  send(master,{t:'master_event_ack',eventId:replayedChoice.eventId});
 
   const requestCancelled = next(pads[1].ws, 'choice_request');
   send(master, { t: 'choice_request', requestId: 'bonus-cancel', chooser: 'Berto', title: 'Scegli il BONUS', options: [{ id: 'scudo', label: 'BONUS · Scudo' }] });
@@ -103,14 +176,16 @@ test('flusso WebSocket con tre giocatori, scelta autorevole e riconnessione', as
   await request2;
   const fallback = next(master, 'choice_unavailable');
   pads[2].ws.close();
-  assert.equal((await fallback).reason, 'disconnected');
+  const fallbackMessage=await fallback;
+  assert.equal(fallbackMessage.reason, 'disconnected');
+  send(master,{t:'master_event_ack',eventId:fallbackMessage.eventId});
 
   const resumedSocket = await open();
   const resumed = await command(resumedSocket, { t: 'resume_pad', code: room.code, token: pads[2].token }, 'resumed_pad');
   assert.equal(resumed.code, room.code);
 
   const mapViews = [pads[0].ws, pads[1].ws, resumedSocket].map(ws => next(ws, 'view'));
-  send(master, { t: 'view', kind: 'map', scores: [{ name: 'Anna', score: 3, pos: 3 }], map: { finish: 30, players: [{ name: 'Anna', pos: 3 }], cells: [] } });
+  send(master, { t: 'view', kind: 'map', scores: [{ name: 'Anna', score: 3, pos: 3 }], map: { finish: 30, players: [{ name: 'Anna', pos: 3 }], cells: [] },movement:[{name:'Anna',scoreDelta:3,posDelta:3,sources:[{label:'Round 1'}]}] });
   assert.ok((await Promise.all(mapViews)).every(view => view.map.players[0].pos === 3));
 
   master.close(); pads[0].ws.close(); pads[1].ws.close(); resumedSocket.close();

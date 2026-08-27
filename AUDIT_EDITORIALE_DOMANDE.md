@@ -1,18 +1,26 @@
 # Audit editoriale domande
 
-Domande totali: 411. Attive e curate: 43. Escluse in attesa di revisione: 368.
+Domande totali: 581. Attive e curate: 213. Escluse in attesa di revisione: 368.
 
 ## Copertura attiva
 
-- Record Assurdi: 6
-- Cultura Pop: 3
-- Cibo e Calorie: 3
-- Sport: 6
-- Cinema: 8
-- Musica: 11
-- Serie TV: 4
-- Internet: 1
-- Libri: 1
+- Record Assurdi: 16
+- Cultura Pop: 13
+- Cibo e Calorie: 13
+- Sport: 16
+- Cinema: 18
+- Musica: 21
+- Serie TV: 14
+- Internet: 11
+- Libri: 11
+- Storia: 10
+- Geografia: 10
+- Scienza: 10
+- Animali: 10
+- Arte: 10
+- Spazio & Tempo: 10
+- Dati da Bar: 10
+- Tabù: 10
 
 ## Domande escluse
 

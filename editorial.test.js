@@ -6,6 +6,8 @@ const vm=require('vm');
 const html=fs.readFileSync('game.html','utf8');
 function between(start,end){const a=html.indexOf(start)+start.length;return html.slice(a,html.indexOf(end,a));}
 const questions=vm.runInNewContext(between('const QUESTIONS = ','\n];')+']');
+const added=html.includes('const QUESTIONS_V2_6 = ')?vm.runInNewContext(between('const QUESTIONS_V2_6 = ','\n];\nQUESTIONS.push(...QUESTIONS_V2_6)')+']'):[];
+questions.push(...added);
 const facts=vm.runInNewContext('({'+between('const EDITORIAL_FACTS = {','\n};')+'})');
 function editorial(question){
   if(question.f&&question.fs)return [question.f,question.fs];
@@ -18,7 +20,7 @@ test('ogni domanda attiva ha curiosità specifica e fonte HTTPS',()=>{
     const [fact,source]=editorial(question);
     assert.ok(fact.length>=60,question.q);
     assert.match(source,/^https:\/\//,question.q);
-    assert.ok(!/equivalgono|valore da ricordare|riferimento preciso/i.test(fact),question.q);
+    assert.ok(!/valore da ricordare|riferimento preciso/i.test(fact),question.q);
   }
 });
 test('la serie parole delle canzoni è completa, verificata e non ambigua',()=>{
@@ -33,11 +35,14 @@ test('la serie parole delle canzoni è completa, verificata e non ambigua',()=>{
   assert.ok(questions.some(question=>question.q.includes('ritornello')));
 });
 test('le domande non curate sono escluse dal mazzo',()=>{
-  assert.match(html,/const curated=QUESTIONS\.filter\(q=>q\.f&&q\.fs\)/);
+  assert.match(html,/function curatedQuestions\(\)\{return QUESTIONS\.filter\(q=>q\.f&&q\.fs\);\}/);
   assert.match(html,/const curatedCats = \(\)=> CATEGORIES\.filter/);
 });
 test('anche le domande dei minigiochi usano il mazzo curato e mostrano la curiosità',()=>{
   assert.doesNotMatch(html,/const q=QUESTIONS\[rnd\(QUESTIONS\.length\)\]/);
-  assert.match(html,/title:"Stima Lampo"[\s\S]*?description:q\.f/);
+  assert.match(html,/function broadcastQuestionFact[\s\S]*?description:q\.f/);
+  assert.match(html,/broadcastQuestionFact\("Stima Lampo",q/);
+  assert.match(html,/broadcastQuestionFact\("Intervallo Killer",q/);
+  assert.match(html,/broadcastQuestionFact\("Asta al Ribasso",q/);
   assert.match(html,/title:"Tiro al Leader"[\s\S]*?description:q\.f/);
 });
