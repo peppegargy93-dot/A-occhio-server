@@ -1,9 +1,18 @@
-# Bug risolti nella v2.7
+# Bug risolti nella v2.8
+
+## Mazzo ufficiale e interazione
+
+- Indizio dopo Indizio e Asta al Ribasso non sono più presenti nello shuffle-bag né nelle funzioni eseguibili.
+- Ordine Impossibile e Timeline Flash non richiedono più che il Master scelga manualmente il vincitore.
+- Le lavagnette degli sfidanti mostrano quattro carte riordinabili, timer, invio e blocco; Timeline dura 20 secondi e Ordine 25.
+- Il risultato è calcolato dal medesimo ordine ricevuto dal server e viene mostrato contemporaneamente a Master, sfidanti e spettatori.
+- Gli spettatori vedono l’andamento di tutte le prove senza poter inviare risposte.
+- Le prove numeriche e di scelta si rivelano automaticamente quando tutte le risposte sono arrivate.
 
 ## Minigiochi e lavagnette
 
 - Il deploy precedente utilizzava ancora il `game.html` vecchio: per questo comparivano soltanto i tre minigiochi originali.
-- Tutte le dieci carte sono ora elencate nella schermata di estrazione e percorse dallo stesso shuffle-bag.
+- Tutte le otto carte ufficiali sono elencate nella schermata di estrazione e percorse dallo stesso shuffle-bag.
 - Le mini sfide con risposta numerica o scelta attivano esclusivamente le lavagnette degli sfidanti.
 - Le lavagnette spettatrici non ricevono i campi e il server rifiuta risposte inviate con token estranei.
 - Il Master riceve una sola risposta per sfidante e può rivelare il risultato soltanto quando entrambe sono arrivate.
@@ -47,10 +56,10 @@
 ## Verifiche eseguite
 
 - Sintassi server e script Master: OK.
-- 33 test automatici: OK.
+- 35 test automatici: OK.
 - End-to-end WebSocket con Master e tre giocatori: ingresso, duplicati, rifiuto ingresso tardivo, rename, timer personale conservato alla riconnessione, replay di stime/scelte verso il Master, risposta unica, curiosità, sfida strutturata, scelta autorizzata, tentativo contraffatto, disconnessione, fallback e mappa: OK.
-- 360 partite simulate, 5.162 domande, 3.718 minigiochi e 2.600 parità: tutte le invarianti OK.
-- Collaudo browser con quattro giocatori fino al round successivo: Sfida, La Bomba, curiosità Master/lavagnetta, movimento e Bonus in due passaggi: OK.
+- 360 partite simulate, 5.228 domande, 3.936 minigiochi e 2.769 parità: tutte le invarianti OK.
+- Collaudo browser Timeline con due sfidanti e uno spettatore: ordine personale, timer, invio, risultato pubblico e viewport iPhone 390 × 844 senza overflow né errori console: OK.
 - Audit HTTP delle 170 nuove schede: 141 URL unici, 126 raggiunti direttamente; 15 hanno rifiutato il client automatico o chiuso la connessione, nessun `404` rilevato.
 
 ## Problemi rimasti

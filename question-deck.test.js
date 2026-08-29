@@ -28,7 +28,7 @@ test('ogni nuova domanda è numerica, unica, curata e dotata di fonte HTTPS',()=
 test('round e minigiochi numerici condividono lo stesso mazzo senza reinserimento',()=>{
   assert.match(html,/const QUESTION_MEMORY_KEY="aocchio_question_cycle_v2"/);
   assert.match(html,/S\.used\.add\(id\);QUESTION_MEMORY\.used\.add\(id\)/);
-  for(const context of ['Tiro al Leader','Stima Lampo','Alto o Basso','Intervallo Killer','Asta al Ribasso']){
+  for(const context of ['Tiro al Leader','Stima Lampo','Alto o Basso','Intervallo Killer']){
     assert.ok(html.includes(`drawFromPool(null,"${context}")`),context);
   }
   assert.doesNotMatch(html,/pick\(curated\(\)\)|QUESTIONS\[rnd/);
@@ -38,6 +38,5 @@ test('anche le carte speciali usano shuffle-bag dedicati',()=>{
   assert.match(html,/drawDeckCard\("tesi",TESI_CARDS\)/);
   assert.match(html,/drawDeckCard\("ordine",MINI_ORDER_CARDS\)/);
   assert.match(html,/drawDeckCard\("timeline",MINI_TIMELINE_CARDS\)/);
-  assert.match(html,/drawDeckCard\("indizi",MINI_CLUE_CARDS\)/);
   assert.match(html,/drawDeckCard\("bomba",MINI_BOMB_CATEGORIES\)/);
 });

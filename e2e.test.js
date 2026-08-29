@@ -130,6 +130,37 @@ test('flusso WebSocket con tre giocatori, scelta autorevole e riconnessione', as
   send(master,{t:'master_event_ack',eventId:bertoMiniMessage.eventId});
   send(master,{t:'mini_cancel',requestId:'mini-lampo-1'});
 
+  const sequenceStartViews=pads.map(pad=>next(pad.ws,'view'));
+  send(master,{t:'view',kind:'info',title:'Timeline Flash',subject:'Cinema',effectTitle:'Anna e Berto stanno giocando',description:'Riordinate quattro eventi.',instruction:'Gli spettatori vedranno le risposte dopo l’invio.'});
+  assert.ok((await Promise.all(sequenceStartViews)).every(view=>view.title==='Timeline Flash'));
+  let spectatorOrder=false;
+  const spectatorOrderListener=data=>{if(JSON.parse(data.toString()).t==='mini_request')spectatorOrder=true};
+  pads[2].ws.on('message',spectatorOrderListener);
+  const orderRequests=[next(pads[0].ws,'mini_request'),next(pads[1].ws,'mini_request')];
+  const orderItems=[{id:'a',label:'Evento A'},{id:'b',label:'Evento B'},{id:'c',label:'Evento C'},{id:'d',label:'Evento D'}];
+  send(master,{t:'mini_request',requestId:'mini-timeline-1',playerTokens:[pads[0].token,pads[1].token],title:'Timeline Flash',subject:'Cinema',icon:'🗓️',seconds:20,fields:[{id:'sequence',label:'Ordina',type:'order',items:orderItems}]});
+  const receivedOrders=await Promise.all(orderRequests);
+  assert.ok(receivedOrders.every(message=>message.fields[0].type==='order'));
+  assert.ok(receivedOrders.every(message=>message.deadline>Date.now()));
+  assert.equal(spectatorOrder,false);
+  assert.match((await command(pads[0].ws,{t:'mini_response',requestId:'mini-timeline-1',values:{sequence:'a|a|c|d'}},'err')).msg,/ordine inviato/i);
+  const annaOrder=next(master,'mini_response');
+  await command(pads[0].ws,{t:'mini_response',requestId:'mini-timeline-1',values:{sequence:'a|b|c|d'}},'mini_confirmed');
+  const annaOrderMessage=await annaOrder;
+  assert.equal(annaOrderMessage.values.sequence,'a|b|c|d');
+  send(master,{t:'master_event_ack',eventId:annaOrderMessage.eventId});
+  const bertoOrder=next(master,'mini_response');
+  await command(pads[1].ws,{t:'mini_response',requestId:'mini-timeline-1',values:{sequence:'d|c|b|a'}},'mini_confirmed');
+  const bertoOrderMessage=await bertoOrder;
+  assert.equal(bertoOrderMessage.values.sequence,'d|c|b|a');
+  send(master,{t:'master_event_ack',eventId:bertoOrderMessage.eventId});
+  send(master,{t:'mini_cancel',requestId:'mini-timeline-1'});
+  pads[2].ws.off('message',spectatorOrderListener);
+  const sequenceResultViews=pads.map(pad=>next(pad.ws,'view'));
+  send(master,{t:'view',kind:'info',title:'Timeline Flash',subject:'Cinema',effectTitle:'Ordine corretto: A → B → C → D',description:'Anna: A → B → C → D | Berto: D → C → B → A',instruction:'Vince Anna'});
+  const sequenceResults=await Promise.all(sequenceResultViews);
+  assert.ok(sequenceResults.every(view=>view.description.includes('Anna:')));
+
   const request = next(pads[0].ws, 'choice_request');
   send(master, { t: 'choice_request', requestId: 'bonus-1', chooser: 'Anna', title: 'Scegli il BONUS', options: [{ id: 'scudo', label: 'BONUS · Scudo' }] });
   await request;

@@ -1,87 +1,77 @@
-# Mazzo Sfide — regole v2.7
+# Mazzo Sfide — regole v2.8
 
-Il Mazzo Sfide contiene dieci minigiochi. Il tipo di prova non viene mai scelto dai giocatori: è sempre il gioco a estrarre una carta casuale.
+Il Mazzo Sfide ufficiale contiene otto minigiochi. Il gioco estrae sempre una carta casuale: i giocatori non scelgono il tipo di prova.
 
-## Interazione sulle lavagnette
+**Indizio dopo Indizio** e **Asta al Ribasso** sono stati rimossi dal mazzo e non possono più essere estratti.
 
-Quando la prova richiede una risposta individuale, si attivano esclusivamente le lavagnette dei giocatori in sfida. Gli altri partecipanti vedono la carta e restano spettatori in sola lettura.
+## Lavagnette e spettatori
 
-- **Stima Lampo** e **Cronometro del Master**: ogni sfidante inserisce un numero.
-- **Alto o Basso**: ogni sfidante sceglie una delle due opzioni.
-- **Intervallo Killer**: ogni sfidante inserisce minimo e massimo.
-- **Asta al Ribasso**: ogni sfidante inserisce stima e margine promesso.
-- **Nomi & Cose** e **La Bomba** restano prove a voce.
-- **Ordine Impossibile**, **Indizio dopo Indizio** e **Timeline Flash** restano guidate dal Master secondo le regole della carta.
+Le lavagnette dei giocatori in sfida ricevono i comandi personali. Tutte le altre mostrano domanda, carte, stato della prova e risultato, ma rimangono in sola lettura.
 
-Se uno sfidante è anche il giocatore Master, risponde direttamente sul Master. Il fallback per un altro giocatore compare sul Master soltanto dopo che il server ha rilevato la disconnessione della sua lavagnetta. Una risposta inviata viene bloccata e non può essere duplicata.
+- **Stima Lampo**: stima personale sulla lavagnetta.
+- **Cronometro del Master**: il Master controlla il cronometro; gli sfidanti inseriscono i secondi sulla propria lavagnetta.
+- **Alto o Basso**: scelta personale sulla lavagnetta per tre manche.
+- **Intervallo Killer**: minimo e massimo sulla lavagnetta.
+- **Ordine Impossibile**: quattro carte riordinabili sulla lavagnetta entro 25 secondi.
+- **Timeline Flash**: quattro eventi riordinabili sulla lavagnetta entro 20 secondi.
+- **Nomi & Cose** e **La Bomba**: risposte a voce, con validità e comandi controllati dal Master.
+
+Quando entrambi gli sfidanti hanno inviato, il gioco blocca le risposte, calcola l’esito e mostra a tutti le due risposte e la soluzione. Ordine e Timeline inviano automaticamente l’ordine presente allo scadere del tempo. Un token estraneo non può rispondere e un giocatore non può inviare due volte.
+
+Se uno sfidante usa il dispositivo Master, risponde localmente. Il fallback di una lavagnetta remota compare sul Master soltanto dopo l’indisponibilità confermata dal server.
 
 ## Come si attiva
 
 ### Casella Sfida o Minigioco
 
-1. Soltanto il giocatore arrivato sulla casella riceve i comandi sulla propria lavagnetta.
-2. Sceglie uno sfidante fra gli altri giocatori.
-3. Tocca **Pesca una carta casuale**.
-4. Tutti vedono la carta con tre regole, durata, criterio di vittoria e posta.
-5. Il Master avvia la prova e registra il vincitore.
-
-Se la lavagnetta autorizzata è disconnessa o il server la conferma indisponibile, gli stessi comandi compaiono sul Master. Non esiste più una scadenza arbitraria che sottragga la scelta a un giocatore ancora collegato. Gli altri telefoni restano spettatori in sola lettura.
+1. Il giocatore arrivato sulla casella sceglie lo sfidante dalla propria lavagnetta.
+2. Il gioco pesca automaticamente una carta.
+3. Tutti vedono nome, regole, durata, criterio di vittoria e posta.
+4. Le lavagnette degli sfidanti si attivano; le altre diventano spettatrici.
+5. Il risultato viene condiviso con tutti i dispositivi.
 
 ### Parità di distanza
 
-Quando due o più stime hanno la stessa distanza valida, il gioco estrae immediatamente una carta e mostra le regole. La schermata espone risposta corretta, stime, distanza reale e formula dopo eventuali modificatori: non può aprirsi per distanze valide diverse. Non viene chiesto di scegliere lo sfidante o il tipo di prova, perché i partecipanti sono già quelli coinvolti nella parità.
+Quando due o più stime hanno la stessa distanza valida, il gioco sceglie automaticamente partecipanti e carta. La schermata mostra risposta corretta, stime, distanza reale e formula dopo i modificatori. Una casella Sfida resta invece un evento del percorso e dichiara chiaramente il motivo differente.
 
-Le caselle Sfida/Minigioco sono invece eventi del percorso e possono attivarsi anche se nel round non esiste una parità. In quel caso il motivo mostrato è la casella raggiunta e l’avversario scelto.
-
-## Le dieci carte
+## Le otto carte
 
 ### Stima Lampo
 
-Il Master legge una nuova domanda numerica. Ogni sfidante dà una sola stima; si rivela la risposta e vince chi è più vicino. Durata indicativa: 40–60 secondi.
+Una nuova domanda numerica e una sola stima per sfidante. Vince chi è più vicino.
 
 ### Cronometro del Master
 
-Gli sfidanti si girano e non guardano lo schermo. Il Master avvia e ferma il cronometro senza annunciare la durata; ognuno stima i secondi trascorsi. Vince la stima temporale più precisa.
+Il Master avvia e ferma un intervallo nascosto. Gli sfidanti stimano i secondi trascorsi dalla propria lavagnetta; vince la stima più precisa.
 
 ### Nomi & Cose
 
-Compare una lettera insieme a una categoria. Gli sfidanti rispondono ad alta voce e il Master assegna la vittoria alla prima risposta valida. Se nessuno risponde, si pesca una nuova lettera e categoria.
+Compare una lettera con una categoria. Si risponde a voce e il Master assegna la vittoria alla prima risposta valida.
 
 ### Alto o Basso
 
-Per tre manche viene mostrata una domanda e un valore di riferimento. Ogni sfidante dichiara se la risposta reale è più alta o più bassa. Vince chi totalizza più risposte corrette; una nuova manche secca risolve l’eventuale parità.
+Per tre manche, gli sfidanti scelgono se la risposta reale è più alta o più bassa del riferimento. Vince chi totalizza più risposte corrette.
 
 ### Intervallo Killer
 
-Ogni sfidante indica un minimo e un massimo. Vince l’intervallo più stretto che contiene la risposta. Se nessun intervallo la contiene, vince quello con il bordo più vicino al valore reale.
+Ogni sfidante invia minimo e massimo. Vince l’intervallo valido più stretto; se nessuno contiene la risposta, vince quello con il bordo più vicino.
 
 ### Ordine Impossibile
 
-Compaiono quattro elementi mescolati da ordinare dal valore minore al maggiore. Il Master rivela la sequenza completa e assegna la vittoria a chi l’ha ricostruita meglio.
-
-### Indizio dopo Indizio
-
-Un numero misterioso è accompagnato da tre indizi progressivi. Dopo ogni indizio un giocatore può bloccare definitivamente la propria stima. Vince chi è più vicino; in caso di pari distanza prevale chi ha bloccato con meno indizi.
+Le lavagnette mostrano quattro elementi mescolati. Gli sfidanti li riordinano dal valore minore al maggiore entro 25 secondi. Vince chi colloca più elementi nella posizione corretta; la distanza complessiva nell’ordine risolve il primo spareggio.
 
 ### La Bomba
 
-Viene mostrata una categoria e parte una miccia casuale fra 7 e 12 secondi. I giocatori dicono a turno un elemento valido e il Master passa la bomba. Chi la possiede all’esplosione viene eliminato; vince l’ultimo rimasto.
-
-### Asta al Ribasso
-
-Ogni sfidante dichiara una stima e il massimo margine d’errore che promette di rispettare. Le promesse più strette sono prioritarie; vince la migliore promessa mantenuta. Se tutti falliscono, vince la stima più vicina.
+Compare una categoria e parte una miccia casuale fra 7 e 12 secondi. Si risponde a voce; il Master valida e passa la bomba. Chi la possiede all’esplosione viene eliminato.
 
 ### Timeline Flash
 
-Compaiono quattro eventi in ordine casuale. Gli sfidanti li ordinano mentalmente dal più vecchio al più recente; il Master rivela gli anni e assegna la vittoria a chi ha ricostruito meglio la cronologia.
+Le lavagnette mostrano quattro eventi mescolati. Gli sfidanti li riordinano dal più vecchio al più recente entro 20 secondi. All’invio, tutti vedono entrambe le timeline e gli anni corretti.
 
-## Rotazione e spareggi interni
+## Rotazione e curiosità
 
-- Il mazzo è uno shuffle-bag: tutte le dieci carte vengono estratte prima di ricominciare il ciclo.
-- La carta appena disputata viene esclusa dall’estrazione successiva.
-- Quando possibile viene esclusa anche la famiglia appena giocata, per alternare stima, voce, riflessi, ordine, tempo e rischio.
-- Se una prova calcolata termina ancora in parità, parte automaticamente un **Alto o Basso** secco fra i soli giocatori rimasti pari.
-
-## Curiosità
-
-Stima Lampo, Alto o Basso, Intervallo Killer, Ordine Impossibile, Indizio dopo Indizio, Asta al Ribasso e Timeline Flash mostrano una curiosità pertinente dopo la soluzione. Ogni curiosità proviene dal mazzo editoriale curato o da una carta con fonte HTTPS.
+- Lo shuffle-bag percorre tutte le otto carte prima di ricominciare.
+- La carta appena disputata non viene riproposta subito.
+- Quando possibile cambia anche la famiglia di gioco.
+- Una parità interna viene risolta con un **Alto o Basso** secco.
+- Stima Lampo, Alto o Basso, Intervallo Killer, Ordine Impossibile e Timeline Flash mostrano una curiosità pertinente e una fonte HTTPS dopo la soluzione.

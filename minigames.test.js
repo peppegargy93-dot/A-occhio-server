@@ -16,12 +16,11 @@ function between(start,end){
 
 const meta=vm.runInNewContext(`(${between('const MINI_GAME_META = ',';\nconst MINI_GAME_KEYS')})`);
 const orderCards=vm.runInNewContext(between('const MINI_ORDER_CARDS = ',';\nconst MINI_TIMELINE_CARDS'));
-const timelineCards=vm.runInNewContext(between('const MINI_TIMELINE_CARDS = ',';\nconst MINI_CLUE_CARDS'));
-const clueCards=vm.runInNewContext(between('const MINI_CLUE_CARDS = ',';\nconst MINI_BOMB_CATEGORIES'));
+const timelineCards=vm.runInNewContext(between('const MINI_TIMELINE_CARDS = ',';\nconst MINI_BOMB_CATEGORIES'));
 
-test('il Mazzo Sfide contiene i tre giochi originali e sette nuovi giochi',()=>{
+test('il Mazzo Sfide ufficiale contiene tre giochi originali e cinque nuovi giochi',()=>{
   assert.deepEqual(Object.keys(meta),[
-    'lampo','crono','ncc','altobasso','intervallo','ordine','indizi','bomba','asta','timeline'
+    'lampo','crono','ncc','altobasso','intervallo','ordine','bomba','timeline'
   ]);
   for(const [key,game] of Object.entries(meta)){
     assert.ok(game.icon,key);
@@ -40,15 +39,18 @@ test('la carta viene estratta automaticamente senza menu del tipo di minigioco',
   assert.match(source,/showRules\(chooseMode\(\)\)/);
   assert.match(source,/if\(finished\|\|!w\)return;finished=true/);
   assert.doesNotMatch(source,/Scegli il minigioco|tgRandom|tgNcc|miniMenu/);
-  assert.match(source,/Vedi tutte le 10 carte del Mazzo Sfide/);
+  assert.match(source,/Vedi tutte le 8 carte del Mazzo Sfide/);
   assert.match(source,/MINI_GAME_KEYS\.map/);
 });
 
 test('le mini sfide interattive attivano soltanto le lavagnette degli sfidanti',()=>{
   const source=between('function diceRollWinner(players,opts,done){','\nfunction scoreCard(){');
-  for(const title of ['Stima Lampo','Cronometro del Master','Alto o Basso','Intervallo Killer','Asta al Ribasso']){
+  for(const title of ['Stima Lampo','Cronometro del Master','Alto o Basso','Intervallo Killer']){
     assert.match(source,new RegExp(`title:\\"${title}\\"`),title);
   }
+  assert.match(source,/function sequenceGame\(/);
+  assert.match(source,/type:"order"/);
+  assert.match(source,/function timeline\(\)\{sequenceGame\("timeline"[\s\S]*?,20\);\}/);
   assert.match(source,/onlineRequestMiniInputs/);
   assert.match(source,/remote-mini-status/);
   assert.match(source,/closeOnlineMini/);
@@ -95,10 +97,25 @@ test('le ricompense originali delle due caselle restano distinte',()=>{
   assert.equal(board[22],'alfabetica');
 });
 
-test('le carte editoriali dei nuovi giochi hanno curiosità e fonte',()=>{
-  for(const card of [...orderCards,...timelineCards,...clueCards]){
+test('le carte editoriali dei giochi di ordine hanno curiosità e fonte',()=>{
+  for(const card of [...orderCards,...timelineCards]){
     assert.ok(card.fact.length>=55,card.title);
     assert.match(card.source,/^https:\/\//,card.title);
   }
   assert.doesNotMatch(html,/function startAlfabeticaGame|function renderAlfabeticaBody/);
+});
+
+test('le due carte eliminate non sono più estraibili né eseguibili',()=>{
+  assert.equal(meta.indizi,undefined);
+  assert.equal(meta.asta,undefined);
+  assert.doesNotMatch(html,/name:"Indizio dopo Indizio"|name:"Asta al Ribasso"/);
+  assert.doesNotMatch(html,/function indizi\(|function asta\(/);
+});
+
+test('spettatori e sfidanti ricevono avvio e risultato dallo stesso evento pubblico',()=>{
+  const source=between('function diceRollWinner(players,opts,done){','\nfunction scoreCard(){');
+  assert.match(source,/function broadcastMiniWaiting/);
+  assert.match(source,/function broadcastMiniResult/);
+  assert.match(source,/Le risposte compariranno insieme dopo l’invio/);
+  assert.match(source,/submitted=entries\.map/);
 });

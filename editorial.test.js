@@ -40,9 +40,8 @@ test('le domande non curate sono escluse dal mazzo',()=>{
 });
 test('anche le domande dei minigiochi usano il mazzo curato e mostrano la curiosità',()=>{
   assert.doesNotMatch(html,/const q=QUESTIONS\[rnd\(QUESTIONS\.length\)\]/);
-  assert.match(html,/function broadcastQuestionFact[\s\S]*?description:q\.f/);
-  assert.match(html,/broadcastQuestionFact\("Stima Lampo",q/);
-  assert.match(html,/broadcastQuestionFact\("Intervallo Killer",q/);
-  assert.match(html,/broadcastQuestionFact\("Asta al Ribasso",q/);
+  assert.match(html,/broadcastMiniResult\("⚡","Stima Lampo"[\s\S]*?q\.f/);
+  assert.match(html,/broadcastMiniResult\("🎯","Intervallo Killer"[\s\S]*?q\.f/);
+  assert.match(html,/broadcastMiniResult\("↕️","Alto o Basso"[\s\S]*?q\.f/);
   assert.match(html,/title:"Tiro al Leader"[\s\S]*?description:q\.f/);
 });

@@ -1,4 +1,16 @@
-# Rapporto playtest v2.7
+# Rapporto playtest v2.8
+
+## Collaudo Timeline v2.8
+
+Scenario reale su server locale con Anna e Berto in sfida e Carla spettatrice:
+
+1. Anna ha ricevuto quattro eventi riordinabili, pulsanti su/giù, timer da 20 secondi e **Invia e blocca**.
+2. Berto ha ricevuto una richiesta indipendente con la stessa lista.
+3. Carla ha visto titolo, categoria e stato della sfida, senza campi o pulsanti di risposta.
+4. Anna ha inviato `a|c|b|d` e Berto `d|c|b|a`; il server ha accettato un solo ordine completo per token.
+5. Dopo il secondo invio, Anna, Berto e Carla hanno visto ordine corretto ed entrambe le sequenze.
+6. Viewport iPhone 390 × 844: larghezza documento 390 pixel, nessun overflow orizzontale.
+7. Console browser: nessun errore JavaScript sulle lavagnette sfidante e spettatrice.
 
 ## Collaudo lavagnette delle mini sfide
 
@@ -17,16 +29,16 @@ Tre agenti deterministici indipendenti del modello di stato hanno giocato 120 pa
 
 | Agente | Seed | Partite | Domande | Minigiochi | Parità | Esito |
 |---|---:|---:|---:|---:|---:|---|
-| A | 260826 | 120 | 1.723 | 1.271 | 902 | OK |
-| B | 270826 | 120 | 1.721 | 1.221 | 842 | OK |
-| C | 930093 | 120 | 1.718 | 1.226 | 856 | OK |
+| A | 260826 | 120 | 1.750 | 1.344 | 943 | OK |
+| B | 270826 | 120 | 1.740 | 1.293 | 927 | OK |
+| C | 930093 | 120 | 1.738 | 1.299 | 899 | OK |
 
-In totale: 360 partite, 5.162 domande, 3.718 minigiochi, 2.600 parità, 277 Paracadute, 147 vittorie per Finale e 213 vittorie ai punti.
+In totale: 360 partite, 5.228 domande, 3.936 minigiochi, 2.769 parità, 286 Paracadute, 127 vittorie per Finale e 233 vittorie ai punti.
 
 Ogni agente ha controllato queste invarianti:
 
 - nessuna domanda ripetuta nella stessa partita;
-- ciclo completo dei dieci minigiochi prima del riuso;
+- ciclo completo degli otto minigiochi prima del riuso;
 - sfida da parità soltanto per distanze valide uguali;
 - un solo aggiornamento di punti/caselle per evento;
 - Paracadute applicato e consumato una sola volta;
@@ -63,6 +75,8 @@ Il test con Master e tre socket verifica inoltre:
 - replay e risposta contraffatta rifiutati;
 - fallback soltanto dopo disconnessione;
 - riconnessione tramite token e mappa aggiornata.
+- campo `order` validato come permutazione completa, con duplicati e token spettatore rifiutati;
+- deadline Timeline condivisa e vista pubblica prima e dopo l’invio.
 
 ## Esito
 

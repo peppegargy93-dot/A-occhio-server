@@ -191,7 +191,7 @@ body{padding:12px 14px calc(24px + env(safe-area-inset-bottom))}.shell{width:100
 .win-rule{border:1px solid #c9ddd2;background:#eef4f0;border-radius:12px;padding:10px;font-size:11.5px;line-height:1.4;margin:10px 0}.movement-list{display:grid;gap:7px;margin:10px 0}.movement-row{border:1px solid var(--line);background:var(--paper2);border-radius:12px;padding:9px}.movement-head{display:flex;gap:7px;justify-content:space-between;align-items:center}.movement-deltas{display:flex;gap:5px}.movement-deltas b{border-radius:999px;padding:4px 6px;font-size:10px;background:#e4f1ed;color:var(--teal)}.movement-deltas b:last-child{background:#fff0c8;color:#806119}.movement-source{font-size:10.5px;color:#65787e;margin-top:4px}.dual-title{display:grid;grid-template-columns:1fr 1fr;gap:7px}.dual-title>div{border:1px solid var(--line);border-radius:12px;padding:8px}@media(max-width:380px){.dual-title{grid-template-columns:1fr}}
 .connection{display:flex;align-items:center;gap:6px;font-size:11px;color:#65787e;margin-top:9px;justify-content:center}.dot{width:7px;height:7px;border-radius:50%;background:var(--teal)}.dot.off{background:var(--coral)}
 .choice-list{display:grid;grid-template-columns:minmax(0,1fr);gap:9px;margin-top:12px;max-height:min(48dvh,430px);overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding:2px}.choice-btn{appearance:none;-webkit-appearance:none;width:100%;min-width:0;display:grid;gap:4px;text-align:left;border:1.5px solid var(--line);border-radius:14px;background:var(--paper);color:var(--ink);padding:12px 13px;font:inherit;touch-action:manipulation}.choice-btn b,.choice-btn span,.event-title,.event-desc,.instruction{min-width:0;overflow-wrap:break-word;word-break:normal;-webkit-hyphens:none;hyphens:none;font-variant-ligatures:none}.choice-btn b{font-size:14px;line-height:1.25}.choice-btn span{font-size:12px;line-height:1.35;color:#587078}.choice-btn:disabled{opacity:.5}.rename-box{margin-top:18px;padding-top:14px;border-top:1px dashed var(--line)}
-.mini-answer-form{display:grid;gap:10px;margin-top:12px}.mini-answer-field label{display:block;font-size:11px;font-weight:950;margin-bottom:5px}.mini-answer-field input{width:100%;min-width:0;border:2px solid var(--ink);background:var(--paper2);border-radius:13px;padding:13px;font:inherit;font-size:19px;font-weight:850;text-align:center;color:var(--ink)}.mini-answer-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.mini-answer-option{border:1.5px solid var(--line);border-radius:12px;background:var(--paper);color:var(--ink);padding:11px 8px;font:inherit;font-size:12px;font-weight:900}.mini-answer-option.selected{background:var(--petrol);border-color:var(--petrol);color:#fff}.mini-answer-submit{margin-top:2px}.mini-answer-note{font-size:11px;color:#587078;text-align:center;line-height:1.35}
+.mini-answer-form{display:grid;gap:10px;margin-top:12px}.mini-answer-field label{display:block;font-size:11px;font-weight:950;margin-bottom:5px}.mini-answer-field input{width:100%;min-width:0;border:2px solid var(--ink);background:var(--paper2);border-radius:13px;padding:13px;font:inherit;font-size:19px;font-weight:850;text-align:center;color:var(--ink)}.mini-answer-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.mini-answer-option{border:1.5px solid var(--line);border-radius:12px;background:var(--paper);color:var(--ink);padding:11px 8px;font:inherit;font-size:12px;font-weight:900}.mini-answer-option.selected{background:var(--petrol);border-color:var(--petrol);color:#fff}.mini-answer-submit{margin-top:2px}.mini-answer-note{font-size:11px;color:#587078;text-align:center;line-height:1.35}.mini-answer-timer{display:grid;place-items:center;width:58px;height:58px;margin:0 auto 4px;border-radius:50%;background:var(--ink);color:#fff;font-size:25px;font-weight:950;font-variant-numeric:tabular-nums}.mini-answer-timer.warn{background:var(--coral)}.mini-order-list{display:grid;gap:7px}.mini-order-item{display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:7px;align-items:center;border:1.5px solid var(--line);border-radius:12px;background:#fff;padding:8px;min-width:0}.mini-order-number{width:25px;height:25px;display:grid;place-items:center;border-radius:50%;background:var(--ochre);font-size:11px;font-weight:950}.mini-order-label{font-size:12px;font-weight:900;line-height:1.25;overflow-wrap:break-word;min-width:0}.mini-order-controls{display:flex;gap:4px}.mini-order-move{border:1.5px solid var(--petrol);border-radius:8px;background:#fff;color:var(--petrol);padding:7px 8px;font:inherit;font-weight:950;line-height:1}.mini-order-move:disabled{opacity:.28}
 @supports not (height:100dvh){.choice-list{max-height:48vh}}
 @media(max-width:380px){body{padding-left:max(10px,env(safe-area-inset-left));padding-right:max(10px,env(safe-area-inset-right))}.panel{padding:14px;border-radius:18px}.event-title{font-size:18px}.choice-btn{padding:11px}.context-head,.compact-score{align-items:flex-start;flex-direction:column}.compact-score span{white-space:normal}}
 </style>
@@ -355,20 +355,28 @@ function applyMiniRequest(v){
   $('infoText').textContent=v.description||'La risposta viene inviata direttamente al Master.';
   $('infoInstruction').textContent='Solo le lavagnette degli sfidanti sono attive. La risposta si blocca dopo l’invio.';
   $('infoContext').classList.add('hidden');
-  const box=$('choiceList'),fields=Array.isArray(v.fields)?v.fields:[],values={};
-  box.innerHTML='<div class="mini-answer-form">'+fields.map(field=>{
+  const box=$('choiceList'),fields=Array.isArray(v.fields)?v.fields:[],values={};let submitted=false;
+  const timerHtml=Number(v.deadline)?'<div id="miniAnswerTimer" class="mini-answer-timer">'+Math.max(0,Math.ceil((Number(v.deadline)-Date.now())/1000))+'</div>':'';
+  box.innerHTML='<div class="mini-answer-form">'+timerHtml+fields.map(field=>{
     if(field.type==='choice')return '<div class="mini-answer-field"><label>'+esc(field.label||'Scegli')+'</label><div class="mini-answer-options">'+(field.options||[]).map(option=>'<button type="button" class="mini-answer-option" data-field="'+esc(field.id)+'" data-value="'+esc(option.id)+'">'+esc(option.label)+'</button>').join('')+'</div></div>';
+    if(field.type==='order')return '<div class="mini-answer-field"><label>'+esc(field.label||'Metti in ordine')+'</label><div class="mini-order-list" data-field="'+esc(field.id)+'">'+(field.items||[]).map((item,index)=>'<div class="mini-order-item" data-value="'+esc(item.id)+'"><span class="mini-order-number">'+(index+1)+'</span><span class="mini-order-label">'+esc(item.label)+'</span><span class="mini-order-controls"><button type="button" class="mini-order-move" data-dir="-1" aria-label="Sposta su">↑</button><button type="button" class="mini-order-move" data-dir="1" aria-label="Sposta giù">↓</button></span></div>').join('')+'</div></div>';
     return '<div class="mini-answer-field"><label for="mini_'+esc(field.id)+'">'+esc(field.label||'Risposta')+'</label><input id="mini_'+esc(field.id)+'" class="mini-answer-input" data-field="'+esc(field.id)+'" inputmode="decimal" autocomplete="off" placeholder="'+esc(field.placeholder||'Scrivi un numero')+'"></div>';
-  }).join('')+'<button id="miniAnswerSubmit" type="button" class="btn mini-answer-submit">Invia e blocca</button><div class="mini-answer-note">Gli altri giocatori restano spettatori.</div></div>';
+  }).join('')+'<button id="miniAnswerSubmit" type="button" class="btn mini-answer-submit">Invia e blocca</button><div class="mini-answer-note">Gli altri giocatori seguono la sfida in modalità spettatore.</div></div>';
   box.classList.remove('hidden');
   box.querySelectorAll('.mini-answer-option').forEach(button=>button.addEventListener('click',()=>{values[button.dataset.field]=button.dataset.value;box.querySelectorAll('.mini-answer-option[data-field="'+button.dataset.field+'"]').forEach(item=>item.classList.toggle('selected',item===button))}));
-  $('miniAnswerSubmit').addEventListener('click',()=>{
-    fields.forEach(field=>{if(field.type!=='choice'){const input=box.querySelector('.mini-answer-input[data-field="'+field.id+'"]');values[field.id]=(input?.value||'').trim()}});
+  function refreshOrder(list){const rows=[...list.querySelectorAll('.mini-order-item')];rows.forEach((row,index)=>{row.querySelector('.mini-order-number').textContent=index+1;const moves=row.querySelectorAll('.mini-order-move');moves[0].disabled=index===0;moves[1].disabled=index===rows.length-1});values[list.dataset.field]=rows.map(row=>row.dataset.value).join('|')}
+  box.querySelectorAll('.mini-order-list').forEach(list=>{refreshOrder(list);list.querySelectorAll('.mini-order-move').forEach(button=>button.addEventListener('click',()=>{const row=button.closest('.mini-order-item'),direction=Number(button.dataset.dir),sibling=direction<0?row.previousElementSibling:row.nextElementSibling;if(!sibling)return;if(direction<0)list.insertBefore(row,sibling);else list.insertBefore(sibling,row);refreshOrder(list)}))});
+  function submitMini(auto){
+    if(submitted)return;
+    fields.forEach(field=>{if(field.type!=='choice'&&field.type!=='order'){const input=box.querySelector('.mini-answer-input[data-field="'+field.id+'"]');values[field.id]=(input?.value||'').trim()}});
     if(fields.some(field=>!String(values[field.id]??'').trim())){$('status').textContent='Completa tutti i campi prima di inviare.';return}
+    submitted=true;stopTimer();
     box.querySelectorAll('input,button').forEach(control=>control.disabled=true);
     ws.send(JSON.stringify({t:'mini_response',requestId:v.requestId,values}));
-    $('infoInstruction').textContent='Risposta inviata. Attendi anche l’altro sfidante.';$('status').textContent='Risposta bloccata.';
-  });
+    $('infoInstruction').textContent=auto?'Tempo scaduto: l’ordine attuale è stato inviato.':'Risposta inviata. Attendi anche l’altro sfidante.';$('status').textContent='Risposta bloccata.';
+  }
+  $('miniAnswerSubmit').addEventListener('click',()=>submitMini(false));
+  if(Number(v.deadline)){const draw=()=>{const left=Math.max(0,Math.ceil((Number(v.deadline)-Date.now())/1000)),timer=$('miniAnswerTimer');if(timer){timer.textContent=left;timer.classList.toggle('warn',left<=5)}if(left<=0){stopTimer();submitMini(true)}};draw();if(!submitted)timerId=setInterval(draw,150)}
   $('status').textContent='La mini sfida è attiva sulla tua lavagnetta.';
 }
 function applyInfo(v){
@@ -424,7 +432,7 @@ function serveFile(res,name){fs.readFile(path.join(__dirname,name),(err,data)=>{
 const server = http.createServer((req,res)=>{
   const pathname=new URL(req.url,'http://localhost').pathname;
   if(pathname==='/lavagnetta'||pathname==='/lavagnetta/'){res.writeHead(200,{'Content-Type':'text/html; charset=utf-8','Cache-Control':'no-store, no-cache, must-revalidate'});return res.end(PAD)}
-  if(pathname==='/health'){res.writeHead(200,{'Content-Type':'application/json; charset=utf-8'});return res.end(JSON.stringify({ok:true,version:'2.7.0',rooms:rooms.size}))}
+  if(pathname==='/health'){res.writeHead(200,{'Content-Type':'application/json; charset=utf-8'});return res.end(JSON.stringify({ok:true,version:'2.8.0',rooms:rooms.size}))}
   if(pathname==='/'||pathname==='/gioco'||pathname==='/gioco/'||pathname==='/game.html') return serveFile(res,'game.html');
   const routes={'/index.html':'index.html','/app.js':'app.js','/styles.css':'styles.css'};
   if(routes[pathname]) return serveFile(res,routes[pathname]);
@@ -711,11 +719,13 @@ wss.on('connection', ws => {
         id: String(field.id || '').slice(0, 30),
         label: String(field.label || 'Risposta').slice(0, 80),
         placeholder: String(field.placeholder || '').slice(0, 80),
-        type: field.type === 'choice' ? 'choice' : 'number',
-        options: (Array.isArray(field.options) ? field.options : []).slice(0, 10).map(option => ({id:String(option.id || '').slice(0,30),label:String(option.label || '').slice(0,80)}))
-      })).filter(field => field.id && (field.type !== 'choice' || field.options.length >= 2));
+        type: field.type === 'choice' ? 'choice' : field.type === 'order' ? 'order' : 'number',
+        options: (Array.isArray(field.options) ? field.options : []).slice(0, 10).map(option => ({id:String(option.id || '').slice(0,30),label:String(option.label || '').slice(0,80)})),
+        items: (Array.isArray(field.items) ? field.items : []).slice(0, 8).map(item => ({id:String(item.id || '').slice(0,30),label:String(item.label || '').slice(0,100)})).filter(item=>item.id)
+      })).filter(field => field.id && (field.type !== 'choice' || field.options.length >= 2) && (field.type !== 'order' || (field.items.length >= 2 && new Set(field.items.map(item=>item.id)).size===field.items.length)));
       if (!requestId || !playerTokens.length || !fields.length) return send(ws, {t:'mini_error',requestId,msg:'Richiesta della mini sfida non valida.'});
-      const payload = {t:'mini_request',requestId,title:String(m.title||'Mini sfida').slice(0,100),subject:String(m.subject||'').slice(0,140),description:String(m.description||'').slice(0,300),icon:String(m.icon||'⚡').slice(0,8),fields};
+      const seconds=Math.max(0,Math.min(120,Number(m.seconds)||0));
+      const payload = {t:'mini_request',requestId,title:String(m.title||'Mini sfida').slice(0,100),subject:String(m.subject||'').slice(0,140),description:String(m.description||'').slice(0,300),icon:String(m.icon||'⚡').slice(0,8),fields,deadline:seconds?Date.now()+seconds*1000:0};
       room.activeMini = {requestId,playerTokens:new Set(playerTokens),fields,responses:new Map(),unavailableSent:new Set(),payload};
       for (const token of playerTokens) {
         const pad=room.pads.get(token);
@@ -788,7 +798,12 @@ wss.on('connection', ws => {
         const value=String(incoming[field.id]??'').trim();
         if(field.type==='number'){
           if(!/^[+-]?(?:\d+(?:[.,]\d*)?|[.,]\d+)$/.test(value))return send(ws,{t:'err',msg:`Inserisci un numero valido per ${field.label}.`});
-        }else if(!field.options.some(option=>option.id===value))return send(ws,{t:'err',msg:`Seleziona una risposta valida per ${field.label}.`});
+        }else if(field.type==='choice'){
+          if(!field.options.some(option=>option.id===value))return send(ws,{t:'err',msg:`Seleziona una risposta valida per ${field.label}.`});
+        }else{
+          const order=value.split('|'),ids=field.items.map(item=>item.id);
+          if(order.length!==ids.length||new Set(order).size!==ids.length||order.some(id=>!ids.includes(id)))return send(ws,{t:'err',msg:`L’ordine inviato per ${field.label} non è valido.`});
+        }
         values[field.id]=value;
       }
       active.responses.set(pad.token,values);

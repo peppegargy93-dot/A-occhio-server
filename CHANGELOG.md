@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.8.0 — otto sfide ufficiali e ordinamento sulle lavagnette
+
+- Rimossi dal mazzo e dal codice eseguibile **Indizio dopo Indizio** e **Asta al Ribasso**.
+- Ridotto lo shuffle-bag ufficiale a otto carte, senza alterare ricompense, punti o tabellone.
+- Trasformati **Ordine Impossibile** e **Timeline Flash** in giochi interattivi sulle lavagnette.
+- Aggiunte quattro carte riordinabili con controlli su/giù responsive: 25 secondi per Ordine e 20 per Timeline.
+- Allo scadere viene inviato automaticamente l’ordine presente; il server valida che la sequenza sia una permutazione completa e accetta un solo invio per token autorizzato.
+- Quando entrambi gli sfidanti hanno risposto, il gioco rivela automaticamente a tutti le due sequenze, la soluzione, il vincitore e la curiosità.
+- Estesa la vista spettatore a ogni minigioco: domanda o categoria durante la prova, quindi risposte ed esito. Gli spettatori non ricevono comandi.
+- Nomi & Cose e La Bomba restano vocali con convalida del Master; il Cronometro resta controllato dal Master ma le stime vengono inserite sulle lavagnette.
+- Aggiunti controlli WebSocket per campi `order`, deadline condivisa, duplicati e risposte contraffatte; suite portata a 35 test.
+
 ## 2.7.0 — dieci minigiochi visibili e risposte sulle lavagnette
 
 - Verificato il deploy precedente: GitHub e Render servivano ancora il vecchio `game.html` con il menu dei soli tre minigiochi.

@@ -1,6 +1,6 @@
-# A OCCHIO! — GitHub Update v2.7
+# A OCCHIO! — GitHub Update v2.8
 
-Party game multiplayer con un dispositivo Master e fino a sette lavagnette WebSocket. La v2.7 rende realmente interattivo il Mazzo Sfide sulle lavagnette, conservando punteggi e percorso originali.
+Party game multiplayer con un dispositivo Master e fino a sette lavagnette WebSocket. La v2.8 porta le risposte e i giochi di ordinamento sui dispositivi personali, mantenendo punteggi e percorso originali.
 
 ## Avvio e verifica
 
@@ -17,16 +17,19 @@ npm start
 - Lavagnetta: `http://localhost:3000/lavagnetta`
 - Stato server: `http://localhost:3000/health`
 
-## Cosa cambia nella v2.7
+## Cosa cambia nella v2.8
 
-- Il Mazzo Sfide contiene e mostra chiaramente tutte le dieci carte: Stima Lampo, Cronometro del Master, Nomi & Cose, Alto o Basso, Intervallo Killer, Ordine Impossibile, Indizio dopo Indizio, La Bomba, Asta al Ribasso e Timeline Flash.
-- Per Stima Lampo, Cronometro, Alto o Basso, Intervallo Killer e Asta al Ribasso si attivano soltanto le lavagnette dei giocatori in sfida.
-- Le risposte vengono inviate e bloccate sul server; gli altri telefoni restano spettatori.
+- Il Mazzo Sfide ufficiale contiene otto carte: Stima Lampo, Cronometro del Master, Nomi & Cose, Alto o Basso, Intervallo Killer, Ordine Impossibile, La Bomba e Timeline Flash.
+- **Indizio dopo Indizio** e **Asta al Ribasso** sono stati rimossi dall’estrazione e dal codice eseguibile.
+- Stima Lampo, Cronometro, Alto o Basso, Intervallo Killer, Ordine Impossibile e Timeline Flash attivano soltanto le lavagnette degli sfidanti.
+- Timeline offre quattro carte riordinabili e 20 secondi; Ordine Impossibile usa la stessa interazione con 25 secondi.
+- Le risposte vengono bloccate e, quando entrambi hanno inviato, appaiono insieme su Master e lavagnette. Gli altri telefoni seguono domanda, andamento e risultato come spettatori.
+- Nomi & Cose e La Bomba restano vocali e vengono controllati dal Master, mentre tutti i dispositivi vedono categoria, turno ed esito.
 - Se il Master è uno degli sfidanti, compila il proprio campo sul dispositivo principale. Il fallback per un altro giocatore compare soltanto dopo la disconnessione della sua lavagnetta.
 
 - Una parità nasce soltanto da una **distanza valida realmente uguale**. Master e lavagnette mostrano domanda, risposta corretta, stime, distanza reale, modificatori e formula usata.
 - Le caselle **Sfida** e **Minigioco** mostrano separatamente il motivo del confronto: giocatore arrivato, casella, avversario e carta estratta.
-- Il Mazzo Sfide contiene 10 minigiochi e usa uno shuffle-bag: tutte le carte vengono percorse prima di ricominciare, evitando anche la stessa famiglia consecutiva quando possibile.
+- Il Mazzo Sfide contiene 8 minigiochi e usa uno shuffle-bag: tutte le carte vengono percorse prima di ricominciare, evitando anche la stessa famiglia consecutiva quando possibile.
 - Round e minigiochi numerici condividono un unico mazzo di domande. Una domanda non può ripetersi nella stessa partita e la memoria del ciclo resta nel browser anche fra partite successive.
 - Aggiunte **170 nuove domande**: esattamente 10 per ognuna delle 17 categorie, tutte con risposta numerica, curiosità specifica e fonte HTTPS.
 - Database: **581 domande totali**, **213 attive e curate**, **368 storiche escluse** finché non ricevono curiosità e fonte verificate.
@@ -52,12 +55,12 @@ Esegui `npm run audit:questions` per rigenerare `AUDIT_EDITORIALE_DOMANDE.md` e 
 
 ## Verifiche incluse
 
-- 33 test automatici, compreso un end-to-end WebSocket con due sfidanti attivi, uno spettatore e tentativi di risposta non autorizzati.
+- 35 test automatici, compreso un end-to-end WebSocket con due sfidanti attivi, uno spettatore, ordinamento Timeline e tentativi di risposta non autorizzati.
 - 360 partite simulate con 3–6 giocatori e tre semi indipendenti.
-- 5.162 domande estratte senza duplicati interni alla partita.
-- 3.718 minigiochi estratti con ciclo completo del mazzo.
-- 2.600 parità autorevoli, 277 Paracadute, vittorie sia per Finale sia ai punti.
-- Collaudo browser con quattro giocatori: parità, carta Sfida, curiosità, avanzamento, scelta Bonus in due passaggi e avvio del round successivo.
+- 5.228 domande estratte senza duplicati interni alla partita.
+- 3.936 minigiochi estratti con ciclo completo del mazzo.
+- 2.769 parità autorevoli, 286 Paracadute, 127 vittorie per Finale e 233 ai punti.
+- Collaudo browser Timeline con due sfidanti e uno spettatore: ordine personale, timer, invio, risultato pubblico e viewport iPhone 390 × 844 senza overflow.
 
 Vedi `SIMULATION_REPORT.md` e `PLAYTEST_REPORT.md` per i dettagli.
 
@@ -66,7 +69,7 @@ Vedi `SIMULATION_REPORT.md` e `PLAYTEST_REPORT.md` per i dettagli.
 - `AUDIT_PRE_MODIFICA.md`: struttura e cause reali individuate prima della v2.6.
 - `AUDIT_EDITORIALE_DOMANDE.md`: copertura del mazzo attivo.
 - `DOMANDE_DA_VERIFICARE.md`: 368 domande storiche ancora escluse.
-- `MAZZO_SFIDE.md`: regole e attivazione dei dieci minigiochi.
+- `MAZZO_SFIDE.md`: regole e attivazione degli otto minigiochi.
 - `BUG_RISOLTI.md` e `CHANGELOG.md`: correzioni e modifiche.
 - `FILE_DA_CARICARE_GITHUB.md`: elenco esatto per GitHub.
 - `DEPLOY_RENDER.md`: pubblicazione e collaudo su Render.

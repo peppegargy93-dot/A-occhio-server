@@ -1,15 +1,15 @@
 # File da aggiornare su GitHub
 
-Carica **il contenuto** di `A_OCCHIO_FILE_DA_CARICARE_GITHUB_V2_7` nella root del repository `A-occhio-server`. Non caricare la cartella v2.7 come sottocartella.
+Carica **il contenuto** di `A_OCCHIO_FILE_DA_CARICARE_GITHUB_V2_8` nella root del repository `A-occhio-server`. Non caricare la cartella v2.8 come sottocartella.
 
 ## Correzione indispensabile
 
-Il sito attualmente online sta ancora servendo il vecchio `game.html`, riconoscibile dal menu con soli tre minigiochi: **Stima Lampo**, **Nomi & Cose** e **Cronometro del Master**. Per rendere effettiva questa correzione devi almeno sostituire nella root GitHub questi due file:
+Per rendere effettiva questa correzione devi almeno sostituire nella root GitHub questi due file; caricarli dentro una sottocartella non aggiorna il gioco pubblicato:
 
 - `game.html`
 - `server.js`
 
-Per evitare errori è inclusa anche la cartella `A_OCCHIO_SOSTITUISCI_QUESTI_2_FILE_V2_7`, che contiene soltanto quei due file. Non lasciare i file nuovi dentro una sottocartella: devono sostituire gli omonimi già visibili nella pagina principale del repository.
+Per evitare errori è inclusa anche la cartella `A_OCCHIO_SOSTITUISCI_QUESTI_2_FILE_V2_8`, che contiene soltanto quei due file. Non lasciare i file nuovi dentro una sottocartella: devono sostituire gli omonimi già visibili nella pagina principale del repository.
 
 ## File applicativi da sostituire
 
@@ -76,12 +76,12 @@ npm run audit:questions
 npm run simulate
 ```
 
-Risultato atteso: 33 test superati, 213 domande curate, 368 escluse e 360 partite simulate con stato `OK`.
+Risultato atteso: 35 test superati, 213 domande curate, 368 escluse e 360 partite simulate con stato `OK`.
 
 ## Controllo dopo il caricamento
 
-1. Apri `game.html` direttamente su GitHub e cerca `A OCCHIO! v2.7.0`.
-2. Nello stesso file cerca `Vedi tutte le 10 carte del Mazzo Sfide`.
-3. Dopo il deploy, apri `/health`: deve comparire `"version":"2.7.0"`.
+1. Apri `game.html` direttamente su GitHub e cerca `A OCCHIO! v2.8.0`.
+2. Nello stesso file cerca `Vedi tutte le 8 carte del Mazzo Sfide`.
+3. Dopo il deploy, apri `/health`: deve comparire `"version":"2.8.0"`.
 
 Se uno di questi controlli fallisce, GitHub o Render stanno ancora usando i file precedenti.
