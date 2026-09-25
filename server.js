@@ -111,6 +111,9 @@ function roomState(room, pad = null) {
   const activeMini = pad && room.activeMini?.playerTokens.has(pad.token)
     ? room.activeMini
     : null;
+  const activeChoice = pad && room.activeChoice?.chooserToken === pad.token && !room.activeChoice.resolved
+    ? room.activeChoice
+    : null;
   return {
     locked: room.locked,
     round: room.round,
@@ -120,7 +123,8 @@ function roomState(room, pad = null) {
     lastResult: room.lastResult || null,
     lastMap: room.lastMap || null,
     sent: !!pad && pad.answeredRound === room.round,
-    miniRequest: activeMini && !activeMini.responses.has(pad.token) ? activeMini.payload : null,
+    choiceRequest: activeChoice ? activeChoice.payload : null,
+    miniRequest: activeMini && !activeMini.responses.has(pad.token) && !activeMini.unavailableSent.has(pad.token) ? activeMini.payload : null,
     miniSent: !!activeMini && activeMini.responses.has(pad.token)
   };
 }
@@ -191,7 +195,7 @@ body{padding:12px 14px calc(24px + env(safe-area-inset-bottom))}.shell{width:100
 .win-rule{border:1px solid #c9ddd2;background:#eef4f0;border-radius:12px;padding:10px;font-size:11.5px;line-height:1.4;margin:10px 0}.movement-list{display:grid;gap:7px;margin:10px 0}.movement-row{border:1px solid var(--line);background:var(--paper2);border-radius:12px;padding:9px}.movement-head{display:flex;gap:7px;justify-content:space-between;align-items:center}.movement-deltas{display:flex;gap:5px}.movement-deltas b{border-radius:999px;padding:4px 6px;font-size:10px;background:#e4f1ed;color:var(--teal)}.movement-deltas b:last-child{background:#fff0c8;color:#806119}.movement-source{font-size:10.5px;color:#65787e;margin-top:4px}.dual-title{display:grid;grid-template-columns:1fr 1fr;gap:7px}.dual-title>div{border:1px solid var(--line);border-radius:12px;padding:8px}@media(max-width:380px){.dual-title{grid-template-columns:1fr}}
 .connection{display:flex;align-items:center;gap:6px;font-size:11px;color:#65787e;margin-top:9px;justify-content:center}.dot{width:7px;height:7px;border-radius:50%;background:var(--teal)}.dot.off{background:var(--coral)}
 .choice-list{display:grid;grid-template-columns:minmax(0,1fr);gap:9px;margin-top:12px;max-height:min(48dvh,430px);overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding:2px}.choice-btn{appearance:none;-webkit-appearance:none;width:100%;min-width:0;display:grid;gap:4px;text-align:left;border:1.5px solid var(--line);border-radius:14px;background:var(--paper);color:var(--ink);padding:12px 13px;font:inherit;touch-action:manipulation}.choice-btn b,.choice-btn span,.event-title,.event-desc,.instruction{min-width:0;overflow-wrap:break-word;word-break:normal;-webkit-hyphens:none;hyphens:none;font-variant-ligatures:none}.choice-btn b{font-size:14px;line-height:1.25}.choice-btn span{font-size:12px;line-height:1.35;color:#587078}.choice-btn:disabled{opacity:.5}.rename-box{margin-top:18px;padding-top:14px;border-top:1px dashed var(--line)}
-.mini-answer-form{display:grid;gap:10px;margin-top:12px}.mini-answer-field label{display:block;font-size:11px;font-weight:950;margin-bottom:5px}.mini-answer-field input{width:100%;min-width:0;border:2px solid var(--ink);background:var(--paper2);border-radius:13px;padding:13px;font:inherit;font-size:19px;font-weight:850;text-align:center;color:var(--ink)}.mini-answer-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.mini-answer-option{border:1.5px solid var(--line);border-radius:12px;background:var(--paper);color:var(--ink);padding:11px 8px;font:inherit;font-size:12px;font-weight:900}.mini-answer-option.selected{background:var(--petrol);border-color:var(--petrol);color:#fff}.mini-answer-submit{margin-top:2px}.mini-answer-note{font-size:11px;color:#587078;text-align:center;line-height:1.35}.mini-answer-timer{display:grid;place-items:center;width:58px;height:58px;margin:0 auto 4px;border-radius:50%;background:var(--ink);color:#fff;font-size:25px;font-weight:950;font-variant-numeric:tabular-nums}.mini-answer-timer.warn{background:var(--coral)}.mini-order-list{display:grid;gap:7px}.mini-order-item{display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:7px;align-items:center;border:1.5px solid var(--line);border-radius:12px;background:#fff;padding:8px;min-width:0}.mini-order-number{width:25px;height:25px;display:grid;place-items:center;border-radius:50%;background:var(--ochre);font-size:11px;font-weight:950}.mini-order-label{font-size:12px;font-weight:900;line-height:1.25;overflow-wrap:break-word;min-width:0}.mini-order-controls{display:flex;gap:4px}.mini-order-move{border:1.5px solid var(--petrol);border-radius:8px;background:#fff;color:var(--petrol);padding:7px 8px;font:inherit;font-weight:950;line-height:1}.mini-order-move:disabled{opacity:.28}
+.mini-answer-form{display:grid;gap:10px;margin-top:12px}.mini-answer-field label{display:block;font-size:11px;font-weight:950;margin-bottom:5px}.mini-answer-field input{width:100%;min-width:0;border:2px solid var(--ink);background:var(--paper2);border-radius:13px;padding:13px;font:inherit;font-size:19px;font-weight:850;text-align:center;color:var(--ink)}.mini-answer-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.mini-answer-option{border:1.5px solid var(--line);border-radius:12px;background:var(--paper);color:var(--ink);padding:13px 8px;font:inherit;font-size:13px;font-weight:900;touch-action:manipulation;-webkit-tap-highlight-color:transparent}.mini-answer-option.selected{background:var(--petrol);border-color:var(--petrol);color:#fff}.mini-answer-submit{margin-top:2px;touch-action:manipulation}.mini-answer-note{font-size:11px;color:#587078;text-align:center;line-height:1.35}.mini-answer-timer{display:grid;place-items:center;width:58px;height:58px;margin:0 auto 4px;border-radius:50%;background:var(--ink);color:#fff;font-size:25px;font-weight:950;font-variant-numeric:tabular-nums}.mini-answer-timer.warn{background:var(--coral)}.mini-order-list{display:grid;gap:7px}.mini-order-item{display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:7px;align-items:center;border:1.5px solid var(--line);border-radius:12px;background:#fff;padding:8px;min-width:0}.mini-order-number{width:25px;height:25px;display:grid;place-items:center;border-radius:50%;background:var(--ochre);font-size:11px;font-weight:950}.mini-order-label{font-size:12px;font-weight:900;line-height:1.25;overflow-wrap:break-word;min-width:0}.mini-order-controls{display:flex;gap:4px}.mini-order-move{border:1.5px solid var(--petrol);border-radius:8px;background:#fff;color:var(--petrol);padding:9px 10px;font:inherit;font-weight:950;line-height:1;touch-action:manipulation}.mini-order-move:disabled{opacity:.28}
 @supports not (height:100dvh){.choice-list{max-height:48vh}}
 @media(max-width:380px){body{padding-left:max(10px,env(safe-area-inset-left));padding-right:max(10px,env(safe-area-inset-right))}.panel{padding:14px;border-radius:18px}.event-title{font-size:18px}.choice-btn{padding:11px}.context-head,.compact-score{align-items:flex-start;flex-direction:column}.compact-score span{white-space:normal}}
 </style>
@@ -363,7 +367,8 @@ function applyMiniRequest(v){
     return '<div class="mini-answer-field"><label for="mini_'+esc(field.id)+'">'+esc(field.label||'Risposta')+'</label><input id="mini_'+esc(field.id)+'" class="mini-answer-input" data-field="'+esc(field.id)+'" inputmode="decimal" autocomplete="off" placeholder="'+esc(field.placeholder||'Scrivi un numero')+'"></div>';
   }).join('')+'<button id="miniAnswerSubmit" type="button" class="btn mini-answer-submit">Invia e blocca</button><div class="mini-answer-note">Gli altri giocatori seguono la sfida in modalità spettatore.</div></div>';
   box.classList.remove('hidden');
-  box.querySelectorAll('.mini-answer-option').forEach(button=>button.addEventListener('click',()=>{values[button.dataset.field]=button.dataset.value;box.querySelectorAll('.mini-answer-option[data-field="'+button.dataset.field+'"]').forEach(item=>item.classList.toggle('selected',item===button))}));
+  if(ws&&ws.readyState===WebSocket.OPEN)ws.send(JSON.stringify({t:'mini_ready',requestId:v.requestId}));
+  box.querySelectorAll('.mini-answer-option').forEach(button=>button.addEventListener('click',()=>{values[button.dataset.field]=button.dataset.value;box.querySelectorAll('.mini-answer-option[data-field="'+button.dataset.field+'"]').forEach(item=>item.classList.toggle('selected',item===button));if(fields.length===1)setTimeout(()=>submitMini(false),120)}));
   function refreshOrder(list){const rows=[...list.querySelectorAll('.mini-order-item')];rows.forEach((row,index)=>{row.querySelector('.mini-order-number').textContent=index+1;const moves=row.querySelectorAll('.mini-order-move');moves[0].disabled=index===0;moves[1].disabled=index===rows.length-1});values[list.dataset.field]=rows.map(row=>row.dataset.value).join('|')}
   box.querySelectorAll('.mini-order-list').forEach(list=>{refreshOrder(list);list.querySelectorAll('.mini-order-move').forEach(button=>button.addEventListener('click',()=>{const row=button.closest('.mini-order-item'),direction=Number(button.dataset.dir),sibling=direction<0?row.previousElementSibling:row.nextElementSibling;if(!sibling)return;if(direction<0)list.insertBefore(row,sibling);else list.insertBefore(sibling,row);refreshOrder(list)}))});
   function submitMini(auto){
@@ -414,7 +419,7 @@ function applyInfo(v){
   $('status').textContent='Evento in corso. La situazione della partita resta visibile qui sotto.';
 }
 function applyView(v){if(v.kind==='result')return applyResult(v);if(v.kind==='map')return applyMap(v);return applyInfo(v)}
-function applyState(s){if(s.miniRequest)return applyMiniRequest(s.miniRequest);if(s.view)applyView(s.view);else if(s.question&&s.locked){stopTimer();showScreen('lockedScreen');$('status').textContent=s.sent?'La tua stima è al sicuro.':'Le risposte sono già chiuse.'}else if(s.question)applyQuestion({...s.question,deadline:s.deadline,locked:s.locked,sent:s.sent});else{$('renameName').value=currentName;showScreen('waitingScreen')}}
+function applyState(s){if(s.choiceRequest)return applyChoiceRequest(s.choiceRequest);if(s.miniRequest)return applyMiniRequest(s.miniRequest);if(s.view)applyView(s.view);else if(s.question&&s.locked){stopTimer();showScreen('lockedScreen');$('status').textContent=s.sent?'La tua stima è al sicuro.':'Le risposte sono già chiuse.'}else if(s.question)applyQuestion({...s.question,deadline:s.deadline,locked:s.locked,sent:s.sent});else{$('renameName').value=currentName;showScreen('waitingScreen')}}
 let connectAttempt=0,openTimer=null;
 function closeSocket(){manualClose=true;clearTimeout(retry);clearTimeout(openTimer);try{ws&&ws.close()}catch{}ws=null;setTimeout(()=>manualClose=false,80)}
 function scheduleReconnect(){if(manualClose||retry)return;const wait=retryMs+Math.floor(Math.random()*350);retry=setTimeout(()=>{retry=null;connect('resume')},wait);retryMs=Math.min(10000,Math.round(retryMs*1.7))}
@@ -432,7 +437,7 @@ function serveFile(res,name){fs.readFile(path.join(__dirname,name),(err,data)=>{
 const server = http.createServer((req,res)=>{
   const pathname=new URL(req.url,'http://localhost').pathname;
   if(pathname==='/lavagnetta'||pathname==='/lavagnetta/'){res.writeHead(200,{'Content-Type':'text/html; charset=utf-8','Cache-Control':'no-store, no-cache, must-revalidate'});return res.end(PAD)}
-  if(pathname==='/health'){res.writeHead(200,{'Content-Type':'application/json; charset=utf-8'});return res.end(JSON.stringify({ok:true,version:'2.8.0',rooms:rooms.size}))}
+  if(pathname==='/health'){res.writeHead(200,{'Content-Type':'application/json; charset=utf-8'});return res.end(JSON.stringify({ok:true,version:'2.9.0',rooms:rooms.size}))}
   if(pathname==='/'||pathname==='/gioco'||pathname==='/gioco/'||pathname==='/game.html') return serveFile(res,'game.html');
   const routes={'/index.html':'index.html','/app.js':'app.js','/styles.css':'styles.css'};
   if(routes[pathname]) return serveFile(res,routes[pathname]);
@@ -689,28 +694,31 @@ wss.on('connection', ws => {
       const requestId = String(m.requestId || '');
       const options = Array.isArray(m.options) ? m.options.slice(0, 20) : [];
       if (!requestId || !options.length) return send(room.masterSocket, { t: 'choice_error', requestId, msg: 'Richiesta di scelta non valida.' });
-      room.activeChoice = {
-        requestId,
-        chooserToken: pad.token,
-        optionIds: new Set(options.map(option => String(option.id))),
-        resolved: false,
-        fallbackSent: false
-      };
-      if (!pad.socket || pad.socket.readyState !== WebSocket.OPEN) {
-        return choiceFallback(room, room.activeChoice);
-      }
-      send(pad.socket, {
+      const payload = {
         t: 'choice_request',
         requestId,
         title: m.title || 'Fai la tua scelta',
         subject: m.subject || '',
         description: m.description || '',
         options
-      });
+      };
+      room.activeChoice = {
+        requestId,
+        chooserToken: pad.token,
+        optionIds: new Set(options.map(option => String(option.id))),
+        resolved: false,
+        fallbackSent: false,
+        payload
+      };
+      if (!pad.socket || pad.socket.readyState !== WebSocket.OPEN) {
+        return choiceFallback(room, room.activeChoice);
+      }
+      send(pad.socket, payload);
       return;
     }
 
     if (m.t === 'mini_request' && ws._role === 'master') {
+      if(room.activeMini?.readyTimer)clearTimeout(room.activeMini.readyTimer);
       const requestId = String(m.requestId || '');
       const playerTokens = [...new Set((Array.isArray(m.playerTokens) ? m.playerTokens : []).map(String))]
         .filter(token => room.pads.has(token))
@@ -726,7 +734,7 @@ wss.on('connection', ws => {
       if (!requestId || !playerTokens.length || !fields.length) return send(ws, {t:'mini_error',requestId,msg:'Richiesta della mini sfida non valida.'});
       const seconds=Math.max(0,Math.min(120,Number(m.seconds)||0));
       const payload = {t:'mini_request',requestId,title:String(m.title||'Mini sfida').slice(0,100),subject:String(m.subject||'').slice(0,140),description:String(m.description||'').slice(0,300),icon:String(m.icon||'⚡').slice(0,8),fields,deadline:seconds?Date.now()+seconds*1000:0};
-      room.activeMini = {requestId,playerTokens:new Set(playerTokens),fields,responses:new Map(),unavailableSent:new Set(),payload};
+      room.activeMini = {requestId,playerTokens:new Set(playerTokens),fields,responses:new Map(),readyTokens:new Set(),unavailableSent:new Set(),payload,readyTimer:null};
       for (const token of playerTokens) {
         const pad=room.pads.get(token);
         if (pad.socket?.readyState === WebSocket.OPEN) send(pad.socket,payload);
@@ -735,12 +743,24 @@ wss.on('connection', ws => {
           queueMasterEvent(room,{t:'mini_unavailable',requestId,playerId:token,name:pad.name,msg:`La lavagnetta di ${pad.name} non è collegata.`});
         }
       }
+      const active=room.activeMini;
+      active.readyTimer=setTimeout(()=>{
+        if(room.activeMini!==active)return;
+        for(const token of active.playerTokens){
+          if(active.readyTokens.has(token)||active.responses.has(token)||active.unavailableSent.has(token))continue;
+          const pad=room.pads.get(token);active.unavailableSent.add(token);
+          send(pad?.socket,{t:'mini_closed',requestId:active.requestId,msg:'La lavagnetta non ha confermato l’apertura: il controllo passa al Master.'});
+          send(pad?.socket,{t:'view',kind:'info',icon:'⚠️',title:'Controllo trasferito',subject:active.payload.title,effectTitle:'La risposta verrà inserita dal Master',description:'Questa lavagnetta non ha confermato in tempo l’apertura dei comandi.',instruction:'Continua a seguire la sfida in modalità spettatore.'});
+          queueMasterEvent(room,{t:'mini_unavailable',requestId:active.requestId,playerId:token,name:pad?.name||'Giocatore',reason:'not_ready',msg:`La lavagnetta di ${pad?.name||'un giocatore'} non ha confermato l’apertura: usa il fallback sul Master.`});
+        }
+      },6000);
       return;
     }
 
     if (m.t === 'mini_cancel' && ws._role === 'master') {
       const active=room.activeMini;
       if(active&&active.requestId===String(m.requestId||'')){
+        if(active.readyTimer)clearTimeout(active.readyTimer);
         for(const token of active.playerTokens)send(room.pads.get(token)?.socket,{t:'mini_closed',requestId:active.requestId});
         room.activeMini=null;
       }
@@ -761,6 +781,17 @@ wss.on('connection', ws => {
       const choice = room.activeChoice;
       if (choice && !choice.resolved && choice.requestId === String(m.requestId || '') && choice.chooserToken === ws._padToken) {
         send(room.masterSocket, { t: 'choice_ready', requestId: choice.requestId });
+      }
+      return;
+    }
+
+    if (m.t === 'mini_ready' && ws._role === 'pad') {
+      const active=room.activeMini,requestId=String(m.requestId||'');
+      if(active&&active.requestId===requestId&&active.playerTokens.has(ws._padToken)&&!active.unavailableSent.has(ws._padToken)){
+        active.readyTokens.add(ws._padToken);
+        const pad=room.pads.get(ws._padToken);
+        send(room.masterSocket,{t:'mini_ready',requestId,playerId:ws._padToken,name:pad?.name||'Giocatore'});
+        if([...active.playerTokens].every(token=>active.readyTokens.has(token)||active.responses.has(token)||active.unavailableSent.has(token))&&active.readyTimer){clearTimeout(active.readyTimer);active.readyTimer=null;}
       }
       return;
     }
@@ -792,7 +823,7 @@ wss.on('connection', ws => {
 
     if (m.t === 'mini_response' && ws._role === 'pad') {
       const pad=room.pads.get(ws._padToken),active=room.activeMini,requestId=String(m.requestId||'');
-      if(!pad||!active||active.requestId!==requestId||!active.playerTokens.has(pad.token)||active.responses.has(pad.token))return send(ws,{t:'err',msg:'Questa risposta della mini sfida non è valida o è già stata registrata.'});
+      if(!pad||!active||active.requestId!==requestId||!active.playerTokens.has(pad.token)||active.responses.has(pad.token)||active.unavailableSent.has(pad.token))return send(ws,{t:'err',msg:'Questa risposta della mini sfida non è valida, è già stata registrata oppure il controllo è passato al Master.'});
       const incoming=m.values&&typeof m.values==='object'?m.values:{},values={};
       for(const field of active.fields){
         const value=String(incoming[field.id]??'').trim();
@@ -807,6 +838,7 @@ wss.on('connection', ws => {
         values[field.id]=value;
       }
       active.responses.set(pad.token,values);
+      if([...active.playerTokens].every(token=>active.readyTokens.has(token)||active.responses.has(token)||active.unavailableSent.has(token))&&active.readyTimer){clearTimeout(active.readyTimer);active.readyTimer=null;}
       queueMasterEvent(room,{t:'mini_response',requestId,playerId:pad.token,name:pad.name,values});
       send(ws,{t:'mini_confirmed',requestId,msg:'Risposta della mini sfida registrata e bloccata.'});
       return;
@@ -855,16 +887,17 @@ wss.on('connection', ws => {
 
     if (ws._role === 'pad') {
       const pad = room.pads.get(ws._padToken);
-      if (pad && pad.socket === ws) {
+      const wasCurrentSocket=!!pad&&pad.socket===ws;
+      if (wasCurrentSocket) {
         pad.socket = null;
-      }
-      if (room.activeChoice?.chooserToken === ws._padToken) {
-        choiceFallback(room, room.activeChoice);
-      }
-      const activeMini=room.activeMini;
-      if(activeMini?.playerTokens.has(ws._padToken)&&!activeMini.responses.has(ws._padToken)&&!activeMini.unavailableSent.has(ws._padToken)){
-        activeMini.unavailableSent.add(ws._padToken);
-        queueMasterEvent(room,{t:'mini_unavailable',requestId:activeMini.requestId,playerId:ws._padToken,name:pad?.name||'Giocatore',msg:'La lavagnetta dello sfidante si è disconnessa.'});
+        if (room.activeChoice?.chooserToken === ws._padToken) {
+          choiceFallback(room, room.activeChoice);
+        }
+        const activeMini=room.activeMini;
+        if(activeMini?.playerTokens.has(ws._padToken)&&!activeMini.responses.has(ws._padToken)&&!activeMini.unavailableSent.has(ws._padToken)){
+          activeMini.unavailableSent.add(ws._padToken);
+          queueMasterEvent(room,{t:'mini_unavailable',requestId:activeMini.requestId,playerId:ws._padToken,name:pad?.name||'Giocatore',msg:'La lavagnetta dello sfidante si è disconnessa.'});
+        }
       }
       notifyMaster(room);
     }

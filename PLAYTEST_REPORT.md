@@ -1,4 +1,19 @@
-# Rapporto playtest v2.8
+# Rapporto playtest v2.9
+
+## Collaudo anti-blocco v2.9
+
+Scenario reale nel browser con un Master e tre lavagnette, Anna e Berto in sfida e Carla spettatrice:
+
+1. Tutti e tre i nickname sono comparsi automaticamente nella lobby del Master.
+2. Anna e Berto hanno inviato la stessa risposta esatta (`47`) e il sistema ha aperto il fotofinish soltanto per loro.
+3. Master e lavagnette hanno mostrato motivo, risposta corretta, formule e posta reale: **1º posto nel round · 3 punti**.
+4. Il pulsante di avvio sul Master era disabilitato; soltanto Anna ha ricevuto **Siamo pronti: inizia** e ha avviato Stima Lampo dalla propria lavagnetta.
+5. Anna e Berto hanno ricevuto campi indipendenti e lo stato `mini_ready`; Carla ha visto domanda e andamento senza alcun comando di risposta.
+6. Dopo il secondo invio, Master e Carla hanno visto insieme risposta, stime, vincitore e curiosità.
+7. Il pulsante risultato mostrava il conto alla rovescia e, senza alcun click del Master, dopo 5 secondi il gioco è tornato alla rivelazione del round.
+8. Il Master non ha registrato doppi invii o errori JavaScript durante il flusso.
+
+Il test WebSocket separato copre il ramo Cronometro con Master sfidante: una lavagnetta spettatrice riceve in sequenza **AVVIA** e **FERMA**, entrambe vincolate allo stesso token autorizzato.
 
 ## Collaudo Timeline v2.8
 
@@ -77,6 +92,10 @@ Il test con Master e tre socket verifica inoltre:
 - riconnessione tramite token e mappa aggiornata.
 - campo `order` validato come permutazione completa, con duplicati e token spettatore rifiutati;
 - deadline Timeline condivisa e vista pubblica prima e dopo l’invio.
+- conferma `mini_ready` per ciascuna lavagnetta sfidante;
+- fallback `not_ready` dopo 6 secondi quando una schermata non conferma l’apertura;
+- recupero del payload di scelta dopo la sostituzione del socket della lavagnetta;
+- sequenza Cronometro delegata AVVIA/FERMA su una lavagnetta spettatrice.
 
 ## Esito
 

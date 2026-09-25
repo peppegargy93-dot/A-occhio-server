@@ -1,4 +1,4 @@
-# Mazzo Sfide — regole v2.8
+# Mazzo Sfide — regole v2.9
 
 Il Mazzo Sfide ufficiale contiene otto minigiochi. Il gioco estrae sempre una carta casuale: i giocatori non scelgono il tipo di prova.
 
@@ -9,16 +9,16 @@ Il Mazzo Sfide ufficiale contiene otto minigiochi. Il gioco estrae sempre una ca
 Le lavagnette dei giocatori in sfida ricevono i comandi personali. Tutte le altre mostrano domanda, carte, stato della prova e risultato, ma rimangono in sola lettura.
 
 - **Stima Lampo**: stima personale sulla lavagnetta.
-- **Cronometro del Master**: il Master controlla il cronometro; gli sfidanti inseriscono i secondi sulla propria lavagnetta.
+- **Cronometro del Master**: se il Master non è in sfida controlla il cronometro; se partecipa, sceglie una lavagnetta spettatrice che riceve AVVIA e FERMA.
 - **Alto o Basso**: scelta personale sulla lavagnetta per tre manche.
 - **Intervallo Killer**: minimo e massimo sulla lavagnetta.
 - **Ordine Impossibile**: quattro carte riordinabili sulla lavagnetta entro 25 secondi.
 - **Timeline Flash**: quattro eventi riordinabili sulla lavagnetta entro 20 secondi.
 - **Nomi & Cose** e **La Bomba**: risposte a voce, con validità e comandi controllati dal Master.
 
-Quando entrambi gli sfidanti hanno inviato, il gioco blocca le risposte, calcola l’esito e mostra a tutti le due risposte e la soluzione. Ordine e Timeline inviano automaticamente l’ordine presente allo scadere del tempo. Un token estraneo non può rispondere e un giocatore non può inviare due volte.
+Uno sfidante collegato avvia la prova dal proprio dispositivo. Quando entrambi hanno inviato, il gioco blocca le risposte, calcola l’esito, mostra a tutti soluzione e risposte e prosegue automaticamente. Ordine e Timeline inviano l’ordine presente allo scadere. Un token estraneo non può rispondere e un giocatore non può inviare due volte.
 
-Se uno sfidante usa il dispositivo Master, risponde localmente. Il fallback di una lavagnetta remota compare sul Master soltanto dopo l’indisponibilità confermata dal server.
+Ogni schermata interattiva invia una conferma di apertura. Se manca entro 6 secondi, il server trasferisce al Master soltanto il campo non consegnato e blocca il doppio invio. Se uno sfidante usa il dispositivo Master, risponde localmente.
 
 ## Come si attiva
 
@@ -32,7 +32,7 @@ Se uno sfidante usa il dispositivo Master, risponde localmente. Il fallback di u
 
 ### Parità di distanza
 
-Quando due o più stime hanno la stessa distanza valida, il gioco sceglie automaticamente partecipanti e carta. La schermata mostra risposta corretta, stime, distanza reale e formula dopo i modificatori. Una casella Sfida resta invece un evento del percorso e dichiara chiaramente il motivo differente.
+Quando due o più stime hanno la stessa distanza valida e la parità incide sui primi tre posti, il gioco sceglie automaticamente partecipanti e carta. La schermata mostra risposta corretta, stime, distanza reale, formula dopo i modificatori, posizione realmente in palio e punti. Una parità interamente fuori dal podio non genera una sfida. Una casella Sfida resta invece un evento del percorso e dichiara chiaramente il motivo differente.
 
 ## Le otto carte
 
@@ -42,7 +42,7 @@ Una nuova domanda numerica e una sola stima per sfidante. Vince chi è più vici
 
 ### Cronometro del Master
 
-Il Master avvia e ferma un intervallo nascosto. Gli sfidanti stimano i secondi trascorsi dalla propria lavagnetta; vince la stima più precisa.
+Se il Master non partecipa, avvia e ferma un intervallo nascosto. Se è uno sfidante, seleziona un giocatore esterno: la sua lavagnetta mostra prima AVVIA e poi FERMA, mentre il tempo resta nascosto sul Master. Dopo lo stop, gli sfidanti stimano i secondi dai propri dispositivi; vince la stima più precisa. Se l’arbitro cade, il comando può essere riassegnato; senza arbitro la carta viene sostituita.
 
 ### Nomi & Cose
 

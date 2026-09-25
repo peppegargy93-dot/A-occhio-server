@@ -39,3 +39,15 @@ test('Android riprova la connessione su rete, focus e ritorno alla pagina',()=>{
   assert.match(server,/addEventListener\('pageshow'/);
   assert.match(server,/server_ping/);
 });
+
+test('le mini sfide hanno handshake, fallback di consegna e stato recuperabile',()=>{
+  assert.match(server,/t:'mini_ready'/);
+  assert.match(server,/m\.t === 'mini_ready'/);
+  assert.match(server,/readyTokens:new Set\(\)/);
+  assert.match(server,/reason:'not_ready'/);
+  assert.match(server,/choiceRequest: activeChoice \? activeChoice\.payload : null/);
+  assert.match(server,/if\(s\.choiceRequest\)return applyChoiceRequest/);
+  assert.match(server,/il controllo è passato al Master/);
+  assert.match(server,/const wasCurrentSocket=!!pad&&pad\.socket===ws/);
+  assert.match(server,/if \(wasCurrentSocket\)/);
+});

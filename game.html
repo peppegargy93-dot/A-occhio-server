@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- A OCCHIO! v2.8.0 · Mazzo Sfide da 8 carte + gioco e risultati sulle lavagnette -->
+<!-- A OCCHIO! v2.9.0 · mini sfide anti-blocco + regia Cronometro delegabile -->
 <html lang="it">
 <head>
 <meta charset="UTF-8">
@@ -1371,7 +1371,7 @@ const TESI_CARDS = [
 // Il gioco estrae sempre la carta; nessun giocatore deve scegliere il tipo.
 const MINI_GAME_META = {
   lampo:{icon:"⚡",name:"Stima Lampo",family:"stima",duration:"40–60 secondi",win:"La stima più vicina",rules:["Il Master legge una nuova domanda numerica.","Ogni sfidante comunica una sola stima.","Si rivela la risposta: chi è più vicino vince."]},
-  crono:{icon:"⏱️",name:"Cronometro del Master",family:"tempo",duration:"30–45 secondi",win:"La stima del tempo più precisa",rules:["Gli sfidanti si girano e non guardano lo schermo.","Il Master avvia e ferma il cronometro quando vuole.","Ognuno stima i secondi trascorsi."]},
+  crono:{icon:"⏱️",name:"Cronometro del Master",family:"tempo",duration:"30–45 secondi",win:"La stima del tempo più precisa",rules:["Gli sfidanti si girano e non guardano lo schermo.","Se il Master è in sfida, assegna AVVIA e FERMA a una lavagnetta spettatrice.","Gli sfidanti stimano i secondi trascorsi dai propri dispositivi."]},
   ncc:{icon:"🔤",name:"Nomi & Cose",family:"voce",duration:"20–40 secondi",win:"La prima risposta valida",rules:["Compare una lettera insieme a una categoria.","Gli sfidanti rispondono ad alta voce.","Il Master assegna la vittoria alla prima risposta valida."]},
   altobasso:{icon:"↕️",name:"Alto o Basso",family:"riflessi",duration:"3 manche rapide",win:"Più risposte corrette",rules:["Per ogni domanda compare un valore di riferimento.","Tutti dichiarano insieme: più alto oppure più basso.","Dopo tre manche vince chi ha più risposte corrette."]},
   intervallo:{icon:"🎯",name:"Intervallo Killer",family:"stima",duration:"45 secondi",win:"L’intervallo valido più stretto",rules:["Ogni sfidante indica un valore minimo e uno massimo.","La risposta deve cadere dentro l’intervallo.","Vince l’intervallo valido più stretto; se tutti sbagliano, chi arriva più vicino."]},
@@ -2267,7 +2267,7 @@ function calcResults(){
     while(j+1<ordered.length && sameScoreDistance(ordered[j+1].effectiveDist,ordered[i].effectiveDist)) j++;
     const size=j-i+1;
     if(size>1 && ordered[i].dist!==Infinity && validIdx<3){
-      clusters.push({start:i,end:j,reason:buildTieReason(ordered.slice(i,j+1),q)});
+      clusters.push({start:i,end:j,startPlace:validIdx+1,reason:buildTieReason(ordered.slice(i,j+1),q)});
     }
     if(ordered[i].dist!==Infinity) validIdx += size;
     i=j+1;
@@ -2320,7 +2320,7 @@ function calcResults(){
     const c=clusters[k];
     const slice = ordered.slice(c.start, c.end+1);
     const group = slice.map(e=>pById(e.id));
-    diceOrder(group, {title:"Fotofinish!",sub:"Stessa distanza valida: sfida di spareggio",reason:c.reason}, (orderedPlayers)=>{
+    diceOrder(group, {title:"Fotofinish!",sub:"Stessa distanza valida: sfida di spareggio",startPlace:c.startPlace,maxPlace:3,reason:c.reason}, (orderedPlayers)=>{
       const byId={}; slice.forEach(e=> byId[e.id]=e);
       const newSlice = orderedPlayers.map(p=>byId[p.id]);
       for(let z=0; z<newSlice.length; z++) ordered[c.start+z]=newSlice[z];
@@ -3002,10 +3002,13 @@ function startTesi(challenger, opponent){
 function diceOrder(players, opts, done){
   const result=[]; let remaining=players.slice();
   (function step(){
+    const place=(opts.startPlace||1)+result.length;
+    if(place>(opts.maxPlace||Infinity)){result.push(...remaining);return done(result);}
     if(remaining.length<=1){ if(remaining.length) result.push(remaining[0]); return done(result); }
-    const place=result.length+1;
+    const points=S.players.length===2&&place===1?"da +1 a +2 punti":place<=3?`${4-place} ${4-place===1?"punto":"punti"}`:"ordine di classifica";
+    const stake=`${place}º posto nel round · ${points}`;
     const reason=opts.reason?{...opts.reason,players:(opts.reason.players||[]).filter(item=>remaining.some(p=>p.id===item.id))}:null;
-    diceRollWinner(remaining, {title:opts.title,sub:(opts.sub?opts.sub+" · ":"")+"in palio il "+place+"º posto",stakes:place+"º posto nel round",reason}, w=>{
+    diceRollWinner(remaining, {title:opts.title,sub:(opts.sub?opts.sub+" · ":"")+"in palio il "+place+"º posto",stakes:stake,reason}, w=>{
       result.push(w); remaining=remaining.filter(p=>p.id!==w.id); step();
     });
   })();
@@ -3203,12 +3206,20 @@ function diceRollWinner(players,opts,done){
   const curated=()=>curatedQuestions();
   const factBlock=q=>q&&q.f?`<div class="mini-fact"><b>💡 Curiosità</b><br>${esc(q.f)}${q.fs?`<div style="font-size:10px;color:#6b7c76;margin-top:5px">Fonte: ${esc(q.fs)}</div>`:""}</div>`:"";
   const playerNameList=list=>list.map(p=>esc(p.name)).join(" · ");
+  const masterPlayer=S.players[0],masterIsContender=players.some(player=>player.id===masterPlayer?.id);
   function finish(w,how){if(finished||!w)return;finished=true;log(`⚡ ${esc(how)}: vince ${esc(w.name)}.`);done(w);}
   function chooseMode(){
     let bag=S.cardBags["mini-games"];
     if(!Array.isArray(bag)||!bag.length)bag=S.cardBags["mini-games"]=shuffle(MINI_GAME_KEYS);
-    let index=bag.findIndex(key=>key!==S.lastMiniGame&&MINI_GAME_META[key].family!==S.lastMiniFamily);
-    if(index<0)index=bag.findIndex(key=>key!==S.lastMiniGame);
+    const available=key=>key!=="crono"||!masterIsContender||cronoControllers().length>0;
+    const findIndex=()=>{
+      let found=bag.findIndex(key=>available(key)&&key!==S.lastMiniGame&&MINI_GAME_META[key].family!==S.lastMiniFamily);
+      if(found<0)found=bag.findIndex(key=>available(key)&&key!==S.lastMiniGame);
+      if(found<0)found=bag.findIndex(available);
+      return found;
+    };
+    let index=findIndex();
+    if(index<0){bag=S.cardBags["mini-games"]=shuffle(MINI_GAME_KEYS);index=findIndex();}
     if(index<0)index=0;
     const mode=bag.splice(index,1)[0];S.lastMiniGame=mode;S.lastMiniFamily=MINI_GAME_META[mode].family;return mode;
   }
@@ -3223,6 +3234,7 @@ function diceRollWinner(players,opts,done){
   }
   function showRules(mode){
     const meta=MINI_GAME_META[mode];
+    const starter=connectedRemote(players)[0]||null;
     app.innerHTML=`<div class="card">
       <p class="eyebrow center">🎴 Carta Sfida estratta automaticamente</p>
       ${reasonHtml(opts.reason)}
@@ -3234,13 +3246,28 @@ function diceRollWinner(players,opts,done){
       ${contendersHtml()}
       <div class="stakes">🏆 In palio: ${esc(opts.stakes||"vantaggio decisivo")}</div>
       <details class="logbox mt-s"><summary>🎴 Vedi tutte le 8 carte del Mazzo Sfide</summary><div class="log">${MINI_GAME_KEYS.map(key=>`<div class="e">${MINI_GAME_META[key].icon} <b>${esc(MINI_GAME_META[key].name)}</b></div>`).join("")}</div></details>
-      <button type="button" class="btn coral mt" id="miniStart">Ho capito, iniziamo →</button>
+      <button type="button" class="btn coral mt" id="miniStart" ${starter?"disabled":""}>${starter?`Attendo che ${esc(starter.name)} avvii la sfida…`:"Ho capito, iniziamo →"}</button>
     </div>`;
-    onlineBroadcastView({kind:"challenge",icon:meta.icon,title:"Carta Sfida",subject:meta.name,effectTitle:`${playerNameList(players)} · ${opts.stakes||"sfida decisiva"}`,description:meta.rules.join(" "),instruction:"Gli sfidanti giocheranno dalle proprie lavagnette; gli altri seguiranno tutto in diretta, senza comandi attivi.",challenge:{reason:opts.reason||null,game:{key:mode,name:meta.name,icon:meta.icon,rules:meta.rules,duration:meta.duration,win:meta.win,stakes:opts.stakes||"sfida decisiva"},players:players.map(p=>({id:p.id,name:p.name,color:p.color}))}});
-    $("#miniStart").onclick=()=>games[mode]();
+    onlineBroadcastView({kind:"challenge",icon:meta.icon,title:"Carta Sfida",subject:meta.name,effectTitle:`${playerNameList(players)} · ${opts.stakes||"sfida decisiva"}`,description:meta.rules.join(" "),instruction:starter?`${starter.name} avvia la prova dalla propria lavagnetta. Tutti gli altri seguono in diretta.`:"La prova viene avviata dal Master; tutti gli altri seguono in diretta.",challenge:{reason:opts.reason||null,game:{key:mode,name:meta.name,icon:meta.icon,rules:meta.rules,duration:meta.duration,win:meta.win,stakes:opts.stakes||"sfida decisiva"},players:players.map(p=>({id:p.id,name:p.name,color:p.color}))}});
+    let started=false;
+    const launch=()=>{if(started)return;started=true;games[mode]();};
+    const button=$("#miniStart");
+    if(!starter)button.onclick=launch;
+    else onlineRequestPlayerChoice({chooser:starter,title:"Avvia la mini sfida",subject:meta.name,description:`Hai la regia iniziale della sfida contro ${players.filter(p=>p.id!==starter.id).map(p=>p.name).join(" e ")}. Quando siete pronti, dai il via.`,options:[{id:"start",label:"▶︎ Siamo pronti: inizia"}]},(option)=>{
+      if(option==="start")return launch();
+      if(started)return;button.disabled=false;button.textContent="Lavagnetta non disponibile · avvia dal Master →";button.onclick=launch;
+    });
+  }
+  function wireAutoAction(id,action,delay=4500){
+    const button=$(id);if(!button)return;
+    let advanced=false,seconds=Math.ceil(delay/1000),ticker=null;
+    const go=()=>{if(advanced)return;advanced=true;if(ticker)clearInterval(ticker);action();};
+    button.onclick=go;
+    const draw=()=>{if(advanced||!document.body.contains(button))return;button.textContent=`Continua ora · automatico fra ${Math.max(1,seconds--)} s`;};
+    draw();ticker=track(setInterval(draw,1000));track(setTimeout(go,delay));
   }
   function outcomeButton(id,winners,how){
-    $(id).onclick=()=>winners.length===1?finish(winners[0],how):altoBasso(winners,1,true);
+    wireAutoAction(id,()=>winners.length===1?finish(winners[0],how):altoBasso(winners,1,true));
   }
   function lowest(entries,field="metric",second="secondary"){
     const valid=entries.filter(e=>Number.isFinite(e[field]));if(!valid.length)return [];
@@ -3251,7 +3278,13 @@ function diceRollWinner(players,opts,done){
   function broadcastQuestionFact(title,q,instruction){onlineBroadcastView({kind:"info",icon:"💡",title,subject:q.q,effectTitle:`Risposta: ${fmtNum(q.a)} ${q.u||""}`,description:q.f,instruction});}
   function broadcastMiniWaiting(icon,title,subject,description){onlineBroadcastView({kind:"info",icon,title,subject,effectTitle:`${playerNameList(players)} stanno giocando`,description,instruction:"Sei spettatore: segui la sfida. Le risposte compariranno insieme dopo l’invio."});}
   function broadcastMiniResult(icon,title,subject,effectTitle,description,instruction){onlineBroadcastView({kind:"info",icon,title,subject,effectTitle,description,instruction});}
-  function connectedRemote(roster=players){return ONLINE?.ws?.readyState===WebSocket.OPEN?roster.filter(player=>player.onlineToken):[];}
+  function isPadConnected(player){
+    if(!player?.onlineToken||!ONLINE?.ws||ONLINE.ws.readyState!==WebSocket.OPEN)return false;
+    const peer=(ONLINE.players||[]).find(item=>item&&item.id===player.onlineToken);
+    return !!peer?.connected;
+  }
+  function connectedRemote(roster=players){return roster.filter(isPadConnected);}
+  function cronoControllers(){return connectedRemote(S.players.filter(player=>!players.some(contender=>contender.id===player.id)));}
   function remoteStatus(player,remoteIds){return `<span class="nowin-note remote-mini-status" data-id="${player.id}">${remoteIds.has(player.id)?"📲 Attendo la sua lavagnetta":""}</span>`;}
   function startRemoteFields({roster=players,title,subject,description,icon,fields,selectors,onUpdate,seconds=0}){
     const remote=connectedRemote(roster),remoteIds=new Set(remote.map(player=>player.id));
@@ -3262,9 +3295,9 @@ function diceRollWinner(players,opts,done){
       onUpdate?.();
     },(player,message)=>{
       for(const field of fields){const input=$(`${selectors[field.id]}[data-id="${player.id}"]`);if(input){input.disabled=false;input.placeholder=field.placeholder||"Risposta";}}
-      const status=$(`.remote-mini-status[data-id="${player.id}"]`);if(status)status.textContent="⚠️ Lavagnetta scollegata: inserisci qui";
+      const status=$(`.remote-mini-status[data-id="${player.id}"]`);if(status)status.textContent="⚠️ Controllo passato al Master: inserisci qui";
       onUpdate?.(message);
-    });
+    },(player)=>{const status=$(`.remote-mini-status[data-id="${player.id}"]`);if(status)status.textContent="📲 Lavagnetta pronta";});
     return {bridge,remoteIds};
   }
 
@@ -3288,10 +3321,33 @@ function diceRollWinner(players,opts,done){
     };
   }
   function crono(){
+    if(masterIsContender)return chooseCronoController();
     let startedAt=null,iv=null;
-    app.innerHTML=`<div class="card center"><span class="mini-round">⏱️ Cronometro del Master</span><p class="sub center mt">Gli sfidanti si girano. Il Master avvia e ferma il tempo senza annunciare la durata.</p><div class="timer-num" id="cronoQ" style="margin:14px 0">0.0</div><button type="button" class="btn coral" id="cronoBtn">▶︎ Avvia</button></div>`;
+    app.innerHTML=`<div class="card center"><span class="mini-round">⏱️ Cronometro del Master</span><p class="sub center mt">Gli sfidanti si girano. Poiché il Master non è in sfida, controlla l’intervallo nascosto.</p><div class="timer-num" id="cronoQ" style="margin:14px 0">0.0</div><button type="button" class="btn coral" id="cronoBtn">▶︎ Avvia</button></div>`;
     broadcastMiniWaiting("⏱️","Cronometro del Master","Non guardate il timer","Il Master avvia e ferma un intervallo nascosto. Gli sfidanti dovranno stimarne la durata.");
     $("#cronoBtn").onclick=()=>{const button=$("#cronoBtn");if(startedAt===null){startedAt=performance.now();beep(880,140);button.textContent="◼︎ Ferma";iv=track(setInterval(()=>{const el=$("#cronoQ");if(el)el.textContent=((performance.now()-startedAt)/1000).toFixed(1)},100));}else{clearInterval(iv);const sec=(performance.now()-startedAt)/1000;beep(392,220);cronoInputs(sec)}};
+  }
+  function chooseCronoController(startedAt=null,message=""){
+    const controllers=cronoControllers(),running=Number.isFinite(startedAt);
+    if(!controllers.length&&!running){
+      app.innerHTML=`<div class="card center"><span class="mini-round">⏱️ Cronometro del Master</span><div class="mini-question">Serve un arbitro esterno</div><p class="sub center">Il Master è uno sfidante e al momento non c’è una lavagnetta spettatrice collegata a cui affidare il cronometro.</p><button type="button" class="btn coral mt" id="cronoRedraw">Estrai un’altra carta Sfida →</button></div>`;
+      broadcastMiniResult("⏱️","Cronometro del Master","Carta sostituita","Manca un arbitro esterno collegato","Il Master è in sfida: il cronometro non può essere controllato da uno dei contendenti.","Verrà estratta un’altra prova senza bloccare la partita.");
+      return $("#cronoRedraw").onclick=()=>showRules(chooseMode());
+    }
+    app.innerHTML=`<div class="card center"><span class="mini-round">⏱️ Cronometro del Master</span><div class="mini-question">${running?"Il timer è in corso":"Scegli chi tiene il cronometro"}</div><p class="sub center">Il Master è uno sfidante: ${running?"affida il comando FERMA a una lavagnetta spettatrice.":"affida AVVIA e FERMA a una persona fuori dalla sfida."}</p>${message?`<div class="nowin-note mt-s">⚠️ ${esc(message)}</div>`:""}<div class="choice-grid mt">${controllers.map(controller=>`<button type="button" class="choice cronoController" data-id="${controller.id}">${running?"◼︎ Affida FERMA a ":"⏱️ Affida il cronometro a "}${avatarHTML(controller,22)} ${esc(controller.name)}</button>`).join("")}</div>${running?`<button type="button" class="btn ghost mt" id="cronoEmergency">Emergenza: ferma dal Master</button>`:""}</div>`;
+    broadcastMiniWaiting("⏱️","Cronometro del Master",running?"Cronometro in corso":"Scelta dell’arbitro",running?"Il timer continua. Il Master sta riassegnando il comando FERMA a uno spettatore collegato.":"Il Master è tra gli sfidanti e sta scegliendo una lavagnetta spettatrice come arbitro del cronometro.");
+    $$(".cronoController").forEach(button=>button.onclick=()=>remoteCrono(pById(button.dataset.id),startedAt));
+    const emergency=$("#cronoEmergency");if(emergency)emergency.onclick=()=>cronoInputs(Math.max(.1,(performance.now()-startedAt)/1000));
+  }
+  function remoteCrono(controller,startedAt=null){
+    const running=Number.isFinite(startedAt),action=running?"stop":"start";
+    app.innerHTML=`<div class="card center"><span class="mini-round">⏱️ Cronometro del Master</span><div class="mini-question">${running?"Cronometro in corso":"Cronometro pronto"}</div><div class="timer-num" style="margin:14px 0">${running?"TIC TAC":"PRONTO"}</div><p class="sub center"><b>${esc(controller.name)}</b> controlla ${running?"il tasto FERMA":"AVVIA e FERMA"} dalla propria lavagnetta. Sul Master il tempo resta nascosto.</p></div>`;
+    broadcastMiniWaiting("⏱️","Cronometro del Master",running?"Cronometro in corso":"Cronometro pronto",`${controller.name} è l’arbitro esterno e ${running?"deciderà quando fermare l’intervallo":"darà il via dalla propria lavagnetta"}.`);
+    onlineRequestPlayerChoice({chooser:controller,title:"Regia del Cronometro",subject:running?"Il tempo sta scorrendo":"Quando gli sfidanti sono pronti",description:running?"Ferma il cronometro quando vuoi. Il tempo non viene mostrato.":"Avvia il cronometro senza annunciare la durata.",options:[{id:action,label:running?"◼︎ Ferma il cronometro":"▶︎ Avvia il cronometro"}]},(option,meta)=>{
+      if(option!==action)return chooseCronoController(startedAt,meta?.error||`La lavagnetta di ${controller.name} non è più disponibile.`);
+      if(!running){beep(880,140);return remoteCrono(controller,performance.now());}
+      const sec=Math.max(.1,(performance.now()-startedAt)/1000);beep(392,220);cronoInputs(sec);
+    });
   }
   function cronoInputs(sec){
     const remoteIds=new Set(connectedRemote().map(player=>player.id));let remoteBridge=null,autoQueued=false;
@@ -3319,7 +3375,7 @@ function diceRollWinner(players,opts,done){
       const applyAnswer=(player,value)=>{answers.set(player.id,value);$$(`.abPick[data-id="${player.id}"]`).forEach(button=>button.classList.toggle("selected",button.dataset.v===value));const status=$(`.remote-mini-status[data-id="${player.id}"]`);if(status)status.textContent="✅ Scelta ricevuta";const ready=answers.size===roster.length;$("#abReveal").disabled=!ready;$("#abReveal").textContent=ready?"Scelte ricevute · rivelazione…":"Attendo le due scelte…";if(ready&&!autoQueued){autoQueued=true;setTimeout(()=>$("#abReveal")?.click(),450)}};
       $$(".abPick").filter(button=>!button.disabled).forEach(button=>button.onclick=()=>applyAnswer(pById(button.dataset.id),button.dataset.v));
       const bridge=onlineRequestMiniInputs({players:remotePlayers,title:"Alto o Basso",subject:q.q,description:`La risposta è maggiore o minore di ${fmtNum(threshold)} ${q.u||""}?`,icon:"↕️",fields:[{id:"direction",label:"Scegli",type:"choice",options:[{id:"up",label:"▲ Più alta"},{id:"down",label:"▼ Più bassa"}]}]},(player,values)=>applyAnswer(player,values.direction),(player)=>{const status=$(`.remote-mini-status[data-id="${player.id}"]`);if(status)status.textContent="⚠️ Lavagnetta scollegata: scegli qui";$$(`.abPick[data-id="${player.id}"]`).forEach(button=>{button.disabled=false;button.onclick=()=>applyAnswer(player,button.dataset.v)})});remoteBridge=bridge;
-      $("#abReveal").onclick=()=>{closeOnlineMini(remoteBridge?.requestId);roster.forEach(p=>{if(answers.get(p.id)===correct)scores.set(p.id,scores.get(p.id)+1)});app.innerHTML=`<div class="card center"><span class="mini-round">↕️ Alto o Basso</span><p class="eyebrow mt">Risposta corretta</p><div class="mini-reference">${fmtNum(q.a)} <small style="font-size:14px">${esc(q.u||"")}</small></div><p class="sub center">Era <b>${correct==="up"?"più alta ▲":"più bassa ▼"}</b> del riferimento.</p>${factBlock(q)}<button type="button" class="btn teal mt" id="abNext">${round<total?"Prossima manche →":"Vedi il risultato →"}</button></div>`;const choices=roster.map(p=>`${p.name}: ${answers.get(p.id)==="up"?"più alta":"più bassa"}`).join(" · ");broadcastMiniResult("↕️","Alto o Basso",q.q,`Risposta: ${fmtNum(q.a)} ${q.u||""} · ${correct==="up"?"più alta":"più bassa"}`,`${choices}. 💡 ${q.f}`,round<total?"La sfida continua.":"Tra poco vedrai il punteggio finale.");$("#abNext").onclick=next};
+      $("#abReveal").onclick=()=>{closeOnlineMini(remoteBridge?.requestId);roster.forEach(p=>{if(answers.get(p.id)===correct)scores.set(p.id,scores.get(p.id)+1)});app.innerHTML=`<div class="card center"><span class="mini-round">↕️ Alto o Basso</span><p class="eyebrow mt">Risposta corretta</p><div class="mini-reference">${fmtNum(q.a)} <small style="font-size:14px">${esc(q.u||"")}</small></div><p class="sub center">Era <b>${correct==="up"?"più alta ▲":"più bassa ▼"}</b> del riferimento.</p>${factBlock(q)}<button type="button" class="btn teal mt" id="abNext">${round<total?"Prossima manche →":"Vedi il risultato →"}</button></div>`;const choices=roster.map(p=>`${p.name}: ${answers.get(p.id)==="up"?"più alta":"più bassa"}`).join(" · ");broadcastMiniResult("↕️","Alto o Basso",q.q,`Risposta: ${fmtNum(q.a)} ${q.u||""} · ${correct==="up"?"più alta":"più bassa"}`,`${choices}. 💡 ${q.f}`,round<total?"La sfida continua.":"Tra poco vedrai il punteggio finale.");wireAutoAction("#abNext",next,4000)};
     }
     next();
   }
@@ -3379,7 +3435,7 @@ function diceRollWinner(players,opts,done){
     }
     app.innerHTML=`<div class="card"><span class="mini-round">${meta.icon} ${esc(meta.name)}</span><div class="mini-question">${esc(card.title)}</div><div class="timer-num" id="seqTimer" style="font-size:42px">${seconds}</div><p class="sub center">Riordinate le quattro carte sulle lavagnette. Gli spettatori vedranno le risposte dopo l’invio.</p>${players.map(player=>`<div class="mini-player-row seqPlayer" data-id="${player.id}"><div class="who">${avatarHTML(player,26)} ${esc(player.name)}${remoteStatus(player,remoteIds)}</div>${remoteIds.has(player.id)?"":`<div class="seqLocal" data-id="${player.id}"></div>`}</div>`).join("")}<button type="button" class="btn coral mt" id="seqWaiting" disabled>Attendo ${players.length} risposte…</button></div>`;
     players.filter(player=>!remoteIds.has(player.id)).forEach(player=>bindEditor(player,initial.slice()));
-    broadcastMiniWaiting(meta.icon,meta.name,card.title,`Gli sfidanti stanno riordinando quattro carte. Tempo disponibile: ${seconds} secondi.`);
+    broadcastMiniWaiting(meta.icon,meta.name,card.title,`Carte in gioco: ${items.map(item=>item.label).join(" · ")}. Gli sfidanti le stanno riordinando; tempo disponibile: ${seconds} secondi.`);
     remoteBridge=onlineRequestMiniInputs({players:remotePlayers,title:meta.name,subject:card.title,description:isTimeline?"Metti gli eventi dal più vecchio al più recente.":"Metti gli elementi dal valore più piccolo al più grande.",icon:meta.icon,seconds,fields:[{id:"sequence",label:"Metti le carte in ordine",type:"order",items:items.map(item=>({id:item.id,label:item.label}))}]},(player,values)=>receiveOrder(player,values.sequence),(player,message)=>enableFallback(player,message));
     tick=track(setInterval(()=>{const left=Math.max(0,Math.ceil((deadline-Date.now())/1000)),timer=$("#seqTimer");if(timer){timer.textContent=left;timer.classList.toggle("warn",left<=5)}if(left<=0){clearInterval(tick);players.filter(player=>!answers.has(player.id)&&!remoteIds.has(player.id)).forEach(player=>submitOrder(player,localOrders.get(player.id)||initial,"Tempo scaduto"));setTimeout(()=>players.filter(player=>!answers.has(player.id)).forEach(player=>submitOrder(player,initial,"Tempo scaduto")),1200)}},150));
   }
@@ -3544,13 +3600,17 @@ function fallbackOnlineChoice(m){
   const pending=ONLINE_CHOICE_CALLBACKS.get(m.requestId);if(!pending)return;
   clearTimeout(pending.timer);ONLINE_CHOICE_CALLBACKS.delete(m.requestId);pending.callback(null,{error:m.msg,reason:m.reason||"master_fallback"});
 }
-function onlineRequestMiniInputs({players,title,subject,description,icon,fields,seconds=0},onResponse,onUnavailable){
-  const remote=(players||[]).filter(player=>player&&player.onlineToken);
+function onlineRequestMiniInputs({players,title,subject,description,icon,fields,seconds=0},onResponse,onUnavailable,onReady){
+  const remote=(players||[]).filter(player=>player&&player.onlineToken&&(ONLINE?.players||[]).some(peer=>peer.id===player.onlineToken&&peer.connected));
   if(!remote.length||!ONLINE?.ws||ONLINE.ws.readyState!==WebSocket.OPEN)return null;
   const requestId=`mini_${Date.now()}_${++ONLINE_MINI_SEQ}`;
-  ONLINE_MINI_CALLBACKS.set(requestId,{onResponse,onUnavailable,players:new Map(remote.map(player=>[player.onlineToken,player]))});
+  ONLINE_MINI_CALLBACKS.set(requestId,{onResponse,onUnavailable,onReady,players:new Map(remote.map(player=>[player.onlineToken,player]))});
   ONLINE.ws.send(JSON.stringify({t:"mini_request",requestId,playerTokens:remote.map(player=>player.onlineToken),title,subject,description,icon,fields,seconds}));
   return {requestId,remoteIds:new Set(remote.map(player=>player.id))};
+}
+function resolveOnlineMiniReady(message){
+  const pending=ONLINE_MINI_CALLBACKS.get(message.requestId);if(!pending)return;
+  const player=pending.players.get(message.playerId);if(player)pending.onReady?.(player);
 }
 function resolveOnlineMiniResponse(message){
   const pending=ONLINE_MINI_CALLBACKS.get(message.requestId);if(!pending)return;
@@ -3751,6 +3811,7 @@ function onlineConnect(url, resume=false){
     else if(m.t==="choice_ready"){const pending=ONLINE_CHOICE_CALLBACKS.get(m.requestId);if(pending){pending.ready=true;const s2=$("onlineSt");if(s2)s2.textContent="Scelta aperta sulla lavagnetta ✓";}}
     else if(m.t==="choice_unavailable"){handleOnlineMasterEvent(m);}
     else if(m.t==="choice_error"){const s2=$("onlineSt");if(s2)s2.textContent="⚠️ "+m.msg;fallbackOnlineChoice(m);}
+    else if(m.t==="mini_ready"){resolveOnlineMiniReady(m);}
     else if(m.t==="mini_response"||m.t==="mini_unavailable"){handleOnlineMasterEvent(m);}
     else if(m.t==="mini_error"){const s2=$("onlineSt");if(s2)s2.textContent="⚠️ "+m.msg;}
     else if(m.t==="est"){ storeOnlineEstimate(m); refreshOnlineEstimates(); }

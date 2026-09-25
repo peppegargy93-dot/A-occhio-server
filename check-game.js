@@ -3,7 +3,7 @@ const fs=require('fs');
 const html=fs.readFileSync('game.html','utf8');
 const scripts=[...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map(match=>match[1]).join('\n');
 new Function(scripts);
-if(!html.includes('A OCCHIO! v2.8.0')) throw new Error('Versione game.html errata: attesa v2.8.0.');
+if(!html.includes('A OCCHIO! v2.9.0')) throw new Error('Versione game.html errata: attesa v2.9.0.');
 if(!html.includes('const EDITORIAL_FACTS = {')) throw new Error('Database editoriale mancante.');
 if(!html.includes('function curatedQuestions(){return QUESTIONS.filter(q=>q.f&&q.fs);}')) throw new Error('Filtro editoriale fail-closed mancante.');
 if(!html.includes('drawFromPool(null,"Stima Lampo")')) throw new Error('Stima Lampo non usa il mazzo condiviso.');

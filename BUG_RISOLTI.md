@@ -1,4 +1,21 @@
-# Bug risolti nella v2.8
+# Bug risolti nella v2.9
+
+## Blocchi durante le mini sfide
+
+- Il Master non resta più in attesa di una schermata che il telefono non ha aperto: ogni lavagnetta invia una conferma `mini_ready`; dopo 6 secondi senza conferma viene attivato il fallback locale del solo partecipante mancante.
+- Una risposta ricevuta, un fallback e una riconnessione non possono produrre due esiti: il server accetta un solo percorso autorevole per token e `requestId`.
+- La carta viene avviata da uno sfidante collegato e i risultati proseguono automaticamente, quindi il gioco non dipende da un click dimenticato sul Master.
+- Le scelte attive vengono ripresentate dopo sostituzione o riconnessione del socket; questo elimina i casi in cui il telefono risultava collegato ma mostrava ancora una schermata passiva.
+- La chiusura ritardata del vecchio socket Android non viene più scambiata per la disconnessione della nuova sessione e non attiva fallback o annullamenti errati.
+- Alto o Basso invia la scelta con un solo tocco; pulsanti e frecce di ordinamento hanno aree touch più grandi.
+
+## Cronometro e classifiche
+
+- Se il Master è uno sfidante, non controlla il proprio Cronometro: seleziona uno spettatore collegato, che riceve AVVIA e poi FERMA sulla sua lavagnetta.
+- Se l’arbitro si disconnette, il comando può essere riassegnato; se nessun arbitro è disponibile la carta non viene proposta o viene sostituita senza bloccare la partita.
+- Le sfide da parità partono soltanto quando incidono sul podio. Il testo “In palio” usa la posizione reale del gruppo e indica i punti corrispondenti.
+- Se un gruppo di pari attraversa il limite del podio, il gioco si ferma dopo aver assegnato il terzo posto e non apre spareggi inutili per quarto, quinto o posizioni successive.
+- Le lavagnette spettatrici mostrano anche le carte di Timeline e Ordine, oltre a motivo, posta, risposte e risultato.
 
 ## Mazzo ufficiale e interazione
 
@@ -56,10 +73,10 @@
 ## Verifiche eseguite
 
 - Sintassi server e script Master: OK.
-- 35 test automatici: OK.
+- 40 test automatici: OK.
 - End-to-end WebSocket con Master e tre giocatori: ingresso, duplicati, rifiuto ingresso tardivo, rename, timer personale conservato alla riconnessione, replay di stime/scelte verso il Master, risposta unica, curiosità, sfida strutturata, scelta autorizzata, tentativo contraffatto, disconnessione, fallback e mappa: OK.
 - 360 partite simulate, 5.228 domande, 3.936 minigiochi e 2.769 parità: tutte le invarianti OK.
-- Collaudo browser Timeline con due sfidanti e uno spettatore: ordine personale, timer, invio, risultato pubblico e viewport iPhone 390 × 844 senza overflow né errori console: OK.
+- Collaudo browser con Master e tre lavagnette: parità, avvio remoto, input dei soli sfidanti, vista spettatore, curiosità e uscita automatica dalla sfida: OK.
 - Audit HTTP delle 170 nuove schede: 141 URL unici, 126 raggiunti direttamente; 15 hanno rifiutato il client automatico o chiuso la connessione, nessun `404` rilevato.
 
 ## Problemi rimasti

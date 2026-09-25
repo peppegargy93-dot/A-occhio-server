@@ -1,4 +1,4 @@
-# Report simulazioni v2.8
+# Report simulazioni v2.9
 
 Esito: **OK**. 360 partite simulate con 3–6 giocatori e tre semi indipendenti.
 

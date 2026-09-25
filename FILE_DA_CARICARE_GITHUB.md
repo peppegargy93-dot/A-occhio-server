@@ -1,6 +1,6 @@
 # File da aggiornare su GitHub
 
-Carica **il contenuto** di `A_OCCHIO_FILE_DA_CARICARE_GITHUB_V2_8` nella root del repository `A-occhio-server`. Non caricare la cartella v2.8 come sottocartella.
+Carica **il contenuto** di `A_OCCHIO_FILE_DA_CARICARE_GITHUB_V2_9` nella root del repository `A-occhio-server`. Non caricare la cartella v2.9 come sottocartella.
 
 ## Correzione indispensabile
 
@@ -9,7 +9,7 @@ Per rendere effettiva questa correzione devi almeno sostituire nella root GitHub
 - `game.html`
 - `server.js`
 
-Per evitare errori è inclusa anche la cartella `A_OCCHIO_SOSTITUISCI_QUESTI_2_FILE_V2_8`, che contiene soltanto quei due file. Non lasciare i file nuovi dentro una sottocartella: devono sostituire gli omonimi già visibili nella pagina principale del repository.
+Per evitare errori è inclusa anche la cartella `A_OCCHIO_SOSTITUISCI_QUESTI_2_FILE_V2_9`, che contiene soltanto quei due file. Non lasciare i file nuovi dentro una sottocartella: devono sostituire gli omonimi già visibili nella pagina principale del repository.
 
 ## File applicativi da sostituire
 
@@ -76,12 +76,12 @@ npm run audit:questions
 npm run simulate
 ```
 
-Risultato atteso: 35 test superati, 213 domande curate, 368 escluse e 360 partite simulate con stato `OK`.
+Risultato atteso: 40 test superati, 213 domande curate, 368 escluse e 360 partite simulate con stato `OK`.
 
 ## Controllo dopo il caricamento
 
-1. Apri `game.html` direttamente su GitHub e cerca `A OCCHIO! v2.8.0`.
+1. Apri `game.html` direttamente su GitHub e cerca `A OCCHIO! v2.9.0`.
 2. Nello stesso file cerca `Vedi tutte le 8 carte del Mazzo Sfide`.
-3. Dopo il deploy, apri `/health`: deve comparire `"version":"2.8.0"`.
+3. Dopo il deploy, apri `/health`: deve comparire `"version":"2.9.0"`.
 
 Se uno di questi controlli fallisce, GitHub o Render stanno ancora usando i file precedenti.

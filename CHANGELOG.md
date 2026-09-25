@@ -1,5 +1,21 @@
 # Changelog
 
+## 2.9.0 — mini sfide anti-blocco e Cronometro delegabile
+
+- Spostato l’avvio della carta Sfida sulla lavagnetta di uno degli sfidanti collegati; se non è disponibile, il Master riceve un fallback esplicito.
+- Aggiunta conferma `mini_ready` per ogni schermata interattiva. Se il dispositivo non conferma l’apertura entro 6 secondi, il server abilita il campo locale del solo giocatore mancante e impedisce un successivo doppio invio.
+- Conservato sul server il payload delle scelte attive, così una lavagnetta sostituita o riconnessa riapre i pulsanti corretti.
+- Corretta la corsa di riconnessione mobile: la chiusura ritardata del vecchio socket non annulla più la scelta o la mini-sfida già trasferita alla nuova connessione.
+- Ingrandite le aree touch; nelle prove a scelta singola, come Alto o Basso, il tocco seleziona e invia direttamente.
+- Reso automatico il passaggio dopo i risultati e fra le manche di Alto o Basso, mantenendo il pulsante “Continua ora” come scorciatoia.
+- Se il Master è uno sfidante del Cronometro, il gioco propone le lavagnette spettatrici collegate e invia all’arbitro scelto prima AVVIA e poi FERMA. Il comando può essere riassegnato dopo una caduta; senza arbitro la carta viene sostituita.
+- Il Cronometro viene escluso dall’estrazione quando il Master è in sfida e non esiste alcun arbitro esterno collegato.
+- Corretta la posta del fotofinish: posizione e punti partono dalla collocazione reale del gruppo, invece di ricominciare sempre dal primo posto.
+- Limitate esplicitamente le sfide da parità ai gruppi che toccano i primi tre posti.
+- Interrotta anche la risoluzione ricorsiva appena sono assegnati i posti da podio: gli eventuali pari dal quarto posto in giù non generano ulteriori carte.
+- Estesa la vista spettatore di Ordine Impossibile e Timeline Flash con l’elenco completo delle carte in gioco.
+- Suite portata a 40 test, con consegna confermata, riconnessione durante una scelta, sequenza AVVIA/FERMA, fallback per schermata non aperta e guardia eseguibile sul limite del podio.
+
 ## 2.8.0 — otto sfide ufficiali e ordinamento sulle lavagnette
 
 - Rimossi dal mazzo e dal codice eseguibile **Indizio dopo Indizio** e **Asta al Ribasso**.

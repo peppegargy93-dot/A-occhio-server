@@ -1,6 +1,6 @@
-# A OCCHIO! — GitHub Update v2.8
+# A OCCHIO! — GitHub Update v2.9
 
-Party game multiplayer con un dispositivo Master e fino a sette lavagnette WebSocket. La v2.8 porta le risposte e i giochi di ordinamento sui dispositivi personali, mantenendo punteggi e percorso originali.
+Party game multiplayer con un dispositivo Master e fino a sette lavagnette WebSocket. La v2.9 elimina i blocchi delle mini sfide, delega correttamente il Cronometro quando il Master è uno sfidante e rende esplicita la posizione realmente in palio.
 
 ## Avvio e verifica
 
@@ -17,15 +17,16 @@ npm start
 - Lavagnetta: `http://localhost:3000/lavagnetta`
 - Stato server: `http://localhost:3000/health`
 
-## Cosa cambia nella v2.8
+## Cosa cambia nella v2.9
 
 - Il Mazzo Sfide ufficiale contiene otto carte: Stima Lampo, Cronometro del Master, Nomi & Cose, Alto o Basso, Intervallo Killer, Ordine Impossibile, La Bomba e Timeline Flash.
-- **Indizio dopo Indizio** e **Asta al Ribasso** sono stati rimossi dall’estrazione e dal codice eseguibile.
-- Stima Lampo, Cronometro, Alto o Basso, Intervallo Killer, Ordine Impossibile e Timeline Flash attivano soltanto le lavagnette degli sfidanti.
-- Timeline offre quattro carte riordinabili e 20 secondi; Ordine Impossibile usa la stessa interazione con 25 secondi.
-- Le risposte vengono bloccate e, quando entrambi hanno inviato, appaiono insieme su Master e lavagnette. Gli altri telefoni seguono domanda, andamento e risultato come spettatori.
-- Nomi & Cose e La Bomba restano vocali e vengono controllati dal Master, mentre tutti i dispositivi vedono categoria, turno ed esito.
-- Se il Master è uno degli sfidanti, compila il proprio campo sul dispositivo principale. Il fallback per un altro giocatore compare soltanto dopo la disconnessione della sua lavagnetta.
+- Uno sfidante collegato avvia la carta estratta dalla propria lavagnetta. Dopo l’ultima risposta, rivelazione ed esito avanzano automaticamente; il pulsante Master resta una scorciatoia e un fallback.
+- Ogni mini-sfida usa un handshake `mini_ready`: il Master vede “Lavagnetta pronta”. Se un dispositivo non conferma l’apertura entro 6 secondi, soltanto il suo campo passa al Master e la partita non resta bloccata.
+- Una scelta attiva viene ripresentata dopo la riconnessione del telefono. I pulsanti hanno aree touch più grandi e Alto o Basso si invia con un solo tocco.
+- Se il Master partecipa al Cronometro, sceglie una lavagnetta spettatrice come arbitro: su quel dispositivo compaiono prima AVVIA e poi FERMA. Se l’arbitro cade, il comando può essere riassegnato; se manca un arbitro la carta viene sostituita.
+- Il fotofinish parte soltanto per parità che incidono sul podio. La carta dichiara la posizione reale in palio e i punti collegati, invece di mostrare sempre “1º posto”.
+- Gli spettatori vedono regole, motivo, posta, domanda, elementi da ordinare, risposte e risultato, senza ricevere controlli attivi.
+- Nomi & Cose e La Bomba restano vocali con convalida del Master; le altre prove interattive attivano soltanto le lavagnette degli sfidanti.
 
 - Una parità nasce soltanto da una **distanza valida realmente uguale**. Master e lavagnette mostrano domanda, risposta corretta, stime, distanza reale, modificatori e formula usata.
 - Le caselle **Sfida** e **Minigioco** mostrano separatamente il motivo del confronto: giocatore arrivato, casella, avversario e carta estratta.
@@ -55,12 +56,12 @@ Esegui `npm run audit:questions` per rigenerare `AUDIT_EDITORIALE_DOMANDE.md` e 
 
 ## Verifiche incluse
 
-- 35 test automatici, compreso un end-to-end WebSocket con due sfidanti attivi, uno spettatore, ordinamento Timeline e tentativi di risposta non autorizzati.
+- 40 test automatici, compreso un end-to-end WebSocket con due sfidanti attivi, uno spettatore, handshake di apertura, recupero di una scelta dopo riconnessione, regia AVVIA/FERMA del Cronometro e fallback anti-blocco.
 - 360 partite simulate con 3–6 giocatori e tre semi indipendenti.
 - 5.228 domande estratte senza duplicati interni alla partita.
 - 3.936 minigiochi estratti con ciclo completo del mazzo.
 - 2.769 parità autorevoli, 286 Paracadute, 127 vittorie per Finale e 233 ai punti.
-- Collaudo browser Timeline con due sfidanti e uno spettatore: ordine personale, timer, invio, risultato pubblico e viewport iPhone 390 × 844 senza overflow.
+- Collaudo browser con Master, Anna, Berto e Carla: parità esatta, posta “1º posto · 3 punti”, avvio da Anna, risposte attive solo su Anna/Berto, Carla spettatrice, curiosità pubblica e uscita automatica dalla sfida senza click del Master.
 
 Vedi `SIMULATION_REPORT.md` e `PLAYTEST_REPORT.md` per i dettagli.
 

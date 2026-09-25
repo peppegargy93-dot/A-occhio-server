@@ -15,9 +15,9 @@ function open() {
   });
 }
 function send(ws, payload) { ws.send(JSON.stringify(payload)); }
-function next(ws, type, timeout = 2500) {
+function next(ws, type, timeout = 2500, label = type) {
   return new Promise((resolve, reject) => {
-    const timer = setTimeout(() => { cleanup(); reject(new Error(`Timeout: ${type}`)); }, timeout);
+    const timer = setTimeout(() => { cleanup(); reject(new Error(`Timeout: ${label}`)); }, timeout);
     const listener = data => {
       const message = JSON.parse(data.toString());
       if (message.t !== type) return;
@@ -113,6 +113,8 @@ test('flusso WebSocket con tre giocatori, scelta autorevole e riconnessione', as
   send(master,{t:'mini_request',requestId:'mini-lampo-1',playerTokens:[pads[0].token,pads[1].token],title:'Stima Lampo',subject:'Quanti?',icon:'⚡',fields:[{id:'estimate',label:'La tua stima',type:'number'}]});
   const receivedMini=await Promise.all(miniRequests);
   assert.ok(receivedMini.every(message=>message.title==='Stima Lampo'));
+  const annaReady=next(master,'mini_ready');send(pads[0].ws,{t:'mini_ready',requestId:'mini-lampo-1'});assert.equal((await annaReady).playerId,pads[0].token);
+  const bertoReady=next(master,'mini_ready');send(pads[1].ws,{t:'mini_ready',requestId:'mini-lampo-1'});assert.equal((await bertoReady).playerId,pads[1].token);
   await new Promise(resolve=>setTimeout(resolve,30));
   assert.equal(spectatorMini,false,'La lavagnetta spettatrice non deve ricevere gli input');
   pads[2].ws.off('message',spectatorListener);
@@ -142,6 +144,8 @@ test('flusso WebSocket con tre giocatori, scelta autorevole e riconnessione', as
   const receivedOrders=await Promise.all(orderRequests);
   assert.ok(receivedOrders.every(message=>message.fields[0].type==='order'));
   assert.ok(receivedOrders.every(message=>message.deadline>Date.now()));
+  const annaOrderReady=next(master,'mini_ready');send(pads[0].ws,{t:'mini_ready',requestId:'mini-timeline-1'});await annaOrderReady;
+  const bertoOrderReady=next(master,'mini_ready');send(pads[1].ws,{t:'mini_ready',requestId:'mini-timeline-1'});await bertoOrderReady;
   assert.equal(spectatorOrder,false);
   assert.match((await command(pads[0].ws,{t:'mini_response',requestId:'mini-timeline-1',values:{sequence:'a|a|c|d'}},'err')).msg,/ordine inviato/i);
   const annaOrder=next(master,'mini_response');
@@ -214,6 +218,38 @@ test('flusso WebSocket con tre giocatori, scelta autorevole e riconnessione', as
   const resumedSocket = await open();
   const resumed = await command(resumedSocket, { t: 'resume_pad', code: room.code, token: pads[2].token }, 'resumed_pad');
   assert.equal(resumed.code, room.code);
+
+  const recoveredChoice=next(pads[0].ws,'choice_request');
+  send(master,{t:'choice_request',requestId:'challenge-start-reconnect',chooserToken:pads[0].token,chooser:'Anna',title:'Avvia la mini sfida',options:[{id:'start',label:'Inizia'}]});
+  await recoveredChoice;
+  const replacementAnna=await open();
+  const recoveredState=await command(replacementAnna,{t:'resume_pad',code:room.code,token:pads[0].token},'resumed_pad');
+  assert.equal(recoveredState.state.choiceRequest.requestId,'challenge-start-reconnect');
+  const recoveredResponse=next(master,'choice_response',2500,'choice_response dopo riconnessione');
+  await command(replacementAnna,{t:'choice_response',requestId:'challenge-start-reconnect',optionId:'start'},'choice_confirmed');
+  const recoveredMessage=await recoveredResponse;send(master,{t:'master_event_ack',eventId:recoveredMessage.eventId});pads[0].ws=replacementAnna;
+
+  const controllerStart=next(resumedSocket,'choice_request');
+  send(master,{t:'choice_request',requestId:'crono-start',chooserToken:pads[2].token,chooser:'Carla',title:'Regia del Cronometro',options:[{id:'start',label:'Avvia'}]});
+  await controllerStart;
+  const controllerStartResponse=next(master,'choice_response',2500,'choice_response AVVIA Cronometro');
+  await command(resumedSocket,{t:'choice_response',requestId:'crono-start',optionId:'start'},'choice_confirmed');
+  const controllerStartMessage=await controllerStartResponse;send(master,{t:'master_event_ack',eventId:controllerStartMessage.eventId});
+  const controllerStop=next(resumedSocket,'choice_request');
+  send(master,{t:'choice_request',requestId:'crono-stop',chooserToken:pads[2].token,chooser:'Carla',title:'Regia del Cronometro',options:[{id:'stop',label:'Ferma'}]});
+  await controllerStop;
+  const controllerStopResponse=next(master,'choice_response',2500,'choice_response FERMA Cronometro');
+  await command(resumedSocket,{t:'choice_response',requestId:'crono-stop',optionId:'stop'},'choice_confirmed');
+  const controllerStopMessage=await controllerStopResponse;send(master,{t:'master_event_ack',eventId:controllerStopMessage.eventId});
+
+  const undeliveredRequest=next(pads[1].ws,'mini_request');
+  send(master,{t:'mini_request',requestId:'mini-no-ready',playerTokens:[pads[1].token],title:'Test consegna',fields:[{id:'estimate',label:'Stima',type:'number'}]});
+  await undeliveredRequest;
+  const undelivered=await next(master,'mini_unavailable',7500);
+  assert.equal(undelivered.reason,'not_ready');
+  assert.equal(undelivered.playerId,pads[1].token);
+  send(master,{t:'master_event_ack',eventId:undelivered.eventId});
+  send(master,{t:'mini_cancel',requestId:'mini-no-ready'});
 
   const mapViews = [pads[0].ws, pads[1].ws, resumedSocket].map(ws => next(ws, 'view'));
   send(master, { t: 'view', kind: 'map', scores: [{ name: 'Anna', score: 3, pos: 3 }], map: { finish: 30, players: [{ name: 'Anna', pos: 3 }], cells: [] },movement:[{name:'Anna',scoreDelta:3,posDelta:3,sources:[{label:'Round 1'}]}] });

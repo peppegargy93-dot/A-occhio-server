@@ -3,7 +3,7 @@
 ## 1. Aggiorna GitHub
 
 1. Apri la root del repository `A-occhio-server`.
-2. Carica **i file contenuti** in `A_OCCHIO_FILE_DA_CARICARE_GITHUB_V2_8`, non la cartella contenitore. Per la correzione minima puoi usare i due file contenuti in `A_OCCHIO_SOSTITUISCI_QUESTI_2_FILE_V2_8`.
+2. Carica **i file contenuti** in `A_OCCHIO_FILE_DA_CARICARE_GITHUB_V2_9`, non la cartella contenitore. Per la correzione minima puoi usare i due file contenuti in `A_OCCHIO_SOSTITUISCI_QUESTI_2_FILE_V2_9`.
 3. Sostituisci i file omonimi e le directory `scripts/` e `tests/`.
 4. Elimina le vecchie cartelle-versione e le copie di test/script nella root indicate in `FILE_DA_CARICARE_GITHUB.md`.
 5. Verifica che `package.json`, `server.js`, `game.html`, `scripts/` e `tests/` siano direttamente nella root.
@@ -35,7 +35,7 @@ Non creare manualmente la variabile `PORT`: Render la fornisce e `server.js` la 
 - Lavagnetta: `https://TUO-SERVIZIO.onrender.com/lavagnetta`
 - Health check: `https://TUO-SERVIZIO.onrender.com/health`
 
-`/health` deve restituire un JSON con `"ok": true` e `"version": "2.8.0"`.
+`/health` deve restituire un JSON con `"ok": true` e `"version": "2.9.0"`.
 
 ## 5. Collaudo dopo il deploy
 

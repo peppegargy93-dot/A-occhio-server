@@ -35,7 +35,7 @@ test('il Mazzo Sfide ufficiale contiene tre giochi originali e cinque nuovi gioc
 test('la carta viene estratta automaticamente senza menu del tipo di minigioco',()=>{
   const source=between('function diceRollWinner(players,opts,done){','\nfunction scoreCard(){');
   assert.match(source,/S\.cardBags\["mini-games"\]/);
-  assert.match(source,/findIndex\(key=>key!==S\.lastMiniGame&&MINI_GAME_META\[key\]\.family!==S\.lastMiniFamily\)/);
+  assert.match(source,/findIndex\(key=>available\(key\)&&key!==S\.lastMiniGame&&MINI_GAME_META\[key\]\.family!==S\.lastMiniFamily\)/);
   assert.match(source,/showRules\(chooseMode\(\)\)/);
   assert.match(source,/if\(finished\|\|!w\)return;finished=true/);
   assert.doesNotMatch(source,/Scegli il minigioco|tgRandom|tgNcc|miniMenu/);
@@ -71,9 +71,52 @@ test('le parità di distanza entrano direttamente nel mazzo casuale',()=>{
   const ties=between('// risolve un cluster alla volta','\n\nfunction questionFunFact');
   const order=between('function diceOrder(players, opts, done){','\nfunction renderPostRound(){');
   assert.match(ties,/diceOrder\(group/);
+  assert.match(ties,/startPlace:c\.startPlace/);
+  assert.match(ties,/maxPlace:3/);
   assert.match(order,/diceRollWinner\(remaining/);
-  assert.match(order,/stakes:place\+"º posto nel round"/);
+  assert.match(order,/const place=\(opts\.startPlace\|\|1\)\+result\.length/);
+  assert.match(order,/if\(place>\(opts\.maxPlace\|\|Infinity\)\)\{result\.push\(\.\.\.remaining\);return done\(result\);\}/);
+  assert.match(order,/stakes:stake/);
   assert.doesNotMatch(order,/prompt|Scegli/);
+});
+
+test('la sfida di parità parte soltanto se il gruppo tocca il podio e dichiara la posizione reale',()=>{
+  const ranking=between('function calcResults(){','\n\nfunction questionFunFact');
+  assert.match(ranking,/validIdx<3/);
+  assert.match(ranking,/startPlace:validIdx\+1/);
+  assert.match(ranking,/startPlace:c\.startPlace/);
+  const order=between('function diceOrder(players, opts, done){','\nfunction renderPostRound(){');
+  assert.match(order,/const stake=`\$\{place\}º posto nel round · \$\{points\}`/);
+});
+
+test('un gruppo di pari che parte dal terzo posto gioca una sola sfida',()=>{
+  const source='function diceOrder(players, opts, done){'+between('function diceOrder(players, opts, done){','\nfunction renderPostRound(){');
+  const calls=[];
+  const context={S:{players:[{id:'a'},{id:'b'},{id:'c'},{id:'d'}]},diceRollWinner:(remaining,opts,done)=>{calls.push(opts.stakes);done(remaining[0])}};
+  vm.runInNewContext(source,context);
+  const players=[{id:'b'},{id:'c'},{id:'d'}];let result=null;
+  context.diceOrder(players,{startPlace:3,maxPlace:3},ordered=>{result=ordered});
+  assert.deepEqual(calls,['3º posto nel round · 1 punto']);
+  assert.deepEqual(Array.from(result,player=>player.id),['b','c','d']);
+});
+
+test('avvio, risposta e uscita dalle sfide non dipendono da click del Master',()=>{
+  const source=between('function diceRollWinner(players,opts,done){','\nfunction scoreCard(){');
+  assert.match(source,/title:"Avvia la mini sfida"/);
+  assert.match(source,/function wireAutoAction/);
+  assert.match(source,/track\(setTimeout\(go,delay\)\)/);
+  assert.match(source,/wireAutoAction\("#abNext",next,4000\)/);
+  assert.match(source,/function chooseCronoController/);
+  assert.match(source,/function remoteCrono/);
+  assert.match(source,/title:"Regia del Cronometro"/);
+  assert.match(source,/key!=="crono"\|\|!masterIsContender\|\|cronoControllers\(\)\.length>0/);
+});
+
+test('le lavagnette confermano l’apertura e gli spettatori vedono anche le carte da ordinare',()=>{
+  const source=between('function diceRollWinner(players,opts,done){','\nfunction scoreCard(){');
+  assert.match(source,/Carte in gioco:/);
+  assert.match(html,/function resolveOnlineMiniReady/);
+  assert.match(html,/m\.t==="mini_ready"/);
 });
 
 test('Master e lavagnette ricevono motivo, sfidanti e carta estratta dallo stesso snapshot',()=>{
