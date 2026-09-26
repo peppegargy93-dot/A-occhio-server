@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- A OCCHIO! v2.9.0 · mini sfide anti-blocco + regia Cronometro delegabile -->
+<!-- A OCCHIO! v3.0.0 · tabellone rapido + Bonus rimonta + Malus podio -->
 <html lang="it">
 <head>
 <meta charset="UTF-8">
@@ -370,7 +370,6 @@
   .cell.t-malus{background:#f6d9cf;border-color:#e7b4a3;}
   .cell.t-voce{background:#f6d9cf;border-color:var(--coral);}
   .cell.t-timer{background:#d9ecec;}
-  .cell.t-duello{background:#e2dcea;}
   .cell.t-dadocaos{background:#dfeede;}
   .cell.t-random{background:#e9e2d0;}
   .cell.t-tesi{background:#e3dcef;border-color:#c8bce0;}
@@ -997,10 +996,10 @@ const QUESTIONS = [
 
 /* 170 nuove carte v2.6: 10 per ciascuna categoria, con curiosità e fonte. */
 const QUESTIONS_V2_6 = [
-  {"cat":"Sport","q":"Quanti metri misura la larghezza interna di una porta da calcio regolamentare?","a":7.32,"u":"m","f":"La chicca: la misura nasce dalle 8 iarde britanniche ed è rimasta identica nel calcio internazionale. Una porta certificata viene anche sottoposta a prove di stabilità e resistenza.","fs":"https://football-technology.fifa.com/innovation/standards/football-goals/football-goal-testing-process"},
-  {"cat":"Sport","q":"Quanti metri separano il terreno dal bordo inferiore della traversa in una porta da calcio regolamentare?","a":2.44,"u":"m","f":"Dietro la misura: 2,44 metri equivalgono esattamente a 8 piedi. FIFA controlla anche che pali e traversa non presentino spigoli o fissaggi pericolosi.","fs":"https://football-technology.fifa.com/innovation/standards/football-goals/football-goal-testing-process"},
+  {"cat":"Sport","q":"Quanti metri misura la larghezza interna di una porta da calcio regolamentare?","a":7.32,"u":"m","f":"La porta conserva ancora le misure britanniche delle origini: 7,32 metri sono esattamente 8 iarde. Oggi i modelli certificati devono superare anche prove di stabilità e resistenza.","fs":"https://football-technology.fifa.com/innovation/standards/football-goals/football-goal-testing-process"},
+  {"cat":"Sport","q":"Quanti metri separano il terreno dal bordo inferiore della traversa in una porta da calcio regolamentare?","a":2.44,"u":"m","f":"La traversa è alta esattamente 8 piedi, cioè 2,44 metri: un'altra traccia delle origini britanniche del calcio. FIFA verifica anche spigoli e fissaggi per ridurre i rischi.","fs":"https://football-technology.fifa.com/innovation/standards/football-goals/football-goal-testing-process"},
   {"cat":"Sport","q":"Quanti giocatori al massimo può schierare in campo una squadra di rugby union durante il gioco?","a":15,"u":"giocatori","f":"Non tutti hanno lo stesso compito: i numeri dall'1 all'8 identificano tradizionalmente gli avanti, mentre dal 9 al 15 giocano i trequarti. L'organizzatore può autorizzare incontri con meno di 15 giocatori.","fs":"https://passport.world.rugby/laws-of-the-game/laws-by-number/3-team/"},
-  {"cat":"Sport","q":"Quante riserve può nominare al massimo una nazionale in una partita internazionale di rugby a 15?","a":8,"u":"riserve","f":"Il dettaglio tattico: in una rosa internazionale da 23, almeno sei giocatori devono poter coprire i ruoli specialistici della prima linea. Le sostituzioni avvengono soltanto a gioco fermo e con il permesso dell'arbitro.","fs":"https://passport.world.rugby/laws-of-the-game/laws-by-number/3-team/"},
+  {"cat":"Sport","q":"Quante riserve può nominare al massimo una nazionale in una partita internazionale di rugby a 15?","a":8,"u":"riserve","f":"Una rosa internazionale arriva così a 23 giocatori, ma almeno sei riserve devono poter coprire i ruoli specialistici della prima linea. Le sostituzioni avvengono solo a gioco fermo e col permesso dell'arbitro.","fs":"https://passport.world.rugby/laws-of-the-game/laws-by-number/3-team/"},
   {"cat":"Sport","q":"Quanti metri è lungo un campo regolamentare di pallavolo?","a":18,"u":"m","f":"Il campo è diviso in due quadrati perfetti di 9 metri per lato. Nelle competizioni FIVB deve inoltre essere circondato da una zona libera molto più ampia di quella minima prevista nelle partite comuni.","fs":"https://www.fivb.com/wp-content/uploads/2024/03/FIVB_Volleyball_Rules_2015-2016_EN_V3_20150205.pdf"},
   {"cat":"Sport","q":"Quanti metri è lungo il rettangolo di gioco di un campo FIBA di pallacanestro?","a":28,"u":"m","f":"Il parquet misura 28 per 15 metri, ma l'intera area libera consigliata arriva almeno a 32 per 19. Le linee regolamentari sono larghe 5 centimetri.","fs":"https://www.venueguide.fiba.basketball/vanue-design"},
   {"cat":"Sport","q":"Quanti metri è lungo un campo regolamentare di pallamano indoor?","a":40,"u":"m","f":"È lungo quanto quattro autobus urbani messi quasi in fila e largo 20 metri. Davanti a ciascuna porta c'è un'area di 6 metri riservata al portiere in difesa.","fs":"https://www.ihf.info/media-center/news/how-did-we-get-here-evolution-indoor-handball"},
@@ -1198,8 +1197,8 @@ const EDITORIAL_FACTS = {
     "https://www.oscars.org/oscars/ceremonies/1998"
   ],
   "Quanti minuti dura Avengers Endgame?": [
-    "Avengers: Endgame fu il primo film del Marvel Cinematic Universe a superare le tre ore di durata.",
-    "https://www.marvel.com/movies/avengers-endgame"
+    "Perfino i tacos di Smart Hulk furono creati in CGI: la differenza tra la sua mano gigantesca e quella di Ant-Man rendeva impossibile usare tacos veri nella scena.",
+    "https://www.marvel.com/articles/movies/how-vfx-transforms-mark-ruffalo-to-hulk-avengers-endgame"
   ],
   "Quanti minuti dura Pulp Fiction?": [
     "Pulp Fiction racconta gli eventi fuori ordine: ricomponendo cronologicamente le scene, il film inizierebbe e finirebbe in punti molto diversi.",
@@ -1242,7 +1241,7 @@ const EDITORIAL_FACTS = {
     "https://www.billboard.com/music/chart-beat/pink-floyd-dark-side-of-the-moon-billboard-200-1235042809/"
   ],
   "Quanti tasti ha un pianoforte a coda?": [
-    "Il pianoforte moderno standard ha 88 tasti: 52 bianchi e 36 neri, per un’estensione di poco superiore alle sette ottave.",
+    "Il pianoforte nacque intorno al 1700 dall'intuizione di Bartolomeo Cristofori: a differenza del clavicembalo, permetteva di variare il volume con la forza del tocco.",
     "https://www.britannica.com/art/piano-musical-instrument"
   ],
   "Quante corde ha un'arpa da concerto?": [
@@ -1274,8 +1273,8 @@ const EDITORIAL_FACTS = {
     "https://resources.fina.org/fina/document/2022/02/08/77c3058d-b549-4543-8524-ad51a857864e/210805-Facilities-Rules_clean.pdf"
   ],
   "Quanti grammi pesa una pallina da tennis (circa)?": [
-    "Una pallina da competizione deve rispettare non solo un intervallo di peso, ma anche precisi valori di diametro, deformazione e rimbalzo.",
-    "https://www.itftennis.com/media/7221/2024-rules-of-tennis-english.pdf"
+    "Le palline da tennis non sono sempre state gialle: l'ITF introdusse il giallo nel 1972 perché risultava più visibile in televisione; Wimbledon resistette fino al 1986.",
+    "https://www.itftennis.com/media/2280/balls-history-of-tennis-balls.pdf"
   ],
   "Quanti grammi pesa un pallone da calcio regolamentare?": [
     "Il regolamento specifica il peso del pallone all’inizio della partita: durante il gioco umidità e fango possono modificarlo.",
@@ -1318,12 +1317,12 @@ const EDITORIAL_FACTS = {
     "https://blog.youtube/news-and-events/you-tube-at-15-my-personal-journey/"
   ],
   "Quante kcal ha una lattina di Coca-Cola da 330 ml?": [
-    "La ricetta e i valori nutrizionali possono variare tra mercati: per questo la confezione locale resta il riferimento più affidabile.",
-    "https://www.coca-cola.com/it/it/brands/coca-cola"
+    "La bottiglia sagomata di Coca-Cola nacque nel 1915 con un obiettivo quasi teatrale: essere riconoscibile al tatto al buio o perfino dai frammenti a terra.",
+    "https://www.coca-colacompany.com/about-us/history/11-facts-about-the-coca-cola-contour-bottle"
   ],
   "Quanti grammi di zucchero in una lattina di Fanta?": [
-    "La quantità di zucchero della Fanta cambia tra Paesi perché ricette e normative locali non sono identiche.",
-    "https://www.coca-cola.com/it/it/brands/fanta"
+    "La Fanta arancione moderna nacque a Napoli nel 1955. Oggi il marchio conta più di 100 gusti in 180 Paesi, ma l'arancia resta il più popolare.",
+    "https://www.coca-colacompany.com/brands/sparkling-soft-drinks/fanta"
   ],
   "Quanti kg di pasta mangia un italiano in un anno (circa)?": [
     "L’Italia è stabilmente il Paese con il più alto consumo pro capite di pasta e anche uno dei maggiori produttori mondiali.",
@@ -1394,20 +1393,21 @@ const MINI_TIMELINE_CARDS = [
 ];
 const MINI_BOMB_CATEGORIES = ["Film con almeno due parole nel titolo","Città italiane","Cantanti o band","Animali che vivono in acqua","Cibi che si mangiano con le mani","Serie TV","Oggetti presenti in cucina","Sport con una palla","Personaggi dei cartoni","Cose che porteresti in vacanza"];
 
-// Tabellone da 30 caselle: partite più rapide (cap a 15 round).
+// Tabellone da 30 caselle: soltanto tre tappe del Mazzo Sfide.
+// Bonus e Malus non sono più caselle: dipendono dai risultati del giocatore.
 let BOARD = [
-  // Le due tappe del Mazzo Sfide sono separate: Sfida (cas. 6) e Minigioco (cas. 23).
-  // Entrambe estraggono una prova casuale; cambia soltanto la ricompensa indicata a schermo.
-  "domanda","bonus","malus","timer","domanda","duello",
-  "azzardo","domanda","cecchino","tiroleader","malus","domanda",
-  "gemelli","dadocaos","postadoppia","domanda","bonus","voce",
+  "domanda","domanda","domanda","timer","domanda","alfabetica",
+  "azzardo","domanda","cecchino","tiroleader","domanda","domanda",
+  "gemelli","dadocaos","postadoppia","domanda","alfabetica","voce",
   "domanda","fenomeno","timer","azzardo","alfabetica","domanda",
-  "cecchino","penitenza","domanda","dadocaos","malus","finale"
+  "cecchino","penitenza","domanda","dadocaos","domanda","finale"
 ];
 const BOARD_FULL = BOARD.slice();
 const BOARD_DUO  = BOARD.slice(0,14).map(t=> t==="gemelli"?"domanda":t).concat(["finale"]); // 15 caselle
 let FINISH = BOARD.length;   // casella di arrivo (Finale)
 const MAX_ROUNDS = 15;         // durata massima di una partita
+const COMEBACK_BONUS_STREAK = 4;
+const PODIUM_MALUS_STEP = 3;
 
 const CELL = {
   domanda:{ic:"❓",nm:"Domanda"},
@@ -1415,7 +1415,6 @@ const CELL = {
   malus:{ic:"⛔",nm:"Malus"},
   voce:{ic:"📢",nm:"Infamata a voce"},
   timer:{ic:"⏱️",nm:"Timer Challenge"},
-  duello:{ic:"⚔️",nm:"Sfida"},
   dadocaos:{ic:"🎲",nm:"Dado Caos"},
   random:{ic:"🌀",nm:"Random / Categoria"},
   azzardo:{ic:"🎰",nm:"Azzardo"},
@@ -1465,6 +1464,22 @@ function setFenomeno(player){
   FENOMENO_MALUS.forEach(effect=>addUniqueEffect(player.malus,effect));
 }
 
+// Un'unica funzione autorevole aggiorna le due progressioni personali.
+// Restituisce al massimo un evento: il chiamante lo accoda e lo risolve una volta.
+function updatePerformanceProgress(player,isOnPodium){
+  if(isOnPodium){
+    player.outsidePodiumStreak=0;
+    player.podiumCount=(Number(player.podiumCount)||0)+1;
+    return player.podiumCount%PODIUM_MALUS_STEP===0
+      ? {type:"malus",trigger:"podium_tax",podiumCount:player.podiumCount}
+      : null;
+  }
+  player.outsidePodiumStreak=(Number(player.outsidePodiumStreak)||0)+1;
+  if(player.outsidePodiumStreak<COMEBACK_BONUS_STREAK)return null;
+  player.outsidePodiumStreak=0;
+  return {type:"bonus",trigger:"comeback",streak:COMEBACK_BONUS_STREAK};
+}
+
 const DEMO_NAMES = ["Sara","Marco","Giulia","Luca","Anna","Franco","Chiara","Dario"];
 const COLORS = ["#2E6B7A","#E0795E","#48A39A","#E6AC3C","#8FA94E","#9A6A8E","#3F7DB0","#A4683C"];
 
@@ -1474,7 +1489,7 @@ const COLORS = ["#2E6B7A","#E0795E","#48A39A","#E6AC3C","#8FA94E","#9A6A8E","#3F
 const S = {
   phase:"setup",         // setup | draw | answering | reveal | special | postround | gameover
   count:4,
-  players:[],            // {id,name,color,score,pos,streak,fenomeno,malus:[],bonus:[]}
+  players:[],            // include outsidePodiumStreak e podiumCount, sorgenti autorevoli dei premi
   round:0,
   question:null,
   forcedCat:null,        // forzata da "Cibo e Calorie"
@@ -1646,7 +1661,7 @@ const TUTORIAL = [
   {ic:"✍️", t:"Scrivi in 25 secondi", x:"Parte il timer e ognuno scrive il suo numero in segreto, su carta o lavagnetta. Quando il tempo finisce le risposte si bloccano, e uno di voi le inserisce nel telefono."},
   {ic:"🥇", t:"Punti e caselle", x:"Chi si avvicina di più prende 3 punti e avanza di 3 caselle; il secondo fa +2 e il terzo +1. Bonus e sfide possono cambiare punti o percorso: il riepilogo mostra sempre da dove arriva ogni variazione."},
   {ic:"🏆", t:"Due modi per vincere", x:"Raggiungi per primo la casella Finale e vinci subito. Se dopo 15 round nessuno ha finito il percorso, vince chi ha più punti. Le due classifiche restano sempre separate e visibili."},
-  {ic:"⚡", t:"Parità? Carta Sfida", x:"Una sfida parte soltanto per una vera parità di distanza valida o per una casella Sfida. Il gioco mostra il motivo, pesca automaticamente il minigioco e spiega subito regole e posta."},
+  {ic:"⚡", t:"Parità? Carta Sfida", x:"Una sfida parte soltanto per una vera parità di distanza che incide sul podio o quando una pedina raggiunge una delle tre caselle Minigioco. Il gioco mostra il motivo, pesca automaticamente la prova e spiega subito regole e posta."},
 ];
 function renderTutorial(i){
   S.phase="tutorial";
@@ -1754,7 +1769,7 @@ function syncPlayers(){
       color: COLORS[i],
       avatar: prev? prev.avatar : null,
       onlineToken: prev? prev.onlineToken : null,
-      score:0, pos:0, streak:0, fenomeno:false,
+      score:0, pos:0, streak:0, outsidePodiumStreak:0, podiumCount:0, fenomeno:false,
       malus:[], bonus:[], voiceNext:false,
     });
   }
@@ -1824,7 +1839,7 @@ function startGame(){
   S.winnerFinal=null;S.gameEndReason=null;S.mapFull=false;S._becameFenomeno=false;
   S.lastMiniGame=null; S.lastMiniFamily=null;
   S.used=new Set(); S.questionBag=[];S.cardBags={};S.ledger=[];
-  S.players.forEach(p=>{p.score=0;p.pos=0;p.streak=0;p.fenomeno=false;p.malus=[];p.bonus=[];p.doubleNext=false;p.cecchino=false;});S.twins=null;
+  S.players.forEach(p=>{p.score=0;p.pos=0;p.streak=0;p.outsidePodiumStreak=0;p.podiumCount=0;p.fenomeno=false;p.malus=[];p.bonus=[];p.doubleNext=false;p.cecchino=false;});S.twins=null;
   S.log=[];
   log("Partita avviata con "+S.players.length+" giocatori · categoria "+(S.catMode==="turno"?"a turno":"a sorteggio")+"."+(S.count===2?" ⚔️ Modalità Duello: tabellone da "+FINISH+" caselle. Segna solo il più vicino: +2 se entro il 30% della risposta, +1 se oltre.":""),0);
   drawQuestion();
@@ -2375,7 +2390,7 @@ function renderReveal(){
         <div class="lbl">La risposta era</div>
         <div class="big ans-pop">${fmtNum(q.a)}${q.u?" <span style='font-size:18px'>"+esc(q.u)+"</span>":""}</div>
         <div class="qhint" style="font-style:normal">${esc(q.q)}</div>
-        <div class="card flat mt-s" style="background:#eef4f0;border-color:#c9ddd2;text-align:left;font-size:12.5px;line-height:1.45"><b>💡 Curiosità</b><br>${esc(questionFunFact(q))}<div style="font-size:10px;color:#6b7c76;margin-top:5px">Fonte: ${esc(questionFunFactSource(q))}</div></div>
+        <div class="card flat mt-s" style="background:#eef4f0;border-color:#c9ddd2;text-align:left;font-size:12.5px;line-height:1.45"><b>✨ La storia dietro la domanda</b><br>${esc(questionFunFact(q))}<div style="font-size:10px;color:#6b7c76;margin-top:5px">Fonte: ${esc(questionFunFactSource(q))}</div></div>
       </div>
       ${rowsHtml}
       <button type="button" class="btn teal mt" id="advanceBtn">Assegna punti e avanza →</button>
@@ -2424,6 +2439,7 @@ function applyScoringAndMove(){
   S.scoringAppliedRound=S.round;
   beginLedger();
   let finaleReached=null;
+  const performanceEvents=[];
   S.lastLanded=[];
   // 🔥 Posta Doppia
   S.players.forEach(p=>{
@@ -2445,11 +2461,17 @@ function applyScoringAndMove(){
     S.twins=null;
   }
   S.ranking.forEach(e=>{
+    const p = pById(e.id);
     if(e.pts>0){
-      const p = pById(e.id);
       applyPlayerDelta(p,{score:e.pts,pos:e.pts,source:`Round ${S.round}`,detail:`${e.rank}º posto: +${e.pts} punti e +${e.pts} caselle`});
       S.lastLanded.push(p.pos);
       if(p.pos>=FINISH && !finaleReached) finaleReached=p;
+    }
+    const progressEvent=updatePerformanceProgress(p,e.pts>0);
+    if(progressEvent){
+      performanceEvents.push({...progressEvent,landerId:p.id});
+      if(progressEvent.type==="malus")log(`⛔ Tassa del podio: ${esc(p.name)} raggiunge ${progressEvent.podiumCount} piazzamenti sul podio e riceve un MALUS.`);
+      else log(`⭐ Premio rimonta: ${esc(p.name)} resta fuori dal podio per ${COMEBACK_BONUS_STREAK} round di fila e può scegliere un BONUS.`);
     }
   });
 
@@ -2480,8 +2502,8 @@ function applyScoringAndMove(){
       S.winnerFinal=finaleReached;
       return renderGameOver();
     }
-    // ogni giocatore che ha segnato attiva la casella su cui si ferma (in ordine di podio)
-    S.specialQueue = [];
+    // Prima risolviamo i premi legati ai risultati, poi l'eventuale casella del percorso.
+    S.specialQueue = performanceEvents.slice();
     S.ranking.forEach(e=>{
       if(e.pts>0){
         const p = pById(e.id);
@@ -2522,25 +2544,25 @@ function renderSpecial(){
   const {type, landerId} = S.special;
   const lander = pById(landerId);
   const c = CELL[type];
+  const eventLabel=S.special.trigger==="comeback"
+    ? `${COMEBACK_BONUS_STREAK} round consecutivi fuori dal podio · ${lander.name}`
+    : S.special.trigger==="podium_tax"
+      ? `${S.special.podiumCount} podi complessivi · ${lander.name}`
+      : `Casella ${S.special.cell} · ${lander.name}`;
 
   let body="";
   if(type==="bonus"){
-    body = `<p class="sub center">${esc(lander.name)} pesca una carta Bonus e la tiene.</p>
+    body = `<p class="sub center">⭐ <b>Premio rimonta!</b> ${esc(lander.name)} è rimasto fuori dal podio per ${COMEBACK_BONUS_STREAK} round consecutivi e sceglie un Bonus da conservare.</p>
             <div class="choice-grid" id="bonusList"></div>`;
   } else if(type==="voce"){
     body = `<p class="sub center">📢 <b>Piccola infamata!</b> Nel prossimo round ${esc(lander.name)} dovrà dire subito la propria stima ad alta voce, prima che gli altri rispondano.</p>
             <button type="button" class="btn coral mt" id="voiceGo">Accetta l’infamata 📢</button>`;
   } else if(type==="malus"){
-    body = `<p class="sub center">${esc(lander.name)} pesca un Malus da rifilare a un avversario.</p>
-            <div class="card flat" style="background:#fbe9e2;border-color:#e7b4a3" id="malusCard"></div>
-            <p class="eyebrow center mt">A chi lo dai?</p>
-            <div class="choice-grid" id="malusTargets"></div>`;
+    body = `<p class="sub center">⛔ <b>Tassa del podio!</b> ${esc(lander.name)} ha raggiunto ${S.special.podiumCount} podi complessivi: il gioco gli assegna automaticamente un Malus casuale.</p>
+            <div class="card flat" style="background:#fbe9e2;border-color:#e7b4a3" id="malusCard"><strong>Estrazione in corso…</strong></div>`;
   } else if(type==="alfabetica"){
     body = `<p class="sub center">${esc(lander.name)} sceglie un avversario e pesca una carta casuale dal <b>Mazzo Sfide</b>. Chi vince guadagna +1 punto e +1 casella.</p>
             <div class="choice-grid" id="alfTargets"></div>`;
-  } else if(type==="duello"){
-    body = `<p class="sub center">${esc(lander.name)} sceglie un avversario e pesca una carta casuale dal <b>Mazzo Sfide</b>. Chi vince guadagna +1 casella.</p>
-            <div class="choice-grid" id="duelTargets"></div>`;
   } else if(type==="cecchino"){
     body = `<p class="sub center">🔭 <b>Cecchino!</b> Nel prossimo round ${esc(lander.name)} punta al colpo perfetto: se azzecca la risposta <b>ESATTA</b>, fa <b>+4 punti</b>. Altrimenti, punti normali.</p>
             <button type="button" class="btn ochre mt" id="cecGo">Carico il colpo 🔭</button>`;
@@ -2595,8 +2617,8 @@ function renderSpecial(){
       <div class="special-banner">
         <div class="ic">${c.ic}</div>
         <div class="ttl">${esc(c.nm)}</div>
-        <div class="sub" style="margin:2px 0 0">Casella ${S.special.cell} · ${esc(lander.name)}</div>
-        ${S.specialQueue && S.specialQueue.length ? `<div class="queue-note">poi: altre ${S.specialQueue.length} caselle da attivare</div>`:""}
+        <div class="sub" style="margin:2px 0 0">${esc(eventLabel)}</div>
+        ${S.specialQueue && S.specialQueue.length ? `<div class="queue-note">poi: altri ${S.specialQueue.length} eventi da risolvere</div>`:""}
       </div>
       ${body}
     </div>
@@ -2612,43 +2634,29 @@ function renderSpecial(){
 
 function wireSpecial(type, lander){
   if(type==="bonus"){
-    const list=$("#bonusList"),opts=shuffle(BONUS.filter(b=>S.players.some(p=>!p.bonus.some(owned=>owned.id===b.id)))).slice(0,3);let completed=false;
+    const list=$("#bonusList"),opts=shuffle(BONUS.filter(b=>!lander.bonus.some(owned=>owned.id===b.id))).slice(0,3);let completed=false;
     if(!opts.length){
       completed=true;
-      list.innerHTML=`<div class="card flat center"><b>Nessun BONUS assegnabile</b><br><span>Tutti possiedono già le carte disponibili: nessuna carta viene duplicata.</span></div>`;
-      log(`⭐ ${esc(lander.name)} non assegna un BONUS: tutte le carte disponibili sono già possedute.`);
-      onlineBroadcastCardResolution({icon:"⭐",title:"BONUS non assegnato",subject:lander.name,effectTitle:"Mazzo già completo",description:"Tutti i giocatori possiedono già le carte disponibili.",instruction:"Nessun effetto è stato duplicato; la partita prosegue."});
+      list.innerHTML=`<div class="card flat center"><b>Bonus già completi</b><br><span>${esc(lander.name)} possiede già tutte le carte disponibili.</span></div>`;
+      log(`⭐ Premio rimonta già completo: ${esc(lander.name)} possiede tutti i BONUS.`);
+      onlineBroadcastCardResolution({icon:"⭐",title:"Premio rimonta",subject:lander.name,effectTitle:"Bonus già completi",description:"Il giocatore possiede già tutte le carte disponibili.",instruction:"Nessun effetto viene duplicato; la partita prosegue."});
       setTimeout(nextSpecialOrPost,850);return;
     }
     list.innerHTML=`<div class="card flat center">📲 ${esc(lander.name)} sceglierà il BONUS dalla propria lavagnetta.</div>`;
-    onlineRequestPlayerChoice({chooser:lander,title:"Scegli il BONUS",subject:`Casella BONUS · ${lander.name}`,description:"Scegli la carta da assegnare.",options:opts.map(b=>({id:b.id,label:`BONUS · ${b.nm}`,description:b.desc}))},(bonusId)=>{
+    onlineRequestPlayerChoice({chooser:lander,title:"Scegli il tuo BONUS",subject:`Premio rimonta · ${lander.name}`,description:`${COMEBACK_BONUS_STREAK} round consecutivi fuori dal podio: scegli una carta da conservare.`,options:opts.map(b=>({id:b.id,label:`BONUS · ${b.nm}`,description:b.desc}))},(bonusId)=>{
       const b=opts.find(x=>x.id===bonusId);
-      if(!b){list.innerHTML=opts.map((x,i)=>`<button type="button" class="choice fallback-bonus" data-i="${i}"><b>BONUS · ${esc(x.nm)}</b><br><span>${esc(x.desc)}</span></button>`).join("");$$(".fallback-bonus",list).forEach(btn=>btn.onclick=()=>{list.querySelectorAll("button").forEach(x=>x.disabled=true);askTarget(opts[+btn.dataset.i])});return;}
-      askTarget(b);
+      if(!b){list.innerHTML=opts.map((x,i)=>`<button type="button" class="choice fallback-bonus" data-i="${i}"><b>BONUS · ${esc(x.nm)}</b><br><span>${esc(x.desc)}</span></button>`).join("");$$(".fallback-bonus",list).forEach(btn=>btn.onclick=()=>{list.querySelectorAll("button").forEach(x=>x.disabled=true);finish(opts[+btn.dataset.i])});return;}
+      finish(b);
     });
-    function askTarget(b){
-      const targets=S.players.filter(p=>!p.bonus.some(owned=>owned.id===b.id));
-      if(!targets.length){
-        completed=true;
-        list.innerHTML=`<div class="card flat center">Il BONUS <b>${esc(b.nm)}</b> è già posseduto da tutti: nessuna copia aggiunta.</div>`;
-        onlineBroadcastCardResolution({icon:"⭐",title:"BONUS non assegnato",subject:lander.name,effectTitle:b.nm,description:"La carta è già posseduta da tutti i giocatori.",instruction:"Nessun effetto è stato duplicato; la partita prosegue."});
-        setTimeout(nextSpecialOrPost,850);return;
-      }
-      onlineRequestPlayerChoice({chooser:lander,title:"A chi vuoi dare il BONUS?",subject:`BONUS · ${b.nm}`,description:b.desc,options:targets.map(p=>({id:p.id,label:p.name,description:p.id===lander.id?"Tienilo per te.":"Assegna il BONUS a questo giocatore."}))},(id)=>{
-        const target=pById(id);
-        if(!target){list.innerHTML=targets.map(p=>`<button type="button" class="choice fallback-target" data-id="${p.id}"><b>${esc(p.name)}</b></button>`).join("");$$(".fallback-target",list).forEach(btn=>btn.onclick=()=>finish(b,pById(btn.dataset.id)));return;}
-        finish(b,target);
-      });
-    }
-    function finish(b,target=lander){
-      if(completed||!b||!target)return;completed=true;
-      const assigned=addUniqueEffect(target.bonus,b);
+    function finish(b){
+      if(completed||!b)return;completed=true;
+      const assigned=addUniqueEffect(lander.bonus,b);
       if(assigned){
-        log(`⭐ ${esc(lander.name)} assegna il BONUS "${b.nm}" a ${esc(target.name)}.`);
-        onlineBroadcastCardResolution({icon:"⭐",title:"BONUS assegnato",subject:`Da ${lander.name} a ${target.name}`,effectTitle:b.nm,description:b.desc,instruction:`${target.name} conserva questa carta.`});
+        log(`⭐ Premio rimonta: ${esc(lander.name)} sceglie il BONUS "${b.nm}".`);
+        onlineBroadcastCardResolution({icon:"⭐",title:"BONUS rimonta assegnato",subject:lander.name,effectTitle:b.nm,description:b.desc,instruction:`${lander.name} conserva questa carta.`});
       }else{
-        log(`⭐ BONUS "${b.nm}" non duplicato: ${esc(target.name)} lo possiede già.`);
-        onlineBroadcastCardResolution({icon:"⭐",title:"BONUS non assegnato",subject:target.name,effectTitle:b.nm,description:"Il giocatore possiede già questa carta.",instruction:"Nessun effetto è stato duplicato; la partita prosegue."});
+        log(`⭐ BONUS "${b.nm}" non duplicato: ${esc(lander.name)} lo possiede già.`);
+        onlineBroadcastCardResolution({icon:"⭐",title:"BONUS non assegnato",subject:lander.name,effectTitle:b.nm,description:"Il giocatore possiede già questa carta.",instruction:"Nessun effetto è stato duplicato; la partita prosegue."});
       }
       setTimeout(nextSpecialOrPost,700);
     }
@@ -2661,48 +2669,34 @@ function wireSpecial(type, lander){
     });
   }
   else if(type==="malus"){
-    let m=null,targets=[];let completed=false;
+    let m=null;
     for(let attempt=0;attempt<MALUS.length;attempt++){
       const candidate=drawDeckCard("malus",MALUS);
-      const eligible=S.players.filter(p=>p.id!==lander.id&&(p.bonus.some(b=>b.id==="scudo")||!p.malus.some(owned=>owned.id===candidate.id)));
-      if(eligible.length){m=candidate;targets=eligible;break;}
+      if(!lander.malus.some(owned=>owned.id===candidate.id)){m=candidate;break;}
     }
     if(!m){
-      $("#malusCard").innerHTML=`<strong>⛔ Nessun MALUS assegnabile</strong><div style="font-size:12px;margin-top:3px">Tutti gli avversari possiedono già i malus disponibili.</div>`;
-      $("#malusTargets").innerHTML=`<div class="card flat center">Nessun effetto viene duplicato.</div>`;
-      log(`⛔ ${esc(lander.name)} non assegna un MALUS: tutti gli effetti sono già attivi sugli avversari.`);
-      onlineBroadcastCardResolution({icon:"⛔",title:"MALUS non assegnato",subject:lander.name,effectTitle:"Nessun effetto disponibile",description:"Tutti gli avversari possiedono già i malus disponibili.",instruction:"Nessun malus è stato duplicato; la partita prosegue."});
+      $("#malusCard").innerHTML=`<strong>⛔ Nessun nuovo MALUS disponibile</strong><div style="font-size:12px;margin-top:3px">${esc(lander.name)} possiede già tutti gli effetti del mazzo.</div>`;
+      log(`⛔ Tassa del podio senza duplicati: ${esc(lander.name)} possiede già tutti i MALUS.`);
+      onlineBroadcastCardResolution({icon:"⛔",title:"Tassa del podio",subject:lander.name,effectTitle:"Nessun nuovo effetto",description:"Il giocatore possiede già tutti i Malus disponibili.",instruction:"Nessun effetto viene duplicato; la partita prosegue."});
       setTimeout(nextSpecialOrPost,850);return;
     }
     $("#malusCard").innerHTML=`<strong style="color:#a23a22">⛔ MALUS · ${esc(m.nm)}</strong><div style="font-size:12px;color:#7a4536;margin-top:3px">${esc(m.desc)}</div>`;
-    $("#malusTargets").innerHTML=`<div class="card flat center">📲 ${esc(lander.name)} sceglierà il destinatario dalla propria lavagnetta.</div>`;
-    onlineRequestPlayerChoice({chooser:lander,title:"A chi vuoi dare il MALUS?",subject:`MALUS · ${m.nm}`,description:m.desc,options:targets.map(p=>({id:p.id,label:p.name,description:`${p.score} pt · casella ${p.pos}`}))},(id)=>{
-      const target=pById(id);
-      if(!target){$("#malusTargets").innerHTML=targets.map(p=>`<button type="button" class="choice fallback-malus" data-id="${p.id}"><b>${esc(p.name)}</b></button>`).join("");$$(".fallback-malus").forEach(btn=>btn.onclick=()=>finish(pById(btn.dataset.id)));return;}
-      finish(target);
-    });
-    function finish(tgt){
-      if(completed||!tgt)return;completed=true;
-      const shield=tgt.bonus.findIndex(b=>b.id==="scudo");
-      if(shield>=0){tgt.bonus.splice(shield,1);log(`🛡️ ${esc(tgt.name)} blocca il MALUS "${m.nm}".`);onlineBroadcastCardResolution({icon:"🛡️",title:"MALUS bloccato",subject:tgt.name,effectTitle:m.nm,description:"La carta Scudo annulla il MALUS.",instruction:"La partita prosegue senza penalità."});}
-      else{
-        const assigned=addUniqueEffect(tgt.malus,m);
-        if(assigned){log(`⛔ ${esc(lander.name)} assegna il MALUS "${m.nm}" a ${esc(tgt.name)}.`);onlineBroadcastCardResolution({icon:"⛔",title:"MALUS assegnato",subject:`Da ${lander.name} a ${tgt.name}`,effectTitle:m.nm,description:m.desc,instruction:m.time?`La lavagnetta di ${tgt.name} si bloccherà dopo ${m.time} secondi.`:`Il MALUS verrà applicato automaticamente.`});}
-        else{log(`⛔ MALUS "${m.nm}" non duplicato: ${esc(tgt.name)} lo possiede già.`);onlineBroadcastCardResolution({icon:"⛔",title:"MALUS non assegnato",subject:tgt.name,effectTitle:m.nm,description:"Il giocatore possiede già questo effetto.",instruction:"Nessun malus è stato duplicato; la partita prosegue."});}
-      }
-      setTimeout(nextSpecialOrPost,850);
+    const shield=lander.bonus.findIndex(b=>b.id==="scudo");
+    if(shield>=0){
+      lander.bonus.splice(shield,1);
+      log(`🛡️ ${esc(lander.name)} blocca la Tassa del podio "${m.nm}" con lo Scudo.`);
+      onlineBroadcastCardResolution({icon:"🛡️",title:"MALUS bloccato",subject:lander.name,effectTitle:m.nm,description:"La carta Scudo annulla la Tassa del podio.",instruction:"La partita prosegue senza penalità."});
+    }else{
+      addUniqueEffect(lander.malus,m);
+      log(`⛔ Tassa del podio: ${esc(lander.name)} riceve automaticamente il MALUS "${m.nm}".`);
+      onlineBroadcastCardResolution({icon:"⛔",title:"MALUS automatico",subject:`${lander.name} · ${S.special.podiumCount} podi`,effectTitle:m.nm,description:m.desc,instruction:m.time?`La lavagnetta di ${lander.name} si bloccherà dopo ${m.time} secondi nel prossimo round.`:"Il MALUS verrà applicato automaticamente nel prossimo round."});
     }
+    setTimeout(nextSpecialOrPost,1100);
   }
   else if(type==="alfabetica"){
     wireRandomChallenge(lander,"#alfTargets",{
       title:"Minigioco!",stakes:"+1 punto e +1 casella",logIcon:"🎴",
       reward(win){applyPlayerDelta(win,{score:1,pos:1,source:"Casella Minigioco",detail:"Vittoria nella carta Sfida"});}
-    });
-  }
-  else if(type==="duello"){
-    wireRandomChallenge(lander,"#duelTargets",{
-      title:"Sfida!",stakes:"+1 casella sul tabellone",logIcon:"⚔️",
-      reward(win){applyPlayerDelta(win,{pos:1,source:"Casella Sfida",detail:"Vittoria nella carta Sfida"});}
     });
   }
   else if(type==="cecchino"){
@@ -2718,7 +2712,7 @@ function wireSpecial(type, lander){
       $("#tlReveal").classList.add("hide");
       const g=$("#tlPick"); g.classList.remove("hide");
       g.innerHTML = `<p class="eyebrow center" style="grid-column:1/-1">Risposta: <b>${fmtNum(q.a)} ${esc(q.u)}</b> — chi era più vicino?</p>
-        <div class="card flat" style="grid-column:1/-1;background:#eef4f0;border-color:#c9ddd2;text-align:left;font-size:12.5px;line-height:1.45"><b>💡 Curiosità</b><br>${esc(q.f)}<div style="font-size:10px;color:#6b7c76;margin-top:5px">Fonte: ${esc(q.fs)}</div></div>
+        <div class="card flat" style="grid-column:1/-1;background:#eef4f0;border-color:#c9ddd2;text-align:left;font-size:12.5px;line-height:1.45"><b>✨ La storia dietro la domanda</b><br>${esc(q.f)}<div style="font-size:10px;color:#6b7c76;margin-top:5px">Fonte: ${esc(q.fs)}</div></div>
         <button type="button" class="choice" id="tlWin">🎯 ${esc(lander.name)}: ruba 1 punto</button>
         <button type="button" class="choice" id="tlDef">🛡️ ${esc(ldr.name)} si difende</button>`;
       onlineBroadcastView({kind:"info",icon:"💡",title:"Tiro al Leader",subject:q.q,effectTitle:`Risposta: ${fmtNum(q.a)} ${q.u||""}`,description:q.f,instruction:"Il Master stabilisce chi era più vicino."});
@@ -2891,7 +2885,7 @@ function wireRandomChallenge(lander,rootSelector,cfg){
   }
   function start(opponent){
     if(started||!opponent)return;started=true;
-    const reason={type:"board_cell",title:`${lander.name} ha raggiunto la casella ${S.special?.cell||"Sfida"}`,text:`Ha scelto ${opponent.name} come avversario. Il Mazzo Sfide decide ora la prova.`,cell:S.special?.cell||null,players:[{id:lander.id,name:lander.name},{id:opponent.id,name:opponent.name}]};
+    const reason={type:"board_cell",title:`${lander.name} ha raggiunto la casella ${S.special?.cell||"Minigioco"}`,text:`Ha scelto ${opponent.name} come avversario. Il Mazzo Sfide decide ora la prova.`,cell:S.special?.cell||null,players:[{id:lander.id,name:lander.name},{id:opponent.id,name:opponent.name}]};
     diceRollWinner([lander,opponent],{title:cfg.title,sub:`${lander.name} sfida ${opponent.name}`,stakes:cfg.stakes,source:"cell",reason},win=>{
       cfg.reward(win);log(`${cfg.logIcon} ${cfg.title} Vince <b>${esc(win.name)}</b>: ${esc(cfg.stakes)}.`);renderStatus();
       nextSpecialOrPost();
@@ -3204,7 +3198,7 @@ function diceRollWinner(players,opts,done){
   players=(players||[]).filter(Boolean);if(players.length<2)return done(players[0]);
   let finished=false;
   const curated=()=>curatedQuestions();
-  const factBlock=q=>q&&q.f?`<div class="mini-fact"><b>💡 Curiosità</b><br>${esc(q.f)}${q.fs?`<div style="font-size:10px;color:#6b7c76;margin-top:5px">Fonte: ${esc(q.fs)}</div>`:""}</div>`:"";
+  const factBlock=q=>q&&q.f?`<div class="mini-fact"><b>✨ La storia dietro la domanda</b><br>${esc(q.f)}${q.fs?`<div style="font-size:10px;color:#6b7c76;margin-top:5px">Fonte: ${esc(q.fs)}</div>`:""}</div>`:"";
   const playerNameList=list=>list.map(p=>esc(p.name)).join(" · ");
   const masterPlayer=S.players[0],masterIsContender=players.some(player=>player.id===masterPlayer?.id);
   function finish(w,how){if(finished||!w)return;finished=true;log(`⚡ ${esc(how)}: vince ${esc(w.name)}.`);done(w);}
@@ -3428,7 +3422,7 @@ function diceRollWinner(players,opts,done){
       const entries=players.map(player=>{const order=answers.get(player.id)||initial,correctCount=order.reduce((sum,id,index)=>sum+(id===correctIds[index]?1:0),0),displacement=order.reduce((sum,id,index)=>sum+Math.abs(correctIds.indexOf(id)-index),0);return{player,order,correctCount,metric:-correctCount,secondary:displacement}}),winners=lowest(entries);
       const answerCards=entries.map(entry=>`<div class="mini-sequence"><p class="eyebrow" style="margin:0">${esc(entry.player.name)} · ${entry.correctCount}/4 posizioni</p>${entry.order.map((id,index)=>`<div class="item"><b>${index+1}</b><span>${esc(labels.get(id))}</span></div>`).join("")}</div>`).join("");
       const correctCards=correct.map((item,index)=>`<div class="item"><b>${index+1}</b><span>${esc(item.label)} · <strong>${item[valueKey]}${isTimeline?"":" "+esc(unit||"")}</strong></span></div>`).join("");
-      app.innerHTML=`<div class="card"><span class="mini-round">${meta.icon} ${esc(meta.name)}</span><div class="mini-question">Le risposte degli sfidanti</div>${answerCards}<p class="eyebrow center mt">Ordine corretto</p><div class="mini-sequence">${correctCards}</div><div class="mini-fact"><b>💡 Curiosità</b><br>${esc(card.fact)}<div style="font-size:10px;color:#6b7c76;margin-top:5px">Fonte: ${esc(card.source)}</div></div><p class="sub center">${winnerLabel(winners)}</p><button type="button" class="btn teal mt" id="seqEnd">Continua →</button></div>`;
+      app.innerHTML=`<div class="card"><span class="mini-round">${meta.icon} ${esc(meta.name)}</span><div class="mini-question">Le risposte degli sfidanti</div>${answerCards}<p class="eyebrow center mt">Ordine corretto</p><div class="mini-sequence">${correctCards}</div><div class="mini-fact"><b>✨ La storia dietro la domanda</b><br>${esc(card.fact)}<div style="font-size:10px;color:#6b7c76;margin-top:5px">Fonte: ${esc(card.source)}</div></div><p class="sub center">${winnerLabel(winners)}</p><button type="button" class="btn teal mt" id="seqEnd">Continua →</button></div>`;
       const submitted=entries.map(entry=>`${entry.player.name}: ${entry.order.map(id=>labels.get(id)).join(" → ")} (${entry.correctCount}/4)`).join(" | ");
       broadcastMiniResult(meta.icon,meta.name,card.title,`Ordine corretto: ${correct.map(item=>item.label).join(" → ")}`,`${submitted}. 💡 ${card.fact}`,winnerLabel(winners));
       outcomeButton("#seqEnd",winners,meta.name);
@@ -3466,6 +3460,10 @@ function scoreCard(){
       <div class="dual-standing">
         <div class="standing-box"><div class="standing-title">📊 Classifica punti</div>${byPoints.map((p,i)=>`<div class="standing-line"><span>${i+1}°. ${avatarHTML(p,18)} ${esc(p.name)}${scored[p.id]?` <b>+${scored[p.id]}</b>`:""}</span><b>${p.score} pt</b></div>`).join("")}</div>
         <div class="standing-box"><div class="standing-title">🗺️ Corsa sul tabellone</div>${byBoard.map((p,i)=>`<div class="standing-line"><span>${i+1}°. ${avatarHTML(p,18)} ${esc(p.name)}</span><b>cas. ${p.pos}/${FINISH}</b></div>`).join("")}</div>
+      </div>
+      <div class="card flat mt-s" style="font-size:11px;line-height:1.45">
+        <b>Premi automatici</b>
+        ${byPoints.map(p=>{const podiums=Number(p.podiumCount)||0,nextMalus=PODIUM_MALUS_STEP-(podiums%PODIUM_MALUS_STEP);return `<div style="margin-top:4px"><b>${esc(p.name)}</b> · ⭐ rimonta ${(Number(p.outsidePodiumStreak)||0)}/${COMEBACK_BONUS_STREAK} · ⛔ ${podiums} podi (prossimo Malus tra ${nextMalus})</div>`}).join("")}
       </div>
       <div class="mt-s">${byPoints.map(p=>{const effects=[...p.bonus.map(b=>`<span class="tag bonus">${esc(b.nm)}</span>`),...p.malus.map(m=>`<span class="tag malus">${esc(m.nm)}</span>`)];return effects.length?`<div style="font-size:11px;margin:4px 0"><b>${esc(p.name)}:</b> ${effects.join(" ")}</div>`:""}).join("")}</div>
     </div>`;
@@ -3520,7 +3518,7 @@ const ONLINE_CHOICE_CALLBACKS=new Map();
 let ONLINE_MINI_SEQ=0;
 const ONLINE_MINI_CALLBACKS=new Map();
 function onlineScores(){
-  return S.players.map(p=>({name:p.name,score:p.score,pos:p.pos,color:p.color}));
+  return S.players.map(p=>({name:p.name,score:p.score,pos:p.pos,color:p.color,outsidePodiumStreak:Number(p.outsidePodiumStreak)||0,podiumCount:Number(p.podiumCount)||0,comebackTarget:COMEBACK_BONUS_STREAK,podiumMalusStep:PODIUM_MALUS_STEP}));
 }
 function onlineMap(){
   return {
@@ -3632,17 +3630,17 @@ function onlineSpecialFromMaster(type, lander, cell){
   const previews={
     bonus:{
       icon:"⭐",
-      title:"Casella Bonus",
-      effectTitle:`${playerName} pesca una carta Bonus`,
-      description:"Tutti vedono l’anteprima. Subito dopo, soltanto il giocatore coinvolto riceve sulla propria lavagnetta i pulsanti per scegliere.",
+      title:"Premio rimonta",
+      effectTitle:`${playerName} sceglie un Bonus`,
+      description:`Dopo ${COMEBACK_BONUS_STREAK} round consecutivi fuori dal podio, soltanto ${playerName} riceve sulla propria lavagnetta le carte tra cui scegliere.`,
       instruction:"La carta scelta verrà mostrata subito dopo a tutte le lavagnette."
     },
     malus:{
       icon:"⛔",
-      title:"Casella Malus",
-      effectTitle:`${playerName} pesca una carta Malus`,
-      description:"Il malus verrà mostrato in anteprima. Il giocatore coinvolto sceglierà personalmente chi lo riceverà.",
-      instruction:"Attendi l’assegnazione: solo la lavagnetta del giocatore coinvolto mostrerà i pulsanti di scelta."
+      title:"Tassa del podio",
+      effectTitle:`${playerName} riceve un Malus casuale`,
+      description:`Ogni ${PODIUM_MALUS_STEP} piazzamenti complessivi sul podio il gioco assegna automaticamente un Malus al giocatore.`,
+      instruction:"La carta estratta viene mostrata a tutti e si applica al prossimo round."
     },
     voce:{
       icon:"📢",
@@ -3714,13 +3712,6 @@ function onlineSpecialFromMaster(type, lander, cell){
       description:"Il prossimo round sarà dedicato a Cibo e Calorie.",
       instruction:"La categoria verrà applicata automaticamente."
     },
-    duello:{
-      icon:"⚔️",
-      title:"Casella Sfida",
-      effectTitle:`${playerName} pesca dal Mazzo Sfide`,
-      description:"Il giocatore coinvolto sceglierà l’avversario e avvierà dalla propria lavagnetta l’estrazione casuale del minigioco.",
-      instruction:"Gli altri dispositivi restano spettatori; nessuno sceglie il tipo di minigioco."
-    },
     alfabetica:{
       icon:"🎴",
       title:"Casella Minigioco",
@@ -3749,7 +3740,11 @@ function onlineSpecialFromMaster(type, lander, cell){
     kind:"special",
     icon:cfg.icon,
     title:cfg.title,
-    subject:`Casella ${cellNumber} · ${playerName}`,
+    subject:S.special?.trigger==="comeback"
+      ? `${COMEBACK_BONUS_STREAK} round fuori dal podio · ${playerName}`
+      : S.special?.trigger==="podium_tax"
+        ? `${S.special.podiumCount} podi complessivi · ${playerName}`
+        : `Casella ${cellNumber} · ${playerName}`,
     effectTitle:cfg.effectTitle,
     description:cfg.description,
     instruction:cfg.instruction,

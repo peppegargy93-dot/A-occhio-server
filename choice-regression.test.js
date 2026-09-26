@@ -23,8 +23,8 @@ test('ogni richiesta remota ha conferma, annullamento e fallback soltanto su ind
 
 test('la scelta è idempotente e il testo mobile non viene spezzato lettera per lettera',()=>{
   assert.match(game,/let completed=false/);
-  assert.match(game,/if\(completed\|\|!b\|\|!target\)return/);
-  assert.match(game,/if\(completed\|\|!tgt\)return/);
+  assert.match(game,/if\(completed\|\|!b\)return;completed=true/);
+  assert.match(game,/addUniqueEffect\(lander\.malus,m\)/);
   assert.doesNotMatch(server,/overflow-wrap:anywhere/);
   assert.match(server,/overflow-wrap:break-word;word-break:normal/);
   assert.match(server,/font-variant-ligatures:none/);

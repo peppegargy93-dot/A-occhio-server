@@ -128,16 +128,16 @@ test('Master e lavagnette ricevono motivo, sfidanti e carta estratta dallo stess
   assert.match(html,/function buildTieReason\(entries,q\)/);
 });
 
-test('le ricompense originali delle due caselle restano distinte',()=>{
+test('il tabellone ha esattamente tre caselle Minigioco e nessuna casella Bonus, Malus o Sfida',()=>{
   const wire=between('function wireSpecial(type, lander){','\nfunction wireRandomChallenge');
   const mini=wire.match(/else if\(type==="alfabetica"\)[\s\S]*?\n  \}/)[0];
-  const challenge=wire.match(/else if\(type==="duello"\)[\s\S]*?\n  \}/)[0];
   assert.match(mini,/applyPlayerDelta\(win,\{score:1,pos:1,source:"Casella Minigioco"/);
-  assert.doesNotMatch(challenge,/score:1/);
-  assert.match(challenge,/applyPlayerDelta\(win,\{pos:1,source:"Casella Sfida"/);
   const board=vm.runInNewContext(between('let BOARD = ',';\nconst BOARD_FULL'));
-  assert.equal(board[5],'duello');
-  assert.equal(board[22],'alfabetica');
+  assert.equal(board.length,30);
+  assert.deepEqual(Array.from(board.entries()).filter(([,type])=>type==='alfabetica').map(([index])=>index+1),[6,17,23]);
+  assert.equal(board.includes('bonus'),false);
+  assert.equal(board.includes('malus'),false);
+  assert.equal(board.includes('duello'),false);
 });
 
 test('le carte editoriali dei giochi di ordine hanno curiosità e fonte',()=>{

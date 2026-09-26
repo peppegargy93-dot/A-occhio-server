@@ -1,4 +1,4 @@
-# Mazzo Sfide — regole v2.9
+# Mazzo Sfide — regole v3.0
 
 Il Mazzo Sfide ufficiale contiene otto minigiochi. Il gioco estrae sempre una carta casuale: i giocatori non scelgono il tipo di prova.
 
@@ -22,7 +22,9 @@ Ogni schermata interattiva invia una conferma di apertura. Se manca entro 6 seco
 
 ## Come si attiva
 
-### Casella Sfida o Minigioco
+### Casella Minigioco
+
+Sul tabellone completo esistono soltanto tre caselle Minigioco: **6, 17 e 23**. Le vecchie caselle Sfida, Bonus e Malus non fanno più parte del percorso.
 
 1. Il giocatore arrivato sulla casella sceglie lo sfidante dalla propria lavagnetta.
 2. Il gioco pesca automaticamente una carta.
@@ -32,7 +34,7 @@ Ogni schermata interattiva invia una conferma di apertura. Se manca entro 6 seco
 
 ### Parità di distanza
 
-Quando due o più stime hanno la stessa distanza valida e la parità incide sui primi tre posti, il gioco sceglie automaticamente partecipanti e carta. La schermata mostra risposta corretta, stime, distanza reale, formula dopo i modificatori, posizione realmente in palio e punti. Una parità interamente fuori dal podio non genera una sfida. Una casella Sfida resta invece un evento del percorso e dichiara chiaramente il motivo differente.
+Quando due o più stime hanno la stessa distanza valida e la parità incide sui primi tre posti, il gioco sceglie automaticamente partecipanti e carta. La schermata mostra risposta corretta, stime, distanza reale, formula dopo i modificatori, posizione realmente in palio e punti. Una parità interamente fuori dal podio non genera una sfida.
 
 ## Le otto carte
 

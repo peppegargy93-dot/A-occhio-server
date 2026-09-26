@@ -1,102 +1,61 @@
-# Rapporto playtest v2.9
+# Rapporto verifiche v3.0
 
-## Collaudo anti-blocco v2.9
+## Nuove regole eseguite
 
-Scenario reale nel browser con un Master e tre lavagnette, Anna e Berto in sfida e Carla spettatrice:
+La progressione personale è stata eseguita come funzione isolata sullo stesso codice usato dalla partita:
 
-1. Tutti e tre i nickname sono comparsi automaticamente nella lobby del Master.
-2. Anna e Berto hanno inviato la stessa risposta esatta (`47`) e il sistema ha aperto il fotofinish soltanto per loro.
-3. Master e lavagnette hanno mostrato motivo, risposta corretta, formule e posta reale: **1º posto nel round · 3 punti**.
-4. Il pulsante di avvio sul Master era disabilitato; soltanto Anna ha ricevuto **Siamo pronti: inizia** e ha avviato Stima Lampo dalla propria lavagnetta.
-5. Anna e Berto hanno ricevuto campi indipendenti e lo stato `mini_ready`; Carla ha visto domanda e andamento senza alcun comando di risposta.
-6. Dopo il secondo invio, Master e Carla hanno visto insieme risposta, stime, vincitore e curiosità.
-7. Il pulsante risultato mostrava il conto alla rovescia e, senza alcun click del Master, dopo 5 secondi il gioco è tornato alla rivelazione del round.
-8. Il Master non ha registrato doppi invii o errori JavaScript durante il flusso.
+- 8 round consecutivi fuori dal podio producono esattamente due Premi rimonta, al 4º e all'8º;
+- 9 piazzamenti sul podio producono esattamente tre Tasse del podio, al 3º, 6º e 9º;
+- un podio azzera la serie fuori podio;
+- ogni evento viene accodato una sola volta con l'identità del giocatore interessato.
 
-Il test WebSocket separato copre il ramo Cronometro con Master sfidante: una lavagnetta spettatrice riceve in sequenza **AVVIA** e **FERMA**, entrambe vincolate allo stesso token autorizzato.
+Il test del tabellone verifica inoltre 30 caselle totali, Minigioco soltanto alle posizioni 6, 17 e 23 e assenza dei tipi `bonus`, `malus` e `duello`.
 
-## Collaudo Timeline v2.8
+## End-to-end WebSocket
 
-Scenario reale su server locale con Anna e Berto in sfida e Carla spettatrice:
+Test locale superato con Master e tre lavagnette simulate:
 
-1. Anna ha ricevuto quattro eventi riordinabili, pulsanti su/giù, timer da 20 secondi e **Invia e blocca**.
-2. Berto ha ricevuto una richiesta indipendente con la stessa lista.
-3. Carla ha visto titolo, categoria e stato della sfida, senza campi o pulsanti di risposta.
-4. Anna ha inviato `a|c|b|d` e Berto `d|c|b|a`; il server ha accettato un solo ordine completo per token.
-5. Dopo il secondo invio, Anna, Berto e Carla hanno visto ordine corretto ed entrambe le sequenze.
-6. Viewport iPhone 390 × 844: larghezza documento 390 pixel, nessun overflow orizzontale.
-7. Console browser: nessun errore JavaScript sulle lavagnette sfidante e spettatrice.
+- ingresso di Anna, Bruno e Carla e rifiuto del nickname duplicato;
+- modifica di Bruno in Berto prima della partita;
+- timer personale differenziato e conservato dopo riconnessione;
+- recupero sul Master delle stime inviate durante una breve disconnessione;
+- rifiuto dei nuovi ingressi a partita iniziata;
+- curiosità distribuita a tutti i dispositivi;
+- spettatore escluso dai campi di risposta della mini-sfida;
+- `mini_ready`, invio singolo, risposta contraffatta rifiutata e fallback anti-blocco;
+- recupero di una scelta autorizzata dopo sostituzione del socket;
+- Cronometro delegato a una lavagnetta spettatrice con sequenza AVVIA/FERMA;
+- mappa e classifiche aggiornate dallo stesso snapshot.
 
-## Collaudo lavagnette delle mini sfide
+## Simulazioni deterministiche
 
-È stato eseguito un test reale del protocollo WebSocket e dell'interfaccia mobile con Anna e Berto in sfida e Carla spettatrice:
+Tre agenti del modello di stato hanno completato 120 partite ciascuno, con tavoli casuali da 3 a 6 giocatori.
 
-- entrambe le lavagnette sfidanti hanno ricevuto il campo numerico di **Stima Lampo**;
-- la lavagnetta di Carla non ha ricevuto comandi di risposta;
-- una risposta contraffatta di Carla e il valore non numerico `40abc` sono stati rifiutati dal server;
-- il Master ha ricevuto una sola risposta valida per giocatore: Anna `40`, Berto `44`;
-- su viewport iPhone da 390 × 844 pixel il contenuto è rimasto entro i 390 pixel, senza overflow orizzontale;
-- dopo l'invio, i comandi sono stati bloccati per impedire doppio click e doppia risposta.
+| Seed | Partite | Domande | Minigiochi | Bonus rimonta | Malus podio | Esito |
+|---:|---:|---:|---:|---:|---:|---|
+| 260826 | 120 | 1.743 | 1.712 | 126 | 1.567 | OK |
+| 270826 | 120 | 1.746 | 1.664 | 153 | 1.561 | OK |
+| 930093 | 120 | 1.708 | 1.609 | 104 | 1.539 | OK |
 
-## Agenti simulati
+Totale: 360 partite, 5.197 domande, 4.985 minigiochi, 383 Premi rimonta, 4.667 Malus da podio, 1.648 attivazioni dalle tre caselle Minigioco, 3.337 parità valide e 312 Paracadute consumati. Sono risultate 132 vittorie raggiungendo la Finale e 228 vittorie ai punti.
 
-Tre agenti deterministici indipendenti del modello di stato hanno giocato 120 partite ciascuno, con tavoli casuali da 3 a 6 partecipanti. Il protocollo reale è verificato separatamente dal test WebSocket e dal collaudo browser:
-
-| Agente | Seed | Partite | Domande | Minigiochi | Parità | Esito |
-|---|---:|---:|---:|---:|---:|---|
-| A | 260826 | 120 | 1.750 | 1.344 | 943 | OK |
-| B | 270826 | 120 | 1.740 | 1.293 | 927 | OK |
-| C | 930093 | 120 | 1.738 | 1.299 | 899 | OK |
-
-In totale: 360 partite, 5.228 domande, 3.936 minigiochi, 2.769 parità, 286 Paracadute, 127 vittorie per Finale e 233 vittorie ai punti.
-
-Ogni agente ha controllato queste invarianti:
+Invarianti controllate:
 
 - nessuna domanda ripetuta nella stessa partita;
-- ciclo completo degli otto minigiochi prima del riuso;
-- sfida da parità soltanto per distanze valide uguali;
-- un solo aggiornamento di punti/caselle per evento;
-- Paracadute applicato e consumato una sola volta;
+- sfida da parità soltanto per distanze effettive uguali e rilevanti per il podio;
+- un solo aggiornamento di punti e caselle per voce del ledger;
+- Bonus ogni quattro esclusioni consecutive e Malus a ogni multiplo di tre podi;
 - posizioni comprese fra partenza e Finale;
 - vittoria immediata alla Finale oppure vittoria ai punti al round 15.
 
-## Test browser con quattro giocatori
+## Verifica editoriale
 
-Scenario eseguito con Master, Anna, Bruno e Carla:
+- 581 domande censite;
+- 213 domande complete di curiosità specifica e fonte HTTPS, quindi giocabili;
+- 368 schede incomplete escluse automaticamente e riportate in `DOMANDE_DA_VERIFICARE.md`;
+- vietate dai test le formule generiche rimosse in questa versione;
+- titolo “La storia dietro la domanda” presente sia sul Master sia sulle lavagnette.
 
-1. Tre nickname entrano dalla lavagnetta e compaiono automaticamente nella lobby.
-2. Giocatore 1 e Anna inseriscono la stessa stima; la risposta corretta è 37 minuti e la formula mostrata è `13 = 13` per entrambi.
-3. Il gioco estrae **La Bomba** e mostra motivo, partecipanti, tre regole, durata e criterio di vittoria su Master e lavagnette.
-4. La sfida termina e determina l’ordine del round senza doppie ricompense.
-5. La curiosità sul giorno marziano compare identica sul Master e sulla lavagnetta prima dell’avanzamento.
-6. Punti e caselle vengono applicati dal ledger; Anna raggiunge la casella Bonus.
-7. Soltanto Anna vede prima le tre carte Bonus e poi la scelta del destinatario; Bruno resta in attesa in sola lettura.
-8. Dopo la conferma del destinatario la partita entra regolarmente nel round 2.
+## Verifica fisica consigliata dopo il deploy
 
-## Test WebSocket automatico
-
-Il test con Master e tre socket verifica inoltre:
-
-- nickname duplicato rifiutato e rename accettato;
-- timer personale del Malus temporale;
-- timer personale invariato dopo la riconnessione della lavagnetta;
-- stime e scelta effettuate mentre il Master è scollegato, recuperate al suo rientro;
-- nuovo ingresso rifiutato dopo l’avvio, senza creare giocatori fantasma;
-- una sola risposta accettata per round;
-- curiosità distribuita a tutti;
-- payload Sfida senza risultato obsoleto;
-- scelta accettata soltanto dal token autorizzato;
-- secondo passaggio del Bonus;
-- replay e risposta contraffatta rifiutati;
-- fallback soltanto dopo disconnessione;
-- riconnessione tramite token e mappa aggiornata.
-- campo `order` validato come permutazione completa, con duplicati e token spettatore rifiutati;
-- deadline Timeline condivisa e vista pubblica prima e dopo l’invio.
-- conferma `mini_ready` per ciascuna lavagnetta sfidante;
-- fallback `not_ready` dopo 6 secondi quando una schermata non conferma l’apertura;
-- recupero del payload di scelta dopo la sostituzione del socket della lavagnetta;
-- sequenza Cronometro delegata AVVIA/FERMA su una lavagnetta spettatrice.
-
-## Esito
-
-I blocchi Bonus/Malus e Sfida non si sono ripresentati nei test. Restano necessari un collaudo fisico post-deploy su Safari iPhone e almeno un Android reale, perché sospensione della scheda, cambio rete e memoria disponibile dipendono dal dispositivo.
+Il protocollo e il layout responsive sono coperti automaticamente, ma sospensione delle schede, cambio rete e tastiere dipendono dal dispositivo. Dopo la pubblicazione resta consigliato un controllo rapido con un iPhone Safari e almeno un Android reale, seguendo la checklist di `DEPLOY_RENDER.md`.

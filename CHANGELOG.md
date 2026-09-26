@@ -1,5 +1,17 @@
 # Changelog
 
+## 3.0.0 — percorso rapido, premi per andamento e curiosità rafforzate
+
+- Ridotto il tabellone a tre sole caselle Minigioco, nelle posizioni 6, 17 e 23; eliminate dal percorso le caselle Sfida, Bonus e Malus.
+- Limitato il Mazzo Sfide alle parità che incidono realmente sul podio e agli arrivi sulle tre caselle Minigioco.
+- Introdotto il Premio rimonta: dopo quattro round consecutivi fuori dal podio, il giocatore sceglie un Bonus dalla propria lavagnetta; la serie si azzera dopo il premio o un nuovo podio.
+- Introdotta la Tassa del podio: al 3º, 6º, 9º, 12º e 15º piazzamento sul podio, il gioco assegna automaticamente un Malus allo stesso giocatore.
+- Rimossa la scelta del destinatario da Bonus e Malus: il Premio rimonta appartiene a chi lo ha maturato e la Tassa colpisce chi ha raggiunto la soglia.
+- Centralizzati i due contatori personali in `updatePerformanceProgress`, richiamata una sola volta per giocatore durante l'applicazione autorevole del punteggio.
+- Mostrati su Master e lavagnette avanzamento rimonta, podi totali e distanza dal prossimo Malus.
+- Rinominata la scheda editoriale in “La storia dietro la domanda” e riscritte le curiosità troppo generiche su Coca-Cola, Fanta, pallina da tennis, pianoforte, Avengers: Endgame e tre schede sportive.
+- Aggiunti test su soglie ripetute, assenza delle vecchie caselle, presentazione editoriale e simulazioni dei nuovi eventi.
+
 ## 2.9.0 — mini sfide anti-blocco e Cronometro delegabile
 
 - Spostato l’avvio della carta Sfida sulla lavagnetta di uno degli sfidanti collegati; se non è disponibile, il Master riceve un fallback esplicito.

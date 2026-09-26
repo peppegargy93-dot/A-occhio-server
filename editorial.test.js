@@ -21,7 +21,15 @@ test('ogni domanda attiva ha curiosità specifica e fonte HTTPS',()=>{
     assert.ok(fact.length>=60,question.q);
     assert.match(source,/^https:\/\//,question.q);
     assert.ok(!/valore da ricordare|riferimento preciso/i.test(fact),question.q);
+    assert.ok(!/La chicca:|Dietro la misura:|Il dettaglio tattico:|la ricetta e i valori nutrizionali possono variare|la quantità di zucchero .* cambia tra Paesi/i.test(fact),question.q);
   }
+});
+test('la curiosità è presentata come storia della domanda su Master e lavagnette',()=>{
+  assert.match(html,/✨ La storia dietro la domanda/);
+  assert.doesNotMatch(html,/💡 Curiosità/);
+  const server=fs.readFileSync('server.js','utf8');
+  assert.match(server,/✨ La storia dietro la domanda/);
+  assert.doesNotMatch(server,/💡 Curiosità/);
 });
 test('la serie parole delle canzoni è completa, verificata e non ambigua',()=>{
   const songs=questions.filter(question=>/parol/.test(question.q));

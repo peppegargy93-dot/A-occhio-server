@@ -35,9 +35,9 @@ test('Fenomeno e malus persistenti sono idempotenti', () => {
 test('Bonus e Malus restano dati strutturati e non testo copiato dal DOM', () => {
   assert.doesNotMatch(html, /onlineScreenFromMaster|\.innerText/);
   assert.match(html, /label:`BONUS · \$\{b\.nm\}`/);
-  assert.match(html, /subject:`MALUS · \$\{m\.nm\}`/);
-  assert.match(html, /BONUS\.filter\(b=>S\.players\.some\(p=>!p\.bonus\.some/);
-  assert.match(html, /p\.bonus\.some\(b=>b\.id==="scudo"\)\|\|!p\.malus\.some/);
+  assert.match(html, /BONUS\.filter\(b=>!lander\.bonus\.some/);
+  assert.match(html, /drawDeckCard\("malus",MALUS\)/);
+  assert.match(html, /addUniqueEffect\(lander\.malus,m\)/);
 });
 
 test('le stime accettano numeri completi ma rifiutano suffissi ambigui',()=>{
@@ -60,11 +60,17 @@ test('nessuna domanda usa più il fallback numerico', () => {
   assert.match(factFunction,/return ""/);
 });
 
-test('i miglioramenti ai minigiochi non cambiano la posta originale del Duello',()=>{
-  const duel=html.match(/else if\(type==="duello"\)\{\n    wireRandomChallenge[\s\S]*?\n    \}\);\n  \}/)[0];
-  assert.match(duel,/stakes:"\+1 casella sul tabellone"/);
-  assert.match(duel,/applyPlayerDelta\(win,\{pos:1,source:"Casella Sfida"/);
-  assert.doesNotMatch(duel,/score:1/);
+test('Premio rimonta e Tassa del podio hanno soglie autorevoli e ripetibili',()=>{
+  const constants=html.match(/const COMEBACK_BONUS_STREAK = \d+;[\s\S]*?const PODIUM_MALUS_STEP = \d+;/)[0];
+  const update=html.match(/function updatePerformanceProgress\(player,isOnPodium\)\{[\s\S]*?\n\}/)[0];
+  const context={};
+  vm.runInNewContext(`${constants}\n${update}\nconst p={outsidePodiumStreak:0,podiumCount:0};results=[];for(let i=0;i<8;i++)results.push(updatePerformanceProgress(p,false));for(let i=0;i<9;i++)results.push(updatePerformanceProgress(p,true));state=p;`,context);
+  assert.equal(context.state.outsidePodiumStreak,0);
+  assert.equal(context.state.podiumCount,9);
+  assert.deepEqual(Array.from(context.results.filter(Boolean),event=>[event.type,event.streak||event.podiumCount]),[
+    ['bonus',4],['bonus',4],['malus',3],['malus',6],['malus',9]
+  ]);
+  assert.match(html,/performanceEvents\.push\(\{\.\.\.progressEvent,landerId:p\.id\}\)/);
 });
 
 test('Paracadute è applicato una sola volta e compare nella formula della distanza',()=>{

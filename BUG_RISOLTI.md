@@ -1,4 +1,22 @@
-# Bug risolti nella v2.9
+# Bug risolti nella v3.0
+
+## Ritmo del tabellone e assegnazione dei premi
+
+- Il percorso non apre più scelte Bonus/Malus impreviste: le relative caselle sono state eliminate e sostituite da normali eventi già esistenti.
+- Le uniche tre caselle che aprono una carta del Mazzo Sfide sono la 6, la 17 e la 23.
+- Il Premio rimonta viene prodotto una sola volta ogni quattro esclusioni consecutive dal podio; un podio interrompe la serie.
+- La Tassa del podio scatta esattamente ai multipli di tre podi, quindi al 3º, 6º, 9º, 12º e 15º, e può verificarsi più volte nella stessa partita.
+- Il Malus viene applicato automaticamente al giocatore che ha maturato la soglia: non esistono più destinatari incoerenti o schermate di scelta bloccate.
+- Contatori, punteggio e movimento derivano dallo stesso passaggio autorevole e la guardia del round impedisce doppi aggiornamenti.
+
+## Curiosità più specifiche
+
+- La scheda ora presenta “La storia dietro la domanda”, su Master, sfidanti e spettatori.
+- Riscritti i testi che si limitavano a ripetere la misura o a dichiarare variazioni commerciali generiche.
+- Ogni curiosità attiva resta legata alla domanda esatta e a una fonte HTTPS; non vengono prodotti fatti casuali dalla categoria.
+- Le 368 schede ancora prive di verifica restano fuori dal sorteggio e sono elencate in `DOMANDE_DA_VERIFICARE.md`.
+
+## Correzioni precedenti ancora incluse
 
 ## Blocchi durante le mini sfide
 
@@ -46,7 +64,7 @@
 ## Bonus, Malus e scelte
 
 - Soltanto la lavagnetta del giocatore coinvolto riceve i pulsanti; tutti gli altri dispositivi restano in sola lettura.
-- Il Bonus in due passaggi (carta e destinatario) prosegue correttamente senza essere sovrascritto dall’anteprima.
+- La richiesta Bonus resta protetta dall'anteprima pubblica e compare soltanto sulla lavagnetta autorizzata; nella v3.0 il premio appartiene direttamente al giocatore che lo ha maturato.
 - Il fallback Master non dipende più da un timeout arbitrario: si apre solo per il Master stesso o dopo disconnessione/indisponibilità confermata dal server.
 - La risposta è vincolata al token, al `requestId` e alle opzioni autorizzate; replay e dispositivi estranei vengono rifiutati.
 - Se il Master perde la connessione, stime ed esiti delle scelte restano sul server e vengono riprodotti alla riconnessione fino alla conferma di ricezione.
@@ -73,11 +91,11 @@
 ## Verifiche eseguite
 
 - Sintassi server e script Master: OK.
-- 40 test automatici: OK.
+- 41 test automatici: OK.
 - End-to-end WebSocket con Master e tre giocatori: ingresso, duplicati, rifiuto ingresso tardivo, rename, timer personale conservato alla riconnessione, replay di stime/scelte verso il Master, risposta unica, curiosità, sfida strutturata, scelta autorizzata, tentativo contraffatto, disconnessione, fallback e mappa: OK.
-- 360 partite simulate, 5.228 domande, 3.936 minigiochi e 2.769 parità: tutte le invarianti OK.
-- Collaudo browser con Master e tre lavagnette: parità, avvio remoto, input dei soli sfidanti, vista spettatore, curiosità e uscita automatica dalla sfida: OK.
-- Audit HTTP delle 170 nuove schede: 141 URL unici, 126 raggiunti direttamente; 15 hanno rifiutato il client automatico o chiuso la connessione, nessun `404` rilevato.
+- 360 partite simulate, 5.197 domande, 4.985 minigiochi, 383 Premi rimonta e 4.667 Malus da podio: tutte le invarianti OK.
+- Test dedicato: tre sole caselle Minigioco; Bonus al 4º/8º round consecutivo fuori podio; Malus al 3º/6º/9º podio: OK.
+- Audit editoriale: 213 domande attive complete e 368 schede incomplete escluse: OK.
 
 ## Problemi rimasti
 
