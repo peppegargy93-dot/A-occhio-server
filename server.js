@@ -8,6 +8,7 @@ const { WebSocketServer, WebSocket } = require('ws');
 
 const PORT = Number(process.env.PORT || 3000);
 const ROOM_TTL_MS = 10 * 60 * 1000;
+const PAD_DISCONNECT_GRACE_MS = 4500;
 
 const GAME_PATH = path.join(__dirname, 'game.html');
 if (!fs.existsSync(GAME_PATH)) {
@@ -155,6 +156,10 @@ function choiceFallback(room, choice, message) {
 }
 
 function attachPad(room, ws, pad) {
+  if (pad.disconnectTimer) {
+    clearTimeout(pad.disconnectTimer);
+    pad.disconnectTimer = null;
+  }
   if (pad.socket && pad.socket !== ws) {
     try {
       send(pad.socket, {
@@ -197,7 +202,7 @@ body{padding:12px 14px calc(24px + env(safe-area-inset-bottom))}.shell{width:100
 .choice-list{display:grid;grid-template-columns:minmax(0,1fr);gap:9px;margin-top:12px;max-height:min(48dvh,430px);overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding:2px}.choice-btn{appearance:none;-webkit-appearance:none;width:100%;min-width:0;display:grid;gap:4px;text-align:left;border:1.5px solid var(--line);border-radius:14px;background:var(--paper);color:var(--ink);padding:12px 13px;font:inherit;touch-action:manipulation}.choice-btn b,.choice-btn span,.event-title,.event-desc,.instruction{min-width:0;overflow-wrap:break-word;word-break:normal;-webkit-hyphens:none;hyphens:none;font-variant-ligatures:none}.choice-btn b{font-size:14px;line-height:1.25}.choice-btn span{font-size:12px;line-height:1.35;color:#587078}.choice-btn:disabled{opacity:.5}.rename-box{margin-top:18px;padding-top:14px;border-top:1px dashed var(--line)}
 .mini-answer-form{display:grid;gap:10px;margin-top:12px}.mini-answer-field label{display:block;font-size:11px;font-weight:950;margin-bottom:5px}.mini-answer-field input{width:100%;min-width:0;border:2px solid var(--ink);background:var(--paper2);border-radius:13px;padding:13px;font:inherit;font-size:19px;font-weight:850;text-align:center;color:var(--ink)}.mini-answer-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.mini-answer-option{border:1.5px solid var(--line);border-radius:12px;background:var(--paper);color:var(--ink);padding:13px 8px;font:inherit;font-size:13px;font-weight:900;touch-action:manipulation;-webkit-tap-highlight-color:transparent}.mini-answer-option.selected{background:var(--petrol);border-color:var(--petrol);color:#fff}.mini-answer-submit{margin-top:2px;touch-action:manipulation}.mini-answer-note{font-size:11px;color:#587078;text-align:center;line-height:1.35}.mini-answer-timer{display:grid;place-items:center;width:58px;height:58px;margin:0 auto 4px;border-radius:50%;background:var(--ink);color:#fff;font-size:25px;font-weight:950;font-variant-numeric:tabular-nums}.mini-answer-timer.warn{background:var(--coral)}.mini-order-list{display:grid;gap:7px}.mini-order-item{display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:7px;align-items:center;border:1.5px solid var(--line);border-radius:12px;background:#fff;padding:8px;min-width:0}.mini-order-number{width:25px;height:25px;display:grid;place-items:center;border-radius:50%;background:var(--ochre);font-size:11px;font-weight:950}.mini-order-label{font-size:12px;font-weight:900;line-height:1.25;overflow-wrap:break-word;min-width:0}.mini-order-controls{display:flex;gap:4px}.mini-order-move{border:1.5px solid var(--petrol);border-radius:8px;background:#fff;color:var(--petrol);padding:9px 10px;font:inherit;font-weight:950;line-height:1;touch-action:manipulation}.mini-order-move:disabled{opacity:.28}
 @supports not (height:100dvh){.choice-list{max-height:48vh}}
-@media(max-width:380px){body{padding-left:max(10px,env(safe-area-inset-left));padding-right:max(10px,env(safe-area-inset-right))}.panel{padding:14px;border-radius:18px}.event-title{font-size:18px}.choice-btn{padding:11px}.context-head,.compact-score{align-items:flex-start;flex-direction:column}.compact-score span{white-space:normal}}
+@media(max-width:380px){body{padding-left:max(10px,env(safe-area-inset-left));padding-right:max(10px,env(safe-area-inset-right))}.panel{padding:14px;border-radius:18px}.event-card{padding:12px}.event-title{font-size:18px;line-height:1.18}.event-desc{font-size:13px}.choice-btn{padding:11px}.mini-answer-form{gap:14px;margin-top:14px}.mini-answer-field{min-width:0}.mini-answer-field input{font-size:18px;padding:12px 10px}.mini-answer-options{grid-template-columns:minmax(0,1fr)}.mini-answer-option{min-height:48px;padding:12px 10px}.mini-order-item{grid-template-columns:25px minmax(0,1fr) auto;padding:7px 6px}.mini-order-controls{flex-direction:column}.mini-order-move{padding:7px 10px}.context-head,.compact-score{align-items:flex-start;flex-direction:column}.compact-score span{white-space:normal}}
 </style>
 </head>
 <body><div class="shell">
@@ -375,6 +380,7 @@ function applyMiniRequest(v){
     if(submitted)return;
     fields.forEach(field=>{if(field.type!=='choice'&&field.type!=='order'){const input=box.querySelector('.mini-answer-input[data-field="'+field.id+'"]');values[field.id]=(input?.value||'').trim()}});
     if(fields.some(field=>!String(values[field.id]??'').trim())){$('status').textContent='Completa tutti i campi prima di inviare.';return}
+    if(!ws||ws.readyState!==WebSocket.OPEN){$('status').textContent='Riconnessione in corso: la risposta non è ancora stata inviata.';resumeIfNeeded();return}
     submitted=true;stopTimer();
     box.querySelectorAll('input,button').forEach(control=>control.disabled=true);
     ws.send(JSON.stringify({t:'mini_response',requestId:v.requestId,values}));
@@ -423,7 +429,55 @@ function applyState(s){if(s.choiceRequest)return applyChoiceRequest(s.choiceRequ
 let connectAttempt=0,openTimer=null;
 function closeSocket(){manualClose=true;clearTimeout(retry);clearTimeout(openTimer);try{ws&&ws.close()}catch{}ws=null;setTimeout(()=>manualClose=false,80)}
 function scheduleReconnect(){if(manualClose||retry)return;const wait=retryMs+Math.floor(Math.random()*350);retry=setTimeout(()=>{retry=null;connect('resume')},wait);retryMs=Math.min(10000,Math.round(retryMs*1.7))}
-function connect(mode){clearTimeout(retry);retry=null;if(!currentCode||!currentName)return;if(ws&&(ws.readyState===WebSocket.OPEN||ws.readyState===WebSocket.CONNECTING))return;const attempt=++connectAttempt;connection(false,mode==='resume'?'Riconnessione…':'Connessione…');try{ws=new WebSocket(proto+location.host)}catch{return scheduleReconnect()}const socket=ws;$('status').textContent='';openTimer=setTimeout(()=>{if(socket.readyState===WebSocket.CONNECTING)socket.close()},9000);socket.onopen=()=>{if(attempt!==connectAttempt)return socket.close();clearTimeout(openTimer);socket.send(JSON.stringify(mode==='resume'&&padToken?{t:'resume_pad',code:currentCode,token:padToken}:{t:'join',code:currentCode,name:currentName}))};socket.onmessage=e=>{let m;try{m=JSON.parse(e.data)}catch{return}if(m.t==='server_ping'){socket.send(JSON.stringify({t:'client_pong'}));return}if(m.t==='ok'||m.t==='resumed_pad'){currentCode=m.code;padToken=m.token||padToken;save();retryMs=1000;setRoom();connection(true,'Collegato');$('changeBtn').classList.remove('hidden');if(m.state)applyState(m.state);else{$('renameName').value=currentName;showScreen('waitingScreen')}}else if(m.t==='nickname_updated'){currentName=m.name;save();$('name').value=currentName;$('renameName').value=currentName;$('status').textContent='Nickname aggiornato.'}else if(m.t==='q')applyQuestion(m);else if(m.t==='choice_request')applyChoiceRequest(m);else if(m.t==='mini_request')applyMiniRequest(m);else if(m.t==='lock'){stopTimer();showScreen('lockedScreen');$('status').textContent=sent?'La tua stima è al sicuro.':'Tempo scaduto: nessuna stima inviata.'}else if(m.t==='view')applyView(m);else if(m.t==='accepted'){sent=true;$('estimate').disabled=true;$('sendBtn').disabled=true;$('sentBox').classList.remove('hidden');$('status').textContent='Risposta registrata.'}else if(m.t==='duplicate'){sent=true;$('estimate').disabled=true;$('sendBtn').disabled=true;$('sentBox').classList.remove('hidden');$('status').textContent='La risposta era già stata inviata.'}else if(m.t==='choice_confirmed'){$('infoInstruction').textContent=m.msg||'Scelta confermata.';$('status').textContent='Scelta registrata.'}else if(m.t==='mini_confirmed'){$('infoInstruction').textContent=m.msg||'Risposta della mini sfida registrata.';$('status').textContent='Risposta bloccata.'}else if(m.t==='mini_closed'){$('infoInstruction').textContent='Mini sfida conclusa. Attendi il risultato sul Master.'}else if(m.t==='personal_timeout'){$('estimate').disabled=true;$('sendBtn').disabled=true;$('status').textContent=m.msg||'Tempo personale scaduto: la lavagnetta è bloccata.'}else if(m.t==='room_closed'){padToken='';clearSaved();currentCode='';setRoom();showScreen('joinScreen');$('status').textContent=m.msg||'La partita è terminata.'}else if(m.t==='replaced'){showScreen('joinScreen');$('status').textContent=m.msg||'Sessione aperta altrove.'}else if(m.t==='err'){if(m.reset){padToken='';clearSaved();showScreen('joinScreen')} $('status').textContent='⚠️ '+m.msg}};socket.onerror=()=>{try{socket.close()}catch{}};socket.onclose=()=>{clearTimeout(openTimer);if(ws===socket)ws=null;connection(false,'Connessione interrotta');scheduleReconnect()}}
+function connect(mode){
+  clearTimeout(retry);retry=null;
+  if(!currentCode||!currentName)return;
+  if(ws&&(ws.readyState===WebSocket.OPEN||ws.readyState===WebSocket.CONNECTING))return;
+  const attempt=++connectAttempt;
+  connection(false,mode==='resume'?'Riconnessione…':'Connessione…');
+  try{ws=new WebSocket(proto+location.host)}catch{return scheduleReconnect()}
+  const socket=ws;$('status').textContent='';
+  openTimer=setTimeout(()=>{if(socket.readyState===WebSocket.CONNECTING)socket.close()},9000);
+  socket.onopen=()=>{
+    if(attempt!==connectAttempt)return socket.close();
+    clearTimeout(openTimer);
+    socket.send(JSON.stringify(mode==='resume'&&padToken?{t:'resume_pad',code:currentCode,token:padToken}:{t:'join',code:currentCode,name:currentName}));
+  };
+  socket.onmessage=e=>{
+    let m;try{m=JSON.parse(e.data)}catch{return}
+    if(m.t==='server_ping'){socket.send(JSON.stringify({t:'client_pong'}));return}
+    if(m.t==='ok'||m.t==='resumed_pad'){
+      currentCode=m.code;padToken=m.token||padToken;save();retryMs=1000;setRoom();connection(true,'Collegato');$('changeBtn').classList.remove('hidden');
+      if(m.state)applyState(m.state);else{$('renameName').value=currentName;showScreen('waitingScreen')}
+    }else if(m.t==='nickname_updated'){currentName=m.name;save();$('name').value=currentName;$('renameName').value=currentName;$('status').textContent='Nickname aggiornato.'}
+    else if(m.t==='q')applyQuestion(m);
+    else if(m.t==='choice_request')applyChoiceRequest(m);
+    else if(m.t==='mini_request')applyMiniRequest(m);
+    else if(m.t==='lock'){stopTimer();showScreen('lockedScreen');$('status').textContent=sent?'La tua stima è al sicuro.':'Tempo scaduto: nessuna stima inviata.'}
+    else if(m.t==='view')applyView(m);
+    else if(m.t==='accepted'){sent=true;$('estimate').disabled=true;$('sendBtn').disabled=true;$('sentBox').classList.remove('hidden');$('status').textContent='Risposta registrata.'}
+    else if(m.t==='duplicate'){sent=true;$('estimate').disabled=true;$('sendBtn').disabled=true;$('sentBox').classList.remove('hidden');$('status').textContent='La risposta era già stata inviata.'}
+    else if(m.t==='choice_confirmed'){$('infoInstruction').textContent=m.msg||'Scelta confermata.';$('status').textContent='Scelta registrata.'}
+    else if(m.t==='mini_confirmed'){$('infoInstruction').textContent=m.msg||'Risposta della mini sfida registrata.';$('status').textContent='Risposta bloccata.'}
+    else if(m.t==='mini_closed'){$('infoInstruction').textContent='Mini sfida conclusa. Attendi il risultato sul Master.'}
+    else if(m.t==='personal_timeout'){$('estimate').disabled=true;$('sendBtn').disabled=true;$('status').textContent=m.msg||'Tempo personale scaduto: la lavagnetta è bloccata.'}
+    else if(m.t==='room_closed'){padToken='';clearSaved();currentCode='';setRoom();showScreen('joinScreen');$('status').textContent=m.msg||'La partita è terminata.'}
+    else if(m.t==='replaced'){
+      if(ws===socket)ws=null;
+      manualClose=true;clearTimeout(retry);
+      connection(false,'Sessione aperta altrove');showScreen('joinScreen');$('status').textContent=m.msg||'Sessione aperta altrove.';
+      setTimeout(()=>manualClose=false,500);
+    }else if(m.t==='err'){if(m.reset){padToken='';clearSaved();showScreen('joinScreen')} $('status').textContent='⚠️ '+m.msg}
+  };
+  socket.onerror=()=>{try{socket.close()}catch{}};
+  socket.onclose=()=>{
+    clearTimeout(openTimer);
+    if(ws!==socket)return;
+    ws=null;
+    if(manualClose)return;
+    connection(false,'Connessione interrotta');scheduleReconnect();
+  };
+}
 function join(){const code=$('code').value.trim().toUpperCase(),name=$('name').value.trim();if(code.length!==4||!name){$('status').textContent='Inserisci un codice di quattro lettere e il tuo nome.';return}closeSocket();currentCode=code;currentName=name;padToken='';clearSaved();setRoom();setTimeout(()=>connect('join'),100)}
 function rename(){const name=$('renameName').value.trim();if(!name)return $('status').textContent='Inserisci il nuovo nickname.';if(!ws||ws.readyState!==WebSocket.OPEN)return $('status').textContent='Riconnessione in corso…';ws.send(JSON.stringify({t:'rename_pad',name}))}
 function submit(){if(!ws||ws.readyState!==WebSocket.OPEN||sent)return;const value=$('estimate').value.trim();if(!value){$('status').textContent='Inserisci prima una stima.';return}ws.send(JSON.stringify({t:'est',value}))}
@@ -437,7 +491,7 @@ function serveFile(res,name){fs.readFile(path.join(__dirname,name),(err,data)=>{
 const server = http.createServer((req,res)=>{
   const pathname=new URL(req.url,'http://localhost').pathname;
   if(pathname==='/lavagnetta'||pathname==='/lavagnetta/'){res.writeHead(200,{'Content-Type':'text/html; charset=utf-8','Cache-Control':'no-store, no-cache, must-revalidate'});return res.end(PAD)}
-  if(pathname==='/health'){res.writeHead(200,{'Content-Type':'application/json; charset=utf-8'});return res.end(JSON.stringify({ok:true,version:'3.0.0',rooms:rooms.size}))}
+  if(pathname==='/health'){res.writeHead(200,{'Content-Type':'application/json; charset=utf-8'});return res.end(JSON.stringify({ok:true,version:'3.1.0',rooms:rooms.size}))}
   if(pathname==='/'||pathname==='/gioco'||pathname==='/gioco/'||pathname==='/game.html') return serveFile(res,'game.html');
   const routes={'/index.html':'index.html','/app.js':'app.js','/styles.css':'styles.css'};
   if(routes[pathname]) return serveFile(res,routes[pathname]);
@@ -541,6 +595,7 @@ wss.on('connection', ws => {
         token: makeToken(),
         name,
         socket: null,
+        disconnectTimer: null,
         answeredRound: -1,
         personalDeadline: 0,
         personalSeconds: 25
@@ -593,6 +648,8 @@ wss.on('connection', ws => {
     }
 
     if (m.t === 'leave_pad' && ws._role === 'pad') {
+      const leavingPad = room.pads.get(ws._padToken);
+      if (leavingPad?.disconnectTimer) clearTimeout(leavingPad.disconnectTimer);
       if (room.activeChoice?.chooserToken === ws._padToken) {
         choiceFallback(room, room.activeChoice);
       }
@@ -617,8 +674,14 @@ wss.on('connection', ws => {
     }
 
     if (m.t === 'q' && ws._role === 'master') {
-      room.round += 1;
+      const masterRound = Number(m.round);
+      room.round = Number.isFinite(masterRound) && masterRound > 0
+        ? Math.trunc(masterRound)
+        : room.round + 1;
       room.locked = false;
+      if (room.activeMini?.readyTimer) clearTimeout(room.activeMini.readyTimer);
+      room.activeChoice = null;
+      room.activeMini = null;
       room.seconds = Number(m.seconds) || 25;
       room.deadline = Date.now() + room.seconds * 1000;
       room.estimates.clear();
@@ -796,7 +859,10 @@ wss.on('connection', ws => {
       return;
     }
 
-    if (m.t === 'client_pong') return;
+    if (m.t === 'client_pong') {
+      ws.isAlive = true;
+      return;
+    }
 
     if (m.t === 'choice_response' && ws._role === 'pad') {
       const pad = room.pads.get(ws._padToken);
@@ -890,14 +956,20 @@ wss.on('connection', ws => {
       const wasCurrentSocket=!!pad&&pad.socket===ws;
       if (wasCurrentSocket) {
         pad.socket = null;
-        if (room.activeChoice?.chooserToken === ws._padToken) {
-          choiceFallback(room, room.activeChoice);
-        }
-        const activeMini=room.activeMini;
-        if(activeMini?.playerTokens.has(ws._padToken)&&!activeMini.responses.has(ws._padToken)&&!activeMini.unavailableSent.has(ws._padToken)){
-          activeMini.unavailableSent.add(ws._padToken);
-          queueMasterEvent(room,{t:'mini_unavailable',requestId:activeMini.requestId,playerId:ws._padToken,name:pad?.name||'Giocatore',msg:'La lavagnetta dello sfidante si è disconnessa.'});
-        }
+        if (pad.disconnectTimer) clearTimeout(pad.disconnectTimer);
+        pad.disconnectTimer = setTimeout(() => {
+          pad.disconnectTimer = null;
+          if (pad.socket?.readyState === WebSocket.OPEN) return;
+          if (room.activeChoice?.chooserToken === pad.token) {
+            choiceFallback(room, room.activeChoice, 'La lavagnetta non si è riconnessa: il controllo passa al Master.');
+          }
+          const activeMini=room.activeMini;
+          if(activeMini?.playerTokens.has(pad.token)&&!activeMini.responses.has(pad.token)&&!activeMini.unavailableSent.has(pad.token)){
+            activeMini.unavailableSent.add(pad.token);
+            queueMasterEvent(room,{t:'mini_unavailable',requestId:activeMini.requestId,playerId:pad.token,name:pad.name||'Giocatore',reason:'disconnect_timeout',msg:`La lavagnetta di ${pad.name||'un giocatore'} non si è riconnessa: usa il fallback sul Master.`});
+          }
+          notifyMaster(room);
+        }, PAD_DISCONNECT_GRACE_MS);
       }
       notifyMaster(room);
     }

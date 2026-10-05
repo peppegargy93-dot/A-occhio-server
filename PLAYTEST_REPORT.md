@@ -1,4 +1,4 @@
-# Rapporto verifiche v3.0
+# Rapporto verifiche v3.1
 
 ## Nuove regole eseguite
 
@@ -24,8 +24,11 @@ Test locale superato con Master e tre lavagnette simulate:
 - spettatore escluso dai campi di risposta della mini-sfida;
 - `mini_ready`, invio singolo, risposta contraffatta rifiutata e fallback anti-blocco;
 - recupero di una scelta autorizzata dopo sostituzione del socket;
+- micro-disconnessione di una lavagnetta durante una scelta e ripresa entro la finestra di 4,5 secondi, senza fallback spurio;
 - Cronometro delegato a una lavagnetta spettatrice con sequenza AVVIA/FERMA;
+- preparazione e comandi arbitro di Nomi & Cose inviati a uno spettatore quando il Master è sfidante;
 - mappa e classifiche aggiornate dallo stesso snapshot.
+- recupero del checkpoint del Master dopo refresh, con ripartenza dalla stessa domanda e senza nuovo sorteggio.
 
 ## Simulazioni deterministiche
 
@@ -33,11 +36,11 @@ Tre agenti del modello di stato hanno completato 120 partite ciascuno, con tavol
 
 | Seed | Partite | Domande | Minigiochi | Bonus rimonta | Malus podio | Esito |
 |---:|---:|---:|---:|---:|---:|---|
-| 260826 | 120 | 1.743 | 1.712 | 126 | 1.567 | OK |
-| 270826 | 120 | 1.746 | 1.664 | 153 | 1.561 | OK |
-| 930093 | 120 | 1.708 | 1.609 | 104 | 1.539 | OK |
+| 260826 | 120 | 1.736 | 1.608 | 113 | 1.542 | OK |
+| 270826 | 120 | 1.720 | 1.601 | 114 | 1.536 | OK |
+| 930093 | 120 | 1.721 | 1.585 | 118 | 1.557 | OK |
 
-Totale: 360 partite, 5.197 domande, 4.985 minigiochi, 383 Premi rimonta, 4.667 Malus da podio, 1.648 attivazioni dalle tre caselle Minigioco, 3.337 parità valide e 312 Paracadute consumati. Sono risultate 132 vittorie raggiungendo la Finale e 228 vittorie ai punti.
+Totale: 360 partite, 5.177 domande, 4.794 minigiochi, 345 Premi rimonta, 4.635 Malus da podio, 1.668 attivazioni dalle tre caselle Minigioco, 3.126 parità valide e 286 Paracadute consumati. Sono risultate 141 vittorie raggiungendo la Finale e 219 vittorie ai punti.
 
 Invarianti controllate:
 
@@ -50,8 +53,9 @@ Invarianti controllate:
 
 ## Verifica editoriale
 
-- 581 domande censite;
-- 213 domande complete di curiosità specifica e fonte HTTPS, quindi giocabili;
+- 593 domande censite;
+- 204 domande complete di curiosità specifica e fonte HTTPS, quindi giocabili;
+- 22 domande Oscar/Grammy escluse dalla linea editoriale richiesta (una è anche priva di una curiosità verificata);
 - 368 schede incomplete escluse automaticamente e riportate in `DOMANDE_DA_VERIFICARE.md`;
 - vietate dai test le formule generiche rimosse in questa versione;
 - titolo “La storia dietro la domanda” presente sia sul Master sia sulle lavagnette.

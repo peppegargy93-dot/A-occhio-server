@@ -209,13 +209,13 @@ test('flusso WebSocket con tre giocatori, scelta autorevole e riconnessione', as
   const request2 = next(pads[2].ws, 'choice_request');
   send(master, { t: 'choice_request', requestId: 'malus-1', chooser: 'Carla', title: 'Scegli il MALUS', options: [{ id: 'berto', label: 'Berto' }] });
   await request2;
-  const fallback = next(master, 'choice_unavailable');
+  const fallback = next(master, 'choice_unavailable', 7000);
   pads[2].ws.close();
   const fallbackMessage=await fallback;
   assert.equal(fallbackMessage.reason, 'disconnected');
   send(master,{t:'master_event_ack',eventId:fallbackMessage.eventId});
 
-  const resumedSocket = await open();
+  let resumedSocket = await open();
   const resumed = await command(resumedSocket, { t: 'resume_pad', code: room.code, token: pads[2].token }, 'resumed_pad');
   assert.equal(resumed.code, room.code);
 
@@ -241,6 +241,18 @@ test('flusso WebSocket con tre giocatori, scelta autorevole e riconnessione', as
   const controllerStopResponse=next(master,'choice_response',2500,'choice_response FERMA Cronometro');
   await command(resumedSocket,{t:'choice_response',requestId:'crono-stop',optionId:'stop'},'choice_confirmed');
   const controllerStopMessage=await controllerStopResponse;send(master,{t:'master_event_ack',eventId:controllerStopMessage.eventId});
+
+  const graceRequest=next(resumedSocket,'choice_request');
+  send(master,{t:'choice_request',requestId:'ncc-referee-grace',chooserToken:pads[2].token,chooser:'Carla',title:'Preparati: sarai l’arbitro',options:[{id:'ready',label:'Ho capito'}]});
+  await graceRequest;
+  await new Promise(resolve=>{resumedSocket.once('close',resolve);resumedSocket.close()});
+  const graceSocket=await open();
+  const graceState=await command(graceSocket,{t:'resume_pad',code:room.code,token:pads[2].token},'resumed_pad');
+  assert.equal(graceState.state.choiceRequest.requestId,'ncc-referee-grace','un micro-taglio non deve trasferire il controllo al Master');
+  const graceResponse=next(master,'choice_response');
+  await command(graceSocket,{t:'choice_response',requestId:'ncc-referee-grace',optionId:'ready'},'choice_confirmed');
+  const graceMessage=await graceResponse;send(master,{t:'master_event_ack',eventId:graceMessage.eventId});
+  resumedSocket=graceSocket;
 
   const undeliveredRequest=next(pads[1].ws,'mini_request');
   send(master,{t:'mini_request',requestId:'mini-no-ready',playerTokens:[pads[1].token],title:'Test consegna',fields:[{id:'estimate',label:'Stima',type:'number'}]});

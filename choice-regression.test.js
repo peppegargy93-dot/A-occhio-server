@@ -38,6 +38,9 @@ test('Android riprova la connessione su rete, focus e ritorno alla pagina',()=>{
   assert.match(server,/addEventListener\('focus'/);
   assert.match(server,/addEventListener\('pageshow'/);
   assert.match(server,/server_ping/);
+  assert.match(server,/if\(ws!==socket\)return/);
+  assert.match(server,/if\(manualClose\)return/);
+  assert.match(server,/m\.t==='replaced'[\s\S]*?if\(ws===socket\)ws=null/);
 });
 
 test('le mini sfide hanno handshake, fallback di consegna e stato recuperabile',()=>{
@@ -50,4 +53,8 @@ test('le mini sfide hanno handshake, fallback di consegna e stato recuperabile',
   assert.match(server,/il controllo è passato al Master/);
   assert.match(server,/const wasCurrentSocket=!!pad&&pad\.socket===ws/);
   assert.match(server,/if \(wasCurrentSocket\)/);
+  assert.match(server,/PAD_DISCONNECT_GRACE_MS = 4500/);
+  assert.match(server,/pad\.disconnectTimer = setTimeout/);
+  assert.match(server,/if \(pad\.socket\?\.readyState === WebSocket\.OPEN\) return/);
+  assert.match(server,/Riconnessione in corso: la risposta non è ancora stata inviata/);
 });

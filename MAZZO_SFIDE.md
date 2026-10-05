@@ -1,4 +1,4 @@
-# Mazzo Sfide — regole v3.0
+# Mazzo Sfide — regole v3.1
 
 Il Mazzo Sfide ufficiale contiene otto minigiochi. Il gioco estrae sempre una carta casuale: i giocatori non scelgono il tipo di prova.
 
@@ -14,7 +14,8 @@ Le lavagnette dei giocatori in sfida ricevono i comandi personali. Tutte le altr
 - **Intervallo Killer**: minimo e massimo sulla lavagnetta.
 - **Ordine Impossibile**: quattro carte riordinabili sulla lavagnetta entro 25 secondi.
 - **Timeline Flash**: quattro eventi riordinabili sulla lavagnetta entro 20 secondi.
-- **Nomi & Cose** e **La Bomba**: risposte a voce, con validità e comandi controllati dal Master.
+- **Nomi & Cose**: risposta a voce; se il Master gareggia, un giocatore esterno viene estratto casualmente come arbitro e riceve i comandi sulla propria lavagnetta.
+- **La Bomba**: risposta a voce, con validità e comandi controllati dal Master.
 
 Uno sfidante collegato avvia la prova dal proprio dispositivo. Quando entrambi hanno inviato, il gioco blocca le risposte, calcola l’esito, mostra a tutti soluzione e risposte e prosegue automaticamente. Ordine e Timeline inviano l’ordine presente allo scadere. Un token estraneo non può rispondere e un giocatore non può inviare due volte.
 
@@ -48,7 +49,7 @@ Se il Master non partecipa, avvia e ferma un intervallo nascosto. Se è uno sfid
 
 ### Nomi & Cose
 
-Compare una lettera con una categoria. Si risponde a voce e il Master assegna la vittoria alla prima risposta valida.
+Compare una lettera con una categoria. Si risponde a voce. Se il Master è in sfida, il gioco estrae casualmente una persona non coinvolta: prima le spiega il ruolo, poi le mostra carta e pulsanti per assegnare il punto alla prima risposta valida.
 
 ### Alto o Basso
 

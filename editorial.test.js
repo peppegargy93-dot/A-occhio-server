@@ -8,13 +8,15 @@ function between(start,end){const a=html.indexOf(start)+start.length;return html
 const questions=vm.runInNewContext(between('const QUESTIONS = ','\n];')+']');
 const added=html.includes('const QUESTIONS_V2_6 = ')?vm.runInNewContext(between('const QUESTIONS_V2_6 = ','\n];\nQUESTIONS.push(...QUESTIONS_V2_6)')+']'):[];
 questions.push(...added);
+const addedV31=html.includes('const QUESTIONS_V3_1 = ')?vm.runInNewContext(between('const QUESTIONS_V3_1 = ','\n];\nQUESTIONS.push(...QUESTIONS_V3_1)')+']'):[];
+questions.push(...addedV31);
 const facts=vm.runInNewContext('({'+between('const EDITORIAL_FACTS = {','\n};')+'})');
 function editorial(question){
   if(question.f&&question.fs)return [question.f,question.fs];
   return facts[question.q]||null;
 }
 test('ogni domanda attiva ha curiosità specifica e fonte HTTPS',()=>{
-  const curated=questions.filter(editorial);
+  const curated=questions.filter(question=>editorial(question)&&! /\b(?:Oscar|Grammy)\b/i.test(question.q||''));
   assert.ok(curated.length>=43);
   for(const question of curated){
     const [fact,source]=editorial(question);
@@ -43,8 +45,22 @@ test('la serie parole delle canzoni è completa, verificata e non ambigua',()=>{
   assert.ok(questions.some(question=>question.q.includes('ritornello')));
 });
 test('le domande non curate sono escluse dal mazzo',()=>{
-  assert.match(html,/function curatedQuestions\(\)\{return QUESTIONS\.filter\(q=>q\.f&&q\.fs\);\}/);
+  assert.match(html,/function curatedQuestions\(\)\{return QUESTIONS\.filter\(q=>q\.f&&q\.fs&&!isEditoriallyExcluded\(q\)\);\}/);
   assert.match(html,/const curatedCats = \(\)=> CATEGORIES\.filter/);
+});
+test('Oscar e Grammy non entrano nel mazzo attivo',()=>{
+  assert.match(html,/QUESTION_EXCLUSION_PATTERN = \/\\b\(\?:Oscar\|Grammy\)\\b\/i/);
+  const active=questions.filter(question=>editorial(question)&&! /\b(?:Oscar|Grammy)\b/i.test(question.q||''));
+  assert.ok(!active.some(question=>/\b(?:Oscar|Grammy)\b/i.test(question.q)));
+});
+test('i nuovi confronti assurdi sono verificati e completi',()=>{
+  assert.ok(addedV31.length>=12);
+  assert.ok(addedV31.filter(question=>/lattin/i.test(question.q)).length>=5);
+  for(const question of addedV31){
+    assert.ok(Number.isFinite(question.a),question.q);
+    assert.ok(question.f.length>=60,question.q);
+    assert.match(question.fs,/^https:\/\//,question.q);
+  }
 });
 test('anche le domande dei minigiochi usano il mazzo curato e mostrano la curiosità',()=>{
   assert.doesNotMatch(html,/const q=QUESTIONS\[rnd\(QUESTIONS\.length\)\]/);

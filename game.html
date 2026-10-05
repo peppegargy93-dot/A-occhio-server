@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- A OCCHIO! v3.0.0 · tabellone rapido + Bonus rimonta + Malus podio -->
+<!-- A OCCHIO! v3.1.0 · riconnessione robusta + arbitro esterno + domande assurde -->
 <html lang="it">
 <head>
 <meta charset="UTF-8">
@@ -1170,6 +1170,26 @@ const QUESTIONS_V2_6 = [
 ];
 QUESTIONS.push(...QUESTIONS_V2_6);
 
+/* Domande v3.1: confronti assurdi ma calcolabili da misure ufficiali. */
+const QUESTIONS_V3_1 = [
+  {"cat":"Record Assurdi","q":"Quante lattine da 330 ml, alte 11,52 cm, servirebbero impilate per raggiungere i 330 metri della Torre Eiffel? Arrotonda all’intero più vicino.","a":2865,"u":"lattine","f":"La Torre Eiffel non è rimasta alta come nel 1889: antenne radio e televisive l’hanno fatta crescere più volte. L’ultimo salto è arrivato nel 2022, quando un’antenna di 6 metri portata in elicottero l’ha fatta arrivare a 330 metri.","fs":"https://www.toureiffel.paris/en/news/history-and-culture/300-330-meters-story-towers-height"},
+  {"cat":"Record Assurdi","q":"Quante lattine da 330 ml, alte 11,52 cm, servirebbero impilate per arrivare dalla base alla torcia della Statua della Libertà, alta 92,99 metri? Arrotonda all’intero più vicino.","a":807,"u":"lattine","f":"Quasi metà dell’altezza totale non è la statua: la figura misura 46,05 metri e il piedistallo altri 46,93. Ai piedi della Libertà ci sono inoltre catene spezzate, invisibili a chi guarda dal basso.","fs":"https://www.nps.gov/stli/learn/statue-of-liberty-facts.htm"},
+  {"cat":"Record Assurdi","q":"Quante lattine da 330 ml, alte 11,52 cm, servirebbero impilate per raggiungere i 192 metri del Gateway Arch di St. Louis? Arrotonda all’intero più vicino.","a":1667,"u":"lattine","f":"Il Gateway Arch è alto 192 metri ed è largo esattamente altrettanto da una gamba all’altra. La sua forma ricorda una catena appesa capovolta e la cima ospita una sottile sala panoramica.","fs":"https://www.nps.gov/jeff/faqs.htm"},
+  {"cat":"Record Assurdi","q":"Quante lattine da 330 ml, alte 11,52 cm, servirebbero impilate per raggiungere gli 828 metri del Burj Khalifa? Arrotonda all’intero più vicino.","a":7188,"u":"lattine","f":"Il confronto del National Park Service mette il Burj Khalifa a 828 metri: oltre quattro volte il Gateway Arch. Una colonna di lattine così lunga supererebbe quota settemila prima di arrivare in cima.","fs":"https://home.nps.gov/jeff/planyourvisit/arch-height.htm"},
+  {"cat":"Record Assurdi","q":"Mettendo di lato lattine da 330 ml larghe 6,625 cm, quante ne servirebbero per coprire orizzontalmente 330 metri, l’altezza attuale della Torre Eiffel? Arrotonda all’intero più vicino.","a":4981,"u":"lattine","f":"Una lattina da 330 ml non è un cilindro uniforme: Coca-Cola indica 66,2–66,3 mm per il corpo ma appena 47,3–48 mm alla base. Quel profilo rastremato aiuta impilamento e resistenza dell’imballaggio.","fs":"https://merakettim.coca-colaturkiye.com/soru-detay/merhabalar-kutu-kolalarda-ki-tenekenin-tam-boyutlari-nelerdir-sac-kalinligi--38066"},
+  {"cat":"Record Assurdi","q":"Se un pallone regolamentare avesse circonferenza media di 69 cm, quanti palloni in fila per il diametro servirebbero per coprire i 330 metri della Torre Eiffel? Arrotonda all’intero più vicino.","a":1503,"u":"palloni","f":"Le regole non fissano un solo formato millimetrico: la circonferenza ammessa è fra 68 e 70 cm, il peso iniziale fra 410 e 450 grammi e perfino la pressione ha un intervallo regolamentare.","fs":"https://www.theifab.com/laws/2025-26/the-ball/"},
+  {"cat":"Record Assurdi","q":"Se un pallone regolamentare avesse circonferenza media di 69 cm, quanti palloni in fila per il diametro servirebbero per arrivare alla torcia della Statua della Libertà, a 92,99 metri? Arrotonda all’intero più vicino.","a":423,"u":"palloni","f":"La pelle di rame della Statua della Libertà è spessa soltanto 3/32 di pollice, paragonabile a due monetine sovrapposte. Eppure la struttura completa, fondazione compresa, pesa decine di milioni di chili.","fs":"https://www.nps.gov/stli/learn/historyculture/statue-statistics.htm"},
+  {"cat":"Record Assurdi","q":"Se un pallone regolamentare avesse circonferenza media di 69 cm, quanti palloni in fila per il diametro servirebbero per raggiungere i 192 metri del Gateway Arch? Arrotonda all’intero più vicino.","a":874,"u":"palloni","f":"L’Arch è rivestito in acciaio inossidabile e costruito con 142 sezioni. Alla base ogni gamba è larga oltre 16 metri, ma vicino alla cima si restringe a poco più di 5 metri.","fs":"https://home.nps.gov/jeff/planyourvisit/gateway-arch-fact-sheet.htm"},
+  {"cat":"Record Assurdi","q":"Se un pallone da calcio avesse circonferenza media di 69 cm, quanti palloni affiancati per il diametro coprirebbero i 7,32 metri di una porta regolamentare? Arrotonda all’intero più vicino.","a":33,"u":"palloni","f":"Il pallone può variare fra 68 e 70 cm di circonferenza; per questo la fila è una stima geometrica, non una misura identica per ogni modello. Durante una gara, inoltre, il pallone non può essere cambiato senza il permesso dell’arbitro.","fs":"https://www.theifab.com/laws/2025-26/the-ball/"},
+  {"cat":"Record Assurdi","q":"Quante Statue della Libertà complete di piedistallo, alte 92,99 metri, servirebbero impilate per raggiungere i 330 metri della Torre Eiffel? Arrotonda all’intero più vicino.","a":4,"u":"statue","f":"Nel 1886 la Statua della Libertà era la struttura più alta di New York. La Torre Eiffel sarebbe arrivata tre anni dopo e, grazie alle antenne aggiunte nel tempo, oggi supera i 300 metri originari.","fs":"https://www.nps.gov/places/000/statue-front.htm"},
+  {"cat":"Record Assurdi","q":"Quante Statue della Libertà complete di piedistallo, alte 92,99 metri, servirebbero impilate per raggiungere gli 828 metri del Burj Khalifa? Arrotonda all’intero più vicino.","a":9,"u":"statue","f":"Il National Park Service usa proprio questi giganti per far percepire le scale: il Burj Khalifa misura 828 metri, mentre la Statua della Libertà completa arriva a circa 93. La differenza è quasi nove volte.","fs":"https://home.nps.gov/jeff/planyourvisit/arch-height.htm"},
+  {"cat":"Record Assurdi","q":"Quanti Gateway Arch alti 192 metri servirebbero impilati per raggiungere gli 828 metri del Burj Khalifa? Arrotonda all’intero più vicino.","a":4,"u":"archi","f":"Il Gateway Arch è il monumento più alto degli Stati Uniti e la costruzione fu completata nel 1965. Nonostante l’aspetto slanciato, può oscillare sotto il vento senza perdere la propria stabilità.","fs":"https://home.nps.gov/jeff/planyourvisit/gateway-arch-fact-sheet.htm"}
+];
+QUESTIONS.push(...QUESTIONS_V3_1);
+
+const QUESTION_EXCLUSION_PATTERN = /\b(?:Oscar|Grammy)\b/i;
+function isEditoriallyExcluded(question){return QUESTION_EXCLUSION_PATTERN.test(question.q||"");}
+
 // Schema editoriale uniforme. I campi vuoti restano espliciti finché una fonte
 // verificabile non viene aggiunta: il gioco non inventa curiosità di categoria.
 QUESTIONS.forEach(question=>{
@@ -1371,7 +1391,7 @@ const TESI_CARDS = [
 const MINI_GAME_META = {
   lampo:{icon:"⚡",name:"Stima Lampo",family:"stima",duration:"40–60 secondi",win:"La stima più vicina",rules:["Il Master legge una nuova domanda numerica.","Ogni sfidante comunica una sola stima.","Si rivela la risposta: chi è più vicino vince."]},
   crono:{icon:"⏱️",name:"Cronometro del Master",family:"tempo",duration:"30–45 secondi",win:"La stima del tempo più precisa",rules:["Gli sfidanti si girano e non guardano lo schermo.","Se il Master è in sfida, assegna AVVIA e FERMA a una lavagnetta spettatrice.","Gli sfidanti stimano i secondi trascorsi dai propri dispositivi."]},
-  ncc:{icon:"🔤",name:"Nomi & Cose",family:"voce",duration:"20–40 secondi",win:"La prima risposta valida",rules:["Compare una lettera insieme a una categoria.","Gli sfidanti rispondono ad alta voce.","Il Master assegna la vittoria alla prima risposta valida."]},
+  ncc:{icon:"🔤",name:"Nomi & Cose",family:"voce",duration:"20–40 secondi",win:"La prima risposta valida",rules:["Compare una lettera insieme a una categoria.","Gli sfidanti rispondono ad alta voce.","Se il Master è in sfida, il gioco estrae uno spettatore: riceve preparazione, carta e comandi per assegnare il punto."]},
   altobasso:{icon:"↕️",name:"Alto o Basso",family:"riflessi",duration:"3 manche rapide",win:"Più risposte corrette",rules:["Per ogni domanda compare un valore di riferimento.","Tutti dichiarano insieme: più alto oppure più basso.","Dopo tre manche vince chi ha più risposte corrette."]},
   intervallo:{icon:"🎯",name:"Intervallo Killer",family:"stima",duration:"45 secondi",win:"L’intervallo valido più stretto",rules:["Ogni sfidante indica un valore minimo e uno massimo.","La risposta deve cadere dentro l’intervallo.","Vince l’intervallo valido più stretto; se tutti sbagliano, chi arriva più vicino."]},
   ordine:{icon:"🪜",name:"Ordine Impossibile",family:"ordine",duration:"25 secondi",win:"Più elementi nella posizione corretta",rules:["Le quattro carte compaiono sulle lavagnette degli sfidanti.","Ogni sfidante le riordina e invia entro 25 secondi.","Tutti vedono le sequenze inviate e quella corretta."]},
@@ -1510,6 +1530,43 @@ const S = {
   log:[],
   timer:{id:null,left:0,total:25},
 };
+
+const GAME_CHECKPOINT_KEY="aocchio_game_checkpoint_v1";
+const GAME_CHECKPOINT_MAX_AGE=24*60*60*1000;
+function checkpointState(){
+  return {
+    ...S,
+    used:[...(S.used||[])],
+    timer:{...(S.timer||{}),id:null},
+    winnerFinalId:S.winnerFinal?.id||null,
+    winnerFinal:null
+  };
+}
+function saveGameCheckpoint(mode){
+  if(!S.players?.length||S.round<1)return;
+  const payload={version:1,mode,savedAt:Date.now(),offCats:[...OFFCATS],state:checkpointState()};
+  try{localStorage.setItem(GAME_CHECKPOINT_KEY,JSON.stringify(payload));}
+  catch(error){
+    // Le foto profilo in base64 possono saturare localStorage: lo stato di gioco
+    // ha priorità, quindi riproviamo senza avatar.
+    try{payload.state.players=payload.state.players.map(player=>({...player,avatar:null}));localStorage.setItem(GAME_CHECKPOINT_KEY,JSON.stringify(payload));}catch(ignored){}
+  }
+}
+function clearGameCheckpoint(){try{localStorage.removeItem(GAME_CHECKPOINT_KEY);}catch(error){}}
+function restoreGameCheckpoint(){
+  try{
+    const payload=JSON.parse(localStorage.getItem(GAME_CHECKPOINT_KEY)||"null");
+    if(!payload||payload.version!==1||!payload.state||Date.now()-Number(payload.savedAt)>GAME_CHECKPOINT_MAX_AGE){clearGameCheckpoint();return null;}
+    const state=payload.state;
+    state.used=new Set(Array.isArray(state.used)?state.used:[]);
+    state.timer={id:null,left:Number(state.timer?.left)||0,total:Number(state.timer?.total)||25};
+    Object.assign(S,state);
+    S.winnerFinal=state.winnerFinalId?S.players.find(player=>player.id===state.winnerFinalId)||null:null;
+    OFFCATS=new Set(Array.isArray(payload.offCats)?payload.offCats:[]);
+    if(S.count===2){BOARD=BOARD_DUO;FINISH=BOARD.length;}else{BOARD=BOARD_FULL;FINISH=BOARD.length;}
+    return payload;
+  }catch(error){clearGameCheckpoint();return null;}
+}
 
 /* =====================================================================
    HELPER
@@ -1690,6 +1747,7 @@ function renderTutorial(i){
    ===================================================================== */
 function renderSetup(){
   haltAll();
+  clearGameCheckpoint();
   S.phase="setup";
   renderStatus();
   if(S.players.length!==S.count) syncPlayers();
@@ -1754,6 +1812,7 @@ function renderSetup(){
   $$("#catMode button").forEach(b=> b.addEventListener("click",()=>{
     S.catMode=b.dataset.mode; renderSetup();
   }));
+  if(ONLINE?.players?.length)syncJoinedPlayers(ONLINE.players);
   renderPlayerInputs();
   renderOnlineBar();
 }
@@ -1821,6 +1880,7 @@ function fillDemoNames(){
    ===================================================================== */
 function startGame(){
   haltAll();
+  clearGameCheckpoint();
   if(S.count===2){ BOARD=BOARD_DUO; FINISH=BOARD.length; }
   else { BOARD=BOARD_FULL; FINISH=BOARD.length; }
   S.players.forEach((p,i)=>{ if(!p.name.trim()) p.name = "Giocatore "+(i+1); });
@@ -1884,7 +1944,7 @@ const QUESTION_MEMORY=loadQuestionMemory();
 function saveQuestionMemory(){
   try{localStorage.setItem(QUESTION_MEMORY_KEY,JSON.stringify({used:[...QUESTION_MEMORY.used],recent:QUESTION_MEMORY.recent.slice(-QUESTION_RECENT_LIMIT)}));}catch(e){}
 }
-function curatedQuestions(){return QUESTIONS.filter(q=>q.f&&q.fs);}
+function curatedQuestions(){return QUESTIONS.filter(q=>q.f&&q.fs&&!isEditoriallyExcluded(q));}
 function pruneQuestionMemory(curated){
   const valid=new Set(curated.map(questionId));
   QUESTION_MEMORY.used=new Set([...QUESTION_MEMORY.used].filter(id=>valid.has(id)));
@@ -1933,6 +1993,7 @@ function finalizeDraw(cat){
   S.chosenCat = cat;
   S.question = drawFromPool(cat);
   renderStatus();
+  saveGameCheckpoint("question");
   startWriting();
 }
 
@@ -3010,6 +3071,7 @@ function diceOrder(players, opts, done){
 function renderPostRound(){
   onlineBroadcastView({kind:"map",title:"Classifica e mappa aggiornate",text:"I punti sono stati assegnati. Controlla la tua nuova posizione.",scores:onlineScores(),map:onlineMap(),round:S.round});
   S.phase="postround";
+  saveGameCheckpoint("postround");
   renderStatus();
   const w = S.roundWinnerId? pById(S.roundWinnerId):null;
   const capReached = S.round>=MAX_ROUNDS;
@@ -3043,7 +3105,7 @@ function renderPostRound(){
   });
   wireBoardLog();
 }
-function renderGameOver(){
+function renderGameOver(recovered=false){
   S.phase="gameover";
   if(typeof haltAll==="function") haltAll();
   renderStatus();
@@ -3062,7 +3124,8 @@ function renderGameOver(){
     : endedAtLimit
       ? `Nessuno ha raggiunto la Finale entro ${MAX_ROUNDS} round: decide il totale punti.`
       : `Partita chiusa dal Master al round ${S.round}: classifica determinata dai punti accumulati fino a questo momento.`;
-  log(`🏁 Partita finita. ${esc(victoryReason)}`);
+  if(!recovered)log(`🏁 Partita finita. ${esc(victoryReason)}`);
+  saveGameCheckpoint("gameover");
   app.innerHTML = `
     <div class="confetti" aria-hidden="true">${Array.from({length:26},(_,i)=>`<i style="left:${(i*4+2)%100}%;background:${COLORS[i%COLORS.length]};animation-delay:${(i%9)*.14}s;animation-duration:${2.4+(i%5)*.35}s"></i>`).join("")}</div>
     <div class="card center">
@@ -3205,7 +3268,7 @@ function diceRollWinner(players,opts,done){
   function chooseMode(){
     let bag=S.cardBags["mini-games"];
     if(!Array.isArray(bag)||!bag.length)bag=S.cardBags["mini-games"]=shuffle(MINI_GAME_KEYS);
-    const available=key=>key!=="crono"||!masterIsContender||cronoControllers().length>0;
+    const available=key=>!((key==="crono"||key==="ncc")&&masterIsContender&&cronoControllers().length===0);
     const findIndex=()=>{
       let found=bag.findIndex(key=>available(key)&&key!==S.lastMiniGame&&MINI_GAME_META[key].family!==S.lastMiniFamily);
       if(found<0)found=bag.findIndex(key=>available(key)&&key!==S.lastMiniGame);
@@ -3335,13 +3398,15 @@ function diceRollWinner(players,opts,done){
   }
   function remoteCrono(controller,startedAt=null){
     const running=Number.isFinite(startedAt),action=running?"stop":"start";
-    app.innerHTML=`<div class="card center"><span class="mini-round">⏱️ Cronometro del Master</span><div class="mini-question">${running?"Cronometro in corso":"Cronometro pronto"}</div><div class="timer-num" style="margin:14px 0">${running?"TIC TAC":"PRONTO"}</div><p class="sub center"><b>${esc(controller.name)}</b> controlla ${running?"il tasto FERMA":"AVVIA e FERMA"} dalla propria lavagnetta. Sul Master il tempo resta nascosto.</p></div>`;
+    app.innerHTML=`<div class="card center"><span class="mini-round">⏱️ Cronometro del Master</span><div class="mini-question">${running?"Cronometro in corso":"Cronometro pronto"}</div><div class="timer-num" style="margin:14px 0">${running?"TIC TAC":"PRONTO"}</div><p class="sub center"><b>${esc(controller.name)}</b> controlla ${running?"il tasto FERMA":"AVVIA e FERMA"} dalla propria lavagnetta. Sul Master il tempo resta nascosto.</p><button type="button" class="btn ghost mt" id="cronoRecover">${running?"Riassegna FERMA o usa l’emergenza":"Riassegna il controllo"}</button></div>`;
     broadcastMiniWaiting("⏱️","Cronometro del Master",running?"Cronometro in corso":"Cronometro pronto",`${controller.name} è l’arbitro esterno e ${running?"deciderà quando fermare l’intervallo":"darà il via dalla propria lavagnetta"}.`);
-    onlineRequestPlayerChoice({chooser:controller,title:"Regia del Cronometro",subject:running?"Il tempo sta scorrendo":"Quando gli sfidanti sono pronti",description:running?"Ferma il cronometro quando vuoi. Il tempo non viene mostrato.":"Avvia il cronometro senza annunciare la durata.",options:[{id:action,label:running?"◼︎ Ferma il cronometro":"▶︎ Avvia il cronometro"}]},(option,meta)=>{
+    let requestId=null;
+    requestId=onlineRequestPlayerChoice({chooser:controller,title:"Regia del Cronometro",subject:running?"Il tempo sta scorrendo":"Quando gli sfidanti sono pronti",description:running?"Ferma il cronometro quando vuoi. Il tempo non viene mostrato.":"Avvia il cronometro senza annunciare la durata.",options:[{id:action,label:running?"◼︎ Ferma il cronometro":"▶︎ Avvia il cronometro"}]},(option,meta)=>{
       if(option!==action)return chooseCronoController(startedAt,meta?.error||`La lavagnetta di ${controller.name} non è più disponibile.`);
       if(!running){beep(880,140);return remoteCrono(controller,performance.now());}
       const sec=Math.max(.1,(performance.now()-startedAt)/1000);beep(392,220);cronoInputs(sec);
     });
+    $("#cronoRecover").onclick=()=>{cancelOnlineChoiceRequest(requestId);chooseCronoController(startedAt,`Controllo riassegnato manualmente: ${controller.name} non ha risposto.`);};
   }
   function cronoInputs(sec){
     const remoteIds=new Set(connectedRemote().map(player=>player.id));let remoteBridge=null,autoQueued=false;
@@ -3352,11 +3417,49 @@ function diceRollWinner(players,opts,done){
     $$(".cin").filter(input=>!input.disabled).forEach(input=>input.addEventListener("input",update));update();
     $("#cronoGo").onclick=()=>{const entries=$$(".cin").map(inp=>{const value=parseFloat((inp.value||"").replace(",","."));return{player:pById(inp.dataset.id),value,metric:Number.isFinite(value)?Math.abs(value-sec):Infinity,secondary:0}});if(entries.some(e=>!Number.isFinite(e.value)))return;closeOnlineMini(remoteBridge?.requestId);const winners=lowest(entries);app.innerHTML=`<div class="card center"><span class="mini-round">⏱️ Cronometro del Master</span><p class="eyebrow mt">Il tempo era</p><div class="mini-reference">${sec.toFixed(2)}s</div><p class="sub center mt">${winnerLabel(winners)}</p><button type="button" class="btn teal mt" id="cronoEnd">Continua →</button></div>`;broadcastMiniResult("⏱️","Cronometro del Master","Tempo rivelato",`${sec.toFixed(2)} secondi`,entries.map(e=>`${e.player.name}: ${fmtNum(e.value)} s`).join(" · "),winnerLabel(winners));outcomeButton("#cronoEnd",winners,"Cronometro del Master")};
   }
+  function drawNccCard(){
+    return {
+      letter:drawDeckCard("nomi-cose-lettere","ABCDEFGILMNOPRSTV".split("")),
+      category:drawDeckCard("nomi-cose-categorie",["Nome di persona","Città","Animale","Cibo o piatto","Film o serie TV","Cantante o band","Marca famosa","Oggetto di casa","Mestiere","Calciatore"])
+    };
+  }
   function ncc(){
-    const letters="ABCDEFGILMNOPRSTV".split(""),letter=drawDeckCard("nomi-cose-lettere",letters),category=drawDeckCard("nomi-cose-categorie",["Nome di persona","Città","Animale","Cibo o piatto","Film o serie TV","Cantante o band","Marca famosa","Oggetto di casa","Mestiere","Calciatore"]);
+    if(masterIsContender)return chooseNccController();
+    const {letter,category}=drawNccCard();
     app.innerHTML=`<div class="card center"><span class="mini-round">🔤 Nomi & Cose</span><div class="ncc-letter ans-pop">${letter}</div><div class="ncc-cat res-in" style="animation-delay:.2s">${esc(category)}</div><p class="sub center mt">Rispondete ad alta voce. Il Master tocca subito il vincitore.</p><div class="choice-grid mt">${players.map(p=>`<button type="button" class="choice nccW" data-id="${p.id}">🏆 ${avatarHTML(p,24)} ${esc(p.name)}</button>`).join("")}<button type="button" class="choice" id="nccRedo">🔁 Nessuna risposta valida: nuova carta</button></div></div>`;
     broadcastMiniResult("🔤","Nomi & Cose",`${letter} · ${category}`,"Rispondete ad alta voce","Il Master controlla che la risposta sia valida e assegna il punto.","Tutti possono seguire la prova; soltanto il Master ha i comandi.");
     $$(".nccW").forEach(button=>button.onclick=()=>{const winner=pById(button.dataset.id);broadcastMiniResult("🔤","Nomi & Cose",`${letter} · ${category}`,`${winner.name} ha dato la prima risposta valida`,"Risposta verificata dal Master.",`Vince ${winner.name}`);finish(winner,"Nomi & Cose")});$("#nccRedo").onclick=ncc;
+  }
+  function chooseNccController(message=""){
+    const controllers=cronoControllers();
+    if(!controllers.length){
+      app.innerHTML=`<div class="card center"><span class="mini-round">🔤 Nomi & Cose</span><div class="mini-question">Serve un arbitro esterno</div><p class="sub center">Il Master è in sfida e non c’è una lavagnetta spettatrice collegata. La carta viene sostituita per non bloccare la partita.</p>${message?`<div class="nowin-note mt-s">⚠️ ${esc(message)}</div>`:""}<button type="button" class="btn coral mt" id="nccRedraw">Estrai un’altra carta Sfida →</button></div>`;
+      broadcastMiniResult("🔤","Nomi & Cose","Carta sostituita","Manca un arbitro esterno collegato","Il Master è uno sfidante: nessuno dei contendenti può controllare la risposta.","Verrà estratta un’altra prova senza bloccare la partita.");
+      return $("#nccRedraw").onclick=()=>showRules(chooseMode());
+    }
+    const controller=pick(controllers);
+    app.innerHTML=`<div class="card center"><span class="mini-round">🔤 Nomi & Cose</span><div class="mini-question">Arbitro estratto: ${esc(controller.name)}</div><p class="sub center">Il Master è in sfida. <b>${esc(controller.name)}</b>, che non partecipa alla sfida, riceve prima una schermata di preparazione e poi la carta da leggere.</p>${message?`<div class="nowin-note mt-s">⚠️ ${esc(message)}</div>`:""}<div class="stakes">📲 Attendo la conferma dalla sua lavagnetta</div><button type="button" class="btn ghost mt" id="nccReassign">Estrai un altro arbitro</button></div>`;
+    broadcastMiniWaiting("🔤","Nomi & Cose","Arbitro in preparazione",`${controller.name}, scelto casualmente tra gli spettatori, leggerà categoria e lettera agli sfidanti.`);
+    let requestId=null;
+    requestId=onlineRequestPlayerChoice({chooser:controller,title:"Preparati: sarai l’arbitro",subject:"Nomi & Cose",description:`Il Master è uno degli sfidanti. Tra poco vedrai categoria e lettera: leggile ad alta voce a ${players.map(player=>player.name).join(" e ")}. Il primo che dà una risposta valida conquista il punto.`,options:[{id:"ready",label:"Ho capito · mostrami la carta",description:"Prima richiama l’attenzione dei due sfidanti."}]},(option,meta)=>{
+      if(option==="ready")return nccExternalRound(controller);
+      chooseNccController(meta?.error||`La lavagnetta di ${controller.name} non è più disponibile.`);
+    });
+    $("#nccReassign").onclick=()=>{cancelOnlineChoiceRequest(requestId);chooseNccController(`Arbitro riassegnato: ${controller.name} non era pronto.`);};
+  }
+  function nccExternalRound(controller){
+    const {letter,category}=drawNccCard();
+    app.innerHTML=`<div class="card center"><span class="mini-round">🔤 Nomi & Cose</span><div class="ncc-letter ans-pop">${letter}</div><div class="ncc-cat res-in" style="animation-delay:.2s">${esc(category)}</div><p class="sub center mt"><b>${esc(controller.name)}</b> legge la carta e assegna il punto dalla propria lavagnetta. Tutti gli altri seguono in diretta.</p><button type="button" class="btn ghost mt" id="nccReassign">L’arbitro non risponde · riassegna</button></div>`;
+    broadcastMiniResult("🔤","Nomi & Cose",`${letter} · ${category}`,"Rispondete ad alta voce",`${controller.name} controlla la prima risposta valida e assegna il punto dalla propria lavagnetta.`,"Tutti vedono la stessa carta; soltanto l’arbitro ha i comandi.");
+    let requestId=null;
+    requestId=onlineRequestPlayerChoice({chooser:controller,title:"Sei l’arbitro · assegna il punto",subject:`Lettera ${letter} · ${category}`,description:`Leggi ora la categoria e la lettera. Tocca il nome del primo sfidante che risponde correttamente.`,options:[...players.map(player=>({id:player.id,label:`🏆 ${player.name} ha risposto per primo`,description:"Conferma soltanto una risposta valida."})),{id:"redo",label:"🔁 Nessuna risposta valida",description:"Estrai una nuova categoria e una nuova lettera."}]},(option,meta)=>{
+      if(option==="redo")return nccExternalRound(controller);
+      const winner=players.find(player=>player.id===option);
+      if(!winner)return chooseNccController(meta?.error||`La lavagnetta di ${controller.name} non è più disponibile.`);
+      broadcastMiniResult("🔤","Nomi & Cose",`${letter} · ${category}`,`${winner.name} ha dato la prima risposta valida`,`Risposta verificata dall’arbitro ${controller.name}.`,`Vince ${winner.name}`);
+      finish(winner,"Nomi & Cose");
+    });
+    $("#nccReassign").onclick=()=>{cancelOnlineChoiceRequest(requestId);chooseNccController(`L’arbitro ${controller.name} non ha completato la prova.`);};
   }
   function friendlyThreshold(value){const factor=pick([.55,.7,.82,1.18,1.35,1.6]);let n=value*factor;if(Math.abs(n)>=100)n=Math.round(n/10)*10;else if(Math.abs(n)>=10)n=Math.round(n);else n=Math.round(n*10)/10;if(n===value)n+=Math.abs(value)>=10?1:.1;return n;}
   function altoBasso(roster=players,total=3,sudden=false){
@@ -3517,6 +3620,14 @@ let ONLINE_CHOICE_SEQ=0;
 const ONLINE_CHOICE_CALLBACKS=new Map();
 let ONLINE_MINI_SEQ=0;
 const ONLINE_MINI_CALLBACKS=new Map();
+function loadSavedMasterSession(){
+  try{
+    const saved=JSON.parse(localStorage.getItem("aocchio_master")||"null");
+    if(!saved?.code||!saved?.token||!saved?.url)return false;
+    ONLINE={ws:null,code:saved.code,url:saved.url,est:{},n:0,players:[],masterToken:saved.token,connecting:true,masterReady:false};
+    return true;
+  }catch(error){return false;}
+}
 function onlineScores(){
   return S.players.map(p=>({name:p.name,score:p.score,pos:p.pos,color:p.color,outsidePodiumStreak:Number(p.outsidePodiumStreak)||0,podiumCount:Number(p.podiumCount)||0,comebackTarget:COMEBACK_BONUS_STREAK,podiumMalusStep:PODIUM_MALUS_STEP}));
 }
@@ -3582,13 +3693,19 @@ function syncJoinedPlayers(joined){
 }
 function onlineRequestPlayerChoice({chooser,title,subject,description,options},callback){
   const masterPlayer=S.players[0];
-  if(masterPlayer&&chooser&&chooser.id===masterPlayer.id){callback(null,{reason:"master_local"});return;}
-  if(!ONLINE||!ONLINE.ws||ONLINE.ws.readyState!==WebSocket.OPEN){callback(null,{error:"offline",reason:"master_fallback"});return;}
+  if(masterPlayer&&chooser&&chooser.id===masterPlayer.id){callback(null,{reason:"master_local"});return null;}
+  if(!ONLINE||!ONLINE.ws||ONLINE.ws.readyState!==WebSocket.OPEN){callback(null,{error:"offline",reason:"master_fallback"});return null;}
   const requestId=`choice_${Date.now()}_${++ONLINE_CHOICE_SEQ}`;
   // Nessuna scadenza arbitraria: il fallback Master viene aperto soltanto se
   // il server conferma che la lavagnetta autorizzata non è disponibile.
   ONLINE_CHOICE_CALLBACKS.set(requestId,{callback,ready:false});
   ONLINE.ws.send(JSON.stringify({t:"choice_request",requestId,chooser:chooser.name,chooserToken:chooser.onlineToken||"",title,subject,description,options}));
+  return requestId;
+}
+function cancelOnlineChoiceRequest(requestId){
+  if(!requestId)return;
+  ONLINE_CHOICE_CALLBACKS.delete(requestId);
+  if(ONLINE?.ws?.readyState===WebSocket.OPEN)ONLINE.ws.send(JSON.stringify({t:"cancel_choice",requestId}));
 }
 function resolveOnlineChoice(m){
   const pending=ONLINE_CHOICE_CALLBACKS.get(m.requestId);if(!pending)return;
@@ -3617,6 +3734,11 @@ function resolveOnlineMiniResponse(message){
 function fallbackOnlineMiniResponse(message){
   const pending=ONLINE_MINI_CALLBACKS.get(message.requestId);if(!pending)return;
   const player=pending.players.get(message.playerId);if(player)pending.onUnavailable?.(player,message.msg||"Lavagnetta non disponibile.");
+}
+function failOnlineMiniRequest(message){
+  const pending=ONLINE_MINI_CALLBACKS.get(message.requestId);if(!pending)return;
+  ONLINE_MINI_CALLBACKS.delete(message.requestId);
+  for(const player of pending.players.values())pending.onUnavailable?.(player,message.msg||"La mini sfida non può usare le lavagnette: inserisci le risposte dal Master.");
 }
 function closeOnlineMini(requestId){
   if(!requestId)return;
@@ -3776,6 +3898,7 @@ function onlineConnect(url, resume=false){
   const previous=ONLINE;
   if(!ONLINE) ONLINE={ws:null,code:"",url,est:{},n:0,masterToken:"",connecting:true};
   ONLINE.ws=ws; ONLINE.url=url; ONLINE.connecting=true;
+  ONLINE.masterReady=false;
 
   ws.onerror=()=>{};
   ws.onopen=()=>{
@@ -3788,13 +3911,13 @@ function onlineConnect(url, resume=false){
   };
   ws.onmessage=e=>{ let m; try{m=JSON.parse(e.data)}catch(err){return;}
     if(m.t==="room"){
-      ONLINE.code=m.code; ONLINE.masterToken=m.token||ONLINE.masterToken; ONLINE.n=m.n||0; ONLINE.players=m.players||ONLINE.players||[]; syncJoinedPlayers(ONLINE.players);
+      ONLINE.code=m.code; ONLINE.masterToken=m.token||ONLINE.masterToken; ONLINE.n=m.n||0; ONLINE.players=m.players||ONLINE.players||[]; ONLINE.masterReady=true; syncJoinedPlayers(ONLINE.players);
       try{localStorage.setItem("aocchio_master",JSON.stringify({code:ONLINE.code,token:ONLINE.masterToken,url:ONLINE.url}));}catch(e){}
       renderOnlineBar();
       if(!resume) log("🌐 Stanza lavagnette aperta: <b>"+m.code+"</b>",0);
     }
     else if(m.t==="resumed_master"){
-      ONLINE.n=m.n||0; ONLINE.players=m.players||ONLINE.players||[]; syncJoinedPlayers(ONLINE.players); renderOnlineBar();
+      ONLINE.n=m.n||0; ONLINE.players=m.players||ONLINE.players||[]; ONLINE.masterReady=true; syncJoinedPlayers(ONLINE.players); renderOnlineBar();
       (m.estimates||[]).forEach(storeOnlineEstimate);
       refreshOnlineEstimates();
       (m.masterEvents||[]).forEach(handleOnlineMasterEvent);
@@ -3808,9 +3931,18 @@ function onlineConnect(url, resume=false){
     else if(m.t==="choice_error"){const s2=$("onlineSt");if(s2)s2.textContent="⚠️ "+m.msg;fallbackOnlineChoice(m);}
     else if(m.t==="mini_ready"){resolveOnlineMiniReady(m);}
     else if(m.t==="mini_response"||m.t==="mini_unavailable"){handleOnlineMasterEvent(m);}
-    else if(m.t==="mini_error"){const s2=$("onlineSt");if(s2)s2.textContent="⚠️ "+m.msg;}
+    else if(m.t==="mini_error"){const s2=$("onlineSt");if(s2)s2.textContent="⚠️ "+m.msg;failOnlineMiniRequest(m);}
     else if(m.t==="est"){ storeOnlineEstimate(m); refreshOnlineEstimates(); }
-    else if(m.t==="err"){ const s2=$("#onlineSt"); if(s2) s2.textContent="⚠️ "+m.msg; }
+    else if(m.t==="err"){
+      const s2=$("#onlineSt"); if(s2) s2.textContent="⚠️ "+m.msg;
+      if(m.reset&&ONLINE?.ws===ws){
+        // Il salvataggio locale della partita resta valido anche se Render ha
+        // già eliminato la stanza. Si crea un nuovo codice senza azzerare il gioco.
+        try{localStorage.removeItem("aocchio_master");}catch(error){}
+        ONLINE.code="";ONLINE.masterToken="";ONLINE.roomExpired=true;
+        if(ws.readyState===WebSocket.OPEN)ws.send(JSON.stringify({t:"create"}));
+      }
+    }
   };
   ws.onclose=()=>{
     if(!ONLINE || ONLINE.ws!==ws) return;
@@ -3901,10 +4033,68 @@ function initMenu(){
   });
 }
 
+function waitForMasterConnection(action,button,attempt=0){
+  if(!/^https?:$/.test(location.protocol)||(ONLINE?.ws?.readyState===WebSocket.OPEN&&ONLINE.masterReady)){action();return;}
+  if(attempt>=40){
+    if(button){button.disabled=false;button.textContent="Riprova il recupero";}
+    const note=$("#recoveryConnection");if(note)note.textContent="Il server non risponde ancora. Attendi qualche secondo e riprova.";
+    return;
+  }
+  if(button){button.disabled=true;button.textContent="Riconnessione alla stanza…";}
+  setTimeout(()=>waitForMasterConnection(action,button,attempt+1),250);
+}
+
+function renderRecoveredGame(checkpoint){
+  haltAll();
+  S.phase="recovery";
+  renderStatus();
+  const mode=checkpoint.mode;
+  const isQuestion=mode==="question";
+  const isGameOver=mode==="gameover";
+  const title=isGameOver?"Partita conclusa salvata":isQuestion?"Round interrotto recuperato":"Fine round recuperata";
+  const explanation=isGameOver
+    ? "La classifica finale è ancora disponibile su questo Master."
+    : isQuestion
+      ? "Ripartirà la stessa domanda dall’inizio. Le risposte eventualmente inviate prima dell’aggiornamento vengono cancellate, mentre punti e caselle dei round precedenti restano invariati."
+      : "Punteggi, pedine e riepilogo del round sono stati ripristinati. Puoi continuare con il round successivo.";
+  app.innerHTML=`
+    <div class="card">
+      <p class="eyebrow">Recupero automatico · Round ${S.round}/${MAX_ROUNDS}</p>
+      <div class="special-banner">
+        <div class="ic">↻</div>
+        <div class="ttl">${esc(title)}</div>
+        <div class="sub" style="margin:8px 0 0">${esc(explanation)}</div>
+      </div>
+      <div class="card flat mt" style="background:#eef4f0;border-color:#c9ddd2">
+        <div id="recoveryConnection" style="font-size:12px;color:#3a5a52">La stanza e le lavagnette si stanno riconnettendo automaticamente.</div>
+      </div>
+      <button type="button" class="btn coral mt" id="resumeGame">${isGameOver?"Mostra la classifica finale":isQuestion?"Riprendi la stessa domanda":"Riprendi dalla fine del round"} →</button>
+      <button type="button" class="btn ghost sm mt-s" id="discardRecovery">Abbandona questa partita</button>
+    </div>
+    ${boardCard()}
+    ${scoreCard()}`;
+  wireMapToggle();
+  $("#resumeGame").addEventListener("click",event=>{
+    const button=event.currentTarget;
+    waitForMasterConnection(()=>{
+      if(isGameOver)renderGameOver(true);
+      else if(mode==="postround")renderPostRound();
+      else startWriting();
+    },button);
+  });
+  $("#discardRecovery").addEventListener("click",()=>{
+    confirmAction("Abbandonare la partita salvata? Punteggi, caselle e round non saranno recuperabili.",()=>{
+      clearGameCheckpoint();onlineStartFreshRoom();renderSetup();
+    });
+  });
+}
+
 /* =====================================================================
    BOOT
    ===================================================================== */
 syncPlayers();
+const RECOVERED_CHECKPOINT=restoreGameCheckpoint();
+const HAS_SAVED_MASTER=loadSavedMasterSession();
 initMenu();
 initButtonFeedback();
 initCatChips();
@@ -3912,8 +4102,9 @@ initCatChips();
 // Un solo servizio: il master crea automaticamente la stanza sullo stesso dominio.
 if(/^https?:$/.test(location.protocol)){
   setTimeout(()=>{
-    if(!ONLINE) onlineConnect(location.origin);
-  }, 500);
+    if(HAS_SAVED_MASTER&&ONLINE)onlineConnect(ONLINE.url||location.origin,true);
+    else if(!ONLINE)onlineConnect(location.origin,false);
+  }, 150);
 }
 
 let _errCount=0, _errLastRound=-1;
@@ -3937,7 +4128,8 @@ window.addEventListener("error",ev=>{
     }, 1600);
   }catch(e){}
 });
-renderSplash();
+if(RECOVERED_CHECKPOINT)renderRecoveredGame(RECOVERED_CHECKPOINT);
+else renderSplash();
 </script>
 </body>
 </html>

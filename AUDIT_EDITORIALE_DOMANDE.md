@@ -1,15 +1,15 @@
 # Audit editoriale domande
 
-Domande totali: 581. Attive e curate: 213. Escluse in attesa di revisione: 368.
+Domande totali: 593. Attive e curate: 204. Escluse per politica editoriale (Oscar/Grammy): 22. Escluse in attesa di revisione: 368.
 
 ## Copertura attiva
 
-- Record Assurdi: 16
+- Record Assurdi: 28
 - Cultura Pop: 13
 - Cibo e Calorie: 13
 - Sport: 16
-- Cinema: 18
-- Musica: 21
+- Cinema: 7
+- Musica: 11
 - Serie TV: 14
 - Internet: 11
 - Libri: 11
@@ -22,7 +22,32 @@ Domande totali: 581. Attive e curate: 213. Escluse in attesa di revisione: 368.
 - Dati da Bar: 10
 - Tabù: 10
 
-## Domande escluse
+## Escluse per politica editoriale
+
+1. **[Cinema]** Quanti Oscar ha vinto Titanic?
+2. **[Musica]** Quanti Grammy ha vinto Beyonce in carriera (circa)?
+3. **[Cinema]** Quante candidature agli Oscar ricevette Ben-Hur alla cerimonia del 1960?
+4. **[Cinema]** Quanti Oscar vinse Il Signore degli Anelli: Il ritorno del re alla cerimonia del 2004?
+5. **[Cinema]** Quante candidature agli Oscar ottenne La La Land alla cerimonia del 2017?
+6. **[Cinema]** Quanti Oscar vinse Everything Everywhere All at Once alla cerimonia del 2023?
+7. **[Cinema]** Quanti Oscar vinse Parasite alla cerimonia del 2020?
+8. **[Cinema]** Quanti Oscar vinse Oppenheimer alla cerimonia del 2024?
+9. **[Cinema]** Quanti Oscar vinse Mad Max: Fury Road alla cerimonia del 2016?
+10. **[Cinema]** Quanti Oscar vinse Gravity alla cerimonia del 2014?
+11. **[Cinema]** Quanti Oscar vinse West Side Story alla cerimonia del 1962?
+12. **[Cinema]** Quanti Oscar vinse Cabaret alla cerimonia del 1973?
+13. **[Musica]** Quante volte Taylor Swift aveva vinto il Grammy per l'Album dell'anno dopo l'edizione 2024?
+14. **[Musica]** Quanti Grammy risultano vinti da Stevie Wonder nel profilo ufficiale aggiornato ai Grammy 2026?
+15. **[Musica]** Quanti Grammy vinse Bruno Mars su altrettante candidature alla cerimonia del 2018?
+16. **[Musica]** Quanti anni aveva Billie Eilish quando conquistò in una sola notte le quattro categorie principali dei Grammy 2020?
+17. **[Musica]** Quanti Grammy risultano vinti da Adele nel profilo ufficiale aggiornato ai Grammy 2026?
+18. **[Musica]** Quanti Grammy risultano vinti da Ed Sheeran nel profilo ufficiale aggiornato ai Grammy 2026?
+19. **[Musica]** Quanti Grammy ha vinto Madonna secondo il suo profilo ufficiale della Recording Academy?
+20. **[Musica]** Quanti Grammy risultano vinti da Kendrick Lamar dopo l'edizione 2026?
+21. **[Musica]** Quanti Grammy vinse Donna Summer nell'arco della sua carriera?
+22. **[Musica]** Quanti Grammy ha vinto Lorde secondo il suo profilo ufficiale della Recording Academy?
+
+## Domande ancora da verificare
 
 1. **[Record Assurdi]** Temperatura piu alta mai registrata sulla Terra (Death Valley)?
 2. **[Record Assurdi]** Temperatura piu bassa mai registrata (Antartide)?

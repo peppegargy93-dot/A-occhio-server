@@ -8,6 +8,8 @@ function between(start,end){const a=html.indexOf(start)+start.length;assert.ok(a
 const questions=vm.runInNewContext(between('const QUESTIONS = ','\n];')+']');
 const added=vm.runInNewContext(between('const QUESTIONS_V2_6 = ','\n];\nQUESTIONS.push(...QUESTIONS_V2_6)')+']');
 questions.push(...added);
+const addedV31=vm.runInNewContext(between('const QUESTIONS_V3_1 = ','\n];\nQUESTIONS.push(...QUESTIONS_V3_1)')+']');
+questions.push(...addedV31);
 
 test('la v2.6 aggiunge esattamente dieci domande per ognuna delle 17 categorie',()=>{
   assert.equal(added.length,170);
@@ -23,6 +25,17 @@ test('ogni nuova domanda è numerica, unica, curata e dotata di fonte HTTPS',()=
     assert.ok(q.f.length>=60,q.q);assert.match(q.fs,/^https:\/\//,q.q);
     const id=q.cat+'\u241f'+q.q;assert.ok(!seen.has(id),q.q);seen.add(id);
   }
+});
+
+test('la v3.1 aggiunge confronti assurdi senza premi Oscar o Grammy',()=>{
+  assert.ok(addedV31.length>=12);
+  assert.ok(addedV31.some(q=>/lattine.*Torre Eiffel/i.test(q.q)));
+  assert.ok(addedV31.some(q=>/pallon/i.test(q.q)));
+  for(const q of addedV31){
+    assert.ok(Number.isFinite(q.a),q.q);assert.ok(q.u,q.q);assert.ok(q.f.length>=60,q.q);assert.match(q.fs,/^https:\/\//,q.q);
+  }
+  assert.match(html,/QUESTION_EXCLUSION_PATTERN/);
+  assert.match(html,/!isEditoriallyExcluded\(q\)/);
 });
 
 test('round e minigiochi numerici condividono lo stesso mazzo senza reinserimento',()=>{

@@ -1,4 +1,32 @@
-# Bug risolti nella v3.0
+# Bug risolti nella v3.1
+
+## Disconnessioni e minisfide ferme
+
+- Una vecchia scheda sostituita non può più riconnettersi in loop e buttare fuori la lavagnetta nuova che usa lo stesso token.
+- I micro-tagli su Android hanno 4,5 secondi di recupero prima che il server trasferisca scelte o risposte al Master.
+- Un invio durante una rete non disponibile resta modificabile e viene inviato solo quando il socket è realmente aperto.
+- Un errore di creazione della mini-sfida sblocca i campi locali del Master per tutti i partecipanti interessati.
+- Il Cronometro offre sempre un’uscita manuale per riassegnare il controllo senza perdere il tempo già trascorso.
+
+## Refresh del Master
+
+- Il browser salva un checkpoint soltanto in stati sicuri: inizio domanda, fine round e fine partita.
+- Dopo un refresh riapre la stessa stanza e conserva giocatori, punteggi, pedine, mazzi, contatori e domanda corrente.
+- Se il refresh avviene durante una domanda o una sfida, viene riproposta la stessa domanda dall'inizio: le risposte parziali vengono scartate e il punteggio non può essere applicato due volte.
+- Se Render ha già perso la stanza per riavvio o scadenza, il Master mantiene il checkpoint locale e genera automaticamente un nuovo codice; soltanto le lavagnette devono rientrare.
+
+## Nomi & Cose con Master sfidante
+
+- Il gioco sceglie casualmente una lavagnetta spettatrice collegata.
+- L’arbitro vede una schermata di preparazione prima della carta, quindi legge lettera e categoria ai due sfidanti.
+- Soltanto l’arbitro può indicare chi ha dato la prima risposta valida; tutti gli altri vedono la stessa carta in sola lettura.
+- Se l’arbitro cade, il ruolo può essere riassegnato; se non restano spettatori la carta viene sostituita senza bloccare la partita.
+
+## Domande e layout
+
+- Aggiunti 12 confronti assurdi verificati con fonti ufficiali.
+- Le domande dedicate a Oscar e Grammy sono escluse dal sorteggio attivo.
+- Migliorati spazi, pulsanti e griglie per iPhone e Android stretti.
 
 ## Ritmo del tabellone e assegnazione dei premi
 
@@ -91,15 +119,15 @@
 ## Verifiche eseguite
 
 - Sintassi server e script Master: OK.
-- 41 test automatici: OK.
+- 53 test automatici: OK.
 - End-to-end WebSocket con Master e tre giocatori: ingresso, duplicati, rifiuto ingresso tardivo, rename, timer personale conservato alla riconnessione, replay di stime/scelte verso il Master, risposta unica, curiosità, sfida strutturata, scelta autorizzata, tentativo contraffatto, disconnessione, fallback e mappa: OK.
-- 360 partite simulate, 5.197 domande, 4.985 minigiochi, 383 Premi rimonta e 4.667 Malus da podio: tutte le invarianti OK.
+- 360 partite simulate, 5.177 domande, 4.794 minigiochi, 345 Premi rimonta e 4.635 Malus da podio: tutte le invarianti OK.
 - Test dedicato: tre sole caselle Minigioco; Bonus al 4º/8º round consecutivo fuori podio; Malus al 3º/6º/9º podio: OK.
-- Audit editoriale: 213 domande attive complete e 368 schede incomplete escluse: OK.
+- Audit editoriale: 204 domande attive complete, 22 schede Oscar/Grammy escluse e 368 schede incomplete escluse: OK.
 
 ## Problemi rimasti
 
 - 368 domande storiche non hanno ancora curiosità e fonte verificate: non vengono sorteggiate.
-- Stanze e stato partita sono in memoria. La breve riconnessione WebSocket è recuperata, ma un riavvio/deploy Render o un ricaricamento completo della pagina Master interrompe lo stato di gioco; la persistenza completa richiederebbe Redis/Postgres.
+- Le stanze del server restano in memoria: dopo un riavvio/deploy Render il Master recupera localmente la partita, ma viene generato un nuovo codice e le lavagnette devono rientrare. Una ripresa trasparente dell'intera stanza fra processi diversi richiederebbe Redis/Postgres.
 - Alcuni siti istituzionali bloccano i controlli HTTP automatici (`403`), quindi le fonti vanno ricontrollate editorialmente quando si aggiorna una scheda.
 - Il collaudo automatico copre protocollo e layout; resta consigliato un ultimo test fisico su Safari iPhone e su almeno un Android dopo il deploy.

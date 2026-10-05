@@ -1,6 +1,6 @@
-# A OCCHIO! — GitHub Update v3.0
+# A OCCHIO! — GitHub Update v3.1
 
-Party game multiplayer con un dispositivo Master e fino a sette lavagnette WebSocket. La v3.0 rende il percorso più rapido: riduce a tre le caselle Minigioco, elimina dal tabellone le caselle Bonus/Malus e lega quei premi all'andamento reale di ogni giocatore.
+Party game multiplayer con un dispositivo Master e fino a sette lavagnette WebSocket. La v3.1 mantiene il gameplay rapido della v3.0 e rende più resistenti riconnessione, Cronometro del Master e Nomi & Cose.
 
 ## Avvio e verifica
 
@@ -17,7 +17,7 @@ npm start
 - Lavagnetta: `http://localhost:3000/lavagnetta`
 - Stato server: `http://localhost:3000/health`
 
-## Regole introdotte nella v3.0
+## Regole di gioco confermate
 
 ### Minigiochi
 
@@ -47,7 +47,7 @@ Master e lavagnette mostrano sempre i due contatori personali: avanzamento verso
 
 Le otto carte ufficiali restano: Stima Lampo, Cronometro del Master, Nomi & Cose, Alto o Basso, Intervallo Killer, Ordine Impossibile, La Bomba e Timeline Flash. Indizio dopo Indizio e Asta al Ribasso non sono estraibili.
 
-Le prove interattive attivano soltanto i dispositivi degli sfidanti. Tutti gli altri vedono regole, stato, risposte e risultato in sola lettura. Il Cronometro delega AVVIA/FERMA a una lavagnetta spettatrice quando il Master è in sfida.
+Le prove interattive attivano soltanto i dispositivi degli sfidanti. Tutti gli altri vedono regole, stato, risposte e risultato in sola lettura. Il Cronometro delega AVVIA/FERMA a una lavagnetta spettatrice quando il Master è in sfida. In Nomi & Cose, se il Master gareggia, uno spettatore viene estratto casualmente e riceve preparazione, carta e comandi da arbitro.
 
 ## Curiosità editoriali
 
@@ -59,7 +59,7 @@ Ogni domanda giocabile usa questa struttura:
 
 La schermata si chiama **“La storia dietro la domanda”**: il testo racconta un retroscena specifico e interessante, non ripete la risposta e non usa riempitivi generati dalla categoria. In questa versione sono state riscritte anche alcune schede troppo fredde o generiche, tra cui Coca-Cola, Fanta, pallina da tennis, pianoforte e Avengers: Endgame.
 
-Una scheda senza `f` e `fs` resta nel database storico ma non viene sorteggiata. Il mazzo contiene **581 domande totali**, delle quali **213 attive e curate** e **368 escluse** in attesa di verifica. Esegui `npm run audit:questions` per rigenerare i due report editoriali.
+Una scheda senza `f` e `fs` resta nel database storico ma non viene sorteggiata. Il database contiene **593 domande totali**: **225 complete**, delle quali **204 attive**; **22 schede Oscar/Grammy** sono escluse dalla linea editoriale e **368** sono incomplete (una scheda appartiene a entrambi i gruppi esclusi). Esegui `npm run audit:questions` per rigenerare i due report editoriali.
 
 ## Stato autorevole e affidabilità
 
@@ -67,15 +67,16 @@ Una scheda senza `f` e `fs` resta nel database storico ma non viene sorteggiata.
 - Bonus e Malus vengono accodati come eventi strutturati e risolti prima dell'eventuale casella speciale.
 - Doppi click, replay e token estranei non possono assegnare due volte una risposta o un effetto.
 - Il fallback Master compare soltanto quando la lavagnetta autorizzata è davvero indisponibile.
+- Se il Master aggiorna accidentalmente la pagina, recupera la stessa stanza e un checkpoint sicuro della partita. La domanda interrotta riparte dall'inizio senza duplicare il risultato.
 - Il mazzo domande non ripete una domanda nella stessa partita e conserva una finestra delle estrazioni recenti anche tra partite.
 - Classifica punti e corsa sul tabellone restano distinte; Finale raggiunta significa vittoria immediata, altrimenti dopo 15 round si vince ai punti.
 
 ## Verifiche incluse
 
-- **41 test automatici**, incluso l'end-to-end WebSocket con tre giocatori, riconnessione, scelte autorizzate, mini-sfide e fallback.
+- **53 test automatici**, incluso l'end-to-end WebSocket con tre giocatori, micro-taglio durante una scelta, recupero del Master, mini-sfide e fallback.
 - **360 partite simulate** con 3–6 giocatori e tre semi indipendenti.
 - Test eseguibile della progressione: Bonus al 4º e 8º round consecutivo fuori podio; Malus al 3º, 6º e 9º podio.
 - Controllo del tabellone: tre sole caselle Minigioco e nessuna casella Bonus, Malus o Sfida.
-- Audit editoriale fail-closed su tutte le 581 schede.
+- Audit editoriale fail-closed su tutte le 593 schede.
 
 Vedi `SIMULATION_REPORT.md`, `PLAYTEST_REPORT.md`, `BUG_RISOLTI.md` e `DEPLOY_RENDER.md` per i dettagli.

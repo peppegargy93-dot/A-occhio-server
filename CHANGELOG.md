@@ -1,5 +1,21 @@
 # Changelog
 
+## 3.1.0 — riconnessione stabile, minisfide anti-blocco e nuove domande assurde
+
+- Impedita la contesa della stessa sessione fra una vecchia scheda e la lavagnetta appena riconnessa: un socket sostituito non tenta più di rientrare automaticamente.
+- Aggiunta una finestra di 4,5 secondi per i micro-tagli di rete mobile; il fallback Master parte soltanto se la lavagnetta non torna davvero online.
+- La risposta di una minisfida non viene più bloccata localmente quando il WebSocket è caduto proprio al momento dell’invio.
+- Gli errori `mini_error` riattivano i campi di fallback sul Master invece di lasciare la prova ferma in attesa.
+- Il Cronometro del Master dispone ora di un comando visibile per riassegnare AVVIA/FERMA e uscire da qualsiasi attesa anomala.
+- In Nomi & Cose, se il Master è sfidante, il gioco estrae casualmente una persona non coinvolta: riceve prima la preparazione, poi lettera, categoria e pulsanti per indicare la prima risposta valida.
+- Migliorati spazi, aree touch e impaginazione mobile delle risposte, soprattutto sotto i 380 px.
+- Aggiunte 12 domande di confronti assurdi fra lattine, monumenti e palloni, tutte con curiosità specifica e fonte.
+- Escluse dal mazzo attivo le domande incentrate su Oscar e Grammy; restano archiviate nel database ma non vengono sorteggiate.
+- Il refresh della pagina Master non azzera più la partita: stanza, domanda corrente, punteggi, pedine, mazzi e contatori vengono recuperati automaticamente.
+- Un round interrotto dal refresh riparte dalla stessa domanda e scarta soltanto le risposte parziali, evitando doppi punteggi o doppi movimenti.
+- Se la stanza in memoria è già scaduta dopo un riavvio di Render, lo stato locale resta salvo e viene creato un nuovo codice per far rientrare le lavagnette.
+- Suite ampliata a 53 test, incluso il recupero di una scelta durante un micro-taglio reale WebSocket e il checkpoint del Master.
+
 ## 3.0.0 — percorso rapido, premi per andamento e curiosità rafforzate
 
 - Ridotto il tabellone a tre sole caselle Minigioco, nelle posizioni 6, 17 e 23; eliminate dal percorso le caselle Sfida, Bonus e Malus.

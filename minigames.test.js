@@ -109,7 +109,25 @@ test('avvio, risposta e uscita dalle sfide non dipendono da click del Master',()
   assert.match(source,/function chooseCronoController/);
   assert.match(source,/function remoteCrono/);
   assert.match(source,/title:"Regia del Cronometro"/);
-  assert.match(source,/key!=="crono"\|\|!masterIsContender\|\|cronoControllers\(\)\.length>0/);
+  assert.match(source,/key==="crono"\|\|key==="ncc"/);
+  assert.match(source,/id="cronoRecover"/);
+  assert.match(source,/cancelOnlineChoiceRequest\(requestId\)/);
+});
+
+test('Nomi & Cose assegna casualmente un arbitro spettatore quando il Master è in sfida',()=>{
+  const source=between('function diceRollWinner(players,opts,done){','\nfunction scoreCard(){');
+  assert.match(source,/if\(masterIsContender\)return chooseNccController\(\)/);
+  assert.match(source,/const controller=pick\(controllers\)/);
+  assert.match(source,/title:"Preparati: sarai l’arbitro"/);
+  assert.match(source,/title:"Sei l’arbitro · assegna il punto"/);
+  assert.match(source,/Tutti vedono la stessa carta; soltanto l’arbitro ha i comandi/);
+  assert.match(source,/function nccExternalRound\(controller\)/);
+});
+
+test('un errore server della mini sfida riattiva il fallback Master',()=>{
+  assert.match(html,/function failOnlineMiniRequest\(message\)/);
+  assert.match(html,/for\(const player of pending\.players\.values\(\)\)pending\.onUnavailable/);
+  assert.match(html,/m\.t==="mini_error"[\s\S]*?failOnlineMiniRequest\(m\)/);
 });
 
 test('le lavagnette confermano l’apertura e gli spettatori vedono anche le carte da ordinare',()=>{
