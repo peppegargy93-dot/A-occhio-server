@@ -999,9 +999,9 @@
   },
   "renders": {
     "latest": {
-      "id": "49f6b694-71fd-4a4f-9595-f01b0c4cacde",
-      "completedAt": 1791895736586,
-      "output": "/home/user/A-occhio-server/videos/passaparola-spot/renders/bozza-con-voce.mp4",
+      "id": "5603b1c0-698f-46a0-8318-339fc3a93dc4",
+      "completedAt": 1791896716610,
+      "output": "/home/user/A-occhio-server/videos/passaparola-spot/renders/passaparola-spot-v1.mp4",
       "status": "completed",
       "revision": "2fd52e14-f861-4da7-9dc1-cc43b0524883"
     },
