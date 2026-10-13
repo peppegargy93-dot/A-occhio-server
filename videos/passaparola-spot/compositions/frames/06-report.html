@@ -1,0 +1,285 @@
+<template id="06-report-template">
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <style>
+    @font-face { font-family: "Space Grotesk"; src: url("assets/fonts/space-grotesk-latin-500-normal.woff2") format("woff2"); font-weight: 500; font-style: normal; }
+    @font-face { font-family: "Space Grotesk"; src: url("assets/fonts/space-grotesk-latin-600-normal.woff2") format("woff2"); font-weight: 600; font-style: normal; }
+    @font-face { font-family: "Space Grotesk"; src: url("assets/fonts/space-grotesk-latin-700-normal.woff2") format("woff2"); font-weight: 700; font-style: normal; }
+    @font-face { font-family: "Inter"; src: url("assets/fonts/inter-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-style: normal; }
+    @font-face { font-family: "Inter"; src: url("assets/fonts/inter-latin-500-normal.woff2") format("woff2"); font-weight: 500; font-style: normal; }
+
+    #root {
+      position: absolute;
+      inset: 0;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      font-family: "Inter", sans-serif;
+      color: #1F1A17;
+    }
+    .r06-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 60% 35%, rgba(181, 57, 44, 0.06), rgba(181, 57, 44, 0) 70%),
+        #FAF6EF;
+    }
+    .r06-world {
+      position: absolute;
+      inset: 0;
+      transform-origin: 960px 540px;
+    }
+    .r06-card {
+      position: absolute;
+      left: 154px;
+      top: 100px;
+      width: 1612px;
+      height: 600px;
+      padding: 52px;
+      box-sizing: border-box;
+      background: #FFFFFF;
+      border-radius: 32px;
+      box-shadow: 0 40px 80px -24px rgba(31, 26, 23, 0.28), 0 12px 24px -12px rgba(31, 26, 23, 0.18);
+    }
+    .r06-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 56px;
+    }
+    .r06-title {
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 700;
+      font-size: 50px;
+      line-height: 1;
+      letter-spacing: 0.04em;
+      color: #1F1A17;
+    }
+    .r06-pill {
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 600;
+      font-size: 22px;
+      line-height: 1;
+      padding: 13px 22px;
+      border-radius: 100px;
+      background: rgba(181, 57, 44, 0.08);
+      color: #B5392C;
+      letter-spacing: 0.02em;
+    }
+    .r06-row {
+      display: flex;
+      gap: 38px;
+      margin-top: 40px;
+      height: 360px;
+    }
+    .r06-tile {
+      flex: 1;
+      background: rgba(181, 57, 44, 0.07);
+      border-radius: 24px;
+      padding: 32px 30px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .r06-num {
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 700;
+      font-size: 96px;
+      line-height: 1;
+      letter-spacing: 0.01em;
+      color: #B5392C;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .r06-num.r06-ink { color: #1F1A17; }
+    .r06-star { width: 76px; height: 76px; display: block; }
+    .r06-label {
+      font-family: "Inter", sans-serif;
+      font-weight: 500;
+      font-size: 28px;
+      line-height: 1.25;
+      color: #6B625B;
+    }
+    .r06-chart {
+      flex: 1.3;
+      display: flex;
+      align-items: flex-end;
+      gap: 20px;
+      padding: 0 12px;
+    }
+    .r06-bar {
+      flex: 1;
+      background: #B5392C;
+      border-radius: 12px 12px 0 0;
+      transform-origin: 50% 100%;
+    }
+    .r06-weeks {
+      margin-top: 14px;
+      text-align: right;
+      font-family: "Inter", sans-serif;
+      font-weight: 500;
+      font-size: 22px;
+      line-height: 26px;
+      letter-spacing: 0.1em;
+      color: #6B625B;
+      padding-right: 12px;
+    }
+    .r06-mascot {
+      position: absolute;
+      left: 1640px;
+      top: 40px;
+      width: 92px;
+      height: 92px;
+      transform-origin: 50% 90%;
+    }
+    .r06-mascot svg { width: 100%; height: 100%; display: block; }
+    .r06-headline {
+      position: absolute;
+      left: 154px;
+      top: 760px;
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 700;
+      font-size: 84px;
+      line-height: 1.05;
+      letter-spacing: 0.04em;
+      color: #1F1A17;
+      white-space: pre;
+    }
+    .r06-headline .r06-c { display: inline-block; white-space: pre; }
+    .r06-headline .r06-coral { color: #B5392C; }
+    .r06-grain {
+      position: absolute;
+      inset: 0;
+      opacity: 0.08;
+      mix-blend-mode: multiply;
+      pointer-events: none;
+    }
+    .r06-grain svg { width: 100%; height: 100%; display: block; }
+  </style>
+
+  <div id="root" data-composition-id="06-report" data-width="1920" data-height="1080" data-start="0" data-duration="4">
+    <div class="clip r06-bg" data-start="0" data-duration="4" data-track-index="0"></div>
+
+    <div class="clip" id="r06-stage" data-start="0" data-duration="4" data-track-index="1" style="position:absolute;inset:0;">
+      <div class="r06-world" id="r06-world">
+        <div class="r06-card" id="r06-card">
+          <div class="r06-head">
+            <div class="r06-title" id="r06-title">Report di ottobre</div>
+            <span class="r06-pill" id="r06-pill">Osteria Marea</span>
+          </div>
+          <div class="r06-row">
+            <div class="r06-tile" id="r06-tile1">
+              <div class="r06-num"><span id="r06-n1">0</span></div>
+              <div class="r06-label">tocchi sulla targa</div>
+            </div>
+            <div class="r06-tile" id="r06-tile2">
+              <div class="r06-num"><span>+</span><span id="r06-n2">0</span></div>
+              <div class="r06-label">recensioni nuove</div>
+            </div>
+            <div class="r06-tile" id="r06-tile3">
+              <div class="r06-num r06-ink">
+                <svg class="r06-star" id="r06-star" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 6 L62 37 L95 38 L69 58 L78 91 L50 72 L22 91 L31 58 L5 38 L38 37 Z" fill="#E2B04F" stroke="#E2B04F" stroke-width="6" stroke-linejoin="round"/></svg>
+                <span id="r06-n3">0,0</span>
+              </div>
+              <div class="r06-label">media del mese</div>
+            </div>
+            <div class="r06-chart" id="r06-chart">
+              <div class="r06-bar" style="height:131px;opacity:0.35"></div>
+              <div class="r06-bar" style="height:213px;opacity:0.55"></div>
+              <div class="r06-bar" style="height:279px;opacity:0.75"></div>
+              <div class="r06-bar" style="height:360px;opacity:1"></div>
+            </div>
+          </div>
+          <div class="r06-weeks" id="r06-weeks">SETT. 1 · 2 · 3 · 4</div>
+        </div>
+
+        <div class="r06-mascot" id="r06-mascot">
+          <svg viewBox="0 0 100 100" aria-hidden="true"><path d="M50 6 L62 37 L95 38 L69 58 L78 91 L50 72 L22 91 L31 58 L5 38 L38 37 Z" fill="#B5392C" stroke="#B5392C" stroke-width="6" stroke-linejoin="round"/><ellipse cx="41" cy="50" rx="5" ry="7" fill="#fff"/><ellipse cx="59" cy="50" rx="5" ry="7" fill="#fff"/><circle cx="42" cy="52" r="3" fill="#1F1A17"/><circle cx="60" cy="52" r="3" fill="#1F1A17"/></svg>
+        </div>
+
+        <div class="r06-headline" id="r06-headline"></div>
+      </div>
+    </div>
+
+    <div class="clip r06-grain" data-start="0" data-duration="4" data-track-index="2">
+      <svg viewBox="0 0 1920 1080" preserveAspectRatio="none" aria-hidden="true">
+        <filter id="r06-noise" x="0" y="0" width="100%" height="100%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="6" stitchTiles="stitch"/>
+          <feColorMatrix type="saturate" values="0"/>
+        </filter>
+        <rect width="1920" height="1080" filter="url(#r06-noise)"/>
+      </svg>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var FRAME_ID = "06-report";
+      var root = document.querySelector('[data-composition-id="' + FRAME_ID + '"]');
+      var q = function (s) { return root.querySelector(s); };
+      var qa = function (s) { return root.querySelectorAll(s); };
+
+      // Critically damped spring (springy, no overshoot) and an under-damped one for the mascot only.
+      var crit = function (p) { var w = 9; return (1 - (1 + w * p) * Math.exp(-w * p)) / (1 - (1 + w) * Math.exp(-w)); };
+      var bouncy = function (p) { return 1 - Math.exp(-6 * p) * Math.cos(13 * p) * (1 - p) ; };
+
+      // Build the headline letter by letter: "E ogni mese " ink + "sai come va." coral.
+      var head = q("#r06-headline");
+      var parts = [["E ogni mese ", ""], ["sai come va.", "r06-coral"]];
+      parts.forEach(function (part) {
+        for (var i = 0; i < part[0].length; i++) {
+          var s = document.createElement("span");
+          s.className = "r06-c" + (part[1] ? " " + part[1] : "");
+          s.textContent = part[0][i];
+          head.appendChild(s);
+        }
+      });
+      var chars = head.querySelectorAll(".r06-c");
+
+      var fmtThousands = function (n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, "."); };
+      var n1 = q("#r06-n1"), n2 = q("#r06-n2"), n3 = q("#r06-n3");
+
+      var tl = gsap.timeline({ paused: true });
+
+      // ---- Virtual camera: chained ~1s legs on .world, always moving ----
+      var world = q("#r06-world");
+      tl.fromTo(world, { scale: 0.965, x: 30, y: 40 }, { scale: 1.0, x: 20, y: 0, duration: 1.0, ease: "sine.inOut" }, 0);
+      tl.to(world, { scale: 1.02, x: -25, y: -6, duration: 1.4, ease: "sine.inOut" }, 1.0);
+      tl.to(world, { scale: 1.05, x: -55, y: -4, duration: 0.8, ease: "sine.inOut" }, 2.4);
+      tl.to(world, { scale: 1.06, x: -60, y: -2, duration: 0.8, ease: "sine.out" }, 3.2);
+
+      // ---- Scene 1 (0.0–1.0): report card springs up from below ----
+      tl.fromTo("#r06-card", { y: 720, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: crit }, 0);
+      tl.fromTo(["#r06-title", "#r06-pill"], { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.45, ease: crit, stagger: 0.08 }, 0.35);
+      tl.fromTo("#r06-weeks", { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "power2.out" }, 0.6);
+      // mascot hops onto the card corner (overshoot allowed here only)
+      tl.fromTo("#r06-mascot", { y: 140, scale: 0.4, opacity: 0, rotation: -18 }, { y: 0, scale: 1, opacity: 1, rotation: 0, duration: 0.7, ease: bouncy }, 0.55);
+
+      // ---- Scene 2 (1.0–2.4): three metric tiles assemble left → right and count ----
+      var tiles = ["#r06-tile1", "#r06-tile2", "#r06-tile3"];
+      var tStart = [1.0, 1.4, 1.8];
+      tiles.forEach(function (sel, i) {
+        tl.fromTo(sel, { opacity: 0, y: 46, scale: 0.94 }, { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: crit }, tStart[i]);
+      });
+      var c1 = { v: 0 }, c2 = { v: 0 }, c3 = { v: 0 };
+      tl.to(c1, { v: 1284, duration: 0.6, ease: "power2.out", onUpdate: function () { n1.textContent = fmtThousands(Math.round(c1.v)); } }, 1.05);
+      tl.to(c2, { v: 87, duration: 0.55, ease: "power2.out", onUpdate: function () { n2.textContent = String(Math.round(c2.v)); } }, 1.45);
+      tl.to(c3, { v: 4.9, duration: 0.55, ease: "power2.out", onUpdate: function () { n3.textContent = c3.v.toFixed(1).replace(".", ","); } }, 1.85);
+      tl.fromTo("#r06-star", { scale: 0.3, rotation: -40 }, { scale: 1, rotation: 0, duration: 0.5, ease: crit }, 1.85);
+
+      // ---- Scene 3 (2.4–3.2): weekly bars grow in sequence ----
+      tl.fromTo(qa(".r06-bar"), { scaleY: 0 }, { scaleY: 1, duration: 0.42, ease: "power3.out", stagger: 0.12 }, 2.4);
+
+      // ---- Scene 4 (3.2–4.0): headline types under the card, held read, mascot nods ----
+      tl.fromTo(chars, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.06, ease: "power1.out", stagger: 0.018 }, 2.95);
+      tl.to("#r06-mascot", { rotation: 9, y: 6, duration: 0.18, ease: "sine.inOut" }, 3.4);
+      tl.to("#r06-mascot", { rotation: 0, y: 0, duration: 0.3, ease: "sine.inOut" }, 3.58);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines[FRAME_ID] = tl;
+    })();
+  </script>
+</template>
