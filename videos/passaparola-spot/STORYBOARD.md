@@ -211,7 +211,7 @@ Shots: tre micro-scatti da ~1s ciascuno dentro un mirino (griglia, punto AF cora
 
 - scene: Logo wordmark minuscolo "passaparola" con le due p speculari che si passano la parola; slogan "Fatti raccontare da chi ti ha scelto."; la mascotte fa l'occhiolino
 - voiceover: "Passaparola. Fatti raccontare da chi ti ha scelto."
-- duration: 3s
+- duration: 3.9s
 - transition_in: blur-crossfade
 - status: animated
 - src: compositions/frames/08-logo.html
