@@ -1,4 +1,4 @@
-<template id="02-targa-nfc-template">
+<template id="f02-targa-nfc-template">
   <style>
     @font-face { font-family: "Space Grotesk"; font-weight: 500; font-style: normal; src: url("assets/fonts/space-grotesk-latin-500-normal.woff2") format("woff2"); }
     @font-face { font-family: "Space Grotesk"; font-weight: 600; font-style: normal; src: url("assets/fonts/space-grotesk-latin-600-normal.woff2") format("woff2"); }
@@ -17,52 +17,52 @@
     #root * { box-sizing: border-box; }
 
     /* ---------- full-bleed ground (clip layer, not the root) ---------- */
-    [id="02-targa-nfc-bg"] {
+    #f02-targa-nfc-bg {
       position: absolute; inset: 0;
       background: radial-gradient(ellipse 70% 60% at 40% 30%, #FDFAF4 0%, #FAF6EF 55%, #F2EADD 100%);
     }
 
     /* ---------- virtual camera: outer scales, inner translates ---------- */
-    [id="02-targa-nfc-stage"] { position: absolute; inset: 0; overflow: hidden; }
-    [id="02-targa-nfc-cam"] {
+    #f02-targa-nfc-stage { position: absolute; inset: 0; overflow: hidden; }
+    #f02-targa-nfc-cam {
       position: absolute; inset: 0;
       transform-origin: 50% 50%;
       will-change: transform;
     }
-    [id="02-targa-nfc-world"] {
+    #f02-targa-nfc-world {
       position: absolute; left: 0; top: 0; width: 1920px; height: 1080px;
       will-change: transform;
     }
 
     /* back wall + counter extend far past the canvas so the dolly never shows an edge */
-    [id="02-targa-nfc-wall"] {
+    #f02-targa-nfc-wall {
       position: absolute; left: -1400px; top: -400px; width: 4900px; height: 1091px;
       background:
         radial-gradient(ellipse 900px 520px at 1700px 760px, rgba(226,176,79,0.10), transparent 70%),
         linear-gradient(#FAF6EF, #F3EBDF);
     }
-    [id="02-targa-nfc-counter"] {
+    #f02-targa-nfc-counter {
       position: absolute; left: -1400px; top: 691px; width: 4900px; height: 800px;
       background:
         repeating-linear-gradient(90deg, transparent 0 478px, rgba(120,90,60,0.16) 478px 480px),
         repeating-linear-gradient(0deg, rgba(150,115,80,0.05) 0 3px, transparent 3px 11px),
         linear-gradient(#E8DCC8, #DCCDB4);
     }
-    [id="02-targa-nfc-lip"] {
+    #f02-targa-nfc-lip {
       position: absolute; left: -1400px; top: 685px; width: 4900px; height: 10px;
       background: linear-gradient(#F4ECDF, #E3D5BF);
       box-shadow: 0 6px 14px -6px rgba(31,26,23,0.25);
     }
 
     /* contact shadow of the plaque on the counter */
-    [id="02-targa-nfc-plaque-shadow"] {
+    #f02-targa-nfc-plaque-shadow {
       position: absolute; left: 326px; top: 786px; width: 386px; height: 44px;
       border-radius: 50%;
       background: radial-gradient(ellipse at center, rgba(31,26,23,0.38), rgba(31,26,23,0) 70%);
     }
 
     /* ---------- the NFC plaque (dark plexiglass) ---------- */
-    [id="02-targa-nfc-plaque"] {
+    #f02-targa-nfc-plaque {
       position: absolute; left: 346px; top: 384px; width: 346px; height: 422px;
       border-radius: 31px;
       background: linear-gradient(160deg, #2b2522, #141110);
@@ -72,19 +72,19 @@
       display: flex; flex-direction: column; justify-content: space-between; align-items: center;
       overflow: hidden;
     }
-    [id="02-targa-nfc-sheen"] {
+    #f02-targa-nfc-sheen {
       position: absolute; left: -160px; top: -120px; width: 120px; height: 700px;
       background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.13), rgba(255,255,255,0));
       rotate: 22deg;
     }
-    [id="02-targa-nfc-wordmark"] {
+    #f02-targa-nfc-wordmark {
       align-self: flex-start;
       font: 700 31px/1 "Space Grotesk", sans-serif;
       letter-spacing: 0.02em;
       color: #F5EFE6;
     }
-    [id="02-targa-nfc-wordmark"] b { color: #B5392C; font-weight: 700; }
-    [id="02-targa-nfc-chip"] {
+    #f02-targa-nfc-wordmark b { color: #B5392C; font-weight: 700; }
+    #f02-targa-nfc-chip {
       position: relative;
       width: 115px; height: 115px;
       border: 6px solid rgba(245,239,230,0.7);
@@ -94,36 +94,36 @@
       font: 600 27px/1 "Space Grotesk", sans-serif;
       letter-spacing: 0.04em;
     }
-    [id="02-targa-nfc-chip-glow"] {
+    #f02-targa-nfc-chip-glow {
       position: absolute; left: -36px; top: -36px; width: 175px; height: 175px;
       border-radius: 50%;
       background: radial-gradient(circle, rgba(181,57,44,0.55), rgba(181,57,44,0) 68%);
     }
-    [id="02-targa-nfc-chip-label"] { position: relative; }
-    [id="02-targa-nfc-caption"] {
+    #f02-targa-nfc-chip-label { position: relative; }
+    #f02-targa-nfc-caption {
       font: 500 20px/1.3 "Inter", sans-serif;
       color: rgba(245,239,230,0.75);
       text-align: center;
     }
 
     /* contact burst + concentric rings (centered on the chip at 519,595) */
-    [id="02-targa-nfc-burst"] {
+    #f02-targa-nfc-burst {
       position: absolute; left: 399px; top: 475px; width: 240px; height: 240px;
       border-radius: 50%;
       background: radial-gradient(circle, rgba(181,57,44,0.65), rgba(181,57,44,0) 70%);
       filter: blur(30px);
     }
-    [class~="02-targa-nfc-ring"] {
+    .f02-targa-nfc-ring {
       position: absolute;
       border: 5px solid #B5392C;
       border-radius: 50%;
     }
-    [id="02-targa-nfc-ring1"] { left: 404px; top: 480px; width: 230px; height: 230px; }
-    [id="02-targa-nfc-ring2"] { left: 327px; top: 403px; width: 384px; height: 384px; }
-    [id="02-targa-nfc-ring3"] { left: 250px; top: 326px; width: 538px; height: 538px; }
+    #f02-targa-nfc-ring1 { left: 404px; top: 480px; width: 230px; height: 230px; }
+    #f02-targa-nfc-ring2 { left: 327px; top: 403px; width: 384px; height: 384px; }
+    #f02-targa-nfc-ring3 { left: 250px; top: 326px; width: 538px; height: 538px; }
 
     /* ---------- phone: transform-origin = contact point, so the press pivots on the chip ---------- */
-    [id="02-targa-nfc-phone"] {
+    #f02-targa-nfc-phone {
       position: absolute; left: 384.5px; top: 185px; width: 269px; height: 499px;
       transform-origin: 134.5px 410px;
       background: #1F1A17;
@@ -131,137 +131,137 @@
       padding: 13px;
       box-shadow: 0 42px 84px -27px rgba(31,26,23,0.36), 0 13px 27px -13px rgba(31,26,23,0.22);
     }
-    [id="02-targa-nfc-screen"] {
+    #f02-targa-nfc-screen {
       position: relative; width: 100%; height: 100%;
       border-radius: 49px; overflow: hidden;
       background: linear-gradient(170deg, #3a302b 0%, #241e1b 60%, #1a1513 100%);
     }
-    [id="02-targa-nfc-island"] {
+    #f02-targa-nfc-island {
       position: absolute; left: 81px; top: 14px; width: 81px; height: 22px;
       border-radius: 100px; background: #0f0c0b;
     }
-    [id="02-targa-nfc-lock-time"] {
+    #f02-targa-nfc-lock-time {
       position: absolute; left: 0; right: 0; top: 82px;
       text-align: center;
       font: 500 52px/1 "Space Grotesk", sans-serif;
       color: rgba(245,239,230,0.9);
       letter-spacing: -0.01em;
     }
-    [id="02-targa-nfc-lock-hint"] {
+    #f02-targa-nfc-lock-hint {
       position: absolute; left: 50%; margin-left: -60px; top: 362px; width: 120px; height: 70px;
       border-radius: 50%;
       background: radial-gradient(ellipse, rgba(181,57,44,0.35), rgba(181,57,44,0) 70%);
     }
     /* in-screen bloom from the contact point (screen-local 121.5, 397) */
-    [id="02-targa-nfc-screen-bloom"] {
+    #f02-targa-nfc-screen-bloom {
       position: absolute; left: 91.5px; top: 367px; width: 60px; height: 60px;
       border-radius: 50%; background: #FFFFFF;
     }
-    [id="02-targa-nfc-mascot"] {
-      position: absolute; left: 214px; top: -52px; width: 80px; height: 80px;
+    #f02-targa-nfc-mascot {
+      position: absolute; left: 206px; top: -38px; width: 80px; height: 80px;
       transform-origin: 50% 90%;
     }
-    [id="02-targa-nfc-mascot"] svg { width: 100%; height: 100%; display: block; overflow: visible; }
+    #f02-targa-nfc-mascot svg { width: 100%; height: 100%; display: block; overflow: visible; }
 
     /* world-space bloom: the review page opening out of the contact point (519,595) */
-    [id="02-targa-nfc-bloom"] {
+    #f02-targa-nfc-bloom {
       position: absolute; left: 469px; top: 545px; width: 100px; height: 100px;
       border-radius: 50%; background: #FFFFFF;
     }
 
     /* ---------- headline (approved copy) ---------- */
-    [id="02-targa-nfc-headline"] {
+    #f02-targa-nfc-headline {
       position: absolute; left: 1114px; top: 372px; width: 760px;
       font: 700 119px/1.05 "Space Grotesk", sans-serif;
       letter-spacing: 0.04em;
       color: #1F1A17;
       white-space: nowrap;
     }
-    [class~="02-targa-nfc-line"] { display: block; perspective: 600px; }
-    [class~="02-targa-nfc-ch"] { display: inline-block; }
-    [class~="02-targa-nfc-coral"] { color: #B5392C; }
-    [class~="02-targa-nfc-sp"] { display: inline-block; width: 0.32em; }
-    [id="02-targa-nfc-underline"] {
+    .f02-targa-nfc-line { display: block; perspective: 600px; }
+    .f02-targa-nfc-ch { display: inline-block; }
+    .f02-targa-nfc-coral { color: #B5392C; }
+    .f02-targa-nfc-sp { display: inline-block; width: 0.32em; }
+    #f02-targa-nfc-underline {
       position: absolute; left: 4px; top: 268px; width: 120px; height: 6px;
       border-radius: 3px; background: #B5392C;
       transform-origin: 0% 50%;
     }
 
     /* foreground bokeh (parallax faster than the world) */
-    [id="02-targa-nfc-fg"] { position: absolute; inset: 0; pointer-events: none; }
-    [class~="02-targa-nfc-bokeh"] { position: absolute; border-radius: 50%; filter: blur(34px); }
-    [id="02-targa-nfc-bokeh1"] { left: 1480px; top: 70px; width: 260px; height: 260px; background: rgba(226,176,79,0.22); }
-    [id="02-targa-nfc-bokeh2"] { left: 120px; top: 120px; width: 180px; height: 180px; background: rgba(181,57,44,0.10); }
+    #f02-targa-nfc-fg { position: absolute; inset: 0; pointer-events: none; }
+    .f02-targa-nfc-bokeh { position: absolute; border-radius: 50%; filter: blur(34px); }
+    #f02-targa-nfc-bokeh1 { left: 1480px; top: 70px; width: 260px; height: 260px; background: rgba(226,176,79,0.22); }
+    #f02-targa-nfc-bokeh2 { left: 120px; top: 120px; width: 180px; height: 180px; background: rgba(181,57,44,0.10); }
 
     /* ---------- handoff page + grain ---------- */
-    [id="02-targa-nfc-page"] { position: absolute; inset: 0; background: #FFFFFF; }
-    [id="02-targa-nfc-grain"] { position: absolute; inset: 0; opacity: 0.08; pointer-events: none; }
-    [id="02-targa-nfc-grain"] svg { width: 100%; height: 100%; display: block; }
+    #f02-targa-nfc-page { position: absolute; inset: 0; background: #FFFFFF; }
+    #f02-targa-nfc-grain { position: absolute; inset: 0; opacity: 0.08; pointer-events: none; }
+    #f02-targa-nfc-grain svg { width: 100%; height: 100%; display: block; }
   </style>
 
   <div id="root" data-composition-id="02-targa-nfc" data-width="1920" data-height="1080" data-duration="4">
 
-    <div id="02-targa-nfc-bg" class="clip" data-start="0" data-duration="4" data-track-index="0"></div>
+    <div id="f02-targa-nfc-bg" class="clip" data-start="0" data-duration="4" data-track-index="0"></div>
 
-    <div id="02-targa-nfc-stage" class="clip" data-start="0" data-duration="4" data-track-index="1">
-      <div id="02-targa-nfc-cam">
-        <div id="02-targa-nfc-world" data-layout-allow-overflow>
-          <div id="02-targa-nfc-wall"></div>
-          <div id="02-targa-nfc-counter"></div>
-          <div id="02-targa-nfc-lip"></div>
-          <div id="02-targa-nfc-plaque-shadow"></div>
+    <div id="f02-targa-nfc-stage" class="clip" data-start="0" data-duration="4" data-track-index="1">
+      <div id="f02-targa-nfc-cam">
+        <div id="f02-targa-nfc-world" data-layout-allow-overflow>
+          <div id="f02-targa-nfc-wall"></div>
+          <div id="f02-targa-nfc-counter"></div>
+          <div id="f02-targa-nfc-lip"></div>
+          <div id="f02-targa-nfc-plaque-shadow"></div>
 
-          <div id="02-targa-nfc-plaque">
-            <div id="02-targa-nfc-sheen"></div>
-            <div id="02-targa-nfc-wordmark"><b>p</b>assa<b>p</b>arola</div>
-            <div id="02-targa-nfc-chip">
-              <div id="02-targa-nfc-chip-glow"></div>
-              <span id="02-targa-nfc-chip-label">NFC</span>
+          <div id="f02-targa-nfc-plaque">
+            <div id="f02-targa-nfc-sheen"></div>
+            <div id="f02-targa-nfc-wordmark"><b>p</b>assa<b>p</b>arola</div>
+            <div id="f02-targa-nfc-chip">
+              <div id="f02-targa-nfc-chip-glow"></div>
+              <span id="f02-targa-nfc-chip-label">NFC</span>
             </div>
-            <div id="02-targa-nfc-caption">Tocca qui per lasciarci<br>una recensione</div>
+            <div id="f02-targa-nfc-caption">Tocca qui per lasciarci<br>una recensione</div>
           </div>
 
-          <div id="02-targa-nfc-burst"></div>
-          <div id="02-targa-nfc-ring1" class="02-targa-nfc-ring"></div>
-          <div id="02-targa-nfc-ring2" class="02-targa-nfc-ring"></div>
-          <div id="02-targa-nfc-ring3" class="02-targa-nfc-ring"></div>
+          <div id="f02-targa-nfc-burst"></div>
+          <div id="f02-targa-nfc-ring1" class="f02-targa-nfc-ring"></div>
+          <div id="f02-targa-nfc-ring2" class="f02-targa-nfc-ring"></div>
+          <div id="f02-targa-nfc-ring3" class="f02-targa-nfc-ring"></div>
 
-          <div id="02-targa-nfc-headline">
-            <span class="02-targa-nfc-line"><span class="02-targa-nfc-ch">B</span><span class="02-targa-nfc-ch">a</span><span class="02-targa-nfc-ch">s</span><span class="02-targa-nfc-ch">t</span><span class="02-targa-nfc-ch">a</span><span class="02-targa-nfc-sp"></span><span class="02-targa-nfc-ch">u</span><span class="02-targa-nfc-ch">n</span></span>
-            <span class="02-targa-nfc-line 02-targa-nfc-coral"><span class="02-targa-nfc-ch">t</span><span class="02-targa-nfc-ch">o</span><span class="02-targa-nfc-ch">c</span><span class="02-targa-nfc-ch">c</span><span class="02-targa-nfc-ch">o</span><span class="02-targa-nfc-ch">.</span></span>
-            <div id="02-targa-nfc-underline"></div>
+          <div id="f02-targa-nfc-headline">
+            <span class="f02-targa-nfc-line"><span class="f02-targa-nfc-ch">B</span><span class="f02-targa-nfc-ch">a</span><span class="f02-targa-nfc-ch">s</span><span class="f02-targa-nfc-ch">t</span><span class="f02-targa-nfc-ch">a</span><span class="f02-targa-nfc-sp"></span><span class="f02-targa-nfc-ch">u</span><span class="f02-targa-nfc-ch">n</span></span>
+            <span class="f02-targa-nfc-line f02-targa-nfc-coral"><span class="f02-targa-nfc-ch">t</span><span class="f02-targa-nfc-ch">o</span><span class="f02-targa-nfc-ch">c</span><span class="f02-targa-nfc-ch">c</span><span class="f02-targa-nfc-ch">o</span><span class="f02-targa-nfc-ch">.</span></span>
+            <div id="f02-targa-nfc-underline"></div>
           </div>
 
-          <div id="02-targa-nfc-phone">
-            <div id="02-targa-nfc-screen">
-              <div id="02-targa-nfc-island"></div>
-              <div id="02-targa-nfc-lock-time">20:47</div>
-              <div id="02-targa-nfc-lock-hint"></div>
-              <div id="02-targa-nfc-screen-bloom"></div>
+          <div id="f02-targa-nfc-phone">
+            <div id="f02-targa-nfc-screen">
+              <div id="f02-targa-nfc-island"></div>
+              <div id="f02-targa-nfc-lock-time">20:47</div>
+              <div id="f02-targa-nfc-lock-hint"></div>
+              <div id="f02-targa-nfc-screen-bloom"></div>
             </div>
-            <div id="02-targa-nfc-mascot">
+            <div id="f02-targa-nfc-mascot">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50 6 L62 37 L95 38 L69 58 L78 91 L50 72 L22 91 L31 58 L5 38 L38 37 Z" fill="#B5392C" stroke="#B5392C" stroke-width="6" stroke-linejoin="round"/><ellipse cx="41" cy="50" rx="5" ry="7" fill="#fff"/><ellipse cx="59" cy="50" rx="5" ry="7" fill="#fff"/><circle cx="42" cy="52" r="3" fill="#1F1A17"/><circle cx="60" cy="52" r="3" fill="#1F1A17"/></svg>
             </div>
           </div>
 
-          <div id="02-targa-nfc-bloom"></div>
+          <div id="f02-targa-nfc-bloom"></div>
         </div>
       </div>
-      <div id="02-targa-nfc-fg" data-layout-allow-overflow>
-        <div id="02-targa-nfc-bokeh1" class="02-targa-nfc-bokeh"></div>
-        <div id="02-targa-nfc-bokeh2" class="02-targa-nfc-bokeh"></div>
+      <div id="f02-targa-nfc-fg" data-layout-allow-overflow>
+        <div id="f02-targa-nfc-bokeh1" class="f02-targa-nfc-bokeh"></div>
+        <div id="f02-targa-nfc-bokeh2" class="f02-targa-nfc-bokeh"></div>
       </div>
     </div>
 
-    <div id="02-targa-nfc-page" class="clip" data-start="0" data-duration="4" data-track-index="2"></div>
+    <div id="f02-targa-nfc-page" class="clip" data-start="0" data-duration="4" data-track-index="2"></div>
 
-    <div id="02-targa-nfc-grain" class="clip" data-start="0" data-duration="4" data-track-index="3">
+    <div id="f02-targa-nfc-grain" class="clip" data-start="0" data-duration="4" data-track-index="3">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="none">
-        <filter id="02-targa-nfc-noise" x="0" y="0" width="100%" height="100%">
+        <filter id="f02-targa-nfc-noise" x="0" y="0" width="100%" height="100%">
           <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="7" stitchTiles="stitch"/>
           <feColorMatrix type="saturate" values="0"/>
         </filter>
-        <rect width="1920" height="1080" filter="url(#02-targa-nfc-noise)"/>
+        <rect width="1920" height="1080" filter="url(#f02-targa-nfc-noise)"/>
       </svg>
     </div>
   </div>
@@ -271,8 +271,8 @@
     (function () {
       var FID = "02-targa-nfc";
       var root = document.querySelector('[data-composition-id="' + FID + '"]');
-      function $(id) { return root.querySelector('[id="' + FID + "-" + id + '"]'); }
-      function $$(cls) { return root.querySelectorAll('[class~="' + FID + "-" + cls + '"]'); }
+      function $(id) { return root.querySelector('[id="f' + FID + "-" + id + '"]'); }
+      function $$(cls) { return root.querySelectorAll('[class~="f' + FID + "-" + cls + '"]'); }
 
       var cam = $("cam"), world = $("world"), fg = $("fg");
       var phone = $("phone"), mascot = $("mascot");
@@ -309,7 +309,7 @@
       // phone descends from top-right on a critically damped spring; mascot rides its edge
       tl.fromTo(phone,
         { x: 760, y: -860, rotation: -26, scale: 1 },
-        { x: 210, y: -127, rotation: -14, duration: 0.85, ease: SPRING }, 1.08);
+        { x: 210, y: -85, rotation: -14, duration: 0.85, ease: SPRING }, 1.08);
       tl.fromTo(mascot,
         { scale: 0.3, rotation: -40, y: 10 },
         { scale: 1, rotation: 8, y: 0, duration: 0.6, ease: MASCOT_SPRING }, 1.42);

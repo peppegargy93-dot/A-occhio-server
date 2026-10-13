@@ -1,0 +1,579 @@
+<template>
+  <style>
+    @font-face { font-family: "Space Grotesk"; font-weight: 500; font-style: normal; src: url("assets/fonts/space-grotesk-latin-500-normal.woff2") format("woff2"); }
+    @font-face { font-family: "Space Grotesk"; font-weight: 600; font-style: normal; src: url("assets/fonts/space-grotesk-latin-600-normal.woff2") format("woff2"); }
+    @font-face { font-family: "Space Grotesk"; font-weight: 700; font-style: normal; src: url("assets/fonts/space-grotesk-latin-700-normal.woff2") format("woff2"); }
+    @font-face { font-family: "Inter"; font-weight: 400; font-style: normal; src: url("assets/fonts/inter-latin-400-normal.woff2") format("woff2"); }
+    @font-face { font-family: "Inter"; font-weight: 500; font-style: normal; src: url("assets/fonts/inter-latin-500-normal.woff2") format("woff2"); }
+    @font-face { font-family: "Inter"; font-weight: 600; font-style: normal; src: url("assets/fonts/inter-latin-600-normal.woff2") format("woff2"); }
+
+    #root {
+      position: absolute;
+      inset: 0;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      font-family: "Inter", sans-serif;
+      color: #1F1A17;
+    }
+    .sv05-bg { position: absolute; inset: 0; background: #FAF6EF; }
+    .sv05-bg-glow {
+      position: absolute; inset: 0;
+      background: radial-gradient(1200px 700px at 38% 42%, rgba(181, 57, 44, 0.06), rgba(181, 57, 44, 0) 70%);
+    }
+    .sv05-scene { position: absolute; inset: 0; overflow: hidden; }
+    .sv05-world {
+      position: absolute; left: 0; top: 0;
+      width: 1920px; height: 1080px;
+      will-change: transform;
+    }
+    .sv05-abs { position: absolute; }
+
+    /* table plaque */
+    .sv05-plaque-shadow {
+      left: 52px; top: 860px; width: 262px; height: 46px; border-radius: 50%;
+      background: radial-gradient(closest-side, rgba(31, 26, 23, 0.32), rgba(31, 26, 23, 0));
+    }
+    .sv05-plaque { left: 77px; top: 576px; width: 211px; height: 307px; }
+    .sv05-plaque-face {
+      position: absolute; inset: 0;
+      border-radius: 27px;
+      background: linear-gradient(160deg, #2b2522, #141110);
+      box-shadow: 0 42px 84px -27px rgba(31, 26, 23, 0.38), 0 13px 27px -13px rgba(31, 26, 23, 0.24);
+      padding: 19px;
+      display: flex; flex-direction: column; justify-content: space-between; align-items: stretch;
+      transform: perspective(768px) rotateX(14deg);
+    }
+    .sv05-wordmark { font: 700 23px/1 "Space Grotesk", sans-serif; color: #F5EFE6; letter-spacing: 0.01em; }
+    .sv05-wordmark b { color: #B5392C; font-weight: 700; }
+    .sv05-nfc { align-self: center; width: 74px; height: 74px; }
+    .sv05-plaque-sub { font: 500 16px/1.3 "Inter", sans-serif; color: rgba(245, 239, 230, 0.8); text-align: center; }
+    .sv05-ring {
+      width: 200px; height: 200px; left: 82px; top: 620px;
+      border: 5px solid #B5392C; border-radius: 50%;
+    }
+
+    /* phone */
+    .sv05-phone {
+      left: 384px; top: 48px; width: 518px; height: 979px;
+      background: #1F1A17; border-radius: 61px; padding: 13px;
+      box-shadow: 0 42px 84px -27px rgba(31, 26, 23, 0.32), 0 13px 27px -13px rgba(31, 26, 23, 0.2);
+    }
+    .sv05-screen {
+      position: relative; width: 100%; height: 100%;
+      background: #FFFFFF; border-radius: 50px; overflow: hidden;
+    }
+    .sv05-hero { position: relative; height: 288px; overflow: hidden; background: #2B2220; }
+    .sv05-kb { position: absolute; left: 0; top: 0; width: 492px; height: 288px; transform-origin: 56% 52%; }
+    .sv05-kb svg { display: block; width: 492px; height: 288px; }
+    .sv05-island {
+      left: 196px; top: 14px; width: 100px; height: 28px; border-radius: 100px; background: #0E0B0A;
+    }
+    .sv05-hero-bar-track { left: 0; right: 0; bottom: 0; height: 4px; background: rgba(250, 246, 239, 0.25); }
+    .sv05-hero-bar { left: 0; bottom: 0; width: 492px; height: 4px; background: #B5392C; transform-origin: 0 50%; }
+    .sv05-body { padding: 27px; }
+    .sv05-title {
+      font: 700 44px/1.05 "Space Grotesk", sans-serif; letter-spacing: 0.04em; color: #1F1A17;
+      white-space: pre; height: 46px;
+    }
+    .sv05-sub { font: 400 19px/1.2 "Inter", sans-serif; color: #6B625B; margin: 6px 0 19px; }
+    .sv05-carousel {
+      position: relative; width: 438px; height: 115px; overflow: hidden; margin-bottom: 21px;
+      -webkit-mask-image: linear-gradient(90deg, #000 0, #000 300px, rgba(0, 0, 0, 0.55) 400px, rgba(0, 0, 0, 0.35) 438px);
+      mask-image: linear-gradient(90deg, #000 0, #000 300px, rgba(0, 0, 0, 0.55) 400px, rgba(0, 0, 0, 0.35) 438px);
+    }
+    .sv05-track { position: absolute; left: 0; top: 0; display: flex; gap: 13px; }
+    .sv05-dish {
+      width: 134px; height: 115px; border-radius: 23px; overflow: hidden; flex: 0 0 auto;
+      box-shadow: 0 10px 18px -10px rgba(31, 26, 23, 0.35);
+    }
+    .sv05-dish svg { display: block; width: 134px; height: 115px; }
+    .sv05-chips { display: flex; gap: 8px; margin-bottom: 21px; }
+    .sv05-pill {
+      font: 600 18px/1 "Space Grotesk", sans-serif; letter-spacing: 0.02em;
+      border-radius: 100px; padding: 11px 18px; background: rgba(181, 57, 44, 0.08); color: #B5392C;
+    }
+    .sv05-pill.sv05-on { background: #B5392C; color: #FFFFFF; }
+    .sv05-btn {
+      position: relative; overflow: hidden; height: 77px; border-radius: 100px;
+      background: #B5392C; color: #FFFFFF;
+      font: 600 25px/77px "Space Grotesk", sans-serif; letter-spacing: 0.02em; text-align: center;
+      box-shadow: 0 16px 28px -14px rgba(181, 57, 44, 0.65);
+    }
+    .sv05-btn span { position: relative; }
+    .sv05-ripple {
+      left: 246px; top: 14px; width: 60px; height: 60px; border-radius: 50%; background: rgba(255, 255, 255, 0.5);
+    }
+    .sv05-social { display: flex; gap: 19px; justify-content: center; margin-top: 23px; }
+    .sv05-ico {
+      width: 50px; height: 50px; border-radius: 50%; background: #2C2522;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .sv05-ico svg { width: 26px; height: 26px; }
+    .sv05-tap-ring { left: 694px; top: 768px; width: 50px; height: 50px; border: 4px solid #B5392C; border-radius: 50%; }
+    .sv05-screen-off { position: absolute; inset: 0; background: #0E0B0A; border-radius: 50px; }
+
+    /* chat bubble */
+    .sv05-bubble {
+      left: 941px; top: 634px;
+      background: #DCF8C6; border-radius: 31px 31px 8px 31px; padding: 22px 30px 20px;
+      font: 500 26px/1.35 "Inter", sans-serif; color: #1F1A17; white-space: nowrap;
+      box-shadow: 0 30px 60px -24px rgba(31, 26, 23, 0.32), 0 10px 20px -10px rgba(31, 26, 23, 0.18);
+      transform-origin: 0% 100%;
+    }
+    .sv05-ticks { display: inline-block; width: 30px; height: 18px; margin-left: 10px; vertical-align: -2px; }
+
+    /* right column */
+    .sv05-col {
+      left: 1114px; top: 134px;
+      font: 700 81px/1.15 "Space Grotesk", sans-serif; letter-spacing: 0.04em; color: #1F1A17;
+    }
+    .sv05-col div { white-space: pre; }
+    .sv05-col .sv05-coral { color: #B5392C; }
+    .sv05-ch { display: inline-block; }
+
+    /* cursor + echo trail */
+    .sv05-cursor, .sv05-ghost { left: 0; top: 0; width: 42px; height: 42px; }
+    .sv05-cursor svg, .sv05-ghost svg { display: block; width: 42px; height: 42px; }
+    .sv05-ghost svg { filter: drop-shadow(0 0 8px rgba(181, 57, 44, 0.85)); }
+    .sv05-cursor { transform-origin: 12% 8%; }
+
+    .sv05-mascot { left: 800px; top: 690px; width: 96px; height: 96px; transform-origin: 50% 90%; }
+    .sv05-mascot svg { display: block; width: 96px; height: 96px; }
+
+    .sv05-grain { position: absolute; inset: 0; opacity: 0.08; mix-blend-mode: multiply; pointer-events: none; }
+    .sv05-grain svg { display: block; width: 1920px; height: 1080px; }
+  </style>
+
+  <div id="root" data-composition-id="05-sito-vetrina" data-width="1920" data-height="1080" data-duration="5">
+    <!-- full-bleed ground -->
+    <div id="05-sito-vetrina-bg" class="sv05-bg clip" data-start="0" data-duration="5" data-track-index="0">
+      <div class="sv05-bg-glow"></div>
+    </div>
+
+    <!-- the world under one virtual camera -->
+    <div id="05-sito-vetrina-scene" class="sv05-scene clip" data-start="0" data-duration="5" data-track-index="1">
+      <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+        <defs>
+          <symbol id="sv05-clam" viewBox="-20 -32 40 36">
+            <path d="M0 -2 C -13 -2 -17 -16 -9 -24 C -4 -29 4 -29 9 -24 C 17 -16 13 -2 0 -2 Z" fill="#EFE6D8" stroke="#A8957A" stroke-width="1.6"/>
+            <path d="M0 -4 L -8 -21 M0 -4 L 0 -26 M0 -4 L 8 -21 M0 -4 L -12 -13 M0 -4 L 12 -13" stroke="#C9B89C" stroke-width="1.3" stroke-linecap="round"/>
+            <ellipse cx="0" cy="-5" rx="6" ry="3" fill="#E7B98A"/>
+          </symbol>
+          <symbol id="sv05-cursor-ink" viewBox="0 0 24 24">
+            <path d="M3 2 L20 12 L12 13.5 L8 21 Z" fill="#1F1A17" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/>
+          </symbol>
+          <symbol id="sv05-cursor-coral" viewBox="0 0 24 24">
+            <path d="M3 2 L20 12 L12 13.5 L8 21 Z" fill="#B5392C" stroke="#E8857A" stroke-width="1.2" stroke-linejoin="round"/>
+          </symbol>
+        </defs>
+      </svg>
+
+      <div class="sv05-world" data-layout-allow-overflow>
+        <!-- plaque on the table -->
+        <div class="sv05-abs sv05-plaque-shadow"></div>
+        <div class="sv05-abs sv05-plaque">
+          <div class="sv05-plaque-face">
+            <div class="sv05-wordmark"><b>p</b>assa<b>p</b>arola</div>
+            <svg class="sv05-nfc" viewBox="0 0 74 74" aria-hidden="true">
+              <circle class="sv05-nfc-dot" cx="22" cy="37" r="6" fill="#B5392C"/>
+              <path d="M34 25 A17 17 0 0 1 34 49" fill="none" stroke="#B5392C" stroke-width="4.5" stroke-linecap="round"/>
+              <path d="M44 17 A27 27 0 0 1 44 57" fill="none" stroke="#B5392C" stroke-width="4.5" stroke-linecap="round" opacity="0.75"/>
+              <path d="M54 9 A37 37 0 0 1 54 65" fill="none" stroke="#B5392C" stroke-width="4.5" stroke-linecap="round" opacity="0.5"/>
+            </svg>
+            <div class="sv05-plaque-sub">Menu · Prenota · Social</div>
+          </div>
+        </div>
+        <div class="sv05-abs sv05-ring"></div>
+        <div class="sv05-abs sv05-ring"></div>
+        <div class="sv05-abs sv05-ring"></div>
+
+        <!-- the phone with the showcase site -->
+        <div class="sv05-abs sv05-phone">
+          <div class="sv05-screen">
+            <div class="sv05-hero">
+              <div class="sv05-kb">
+                <!-- hero dish: spaghetti alle vongole -->
+                <svg viewBox="0 0 492 288" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+                  <rect width="492" height="288" fill="#2B2220"/>
+                  <g stroke="#352a26" stroke-width="2">
+                    <line x1="0" y1="58" x2="492" y2="58"/><line x1="0" y1="130" x2="492" y2="130"/>
+                    <line x1="0" y1="202" x2="492" y2="202"/><line x1="0" y1="274" x2="492" y2="274"/>
+                  </g>
+                  <g transform="rotate(-16 70 240)">
+                    <rect x="-50" y="176" width="190" height="140" rx="12" fill="#B5392C"/>
+                    <g stroke="#F3D9CF" stroke-width="5" opacity="0.5">
+                      <line x1="-50" y1="196" x2="140" y2="196"/><line x1="-50" y1="212" x2="140" y2="212"/>
+                    </g>
+                  </g>
+                  <circle cx="428" cy="62" r="40" fill="#3A2E2A"/>
+                  <circle cx="428" cy="62" r="31" fill="#E9D9A6" opacity="0.5"/>
+                  <circle cx="420" cy="54" r="8" fill="#FFFFFF" opacity="0.25"/>
+                  <g transform="translate(410 214) rotate(24)">
+                    <path d="M0 0 A26 26 0 0 1 52 0 Z" fill="#F2D46B" stroke="#E2B04F" stroke-width="3"/>
+                    <path d="M26 0 L10 -14 M26 0 L26 -22 M26 0 L42 -14" stroke="#E2B04F" stroke-width="2"/>
+                  </g>
+                  <ellipse cx="254" cy="158" rx="134" ry="132" fill="#000000" opacity="0.28"/>
+                  <circle cx="246" cy="148" r="128" fill="#F6EFE3"/>
+                  <circle cx="246" cy="148" r="96" fill="#FFFCF6" stroke="#E6DCCB" stroke-width="2"/>
+                  <g fill="none" stroke-linecap="round">
+                    <path class="sv05-noodle" data-cx="246" data-cy="148" data-r0="5" data-r1="74" data-turns="6" data-phase="0" stroke="#E2B04F" stroke-width="5.5"/>
+                    <path class="sv05-noodle" data-cx="246" data-cy="148" data-r0="9" data-r1="70" data-turns="5.5" data-phase="2.4" stroke="#EDC877" stroke-width="4"/>
+                    <path class="sv05-noodle" data-cx="246" data-cy="148" data-r0="14" data-r1="66" data-turns="4.5" data-phase="4.2" stroke="#D9A23F" stroke-width="3"/>
+                  </g>
+                  <use href="#sv05-clam" x="180" y="96" width="40" height="36" transform="rotate(-20 200 114)"/>
+                  <use href="#sv05-clam" x="268" y="84" width="40" height="36" transform="rotate(25 288 102)"/>
+                  <use href="#sv05-clam" x="300" y="150" width="40" height="36" transform="rotate(70 320 168)"/>
+                  <use href="#sv05-clam" x="200" y="180" width="40" height="36" transform="rotate(-120 220 198)"/>
+                  <use href="#sv05-clam" x="234" y="126" width="40" height="36" transform="rotate(10 254 144)"/>
+                  <use href="#sv05-clam" x="150" y="140" width="40" height="36" transform="rotate(-80 170 158)"/>
+                  <g>
+                    <circle cx="212" cy="138" r="9" fill="#D24A36"/><circle cx="212" cy="138" r="5" fill="#E8785F"/>
+                    <circle cx="282" cy="186" r="9" fill="#D24A36"/><circle cx="282" cy="186" r="5" fill="#E8785F"/>
+                    <circle cx="264" cy="112" r="8" fill="#D24A36"/><circle cx="264" cy="112" r="4.5" fill="#E8785F"/>
+                  </g>
+                  <g fill="#5F8D3E">
+                    <circle cx="230" cy="160" r="3.2"/><circle cx="258" cy="168" r="2.8"/><circle cx="246" cy="128" r="3"/>
+                    <circle cx="276" cy="142" r="3.2"/><circle cx="222" cy="118" r="2.6"/><circle cx="296" cy="122" r="2.8"/>
+                    <circle cx="200" cy="160" r="2.6"/><circle cx="262" cy="196" r="3"/><circle cx="238" cy="190" r="2.4"/>
+                  </g>
+                  <g fill="#7FAE55"><circle cx="234" cy="158" r="1.8"/><circle cx="272" cy="144" r="1.8"/><circle cx="250" cy="170" r="1.6"/></g>
+                </svg>
+              </div>
+              <div class="sv05-abs sv05-island"></div>
+              <div class="sv05-abs sv05-hero-bar-track"></div>
+              <div class="sv05-abs sv05-hero-bar"></div>
+            </div>
+
+            <div class="sv05-body">
+              <div class="sv05-title" data-split="Osteria Marea"></div>
+              <div class="sv05-sub">Cucina di mare · dal 1987</div>
+
+              <div class="sv05-carousel">
+                <div class="sv05-track">
+                  <!-- vongole (mini) -->
+                  <div class="sv05-dish">
+                    <svg viewBox="0 0 134 115" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+                      <rect width="134" height="115" fill="#2B2220"/>
+                      <circle cx="67" cy="58" r="46" fill="#F6EFE3"/>
+                      <circle cx="67" cy="58" r="34" fill="#FFFCF6"/>
+                      <g fill="none" stroke-linecap="round">
+                        <path class="sv05-noodle" data-cx="67" data-cy="58" data-r0="2" data-r1="26" data-turns="4.5" data-phase="0" stroke="#E2B04F" stroke-width="3"/>
+                        <path class="sv05-noodle" data-cx="67" data-cy="58" data-r0="4" data-r1="24" data-turns="4" data-phase="2.6" stroke="#EDC877" stroke-width="2.2"/>
+                      </g>
+                      <use href="#sv05-clam" x="46" y="34" width="20" height="18" transform="rotate(-20 56 43)"/>
+                      <use href="#sv05-clam" x="72" y="50" width="20" height="18" transform="rotate(60 82 59)"/>
+                      <use href="#sv05-clam" x="50" y="62" width="20" height="18" transform="rotate(-130 60 71)"/>
+                      <circle cx="78" cy="44" r="4" fill="#D24A36"/><circle cx="60" cy="58" r="1.6" fill="#5F8D3E"/><circle cx="74" cy="72" r="1.6" fill="#5F8D3E"/>
+                    </svg>
+                  </div>
+                  <!-- grilled fish -->
+                  <div class="sv05-dish">
+                    <svg viewBox="0 0 134 115" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+                      <rect width="134" height="115" fill="#EDE3D3"/>
+                      <ellipse cx="67" cy="62" rx="60" ry="47" fill="#000000" opacity="0.08"/>
+                      <ellipse cx="67" cy="58" rx="60" ry="47" fill="#FFFCF6" stroke="#E3D7C4" stroke-width="1.5"/>
+                      <path d="M20 58 C 38 36, 84 34, 102 56 L 118 44 L 115 72 L 102 61 C 84 82, 38 80, 20 58 Z" fill="#98ABB3"/>
+                      <path d="M26 62 C 44 76, 82 76, 100 62 C 82 70, 44 70, 26 62 Z" fill="#C9D4D8"/>
+                      <g stroke="#4A3A33" stroke-width="3" stroke-linecap="round" opacity="0.85">
+                        <line x1="46" y1="44" x2="40" y2="70"/><line x1="60" y1="42" x2="54" y2="72"/><line x1="74" y1="42" x2="68" y2="72"/><line x1="88" y1="46" x2="82" y2="70"/>
+                      </g>
+                      <circle cx="30" cy="55" r="3.4" fill="#FFFFFF"/><circle cx="30" cy="55" r="1.7" fill="#1F1A17"/>
+                      <circle cx="96" cy="88" r="10" fill="#F2D46B" stroke="#E2B04F" stroke-width="2"/>
+                      <path d="M96 88 L90 81 M96 88 L96 78 M96 88 L103 81" stroke="#E2B04F" stroke-width="1.3"/>
+                      <path d="M30 86 L58 92" stroke="#5F8D3E" stroke-width="2.2" stroke-linecap="round"/>
+                      <g fill="#5F8D3E"><ellipse cx="38" cy="85" rx="3" ry="1.4"/><ellipse cx="46" cy="90" rx="3" ry="1.4"/><ellipse cx="52" cy="87" rx="3" ry="1.4"/></g>
+                    </svg>
+                  </div>
+                  <!-- tiramisu -->
+                  <div class="sv05-dish">
+                    <svg viewBox="0 0 134 115" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+                      <rect width="134" height="115" fill="#F1E6D3"/>
+                      <ellipse cx="67" cy="74" rx="56" ry="30" fill="#FFFCF6" stroke="#E3D7C4" stroke-width="1.5"/>
+                      <polygon points="40,40 92,40 102,30 50,30" fill="#6B4630"/>
+                      <polygon points="92,40 102,30 102,78 92,88" fill="#C99A64"/>
+                      <rect x="40" y="40" width="52" height="7" fill="#5B3B2A"/>
+                      <rect x="40" y="47" width="52" height="10" fill="#F6ECD9"/>
+                      <rect x="40" y="57" width="52" height="10" fill="#B98552"/>
+                      <rect x="40" y="67" width="52" height="10" fill="#F6ECD9"/>
+                      <rect x="40" y="77" width="52" height="11" fill="#A9743F"/>
+                      <g fill="#5B3B2A" opacity="0.6"><circle cx="30" cy="80" r="1.3"/><circle cx="108" cy="84" r="1.2"/><circle cx="26" cy="72" r="1"/><circle cx="112" cy="70" r="1.1"/></g>
+                      <ellipse cx="66" cy="32" rx="7" ry="3.4" fill="#5F8D3E" transform="rotate(-24 66 32)"/>
+                      <ellipse cx="76" cy="33" rx="6" ry="3" fill="#7FAE55" transform="rotate(20 76 33)"/>
+                    </svg>
+                  </div>
+                  <!-- gamberi -->
+                  <div class="sv05-dish">
+                    <svg viewBox="0 0 134 115" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+                      <rect width="134" height="115" fill="#F4E3D9"/>
+                      <circle cx="67" cy="58" r="47" fill="#FFFCF6" stroke="#E3D7C4" stroke-width="1.5"/>
+                      <g fill="none" stroke-linecap="round">
+                        <path d="M44 40 A16 16 0 1 0 58 62" stroke="#E07A5F" stroke-width="10"/>
+                        <path d="M70 32 A16 16 0 1 0 84 54" stroke="#E07A5F" stroke-width="10"/>
+                        <path d="M60 64 A16 16 0 1 0 74 86" stroke="#E07A5F" stroke-width="10"/>
+                        <g stroke="#F4A890" stroke-width="2">
+                          <path d="M36 44 L30 48 M34 54 L28 54 M40 62 L36 66"/>
+                          <path d="M62 36 L56 40 M60 46 L54 46 M66 54 L62 58"/>
+                          <path d="M52 68 L46 72 M50 78 L44 78 M56 86 L52 90"/>
+                        </g>
+                      </g>
+                      <path d="M86 84 A12 12 0 0 1 106 74 L 96 90 Z" fill="#F2D46B" stroke="#E2B04F" stroke-width="1.5"/>
+                      <g fill="#5F8D3E"><circle cx="92" cy="40" r="2"/><circle cx="98" cy="46" r="1.8"/><circle cx="36" cy="80" r="1.8"/></g>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
+              <div class="sv05-chips">
+                <span class="sv05-pill">Menu</span>
+                <span class="sv05-pill sv05-on">IT</span>
+                <span class="sv05-pill">EN</span>
+                <span class="sv05-pill">DE</span>
+                <span class="sv05-pill">FR</span>
+                <span class="sv05-pill">ES</span>
+              </div>
+
+              <div class="sv05-btn">
+                <div class="sv05-abs sv05-ripple"></div>
+                <span>Prenota un tavolo</span>
+              </div>
+
+              <div class="sv05-social">
+                <div class="sv05-ico">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="3.5" y="3.5" width="17" height="17" rx="5" fill="none" stroke="#FAF6EF" stroke-width="2"/>
+                    <circle cx="12" cy="12" r="4" fill="none" stroke="#FAF6EF" stroke-width="2"/>
+                    <circle cx="17" cy="7" r="1.2" fill="#FAF6EF"/>
+                  </svg>
+                </div>
+                <div class="sv05-ico">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M15.5 4.5 H14 A3 3 0 0 0 11 7.5 V20 M8 11 H15" fill="none" stroke="#FAF6EF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <div class="sv05-ico">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="3" y="5.5" width="18" height="13" rx="4" fill="none" stroke="#FAF6EF" stroke-width="2"/>
+                    <path d="M10.5 9.3 L15 12 L10.5 14.7 Z" fill="#FAF6EF"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div class="sv05-screen-off"></div>
+          </div>
+        </div>
+
+        <!-- chat bubble (WhatsApp-like, no logo) -->
+        <div class="sv05-abs sv05-bubble">Ciao! Un tavolo per 4 stasera?<svg class="sv05-ticks" viewBox="0 0 30 18" aria-hidden="true"><path d="M2 10 L7 15 L16 4 M12 13 L14 15 L24 4" fill="none" stroke="#5B9BB8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+        <!-- right column, letter by letter on the spoken cues -->
+        <div class="sv05-abs sv05-col">
+          <div class="sv05-w1" data-split="Menu."></div>
+          <div class="sv05-w2" data-split="Prenotazioni."></div>
+          <div class="sv05-w3 sv05-coral" data-split="Social."></div>
+        </div>
+
+        <div class="sv05-abs sv05-tap-ring"></div>
+
+        <!-- mascot -->
+        <div class="sv05-abs sv05-mascot">
+          <svg viewBox="0 0 100 100" aria-hidden="true">
+            <path d="M50 6 L62 37 L95 38 L69 58 L78 91 L50 72 L22 91 L31 58 L5 38 L38 37 Z" fill="#B5392C" stroke="#B5392C" stroke-width="6" stroke-linejoin="round"/>
+            <ellipse cx="41" cy="50" rx="5" ry="7" fill="#fff"/><ellipse cx="59" cy="50" rx="5" ry="7" fill="#fff"/>
+            <circle cx="42" cy="52" r="3" fill="#1F1A17"/><circle cx="60" cy="52" r="3" fill="#1F1A17"/>
+          </svg>
+        </div>
+
+        <!-- cursor with coral echo trail (echo-trail primitive, merged inline) -->
+        <div class="sv05-abs sv05-ghost"><svg aria-hidden="true"><use href="#sv05-cursor-coral"/></svg></div>
+        <div class="sv05-abs sv05-ghost"><svg aria-hidden="true"><use href="#sv05-cursor-coral"/></svg></div>
+        <div class="sv05-abs sv05-ghost"><svg aria-hidden="true"><use href="#sv05-cursor-coral"/></svg></div>
+        <div class="sv05-abs sv05-ghost"><svg aria-hidden="true"><use href="#sv05-cursor-coral"/></svg></div>
+        <div class="sv05-abs sv05-cursor"><svg aria-hidden="true"><use href="#sv05-cursor-ink"/></svg></div>
+      </div>
+    </div>
+
+    <!-- static deterministic grain -->
+    <div id="05-sito-vetrina-grain" class="sv05-grain clip" data-start="0" data-duration="5" data-track-index="2">
+      <svg viewBox="0 0 1920 1080" aria-hidden="true">
+        <filter id="sv05-grain-f" x="0" y="0" width="100%" height="100%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="7" stitchTiles="stitch"/>
+          <feColorMatrix type="saturate" values="0"/>
+        </filter>
+        <rect width="1920" height="1080" filter="url(#sv05-grain-f)"/>
+      </svg>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    (function () {
+      "use strict";
+      var FRAME = "05-sito-vetrina";
+      var DUR = 5;
+      var host = document.querySelector('[data-composition-id="' + FRAME + '"]');
+      var scope = host.querySelector(".sv05-world") ? host : document;
+      function q(sel) { return scope.querySelector(sel); }
+      function qa(sel) { return Array.prototype.slice.call(scope.querySelectorAll(sel)); }
+
+      // ---- deterministic setup: noodle spirals ----
+      qa(".sv05-noodle").forEach(function (p) {
+        var cx = +p.getAttribute("data-cx"), cy = +p.getAttribute("data-cy");
+        var r0 = +p.getAttribute("data-r0"), r1 = +p.getAttribute("data-r1");
+        var turns = +p.getAttribute("data-turns"), ph = +p.getAttribute("data-phase");
+        var N = 220, d = "";
+        for (var i = 0; i <= N; i++) {
+          var u = i / N;
+          var a = ph + u * turns * Math.PI * 2;
+          var r = r0 + (r1 - r0) * u + Math.sin(a * 3 + ph) * 1.6;
+          var x = cx + Math.cos(a) * r, y = cy + Math.sin(a) * r * 0.96;
+          d += (i === 0 ? "M" : "L") + x.toFixed(2) + " " + y.toFixed(2) + " ";
+        }
+        p.setAttribute("d", d);
+      });
+
+      // ---- split text into per-letter spans ----
+      qa("[data-split]").forEach(function (el) {
+        var s = el.getAttribute("data-split");
+        el.textContent = "";
+        for (var i = 0; i < s.length; i++) {
+          var sp = document.createElement("span");
+          sp.className = "sv05-ch";
+          sp.textContent = s.charAt(i);
+          el.appendChild(sp);
+        }
+      });
+
+      var world = q(".sv05-world");
+      var plaque = q(".sv05-plaque");
+      var rings = qa(".sv05-ring");
+      var nfcDot = q(".sv05-nfc-dot");
+      var screenOff = q(".sv05-screen-off");
+      var kb = q(".sv05-kb");
+      var heroBar = q(".sv05-hero-bar");
+      var titleChars = qa(".sv05-title .sv05-ch");
+      var sub = q(".sv05-sub");
+      var track = q(".sv05-track");
+      var pills = qa(".sv05-pill");
+      var btn = q(".sv05-btn");
+      var ripple = q(".sv05-ripple");
+      var icons = qa(".sv05-ico");
+      var tapRing = q(".sv05-tap-ring");
+      var bubble = q(".sv05-bubble");
+      var w1 = qa(".sv05-w1 .sv05-ch"), w2 = qa(".sv05-w2 .sv05-ch"), w3 = qa(".sv05-w3 .sv05-ch");
+      var mascot = q(".sv05-mascot");
+      var cursor = q(".sv05-cursor");
+      var ghosts = qa(".sv05-ghost");
+
+      // app-like spring: critically damped feel (fast out, no overshoot)
+      var SPRING = "expo.out";
+
+      var tl = gsap.timeline({ paused: true });
+
+      // ================= virtual camera (single .world wrapper) =================
+      // screen = (x, y) + scale * world  (transform-origin 0 0)
+      gsap.set(world, { transformOrigin: "0 0" });
+      var P0 = { x: 456.1, y: -588.5, scale: 1.45 };   // on the table plaque
+      var P1 = { x: 448.8, y: -695.2, scale: 1.6 };    // slow push into the tap
+      var P2 = { x: -225, y: -147.5, scale: 1.75 };    // dive into the phone hero
+      var P3 = { x: -50, y: -161, scale: 1.3 };        // reposition: site body + right column
+      var P3b = { x: -66, y: -178, scale: 1.33 };      // drift toward the button
+      var P4 = { x: -90, y: -96, scale: 1.05 };        // travel right to the chat bubble
+      var P5 = { x: 134.4, y: -0.5, scale: 0.86 };     // land: whole vitrine
+      var P6 = { x: 120, y: -8, scale: 0.875 };        // micro drift, never dead
+      tl.fromTo(world, P0, Object.assign({}, P1, { duration: 1.0, ease: "power1.inOut" }), 0);
+      tl.fromTo(world, P1, Object.assign({}, P2, { duration: 0.9, ease: "power4.out", immediateRender: false }), 1.0);
+      tl.fromTo(world, P2, Object.assign({}, P3, { duration: 1.1, ease: "power2.inOut", immediateRender: false }), 1.9);
+      tl.fromTo(world, P3, Object.assign({}, P3b, { duration: 0.3, ease: "sine.inOut", immediateRender: false }), 3.0);
+      tl.fromTo(world, P3b, Object.assign({}, P4, { duration: 0.65, ease: "power2.inOut", immediateRender: false }), 3.3);
+      tl.fromTo(world, P4, Object.assign({}, P5, { duration: 0.75, ease: "power3.inOut", immediateRender: false }), 3.95);
+      tl.fromTo(world, P5, Object.assign({}, P6, { duration: 0.3, ease: "sine.out", immediateRender: false }), 4.7);
+
+      // ================= Scene 1 (0–1s): plaque tap + coral rings =================
+      tl.fromTo(plaque, { scale: 1 }, { scale: 0.94, duration: 0.08, ease: "power2.out" }, 0.28);
+      tl.fromTo(plaque, { scale: 0.94 }, { scale: 1, duration: 0.5, ease: SPRING, immediateRender: false }, 0.36);
+      tl.fromTo(nfcDot, { attr: { r: 6 } }, { attr: { r: 9 }, duration: 0.12, ease: "power2.out" }, 0.3);
+      tl.fromTo(nfcDot, { attr: { r: 9 } }, { attr: { r: 6 }, duration: 0.4, ease: SPRING, immediateRender: false }, 0.42);
+      rings.forEach(function (r, i) {
+        tl.fromTo(r, { scale: 0.3, opacity: 0.9 }, { scale: 2.6, opacity: 0, duration: 0.95, ease: "power2.out" }, 0.32 + i * 0.13);
+      });
+      // phone wakes: the site opens
+      tl.fromTo(screenOff, { opacity: 1 }, { opacity: 0, duration: 0.45, ease: "power2.out" }, 0.55);
+
+      // ================= Scene 2 (1–2s): hero clip (Ken Burns) + title types =================
+      tl.fromTo(kb, { scale: 1.06, x: 0, y: 0 }, { scale: 1.2, x: -16, y: -6, duration: 4.45, ease: "none" }, 0.55);
+      tl.fromTo(heroBar, { scaleX: 0 }, { scaleX: 1, duration: 4.45, ease: "none" }, 0.55);
+      tl.fromTo(titleChars, { opacity: 0 }, { opacity: 1, duration: 0.03, ease: "none", stagger: 0.045 }, 1.2);
+      tl.fromTo(sub, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.5, ease: SPRING }, 1.75);
+      tl.fromTo(track, { x: 300, opacity: 0 }, { x: 0, opacity: 1, duration: 0.55, ease: SPRING }, 1.5);
+
+      // ================= Scene 3 (2–3s): carousel slides left, menu chips, "Menu." =================
+      tl.fromTo(track, { x: 0 }, { x: -147, duration: 0.6, ease: "power3.inOut", immediateRender: false }, 2.05);
+      tl.fromTo(pills, { opacity: 0, scale: 0.6, y: 8 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPRING, stagger: 0.05 }, 2.35);
+      tl.fromTo(w1, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.45, ease: SPRING, stagger: 0.04 }, 2.4);
+      tl.fromTo(btn, { opacity: 0, y: 20, scale: 0.96 }, { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: SPRING }, 2.7);
+
+      // ================= Scene 4 (3–4s): cursor presses "Prenota un tavolo" → chat bubble =================
+      tl.fromTo(cursor, { opacity: 0 }, { opacity: 1, duration: 0.15, ease: "power1.out" }, 2.85);
+      tl.fromTo(cursor, { scale: 1 }, { scale: 0.82, duration: 0.07, ease: "power2.out" }, 3.22);
+      tl.fromTo(cursor, { scale: 0.82 }, { scale: 1, duration: 0.35, ease: SPRING, immediateRender: false }, 3.29);
+      tl.fromTo(btn, { scale: 1 }, { scale: 0.95, duration: 0.07, ease: "power2.out", immediateRender: false }, 3.22);
+      tl.fromTo(btn, { scale: 0.95 }, { scale: 1, duration: 0.4, ease: SPRING, immediateRender: false }, 3.29);
+      tl.fromTo(ripple, { scale: 0, opacity: 0.55 }, { scale: 7, opacity: 0, duration: 0.6, ease: "power2.out" }, 3.24);
+      tl.fromTo(w2, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.45, ease: SPRING, stagger: 0.03 }, 3.3);
+      tl.fromTo(bubble, { opacity: 0, scale: 0.4, x: -40, y: 18 }, { opacity: 1, scale: 1, x: 0, y: 0, duration: 0.55, ease: SPRING }, 3.5);
+
+      // ================= Scene 5 (4–5s): social icons pop, "Social.", mascot taps =================
+      tl.fromTo(icons, { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, duration: 0.45, ease: SPRING, stagger: 0.08 }, 4.05);
+      tl.fromTo(w3, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.45, ease: SPRING, stagger: 0.04 }, 4.2);
+      // mascot: the one element allowed to overshoot
+      tl.fromTo(mascot, { opacity: 0, scale: 0, rotation: 12 }, { opacity: 1, scale: 1, rotation: 0, duration: 0.42, ease: "back.out(2.2)" }, 4.3);
+      tl.fromTo(mascot, { x: 0, y: 0, rotation: 0 }, { x: -24, y: 16, rotation: -18, duration: 0.12, ease: "power2.in", immediateRender: false }, 4.6);
+      tl.fromTo(mascot, { x: -24, y: 16, rotation: -18 }, { x: 0, y: 0, rotation: 0, duration: 0.3, ease: "back.out(2)", immediateRender: false }, 4.72);
+      tl.fromTo(icons[2], { scale: 1 }, { scale: 0.84, duration: 0.07, ease: "power2.out", immediateRender: false }, 4.7);
+      tl.fromTo(icons[2], { scale: 0.84 }, { scale: 1, duration: 0.3, ease: SPRING, immediateRender: false }, 4.77);
+      tl.fromTo(tapRing, { scale: 1, opacity: 0.9 }, { scale: 2.4, opacity: 0, duration: 0.3, ease: "power2.out" }, 4.7);
+
+      // ================= cursor path + coral echo trail (pure function of time) =================
+      var TIP_X = 5.25, TIP_Y = 3.5;
+      var A = { x: 1010, y: 1000 }, C = { x: 960, y: 760 }, B = { x: 700, y: 712 }, D = { x: 736, y: 702 };
+      var T0 = 2.85, T1 = 3.22, T2 = 3.5;
+      function clamp01(v) { return v < 0 ? 0 : v > 1 ? 1 : v; }
+      function easeInOut(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
+      function cursorAt(t) {
+        if (t <= T1) {
+          var u = easeInOut(clamp01((t - T0) / (T1 - T0)));
+          var m = 1 - u;
+          return { x: m * m * A.x + 2 * m * u * C.x + u * u * B.x, y: m * m * A.y + 2 * m * u * C.y + u * u * B.y };
+        }
+        var v = clamp01((t - T2) / (DUR - T2));
+        v = v * v * (3 - 2 * v);
+        return { x: B.x + (D.x - B.x) * v, y: B.y + (D.y - B.y) * v };
+      }
+      var ECHO_DELTA = 0.05;
+      var bases = ghosts.map(function (g, i) { return 0.6 * (1 - i / ghosts.length); });
+      ghosts.forEach(function (g, i) { gsap.set(g, { scale: 1 - 0.04 * (i + 1), transformOrigin: "12% 8%" }); });
+      function applyCursor(t) {
+        var lp = cursorAt(t);
+        gsap.set(cursor, { left: lp.x - TIP_X, top: lp.y - TIP_Y });
+        var visible = t >= T0;
+        for (var n = 0; n < ghosts.length; n++) {
+          var p = cursorAt(Math.max(T0, t - (n + 1) * ECHO_DELTA));
+          var dist = Math.hypot(p.x - lp.x, p.y - lp.y);
+          var a = visible ? bases[n] * clamp01(dist / 24) : 0;
+          gsap.set(ghosts[n], { left: p.x - TIP_X, top: p.y - TIP_Y, opacity: a < 0.003 ? 0 : a });
+        }
+      }
+      var clock = { t: 0 };
+      tl.fromTo(clock, { t: 0 }, {
+        t: DUR, duration: DUR, ease: "none",
+        onUpdate: function () { applyCursor(clock.t); }
+      }, 0);
+      applyCursor(0);
+
+      tl.seek(0);
+      window.__timelines = window.__timelines || {};
+      window.__timelines[FRAME] = tl;
+    })();
+  </script>
+</template>
