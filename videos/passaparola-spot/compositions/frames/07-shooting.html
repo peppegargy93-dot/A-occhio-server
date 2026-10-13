@@ -1,0 +1,316 @@
+<template>
+  <style>
+    @font-face { font-family: "Space Grotesk"; font-weight: 600; font-style: normal; src: url("assets/fonts/space-grotesk-latin-600-normal.woff2") format("woff2"); }
+    @font-face { font-family: "Space Grotesk"; font-weight: 700; font-style: normal; src: url("assets/fonts/space-grotesk-latin-700-normal.woff2") format("woff2"); }
+    @font-face { font-family: "Inter"; font-weight: 500; font-style: normal; src: url("assets/fonts/inter-latin-500-normal.woff2") format("woff2"); }
+    #root {
+      position: absolute;
+      inset: 0;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      font-family: "Inter", sans-serif;
+    }
+  </style>
+
+  <div id="root" data-composition-id="07-shooting" data-start="0" data-duration="3" data-width="1920" data-height="1080">
+
+    <!-- full-duration dark ground (frame-07 only) -->
+    <div id="f07-shooting-bg" class="clip" data-start="0" data-duration="3" data-track-index="0"
+      style="position:absolute;left:0;top:0;width:1920px;height:1080px;background:#1F1A17;"></div>
+
+    <!-- shared illustration symbols -->
+    <svg width="0" height="0" style="position:absolute;left:0;top:0;" aria-hidden="true">
+      <defs>
+        <!-- (1) plated seafood pasta, top-down -->
+        <symbol id="f07-shooting-sym-dish" viewBox="0 0 1690 800">
+          <rect width="1690" height="800" fill="#B9825A"/>
+          <g stroke="#A46D47" stroke-width="4" opacity=".7">
+            <line x1="0" y1="150" x2="1690" y2="150"/><line x1="0" y1="330" x2="1690" y2="330"/>
+            <line x1="0" y1="520" x2="1690" y2="520"/><line x1="0" y1="690" x2="1690" y2="690"/>
+          </g>
+          <g transform="rotate(-8 330 400)">
+            <rect x="200" y="120" width="270" height="560" rx="26" fill="#E8857A"/>
+            <g stroke="#FAF6EF" stroke-width="10" opacity=".55">
+              <line x1="200" y1="190" x2="470" y2="190"/><line x1="200" y1="610" x2="470" y2="610"/>
+            </g>
+            <rect x="322" y="200" width="26" height="420" rx="13" fill="#EDE4D6"/>
+            <g fill="#EDE4D6"><rect x="300" y="170" width="12" height="90" rx="6"/><rect x="322" y="160" width="12" height="90" rx="6"/><rect x="344" y="160" width="12" height="90" rx="6"/><rect x="366" y="170" width="12" height="90" rx="6"/></g>
+          </g>
+          <circle cx="870" cy="425" r="335" fill="#000" opacity=".18"/>
+          <circle cx="850" cy="400" r="330" fill="#FAF6EF"/>
+          <circle cx="850" cy="400" r="262" fill="none" stroke="#EDE4D6" stroke-width="8"/>
+          <g fill="none" stroke-linecap="round" stroke-width="15">
+            <circle cx="850" cy="400" r="175" stroke="#E2B04F" stroke-dasharray="120 34"/>
+            <circle cx="842" cy="406" r="150" stroke="#D99B3E" stroke-dasharray="90 28"/>
+            <circle cx="856" cy="394" r="126" stroke="#E9C46A" stroke-dasharray="140 30"/>
+            <circle cx="848" cy="402" r="100" stroke="#E2B04F" stroke-dasharray="70 22"/>
+            <circle cx="852" cy="398" r="74" stroke="#D99B3E" stroke-dasharray="80 20"/>
+            <circle cx="850" cy="400" r="48" stroke="#E9C46A" stroke-dasharray="50 16"/>
+          </g>
+          <g fill="#C8452F" opacity=".85">
+            <circle cx="790" cy="330" r="14"/><circle cx="930" cy="360" r="11"/><circle cx="880" cy="480" r="15"/>
+            <circle cx="760" cy="450" r="10"/><circle cx="960" cy="440" r="9"/><circle cx="840" cy="270" r="9"/>
+          </g>
+          <g>
+            <g transform="rotate(-30 700 300)"><ellipse cx="700" cy="300" rx="62" ry="34" fill="#2B2733"/><ellipse cx="700" cy="300" rx="44" ry="20" fill="#E59A57"/></g>
+            <g transform="rotate(25 1010 330)"><ellipse cx="1010" cy="330" rx="62" ry="34" fill="#2B2733"/><ellipse cx="1010" cy="330" rx="44" ry="20" fill="#E59A57"/></g>
+            <g transform="rotate(70 960 540)"><ellipse cx="960" cy="540" rx="60" ry="33" fill="#2B2733"/><ellipse cx="960" cy="540" rx="42" ry="19" fill="#E59A57"/></g>
+            <g transform="rotate(-70 720 520)"><ellipse cx="720" cy="520" rx="60" ry="33" fill="#2B2733"/><ellipse cx="720" cy="520" rx="42" ry="19" fill="#E59A57"/></g>
+          </g>
+          <g fill="none" stroke-linecap="round">
+            <path d="M820 230 a42 42 0 1 1 64 30" stroke="#EE7E5E" stroke-width="28"/>
+            <path d="M884 260 l26 -4" stroke="#C8452F" stroke-width="16"/>
+            <path d="M1040 440 a40 40 0 1 0 -20 66" stroke="#EE7E5E" stroke-width="28"/>
+            <path d="M1020 506 l-8 24" stroke="#C8452F" stroke-width="16"/>
+            <path d="M660 400 a40 40 0 1 1 30 60" stroke="#EE7E5E" stroke-width="28"/>
+            <path d="M690 460 l-6 24" stroke="#C8452F" stroke-width="16"/>
+          </g>
+          <g fill="#5E8C4A">
+            <circle cx="810" cy="380" r="8"/><circle cx="905" cy="410" r="7"/><circle cx="860" cy="330" r="6"/>
+            <circle cx="780" cy="420" r="7"/><circle cx="900" cy="300" r="8"/><circle cx="830" cy="470" r="6"/><circle cx="950" cy="380" r="6"/>
+          </g>
+          <circle cx="1430" cy="230" r="104" fill="#F3E6BE" opacity=".55"/>
+          <circle cx="1430" cy="230" r="104" fill="none" stroke="#FAF6EF" stroke-width="8" opacity=".75"/>
+          <path d="M1290 560 a90 90 0 0 1 180 0 z" fill="#E9C46A"/>
+          <path d="M1310 560 a70 70 0 0 1 140 0 z" fill="#F4DB8E"/>
+        </symbol>
+
+        <!-- (2) two hands plating on a kitchen counter -->
+        <symbol id="f07-shooting-sym-hands" viewBox="0 0 1690 800">
+          <rect width="1690" height="800" fill="#ECE4D8"/>
+          <rect width="1690" height="120" fill="#3A302A"/>
+          <rect y="112" width="1690" height="14" fill="#8C847C"/>
+          <g fill="none" stroke="#D9CDBC" stroke-width="5" opacity=".8">
+            <path d="M0 300 C 300 260, 520 380, 820 330 S 1400 260, 1690 330"/>
+            <path d="M0 640 C 260 600, 600 700, 900 650 S 1450 600, 1690 660"/>
+          </g>
+          <rect x="120" y="260" width="420" height="330" rx="34" fill="#C9935F"/>
+          <rect x="140" y="280" width="380" height="290" rx="26" fill="none" stroke="#B57F4E" stroke-width="5"/>
+          <g fill="#5E8C4A">
+            <circle cx="260" cy="420" r="11"/><circle cx="300" cy="440" r="9"/><circle cx="280" cy="390" r="8"/>
+            <circle cx="330" cy="410" r="10"/><circle cx="240" cy="455" r="8"/><circle cx="350" cy="450" r="7"/>
+          </g>
+          <circle cx="920" cy="495" r="268" fill="#000" opacity=".14"/>
+          <circle cx="900" cy="470" r="262" fill="#FAF6EF"/>
+          <circle cx="900" cy="470" r="200" fill="none" stroke="#EDE4D6" stroke-width="7"/>
+          <path d="M760 560 C 840 470, 960 600, 1050 500" fill="none" stroke="#B5392C" stroke-width="34" stroke-linecap="round"/>
+          <rect x="800" y="400" width="210" height="110" rx="26" fill="#E9C27A"/>
+          <g stroke="#C9963F" stroke-width="9" stroke-linecap="round">
+            <line x1="840" y1="415" x2="820" y2="495"/><line x1="890" y1="415" x2="870" y2="495"/><line x1="940" y1="415" x2="920" y2="495"/><line x1="990" y1="415" x2="970" y2="495"/>
+          </g>
+          <g fill="#5E8C4A"><ellipse cx="880" cy="392" rx="24" ry="12" transform="rotate(-20 880 392)"/><ellipse cx="925" cy="388" rx="22" ry="11" transform="rotate(25 925 388)"/></g>
+          <!-- right hand with tweezers, from top-right -->
+          <g transform="rotate(32 1250 160)">
+            <rect x="1150" y="-140" width="210" height="260" rx="40" fill="#FAF6EF"/>
+            <rect x="1150" y="80" width="210" height="34" rx="14" fill="#E8DFD2"/>
+            <rect x="1170" y="105" width="170" height="160" rx="70" fill="#D9A27E"/>
+            <rect x="1170" y="230" width="34" height="90" rx="17" fill="#CF956F"/>
+            <rect x="1210" y="240" width="34" height="100" rx="17" fill="#D9A27E"/>
+            <rect x="1250" y="236" width="32" height="92" rx="16" fill="#D9A27E"/>
+            <rect x="1288" y="226" width="30" height="76" rx="15" fill="#CF956F"/>
+            <path d="M1226 320 L1214 520 M1246 320 L1226 520" stroke="#8A8F98" stroke-width="9" stroke-linecap="round"/>
+            <ellipse cx="1220" cy="536" rx="26" ry="12" fill="#6FA05A"/>
+          </g>
+          <!-- left hand steadying the plate rim -->
+          <g transform="rotate(-18 560 760)">
+            <rect x="380" y="700" width="260" height="200" rx="40" fill="#FAF6EF"/>
+            <rect x="380" y="690" width="260" height="34" rx="14" fill="#E8DFD2"/>
+            <rect x="410" y="560" width="190" height="150" rx="70" fill="#D9A27E"/>
+            <rect x="590" y="580" width="90" height="36" rx="18" fill="#CF956F"/>
+            <rect x="420" y="520" width="34" height="80" rx="17" fill="#D9A27E"/>
+            <rect x="462" y="508" width="34" height="90" rx="17" fill="#D9A27E"/>
+            <rect x="504" y="510" width="34" height="86" rx="17" fill="#D9A27E"/>
+            <rect x="546" y="522" width="32" height="74" rx="16" fill="#CF956F"/>
+          </g>
+        </symbol>
+
+        <!-- (3) friendly staff portrait in an apron -->
+        <symbol id="f07-shooting-sym-staff" viewBox="0 0 1690 800">
+          <rect width="1690" height="800" fill="#4A362C"/>
+          <rect x="0" y="560" width="1690" height="240" fill="#3E2D25"/>
+          <g fill="#E2B04F">
+            <circle cx="230" cy="180" r="70" opacity=".22"/><circle cx="420" cy="320" r="44" opacity=".18"/>
+            <circle cx="1350" cy="160" r="84" opacity=".2"/><circle cx="1500" cy="380" r="52" opacity=".16"/>
+          </g>
+          <g fill="#E8857A"><circle cx="160" cy="470" r="56" opacity=".16"/><circle cx="1240" cy="420" r="40" opacity=".18"/></g>
+          <line x1="1460" y1="0" x2="1460" y2="150" stroke="#2A211C" stroke-width="6"/>
+          <path d="M1390 150 h140 l-30 -50 h-80 z" fill="#2A211C"/>
+          <ellipse cx="1460" cy="160" rx="54" ry="18" fill="#F4DB8E" opacity=".8"/>
+          <!-- shoulders / shirt -->
+          <path d="M520 800 C 520 600, 640 520, 845 520 C 1050 520, 1170 600, 1170 800 Z" fill="#FAF6EF"/>
+          <rect x="805" y="430" width="80" height="110" rx="30" fill="#CF956F"/>
+          <path d="M800 525 L845 590 L890 525" fill="#EDE4D6"/>
+          <!-- apron -->
+          <path d="M690 620 h310 v180 h-310 z" fill="#B5392C"/>
+          <path d="M740 600 L760 520 M950 600 L930 520" stroke="#B5392C" stroke-width="18" stroke-linecap="round"/>
+          <rect x="690" y="590" width="310" height="70" rx="20" fill="#B5392C"/>
+          <rect x="780" y="680" width="130" height="80" rx="14" fill="none" stroke="#E8857A" stroke-width="6"/>
+          <!-- head -->
+          <ellipse cx="722" cy="320" rx="28" ry="40" fill="#CF956F"/>
+          <ellipse cx="968" cy="320" rx="28" ry="40" fill="#CF956F"/>
+          <ellipse cx="845" cy="310" rx="122" ry="146" fill="#D9A27E"/>
+          <path d="M722 300 C 715 170, 800 140, 860 146 C 950 150, 985 210, 970 300 C 940 230, 860 210, 780 230 C 750 240, 735 260, 722 300 Z" fill="#2A211C"/>
+          <g fill="none" stroke="#1F1A17" stroke-width="9" stroke-linecap="round">
+            <path d="M785 320 q20 -20 40 0"/>
+            <path d="M865 320 q20 -20 40 0"/>
+            <path d="M800 385 q45 42 90 0"/>
+          </g>
+          <circle cx="772" cy="370" r="20" fill="#E8857A" opacity=".45"/>
+          <circle cx="918" cy="370" r="20" fill="#E8857A" opacity=".45"/>
+        </symbol>
+
+        <filter id="f07-shooting-grain" x="0" y="0" width="100%" height="100%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" stitchTiles="stitch"/>
+          <feColorMatrix type="saturate" values="0"/>
+        </filter>
+      </defs>
+    </svg>
+
+    <!-- viewfinder (camera window) -->
+    <div id="f07-shooting-vf" style="position:absolute;left:115px;top:96px;width:1690px;height:800px;border-radius:24px;overflow:hidden;background:#2A231F;box-shadow:0 40px 80px -24px rgba(0,0,0,.55),0 12px 24px -12px rgba(0,0,0,.4);">
+      <div id="f07-shooting-cam" style="position:absolute;left:0;top:0;width:1690px;height:800px;">
+        <div id="f07-shooting-world" style="position:absolute;left:0;top:0;width:5070px;height:800px;">
+          <svg style="position:absolute;left:0;top:0;" width="1690" height="800" viewBox="0 0 1690 800"><use href="#f07-shooting-sym-dish" width="1690" height="800"/></svg>
+          <svg style="position:absolute;left:1690px;top:0;" width="1690" height="800" viewBox="0 0 1690 800"><use href="#f07-shooting-sym-hands" width="1690" height="800"/></svg>
+          <svg style="position:absolute;left:3380px;top:0;" width="1690" height="800" viewBox="0 0 1690 800"><use href="#f07-shooting-sym-staff" width="1690" height="800"/></svg>
+        </div>
+      </div>
+      <!-- soft light leak from sketch -->
+      <div style="position:absolute;left:0;top:0;width:1690px;height:800px;background:radial-gradient(circle at 70% 30%,rgba(255,255,255,.18),transparent 42%),radial-gradient(ellipse at 50% 50%,transparent 55%,rgba(20,16,14,.55) 100%);"></div>
+      <!-- legibility scrim for the headline -->
+      <div id="f07-shooting-scrim" style="position:absolute;left:0;top:520px;width:1690px;height:280px;background:linear-gradient(rgba(31,26,23,0),rgba(31,26,23,.82));"></div>
+      <!-- rule-of-thirds grid -->
+      <div id="f07-shooting-grid" style="position:absolute;left:0;top:0;width:1690px;height:800px;background:linear-gradient(rgba(255,255,255,.25),rgba(255,255,255,.25)) 33.3% 0/1px 100% no-repeat,linear-gradient(rgba(255,255,255,.25),rgba(255,255,255,.25)) 66.6% 0/1px 100% no-repeat,linear-gradient(rgba(255,255,255,.25),rgba(255,255,255,.25)) 0 33.3%/100% 1px no-repeat,linear-gradient(rgba(255,255,255,.25),rgba(255,255,255,.25)) 0 66.6%/100% 1px no-repeat;"></div>
+      <!-- corner brackets -->
+      <div id="f07-shooting-brackets" style="position:absolute;left:28px;top:28px;width:1634px;height:744px;">
+        <div style="position:absolute;left:0;top:0;width:56px;height:56px;border-left:4px solid #FAF6EF;border-top:4px solid #FAF6EF;border-top-left-radius:14px;"></div>
+        <div style="position:absolute;right:0;top:0;width:56px;height:56px;border-right:4px solid #FAF6EF;border-top:4px solid #FAF6EF;border-top-right-radius:14px;"></div>
+        <div style="position:absolute;left:0;bottom:0;width:56px;height:56px;border-left:4px solid #FAF6EF;border-bottom:4px solid #FAF6EF;border-bottom-left-radius:14px;"></div>
+        <div style="position:absolute;right:0;bottom:0;width:56px;height:56px;border-right:4px solid #FAF6EF;border-bottom:4px solid #FAF6EF;border-bottom-right-radius:14px;"></div>
+      </div>
+    </div>
+
+    <!-- AF square (coral), resting centre ~ (941,518) per sketch -->
+    <div id="f07-shooting-af" style="position:absolute;left:845px;top:422px;width:192px;height:192px;border:5px solid #B5392C;border-radius:12px;box-shadow:0 0 24px rgba(181,57,44,.45);">
+      <div style="position:absolute;left:86px;top:86px;width:10px;height:10px;border-radius:50%;background:#B5392C;"></div>
+    </div>
+
+    <!-- REC readout (approved copy) -->
+    <div id="f07-shooting-rec" style="position:absolute;left:160px;top:134px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:24px;letter-spacing:.1em;color:#FAF6EF;white-space:nowrap;">
+      <span id="f07-shooting-recdot" style="color:#E8857A;">●</span> REC · 1/250 · f2.8
+    </div>
+
+    <!-- thumbnail strip, top-right (slots at x 1334 / 1483 / 1632, y 134) -->
+    <div id="f07-shooting-slot1" style="position:absolute;left:1334px;top:134px;width:134px;height:88px;border-radius:12px;border:2px dashed rgba(250,246,239,.35);background:rgba(90,79,71,.55);"></div>
+    <div id="f07-shooting-slot2" style="position:absolute;left:1483px;top:134px;width:134px;height:88px;border-radius:12px;border:2px dashed rgba(250,246,239,.35);background:rgba(90,79,71,.55);"></div>
+    <div id="f07-shooting-slot3" style="position:absolute;left:1632px;top:134px;width:134px;height:88px;border-radius:12px;border:2px dashed rgba(250,246,239,.35);background:rgba(90,79,71,.55);"></div>
+    <div id="f07-shooting-thumb1" style="position:absolute;left:1334px;top:134px;width:134px;height:88px;border-radius:12px;overflow:hidden;border:3px solid #FAF6EF;box-shadow:0 18px 36px -12px rgba(0,0,0,.6);">
+      <svg width="128" height="82" viewBox="0 0 1690 800" preserveAspectRatio="xMidYMid slice" style="display:block;"><use href="#f07-shooting-sym-dish" width="1690" height="800"/></svg>
+    </div>
+    <div id="f07-shooting-thumb2" style="position:absolute;left:1483px;top:134px;width:134px;height:88px;border-radius:12px;overflow:hidden;border:3px solid #FAF6EF;box-shadow:0 18px 36px -12px rgba(0,0,0,.6);">
+      <svg width="128" height="82" viewBox="0 0 1690 800" preserveAspectRatio="xMidYMid slice" style="display:block;"><use href="#f07-shooting-sym-hands" width="1690" height="800"/></svg>
+    </div>
+    <div id="f07-shooting-thumb3" style="position:absolute;left:1632px;top:134px;width:134px;height:88px;border-radius:12px;overflow:hidden;border:3px solid #FAF6EF;box-shadow:0 18px 36px -12px rgba(0,0,0,.6);">
+      <svg width="128" height="82" viewBox="0 0 1690 800" preserveAspectRatio="xMidYMid slice" style="display:block;"><use href="#f07-shooting-sym-staff" width="1690" height="800"/></svg>
+    </div>
+
+    <!-- mascot, small, bottom-right corner of the viewfinder -->
+    <div id="f07-shooting-mascot" style="position:absolute;left:1676px;top:768px;width:96px;height:96px;">
+      <svg width="96" height="96" viewBox="0 0 100 100" style="display:block;"><path d="M50 6 L62 37 L95 38 L69 58 L78 91 L50 72 L22 91 L31 58 L5 38 L38 37 Z" fill="#B5392C" stroke="#B5392C" stroke-width="6" stroke-linejoin="round"/><ellipse cx="41" cy="50" rx="5" ry="7" fill="#fff"/><ellipse cx="59" cy="50" rx="5" ry="7" fill="#fff"/><circle cx="42" cy="52" r="3" fill="#1F1A17"/><circle cx="60" cy="52" r="3" fill="#1F1A17"/></svg>
+    </div>
+
+    <!-- headline (approved copy), bottom-left inside the viewfinder; letters built in script -->
+    <div id="f07-shooting-headline" style="position:absolute;left:165px;top:786px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:64px;line-height:1.1;letter-spacing:-.01em;color:#FAF6EF;white-space:nowrap;"><span data-part="a">Le foto? </span><span data-part="b" style="color:#E8857A;">Le facciamo insieme, da te.</span></div>
+
+    <!-- white shutter flash -->
+    <div id="f07-shooting-flash" style="position:absolute;left:0;top:0;width:1920px;height:1080px;background:#FFFFFF;opacity:0;"></div>
+
+    <!-- static grain -->
+    <svg style="position:absolute;left:0;top:0;opacity:.08;pointer-events:none;" width="1920" height="1080"><rect width="1920" height="1080" filter="url(#f07-shooting-grain)"/></svg>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    (function () {
+      var $ = function (n) { return document.getElementById("f07-shooting-" + n); };
+
+      // split headline into per-letter spans (deterministic)
+      var head = $("headline");
+      var chars = [];
+      Array.prototype.forEach.call(head.querySelectorAll("[data-part]"), function (part) {
+        var txt = part.textContent;
+        part.textContent = "";
+        for (var i = 0; i < txt.length; i++) {
+          var s = document.createElement("span");
+          s.style.display = "inline-block";
+          s.style.whiteSpace = "pre";
+          s.textContent = txt[i];
+          part.appendChild(s);
+          chars.push(s);
+        }
+      });
+
+      var tl = gsap.timeline({ paused: true });
+      var SPRING = "expo.out";       // critically damped, springy feel, no bounce
+      var WHIP = "expo.inOut";
+
+      // ---- viewfinder chrome boots (0.0–0.4) ----
+      tl.fromTo($("vf"), { scale: 1.04, opacity: 0.6 }, { scale: 1, opacity: 1, duration: 0.5, ease: SPRING }, 0);
+      tl.fromTo($("grid"), { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 0.05);
+      tl.fromTo($("brackets"), { scale: 1.06, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.45, ease: SPRING }, 0.02);
+      tl.fromTo($("rec"), { x: -24, opacity: 0 }, { x: 0, opacity: 1, duration: 0.35, ease: SPRING }, 0.06);
+      tl.fromTo([$("slot1"), $("slot2"), $("slot3")], { y: -16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: SPRING, stagger: 0.05 }, 0.08);
+      tl.fromTo($("scrim"), { opacity: 0.35 }, { opacity: 1, duration: 0.5, ease: "power2.out" }, 2.1);
+
+      // REC dot blink (discrete sets, no repeat)
+      [0.5, 1.0, 1.5, 2.0, 2.5].forEach(function (t, i) { tl.set($("recdot"), { opacity: i % 2 === 0 ? 0.15 : 1 }, t); });
+
+      // ---- virtual camera: always moving ----
+      tl.fromTo($("cam"), { scale: 1.0, y: 0, rotation: -0.6 }, { scale: 1.1, y: -18, rotation: 0.6, duration: 3, ease: "none" }, 0);
+      // whip 1 (dish -> hands) and whip 2 (hands -> staff)
+      tl.fromTo($("world"), { x: 0 }, { x: -1690, duration: 0.24, ease: WHIP, immediateRender: false }, 0.86);
+      tl.to($("world"), { x: -3380, duration: 0.24, ease: WHIP }, 1.72);
+      [0.86, 1.72].forEach(function (t) {
+        tl.fromTo($("world"), { filter: "blur(0px)" }, { filter: "blur(16px)", duration: 0.12, ease: "power2.in", immediateRender: false }, t);
+        tl.to($("world"), { filter: "blur(0px)", duration: 0.12, ease: "power2.out" }, t + 0.12);
+      });
+
+      // ---- AF square: search -> lock, per shot ----
+      var afPos = [
+        { x: 20, y: -20, t: 0.0, lock: 0.42 },     // dish centre
+        { x: 140, y: 20, t: 1.04, lock: 1.32 },    // tweezers on the plate
+        { x: 19, y: -140, t: 1.9, lock: 2.12 }     // staff face
+      ];
+      afPos.forEach(function (p, i) {
+        tl.fromTo($("af"), { scale: 1.6, opacity: 0, x: p.x, y: p.y }, { scale: 1, opacity: 1, duration: 0.32, ease: SPRING, immediateRender: i === 0 }, p.t);
+        tl.to($("af"), { scale: 0.9, duration: 0.06, ease: "power2.out" }, p.lock);
+        tl.to($("af"), { scale: 1, duration: 0.18, ease: SPRING }, p.lock + 0.06);
+      });
+
+      // ---- shutter: white flash + thumbnail flies to the strip ----
+      var shots = [0.58, 1.46, 2.24];
+      var slotX = [1334, 1483, 1632];
+      shots.forEach(function (t, i) {
+        tl.fromTo($("flash"), { opacity: 0 }, { opacity: 0.9, duration: 0.04, ease: "none", immediateRender: false }, t);
+        tl.to($("flash"), { opacity: 0, duration: 0.3, ease: "power2.out" }, t + 0.04);
+        var th = $("thumb" + (i + 1));
+        tl.fromTo(th,
+          { x: 960 - 67 - slotX[i], y: 496 - 44 - 134, scale: 3.4, opacity: 0, rotation: -4 },
+          { x: 0, y: 0, scale: 1, opacity: 1, rotation: 0, duration: 0.36, ease: SPRING, immediateRender: i === 0 }, t + 0.03);
+        tl.fromTo($("mascot"), { y: 0 }, { y: -14, duration: 0.08, ease: "power2.out", immediateRender: false }, t);
+        tl.to($("mascot"), { y: 0, duration: 0.3, ease: "back.out(3)" }, t + 0.08);
+      });
+      tl.set([$("thumb2"), $("thumb3")], { opacity: 0 }, 0);
+
+      // ---- mascot (overshoot allowed only here) ----
+      tl.fromTo($("mascot"), { scale: 0, rotation: -25 }, { scale: 1, rotation: 0, duration: 0.5, ease: "back.out(2.4)" }, 0.28);
+      tl.to($("mascot"), { rotation: 10, duration: 0.25, ease: "back.out(2)" }, 2.55);
+
+      // ---- headline types letter by letter (Scene 3) ----
+      tl.fromTo(chars, { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 0.22, ease: SPRING, stagger: 0.014 }, 2.28);
+
+      window.__timelines["07-shooting"] = tl;
+    })();
+  </script>
+</template>

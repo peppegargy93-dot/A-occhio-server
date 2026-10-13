@@ -1,0 +1,553 @@
+<template>
+  <div
+    id="root"
+    data-composition-id="01-maps-problema"
+    data-start="0"
+    data-duration="4"
+    data-width="1920"
+    data-height="1080"
+  >
+    <style>
+      @font-face {
+        font-family: "Space Grotesk";
+        font-weight: 600;
+        font-style: normal;
+        src: url("assets/fonts/space-grotesk-latin-600-normal.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Space Grotesk";
+        font-weight: 700;
+        font-style: normal;
+        src: url("assets/fonts/space-grotesk-latin-700-normal.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Inter";
+        font-weight: 400;
+        font-style: normal;
+        src: url("assets/fonts/inter-latin-400-normal.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Inter";
+        font-weight: 600;
+        font-style: normal;
+        src: url("assets/fonts/inter-latin-600-normal.woff2") format("woff2");
+      }
+      #root {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        font-family: "Inter", sans-serif;
+      }
+      #f01-maps-bg {
+        position: absolute;
+        inset: 0;
+        background: #faf6ef;
+      }
+      #f01-maps-stage {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+      }
+      /* the virtual camera: world coords == layout coords at scale 1 */
+      #f01-maps-world {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 1920px;
+        height: 1080px;
+        transform-origin: 0 0;
+      }
+      .f01-maps-abs {
+        position: absolute;
+      }
+
+      /* ---- Maps-style result card (left, ~46%) ---- */
+      #f01-maps-card {
+        left: 96px;
+        top: 110px;
+        width: 884px;
+        height: 690px;
+        background: #ffffff;
+        border-radius: 32px;
+        box-shadow:
+          0 40px 80px -24px rgba(31, 26, 23, 0.28),
+          0 12px 24px -12px rgba(31, 26, 23, 0.18);
+        z-index: 2;
+      }
+      #f01-maps-search {
+        left: 44px;
+        top: 44px;
+        width: 796px;
+        height: 68px;
+        border-radius: 100px;
+        background: #f3eee6;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 0 28px;
+        font: 400 25px/1 "Inter", sans-serif;
+        color: #6b625b;
+      }
+      #f01-maps-search svg {
+        width: 26px;
+        height: 26px;
+        flex: none;
+      }
+      .f01-maps-row {
+        left: 44px;
+        width: 796px;
+        height: 120px;
+        display: flex;
+        align-items: center;
+        gap: 26px;
+      }
+      .f01-maps-thumb {
+        width: 112px;
+        height: 112px;
+        flex: none;
+        border-radius: 22px;
+        background: repeating-linear-gradient(
+          135deg,
+          #e9dfd0 0 15px,
+          #e2d6c4 15px 30px
+        );
+      }
+      .f01-maps-soft {
+        filter: blur(7px);
+        opacity: 0.75;
+      }
+      .f01-maps-name {
+        font: 700 32px/1 "Space Grotesk", sans-serif;
+        color: #1f1a17;
+        white-space: nowrap;
+      }
+      .f01-maps-meta {
+        margin-top: 14px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font: 600 25px/1 "Inter", sans-serif;
+        color: #6b625b;
+        white-space: nowrap;
+      }
+      .f01-maps-ministars {
+        display: flex;
+        gap: 4px;
+      }
+      .f01-maps-ministars svg {
+        width: 26px;
+        height: 26px;
+        display: block;
+      }
+      .f01-maps-count {
+        color: #1f1a17;
+        filter: blur(1.2px);
+      }
+
+      /* the highlighted result: Osteria Marea */
+      #f01-maps-sel {
+        left: 24px;
+        top: 470px;
+        width: 836px;
+        height: 200px;
+        border: 4px solid #b5392c;
+        border-radius: 26px;
+        background: rgba(181, 57, 44, 0.04);
+      }
+      #f01-maps-selthumb {
+        left: 20px;
+        top: 31px;
+        width: 130px;
+        height: 130px;
+        border-radius: 24px;
+        background: rgba(181, 57, 44, 0.12);
+        overflow: hidden;
+      }
+      #f01-maps-selthumb svg {
+        width: 130px;
+        height: 130px;
+        display: block;
+      }
+      #f01-maps-selname {
+        left: 176px;
+        top: 34px;
+        font: 700 42px/1 "Space Grotesk", sans-serif;
+        letter-spacing: 0.01em;
+        color: #1f1a17;
+        white-space: nowrap;
+      }
+      #f01-maps-selline {
+        left: 176px;
+        top: 100px;
+        height: 44px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        font: 600 32px/1 "Inter", sans-serif;
+        color: #1f1a17;
+        white-space: nowrap;
+      }
+      #f01-maps-bigstars {
+        display: flex;
+        gap: 6px;
+      }
+      .f01-maps-star {
+        position: relative;
+        width: 40px;
+        height: 40px;
+      }
+      .f01-maps-star svg {
+        position: absolute;
+        inset: 0;
+        width: 40px;
+        height: 40px;
+        display: block;
+      }
+      .f01-maps-dot {
+        color: #9a9a9a;
+      }
+      #f01-maps-rev {
+        position: relative;
+        color: #b5392c;
+      }
+      #f01-maps-underline {
+        position: absolute;
+        left: -4px;
+        right: -4px;
+        bottom: -12px;
+        height: 7px;
+        border-radius: 6px;
+        background: #b5392c;
+        transform-origin: left center;
+      }
+
+      /* mascot peeks from behind the card corner (lower z than the card) */
+      #f01-maps-mascot {
+        left: 922px;
+        top: 694px;
+        width: 150px;
+        height: 150px;
+        z-index: 1;
+      }
+      #f01-maps-mascot svg {
+        width: 150px;
+        height: 150px;
+        display: block;
+      }
+
+      /* ---- headline (right, ~45%) ---- */
+      .f01-maps-line {
+        left: 1062px;
+        font: 700 92px/1.05 "Space Grotesk", sans-serif;
+        letter-spacing: 0.04em;
+        color: #1f1a17;
+        white-space: nowrap;
+        z-index: 3;
+      }
+      .f01-maps-coral {
+        color: #b5392c;
+      }
+      .f01-maps-ch {
+        display: inline-block;
+      }
+
+      #f01-maps-grain {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        opacity: 0.08;
+        mix-blend-mode: multiply;
+      }
+      #f01-maps-grain svg {
+        width: 1920px;
+        height: 1080px;
+        display: block;
+      }
+    </style>
+
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+      <defs>
+        <path
+          id="f01-maps-starpath"
+          d="M12 1.6l3.05 6.6 7.2.8-5.35 4.9 1.5 7.1L12 17.4 5.6 21l1.5-7.1L1.75 9l7.2-.8z"
+        />
+      </defs>
+    </svg>
+
+    <div id="f01-maps-bg" class="clip" data-start="0" data-duration="4" data-track-index="0"></div>
+
+    <div id="f01-maps-stage" class="clip" data-start="0" data-duration="4" data-track-index="1">
+      <div id="f01-maps-world">
+        <div id="f01-maps-mascot" class="f01-maps-abs">
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M50 6 L62 37 L95 38 L69 58 L78 91 L50 72 L22 91 L31 58 L5 38 L38 37 Z"
+              fill="#B5392C"
+              stroke="#B5392C"
+              stroke-width="6"
+              stroke-linejoin="round"
+            />
+            <ellipse cx="41" cy="52" rx="5" ry="6" fill="#fff" />
+            <ellipse cx="59" cy="52" rx="5" ry="6" fill="#fff" />
+            <circle cx="41" cy="55" r="3" fill="#1F1A17" />
+            <circle cx="59" cy="55" r="3" fill="#1F1A17" />
+            <path
+              d="M34 43 L46 46 M66 43 L54 46"
+              stroke="#1F1A17"
+              stroke-width="3"
+              stroke-linecap="round"
+            />
+          </svg>
+        </div>
+
+        <div id="f01-maps-card" class="f01-maps-abs">
+          <div id="f01-maps-search" class="f01-maps-abs">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#6B625B" stroke-width="2.4" stroke-linecap="round">
+              <circle cx="10.5" cy="10.5" r="6.5" />
+              <path d="M15.5 15.5 L21 21" />
+            </svg>
+            <span>ristoranti vicino a me</span>
+          </div>
+
+          <div class="f01-maps-row f01-maps-abs f01-maps-comp" style="top: 146px">
+            <div class="f01-maps-thumb f01-maps-soft"></div>
+            <div>
+              <div class="f01-maps-name f01-maps-soft">Trattoria ••••••</div>
+              <div class="f01-maps-meta">
+                <span class="f01-maps-ministars f01-maps-soft" data-rating="4.5"></span>
+                <span class="f01-maps-soft">4,6 ·</span>
+                <span class="f01-maps-count">2.341</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="f01-maps-row f01-maps-abs f01-maps-comp" style="top: 302px">
+            <div class="f01-maps-thumb f01-maps-soft"></div>
+            <div>
+              <div class="f01-maps-name f01-maps-soft">Ristorante •••••</div>
+              <div class="f01-maps-meta">
+                <span class="f01-maps-ministars f01-maps-soft" data-rating="4.5"></span>
+                <span class="f01-maps-soft">4,5 ·</span>
+                <span class="f01-maps-count">1.870</span>
+              </div>
+            </div>
+          </div>
+
+          <div id="f01-maps-sel" class="f01-maps-abs">
+            <div id="f01-maps-selthumb" class="f01-maps-abs">
+              <svg viewBox="0 0 130 130" fill="none" stroke="#B5392C" stroke-width="7" stroke-linecap="round">
+                <path d="M22 58 Q38 44 54 58 T86 58 T118 58" />
+                <path d="M12 80 Q28 66 44 80 T76 80 T108 80" opacity="0.6" />
+                <path d="M22 102 Q38 88 54 102 T86 102 T118 102" opacity="0.3" />
+              </svg>
+            </div>
+            <div id="f01-maps-selname" class="f01-maps-abs">Osteria Marea</div>
+            <div id="f01-maps-selline" class="f01-maps-abs">
+              <div id="f01-maps-bigstars"></div>
+              <span>4,8</span>
+              <span class="f01-maps-dot">·</span>
+              <span id="f01-maps-rev">34 recensioni<span id="f01-maps-underline"></span></span>
+            </div>
+          </div>
+        </div>
+
+        <div id="f01-maps-l1" class="f01-maps-abs f01-maps-line" style="top: 296px" data-text="Cinque stelle."></div>
+        <div id="f01-maps-l2" class="f01-maps-abs f01-maps-line f01-maps-coral" style="top: 440px" data-text="Ma le leggono"></div>
+        <div id="f01-maps-l3" class="f01-maps-abs f01-maps-line f01-maps-coral" style="top: 537px" data-text="in pochi."></div>
+      </div>
+    </div>
+
+    <div id="f01-maps-grain" class="clip" data-start="0" data-duration="4" data-track-index="2">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="none">
+        <filter id="f01-maps-noise" x="0" y="0" width="100%" height="100%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="11" stitchTiles="stitch" />
+          <feColorMatrix type="saturate" values="0" />
+        </filter>
+        <rect width="1920" height="1080" filter="url(#f01-maps-noise)" />
+      </svg>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script>
+      (function () {
+        const ID = "01-maps-problema";
+        const DUR = 4;
+        const root = document.querySelector('[data-composition-id="' + ID + '"]');
+        const $ = (sel) => root.querySelector(sel);
+        const $$ = (sel) => Array.from(root.querySelectorAll(sel));
+        const NS = "http://www.w3.org/2000/svg";
+        const OCHRE = "#E2B04F";
+        const GRAY = "#E6DED2";
+
+        function starSvg(color, clip) {
+          const svg = document.createElementNS(NS, "svg");
+          svg.setAttribute("viewBox", "0 0 24 24");
+          const use = document.createElementNS(NS, "use");
+          use.setAttribute("href", "#f01-maps-starpath");
+          use.setAttribute("fill", color);
+          svg.appendChild(use);
+          if (clip) svg.style.clipPath = clip;
+          return svg;
+        }
+
+        // competitor mini star rows (static, 4.5 / 5)
+        $$(".f01-maps-ministars").forEach((row) => {
+          const r = parseFloat(row.getAttribute("data-rating"));
+          for (let i = 0; i < 5; i++) {
+            const frac = Math.max(0, Math.min(1, r - i));
+            const holder = document.createElement("span");
+            holder.style.position = "relative";
+            holder.style.width = "26px";
+            holder.style.height = "26px";
+            const g = starSvg(GRAY);
+            g.style.position = "absolute";
+            const o = starSvg(OCHRE, "inset(0 " + (100 - frac * 100) + "% 0 0)");
+            o.style.position = "absolute";
+            holder.appendChild(g);
+            holder.appendChild(o);
+            row.appendChild(holder);
+          }
+        });
+
+        // hero star row: gray base + ochre layer wiped per star (4.8 / 5)
+        const RATING = 4.8;
+        const big = $("#f01-maps-bigstars");
+        const golds = [];
+        const starBoxes = [];
+        for (let i = 0; i < 5; i++) {
+          const box = document.createElement("div");
+          box.className = "f01-maps-star";
+          box.appendChild(starSvg(GRAY));
+          const gold = starSvg(OCHRE, "inset(0 100% 0 0)");
+          box.appendChild(gold);
+          big.appendChild(box);
+          golds.push(gold);
+          starBoxes.push(box);
+        }
+
+        // headline split into per-letter spans (typed letter by letter)
+        $$(".f01-maps-line").forEach((line) => {
+          const text = line.getAttribute("data-text");
+          for (const c of text) {
+            const s = document.createElement("span");
+            s.className = "f01-maps-ch";
+            s.textContent = c === " " ? " " : c;
+            line.appendChild(s);
+          }
+        });
+
+        const tl = gsap.timeline({ paused: true });
+
+        // ---------------- virtual camera (single writer) ----------------
+        // keys: world point at screen center + log-scale; each leg ~1s, motivated.
+        const L = Math.log;
+        const KEYS = [
+          { t: 0.0, x: 404, y: 704, s: L(7.6) },
+          { t: 1.0, x: 446, y: 702, s: L(6.6), ease: "sine.inOut" }, // macro creep along the stars
+          { t: 2.0, x: 640, y: 690, s: L(3.3), ease: "power2.inOut" }, // dolly right to "34 recensioni"
+          { t: 2.85, x: 960, y: 540, s: L(1.0), ease: "power3.inOut" }, // fast pull-back: the list
+          { t: 4.0, x: 930, y: 534, s: L(1.05), ease: "power2.in" }, // push toward the handoff
+        ];
+        KEYS.forEach((k) => {
+          if (k.ease) k.fn = gsap.parseEase(k.ease);
+        });
+        function camAt(t) {
+          if (t <= KEYS[0].t) return KEYS[0];
+          for (let i = 1; i < KEYS.length; i++) {
+            const a = KEYS[i - 1];
+            const b = KEYS[i];
+            if (t <= b.t) {
+              const p = b.fn((t - a.t) / (b.t - a.t));
+              return { x: a.x + (b.x - a.x) * p, y: a.y + (b.y - a.y) * p, s: a.s + (b.s - a.s) * p };
+            }
+          }
+          return KEYS[KEYS.length - 1];
+        }
+        const world = $("#f01-maps-world");
+        const clock = { t: 0 };
+        function writeCam() {
+          const t = clock.t;
+          const c = camAt(t);
+          const sc = Math.exp(c.s);
+          const ph = (t / DUR) * Math.PI * 2 * 1.5;
+          const dx = Math.sin(ph) * 5;
+          const dy = Math.sin(ph * 1.3) * 2.5;
+          const tx = 960 - c.x * sc + dx;
+          const ty = 540 - c.y * sc + dy;
+          world.style.transform =
+            "translate(" + tx.toFixed(2) + "px," + ty.toFixed(2) + "px) scale(" + sc.toFixed(5) + ")";
+        }
+        writeCam();
+        tl.to(clock, { t: DUR, duration: DUR, ease: "none", onUpdate: writeCam }, 0);
+
+        // ---------------- Scene 1 (0.0–1.0): five stars light one by one ----------------
+        golds.forEach((g, i) => {
+          const at = 0.08 + i * 0.15;
+          const frac = Math.max(0, Math.min(1, RATING - i));
+          tl.fromTo(
+            g,
+            { clipPath: "inset(0 100% 0 0)" },
+            { clipPath: "inset(0 " + (100 - frac * 100).toFixed(1) + "% 0 0)", duration: 0.22, ease: "power2.out" },
+            at
+          );
+          tl.fromTo(
+            starBoxes[i],
+            { scale: 0.86 },
+            { scale: 1, duration: 0.45, ease: "expo.out" },
+            at
+          );
+        });
+
+        // ---------------- Scene 2 (1.0–2.0): coral underline sweep on "34 recensioni" ----------------
+        tl.fromTo(
+          "#f01-maps-underline",
+          { scaleX: 0 },
+          { scaleX: 1, duration: 0.5, ease: "power2.inOut" },
+          1.42
+        );
+
+        // ---------------- Scene 3 (2.0–3.0): pull-back; competitors fall out of focus ----------------
+        tl.fromTo(
+          $$(".f01-maps-comp"),
+          { filter: "blur(0px)", opacity: 1 },
+          { filter: "blur(1.5px)", opacity: 0.8, duration: 0.7, ease: "power2.out" },
+          2.1
+        );
+        tl.fromTo(
+          "#f01-maps-sel",
+          { scale: 1 },
+          { scale: 1.015, duration: 0.6, ease: "expo.out" },
+          2.55
+        );
+
+        // ---------------- Scene 4 (2.75–4.0): headline types letter by letter ----------------
+        const l1 = $$("#f01-maps-l1 .f01-maps-ch");
+        const l23 = $$("#f01-maps-l2 .f01-maps-ch").concat($$("#f01-maps-l3 .f01-maps-ch"));
+        tl.fromTo(
+          l1,
+          { opacity: 0, yPercent: 35 },
+          { opacity: 1, yPercent: 0, duration: 0.28, ease: "expo.out", stagger: 0.03 },
+          2.72
+        );
+        tl.fromTo(
+          l23,
+          { opacity: 0, yPercent: 35 },
+          { opacity: 1, yPercent: 0, duration: 0.28, ease: "expo.out", stagger: 0.028 },
+          3.18
+        );
+
+        // sad mascot peeks from behind the card corner (overshoot allowed here only)
+        tl.fromTo(
+          "#f01-maps-mascot",
+          { x: -110, y: -70, rotation: -20 },
+          { x: 0, y: 0, rotation: 12, duration: 0.6, ease: "back.out(1.6)" },
+          3.3
+        );
+
+        window.__timelines = window.__timelines || {};
+        window.__timelines[ID] = tl;
+      })();
+    </script>
+  </div>
+</template>
