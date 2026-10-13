@@ -39,3 +39,5 @@ Regia: quasi tutto dentro le interfacce, telecamera virtuale sempre in movimento
 - Script verbatim (voce fuori campo; testo a schermo uguale o più corto della voce). Tempi approvati con aggiustamento: la frase 3 va a 8–13 s, la frase 4 a 13–16 s. I tempi finali seguono la durata reale della voce (~30 s).
 - Scheda Maps ridisegnata in stile, senza logo Google reale; "Google" solo come testo funzionale.
 - ElevenLabs piano Free: uso non commerciale; per pubblicità serve almeno Starter.
+- Voce: l'utente genera da solo la voce fuori campo su ElevenLabs e la carica nel progetto (un file unico o uno per frase). Niente campioni generati da Claude.
+- Piano delle 8 scene approvato; bozze (storyboard.html v1) richieste prima della costruzione.

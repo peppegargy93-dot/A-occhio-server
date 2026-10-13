@@ -16,7 +16,7 @@ mascot: piccola stella corallo con due occhi; accompagna la camera, salta sui pu
 - voiceover: "Il tuo locale ha cinque stelle. Ma le leggono in pochi."
 - duration: 4s
 - transition_in: cut
-- status: outline
+- status: built
 - src: compositions/frames/01-maps-problema.html
 - type: hook
 - persuasion: Pain validation + Negative contrast
@@ -35,7 +35,7 @@ Shots: (a) macro sulle 5 stelle ocra che si accendono; (b) carrellata che scopre
 - voiceover: "Basta un tocco."
 - duration: 4s
 - transition_in: zoom-through
-- status: outline
+- status: built
 - src: compositions/frames/02-targa-nfc.html
 - type: product_intro
 - persuasion: Friction reduction
@@ -54,7 +54,7 @@ Shots: (a) carrellata laterale sul bancone fino alla targa (logo "passaparola" i
 - voiceover: "Il cliente ti lascia la recensione. In trenta secondi, nella sua lingua."
 - duration: 5s
 - transition_in: cut
-- status: outline
+- status: built
 - src: compositions/frames/03-pagina-recensione.html
 - type: key_feature
 - persuasion: Show-don't-tell proof + Friction reduction
@@ -73,7 +73,7 @@ Shots: (a) 0–1.2s cammeo + nome lettera per lettera; (b) 1.2–2s cinque stell
 - voiceover: "Più recensioni. Più in alto su Google."
 - duration: 3s
 - transition_in: zoom-through
-- status: outline
+- status: built
 - src: compositions/frames/04-scalata-maps.html
 - type: benefits
 - persuasion: Statistical proof + Future pacing
@@ -92,7 +92,7 @@ Shots: (a) contatore grande 34 → 300 con notifiche che piovono ai lati; (b) la
 - voiceover: "La seconda targa apre la tua vetrina. Menu, prenotazioni, social."
 - duration: 5s
 - transition_in: push-slide LEFT
-- status: outline
+- status: built
 - src: compositions/frames/05-sito-vetrina.html
 - type: key_feature
 - persuasion: Value stacking + Rule of three
@@ -111,7 +111,7 @@ Shots: (a) targa sul tavolo, tocco, onde; (b) hero del sito con il piatto (lento
 - voiceover: "E ogni mese sai come sta andando."
 - duration: 4s
 - transition_in: crossfade
-- status: outline
+- status: built
 - src: compositions/frames/06-report.html
 - type: benefits
 - persuasion: Risk reversal (controllo)
@@ -130,7 +130,7 @@ Shots: (a) card "Report di ottobre" entra a molla; (b) tre metriche contano: 1.2
 - voiceover: "Le foto? Le facciamo insieme, da te."
 - duration: 3s
 - transition_in: zoom-through
-- status: outline
+- status: built
 - src: compositions/frames/07-shooting.html
 - type: benefits
 - persuasion: Authority by association (servizio fatto bene) + Friction reduction
@@ -149,7 +149,7 @@ Shots: tre micro-scatti da ~1s ciascuno dentro un mirino (griglia, punto AF cora
 - voiceover: "Passaparola. Fatti raccontare da chi ti ha scelto."
 - duration: 3s
 - transition_in: blur-crossfade
-- status: outline
+- status: built
 - src: compositions/frames/08-logo.html
 - type: brand_outro
 - persuasion: Belonging
