@@ -161,7 +161,7 @@
   </style>
 
   <div id="root" data-composition-id="06-report" data-width="1920" data-height="1080" data-start="0" data-duration="4">
-    <div class="clip r06-bg" data-start="0" data-duration="4" data-track-index="0"></div>
+    <div class="clip r06-bg" id="r06-bg" data-start="0" data-duration="4" data-track-index="0"></div>
 
     <div class="clip" id="r06-stage" data-start="0" data-duration="4" data-track-index="1" style="position:absolute;inset:0;">
       <div class="r06-world" id="r06-world">
@@ -204,7 +204,7 @@
       </div>
     </div>
 
-    <div class="clip r06-grain" data-start="0" data-duration="4" data-track-index="2">
+    <div class="clip r06-grain" id="r06-grain" data-start="0" data-duration="4" data-track-index="2">
       <svg viewBox="0 0 1920 1080" preserveAspectRatio="none" aria-hidden="true">
         <filter id="r06-noise" x="0" y="0" width="100%" height="100%">
           <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="6" stitchTiles="stitch"/>
