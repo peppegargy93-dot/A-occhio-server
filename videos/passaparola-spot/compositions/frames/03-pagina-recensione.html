@@ -500,9 +500,9 @@
       }
     </style>
 
-    <div class="f03-bg clip" data-start="0" data-duration="5" data-track-index="0"></div>
+    <div id="f03-pagina-recensione-bg" class="f03-bg clip" data-start="0" data-duration="5" data-track-index="0"></div>
 
-    <div class="f03-stage clip" data-start="0" data-duration="5" data-track-index="1">
+    <div id="f03-pagina-recensione-stage" class="f03-stage clip" data-start="0" data-duration="5" data-track-index="1">
       <div class="f03-world">
         <!-- phone (cutout, focal) -->
         <div class="f03-phone">
@@ -510,7 +510,7 @@
             <div class="f03-notch"></div>
             <div class="f03-oval">
               <svg viewBox="0 0 300 156" xmlns="http://www.w3.org/2000/svg">
-                <ellipse class="f03-oval-outer" cx="150" cy="78" rx="147" ry="75" stroke-width="4" transform="rotate(-90 150 78) translate(0 0)" />
+                <ellipse class="f03-oval-outer" cx="150" cy="78" rx="147" ry="75" stroke-width="4" />
                 <ellipse class="f03-oval-inner" cx="150" cy="78" rx="137" ry="65" stroke-width="1.5" opacity="0.45" />
               </svg>
               <div class="f03-name">
@@ -555,6 +555,11 @@
           <span class="f03-line f03-split f03-hl2 f03-coral">Nella sua lingua.</span>
         </div>
 
+        <!-- confetti burst -->
+        <div class="f03-confetti">
+          <span class="f03-particle"></span><span class="f03-particle f03-o"></span><span class="f03-particle"></span><span class="f03-particle f03-o"></span><span class="f03-particle"></span><span class="f03-particle f03-o"></span><span class="f03-particle"></span><span class="f03-particle f03-o"></span><span class="f03-particle"></span><span class="f03-particle f03-o"></span><span class="f03-particle"></span><span class="f03-particle f03-o"></span><span class="f03-particle"></span><span class="f03-particle f03-o"></span><span class="f03-particle"></span><span class="f03-particle f03-o"></span><span class="f03-particle"></span><span class="f03-particle f03-o"></span><span class="f03-particle"></span><span class="f03-particle f03-o"></span><span class="f03-particle"></span><span class="f03-particle f03-o"></span>
+        </div>
+
         <!-- thank-you popup (supporting) -->
         <div class="f03-card">
           <div class="f03-cstars">
@@ -581,11 +586,6 @@
           <div class="f03-sub">Recensione pubblicata su Google</div>
         </div>
 
-        <!-- confetti burst -->
-        <div class="f03-confetti">
-          <span class="f03-particle"></span><span class="f03-particle f03-o"></span><span class="f03-particle"></span><span class="f03-particle f03-o"></span><span class="f03-particle"></span><span class="f03-particle f03-o"></span><span class="f03-particle"></span><span class="f03-particle f03-o"></span><span class="f03-particle"></span><span class="f03-particle f03-o"></span><span class="f03-particle"></span><span class="f03-particle f03-o"></span><span class="f03-particle"></span><span class="f03-particle f03-o"></span><span class="f03-particle"></span><span class="f03-particle f03-o"></span><span class="f03-particle"></span><span class="f03-particle f03-o"></span><span class="f03-particle"></span><span class="f03-particle f03-o"></span><span class="f03-particle"></span><span class="f03-particle f03-o"></span>
-        </div>
-
         <!-- mascot -->
         <div class="f03-mascot"><img src="assets/brand/mascot.svg" alt="" /></div>
 
@@ -605,13 +605,13 @@
       </div>
     </div>
 
-    <div class="f03-grain clip" data-start="0" data-duration="5" data-track-index="2">
+    <div id="f03-pagina-recensione-grain-layer" class="f03-grain clip" data-start="0" data-duration="5" data-track-index="2">
       <svg viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
-        <filter id="f03-grain-noise" x="0" y="0" width="100%" height="100%">
+        <filter id="f03-pagina-recensione-grain" x="0" y="0" width="100%" height="100%">
           <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="7" stitchTiles="stitch" />
           <feColorMatrix type="saturate" values="0" />
         </filter>
-        <rect width="1920" height="1080" filter="url(#f03-grain-noise)" />
+        <rect width="1920" height="1080" filter="url(#f03-pagina-recensione-grain)" />
       </svg>
     </div>
 
@@ -835,22 +835,22 @@
         tl.fromTo(q(".f03-sub"), { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" }, 4.45);
 
         // confetti burst (registry formula: cos(i*.83) / sin(i*.61) / 180+i*37), then gravity
-        var BURST = 4.34;
+        var BURST = 4.3;
         qa(".f03-particle").forEach(function (p, i) {
           var bx = Math.cos(i * 0.83) * 290;
           var by = -110 - Math.sin(i * 0.61) * 120;
           var br = 180 + i * 37;
-          var t1 = BURST + i * 0.012;
-          tl.fromTo(p, { x: 0, y: 0, rotation: 0, scale: 0, opacity: 0 }, { x: bx, y: by, rotation: br, scale: 1, opacity: 1, duration: 0.5, ease: "power2.out" }, t1);
-          var t2 = t1 + 0.5;
-          tl.fromTo(p, { y: by, rotation: br }, { y: by + 150 + (i % 5) * 22, rotation: br + 140, duration: Math.max(0.1, 5 - t2), ease: "power1.in", immediateRender: false }, t2);
+          var t1 = BURST + i * 0.01;
+          tl.fromTo(p, { x: 0, y: 0, rotation: 0, scale: 0, opacity: 0 }, { x: bx, y: by, rotation: br, scale: 1, opacity: 1, duration: 0.45, ease: "power2.out" }, t1);
+          var t2 = t1 + 0.45;
+          tl.fromTo(p, { y: by, rotation: br }, { y: by + 150 + (i % 5) * 22, rotation: br + 140, duration: Math.max(0.04, 5 - t2), ease: "power1.in", immediateRender: false }, t2);
         });
 
         // mascot celebrates: anticipation, jump + spin to the card corner (playful overshoot)
         tl.to(mascot, { scaleX: 1.12, scaleY: 0.86, duration: 0.08, ease: "power2.out" }, 4.2);
         tl.to(mascot, { x: 1238 - MH, duration: 0.6, ease: "power2.inOut" }, 4.28);
         tl.to(mascot, { y: 40 - MH, duration: 0.32, ease: "power2.out" }, 4.28);
-        tl.to(mascot, { y: 106 - MH, duration: SPR_MASCOT_LAND.duration * 0.9, ease: SPR_MASCOT_LAND.ease }, 4.6);
+        tl.to(mascot, { y: 106 - MH, duration: 0.4, ease: SPR_MASCOT_LAND.ease }, 4.58);
         tl.to(mascot, { scaleX: 1.26, scaleY: 1.26, duration: SPR_MASCOT.duration, ease: SPR_MASCOT.ease }, 4.28);
         tl.fromTo(mascot, { rotation: 0 }, { rotation: 372, duration: 0.7, ease: SPR_MASCOT.ease, immediateRender: false }, 4.28);
 
