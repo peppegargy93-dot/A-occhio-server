@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=1920, height=1080" />
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js" integrity="sha384-sG0Hv1tP1lZCk9KQmrIbY/XNwi+OY84GQqhMscbnsoBFqAz8KNCil1kvfL3Hbbk2" crossorigin="anonymous"></script>
     <style>
       * {
         margin: 0;
@@ -12,25 +12,23 @@
       }
       html,
       body {
-        margin: 0;
         width: 1920px;
         height: 1080px;
         overflow: hidden;
-        background: #0a0a0a;
+        background: #000;
       }
       #root {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #FAF6EF;
+      }
+      .scene {
+        position: absolute;
+        inset: 0;
         width: 100%;
         height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-family: Inter, ui-sans-serif, system-ui, sans-serif;
-      }
-      #title {
-        color: #f4f4f5;
-        font-size: 72px;
-        font-weight: 600;
-        letter-spacing: -0.03em;
       }
     </style>
   </head>
@@ -39,17 +37,111 @@
       id="root"
       data-composition-id="main"
       data-start="0"
-      data-duration="10"
+      data-duration="31"
       data-width="1920"
       data-height="1080"
     >
-      <h1 id="title" class="clip" data-start="0" data-duration="10" data-track-index="0">Title</h1>
+      <div
+        id="el-01-maps-problema"
+        class="scene"
+        data-composition-id="01-maps-problema"
+        data-composition-src="compositions/frames/01-maps-problema.html"
+        data-start="0"
+        data-duration="4.4"
+        data-track-index="0"
+      ></div>
+
+      <div
+        id="el-02-targa-nfc"
+        class="scene"
+        data-composition-id="02-targa-nfc"
+        data-composition-src="compositions/frames/02-targa-nfc.html"
+        data-start="4"
+        data-duration="4"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-03-pagina-recensione"
+        class="scene"
+        data-composition-id="03-pagina-recensione"
+        data-composition-src="compositions/frames/03-pagina-recensione.html"
+        data-start="8"
+        data-duration="5.4"
+        data-track-index="0"
+      ></div>
+
+      <div
+        id="el-04-scalata-maps"
+        class="scene"
+        data-composition-id="04-scalata-maps"
+        data-composition-src="compositions/frames/04-scalata-maps.html"
+        data-start="13"
+        data-duration="3.5"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-05-sito-vetrina"
+        class="scene"
+        data-composition-id="05-sito-vetrina"
+        data-composition-src="compositions/frames/05-sito-vetrina.html"
+        data-start="16"
+        data-duration="5.5"
+        data-track-index="0"
+      ></div>
+
+      <div
+        id="el-06-report"
+        class="scene"
+        data-composition-id="06-report"
+        data-composition-src="compositions/frames/06-report.html"
+        data-start="21"
+        data-duration="4.4"
+        data-track-index="1"
+      ></div>
+
+      <div
+        id="el-07-shooting"
+        class="scene"
+        data-composition-id="07-shooting"
+        data-composition-src="compositions/frames/07-shooting.html"
+        data-start="25"
+        data-duration="3.6"
+        data-track-index="0"
+      ></div>
+
+      <div
+        id="el-08-logo"
+        class="scene"
+        data-composition-id="08-logo"
+        data-composition-src="compositions/frames/08-logo.html"
+        data-start="28"
+        data-duration="3"
+        data-track-index="1"
+      ></div>
+
     </div>
+
     <script>
-      const tl = gsap.timeline({ paused: true });
-      // Example: tl.fromTo("#title", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.6 }, 0);
-      window.__timelines["main"] = tl;
-      tl.seek(0);
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = gsap.timeline({ paused: true });
+      // ── frame transitions (injected by transitions.mjs) ──
+      (function () { var tl = window.__timelines["main"];
+        tl.to("#el-01-maps-problema", { scale: 2.5, opacity: 0, filter: "blur(8px)", duration: 0.4, ease: "power3.in" }, 4);
+        tl.fromTo("#el-02-targa-nfc", { scale: 0.5, opacity: 0, filter: "blur(8px)" }, { scale: 1, opacity: 1, filter: "blur(0px)", duration: 0.4, ease: "power3.out" }, 4);
+        tl.to("#el-03-pagina-recensione", { scale: 2.5, opacity: 0, filter: "blur(8px)", duration: 0.4, ease: "power3.in" }, 13);
+        tl.fromTo("#el-04-scalata-maps", { scale: 0.5, opacity: 0, filter: "blur(8px)" }, { scale: 1, opacity: 1, filter: "blur(0px)", duration: 0.4, ease: "power3.out" }, 13);
+        tl.to("#el-04-scalata-maps", { x: -1920, duration: 0.5, ease: "power3.inOut" }, 16);
+        tl.fromTo("#el-05-sito-vetrina", { x: 1920, opacity: 1 }, { x: 0, opacity: 1, duration: 0.5, ease: "power3.inOut" }, 16);
+        tl.to("#el-05-sito-vetrina", { opacity: 0, duration: 0.5, ease: "power2.inOut" }, 21);
+        tl.fromTo("#el-06-report", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.inOut" }, 21);
+        tl.to("#el-06-report", { scale: 2.5, opacity: 0, filter: "blur(8px)", duration: 0.4, ease: "power3.in" }, 25);
+        tl.fromTo("#el-07-shooting", { scale: 0.5, opacity: 0, filter: "blur(8px)" }, { scale: 1, opacity: 1, filter: "blur(0px)", duration: 0.4, ease: "power3.out" }, 25);
+        tl.to("#el-07-shooting", { filter: "blur(10px)", scale: 1.03, opacity: 0, duration: 0.6, ease: "power2.inOut" }, 28);
+        tl.fromTo("#el-08-logo", { filter: "blur(10px)", scale: 0.97, opacity: 0 }, { filter: "blur(0px)", scale: 1, opacity: 1, duration: 0.6, ease: "power2.inOut" }, 28);
+        tl.to({}, { duration: 31 }, 0); // full-span anchor — main.duration() == composition total (Studio master duration)
+      })();
     </script>
   </body>
 </html>
