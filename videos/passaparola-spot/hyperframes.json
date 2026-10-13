@@ -9,5 +9,17 @@
   "media": {
     "autoProxy": true
   },
-  "authoringSkill": "product-launch-video"
+  "authoringSkill": "product-launch-video",
+  "registryItems": [
+    {
+      "name": "confetti",
+      "type": "hyperframes:component",
+      "target": "compositions/components/confetti.html"
+    },
+    {
+      "name": "echo-trail",
+      "type": "hyperframes:component",
+      "target": "compositions/components/echo-trail.html"
+    }
+  ]
 }
