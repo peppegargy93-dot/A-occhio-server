@@ -189,6 +189,7 @@
     }
 
     /* ---------- bottom bar ---------- */
+    #f06-barbg { left: 0; top: 800px; width: 614px; height: 504px; background: linear-gradient(180deg, rgba(255,255,255,0) 0%, #FFFFFF 22%, #FFFFFF 100%); }
     #f06-bar {
       left: 28px; top: 880px; width: 558px; height: 104px; border-radius: 100px;
       background: #123247; box-shadow: 0 24px 40px -16px rgba(10,29,43,0.6);
@@ -217,10 +218,10 @@
     .f06-grain { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; opacity: 0.08; pointer-events: none; }
   </style>
 
-  <div id="root" data-composition-id="06-menu" data-start="0" data-duration="8.5" data-width="1080" data-height="1920">
-    <div id="f06-ground" class="clip f06-ground" data-start="0" data-duration="8.5" data-track-index="0"></div>
+  <div id="root" data-composition-id="06-menu" data-start="0" data-duration="8" data-width="1080" data-height="1920">
+    <div id="f06-ground" class="clip f06-ground" data-start="0" data-duration="8" data-track-index="0"></div>
 
-    <div id="f06-stage" class="clip f06-stage" data-start="0" data-duration="8.5" data-track-index="1">
+    <div id="f06-stage" class="clip f06-stage" data-start="0" data-duration="8" data-track-index="1">
       <div class="f06-world" id="f06-world" data-layout-allow-overflow>
 
         <!-- Scene 1: overhead table with the menu plaque -->
@@ -255,7 +256,7 @@
             <div id="f06-view" class="f06-abs">
               <div id="f06-scroll">
                 <div id="f06-today" class="f06-abs">
-                  <div id="f06-today-img"><img class="f06-img" src="assets/food/linguine-allo-scoglio.svg" alt=""></div>
+                  <div id="f06-today-img"><div class="f06-img" style="background: url('assets/food/linguine-allo-scoglio.svg') center / cover no-repeat;"></div></div>
                   <div id="f06-today-kicker">Oggi in cucina</div>
                   <div id="f06-today-name">Linguine allo scoglio</div>
                   <div id="f06-today-price">18 €</div>
@@ -299,10 +300,10 @@
                 <div class="f06-tab" id="f06-tab-1">Primi</div>
                 <div class="f06-tab" id="f06-tab-2">Secondi</div>
                 <div class="f06-tab" id="f06-tab-3">Dolci</div>
-                <div class="f06-tab f06-tab-on" id="f06-tabon-0" style="left:22px;width:160px;">Antipasti</div>
-                <div class="f06-tab f06-tab-on" id="f06-tabon-1" style="left:196px;width:104px;">Primi</div>
-                <div class="f06-tab f06-tab-on" id="f06-tabon-2" style="left:314px;width:148px;">Secondi</div>
-                <div class="f06-tab f06-tab-on" id="f06-tabon-3" style="left:476px;width:112px;">Dolci</div>
+                <div class="f06-tab f06-tab-on" id="f06-tabon-0" data-layout-allow-overlap style="left:22px;width:160px;">Antipasti</div>
+                <div class="f06-tab f06-tab-on" id="f06-tabon-1" data-layout-allow-overlap style="left:196px;width:104px;">Primi</div>
+                <div class="f06-tab f06-tab-on" id="f06-tabon-2" data-layout-allow-overlap style="left:314px;width:148px;">Secondi</div>
+                <div class="f06-tab f06-tab-on" id="f06-tabon-3" data-layout-allow-overlap style="left:476px;width:112px;">Dolci</div>
                 <div id="f06-tab-bar" class="f06-abs"></div>
               </div>
             </div>
@@ -328,7 +329,7 @@
             <div id="f06-dim" class="f06-abs"></div>
             <div id="f06-sheet" class="f06-abs">
               <div id="f06-handle"></div>
-              <div id="f06-sheet-img"><img class="f06-img" src="assets/food/polpo-alla-luciana.svg" alt=""></div>
+              <div id="f06-sheet-img"><div class="f06-img" style="background: url('assets/food/polpo-alla-luciana.svg') center / cover no-repeat;"></div></div>
               <div id="f06-sheet-name">Polpo alla luciana</div>
               <div id="f06-sheet-price">14 €</div>
               <div id="f06-sheet-lbl">Allergeni</div>
@@ -341,6 +342,7 @@
             </div>
 
             <!-- bottom bar: kept above canvas y 1440 -->
+            <div id="f06-barbg" class="f06-abs"></div>
             <div id="f06-bar" class="f06-abs">
               <div class="f06-bar-lbl" id="f06-bar-a">La mia scelta</div>
               <div id="f06-badge">2</div>
@@ -370,7 +372,7 @@
       <div class="f06-abs f06-title" id="f06-title-b2">con la sua foto.</div>
     </div>
 
-    <svg id="f06-grain" class="clip f06-grain" data-start="0" data-duration="8.5" data-track-index="2" xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920">
+    <svg id="f06-grain" class="clip f06-grain" data-start="0" data-duration="8" data-track-index="2" xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920">
       <filter id="f06-noise"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="7" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
       <rect width="1080" height="1920" filter="url(#f06-noise)"/>
     </svg>
@@ -493,6 +495,7 @@
       tl.to(q("f06-sheet"), { y: 1180, duration: 0.5, ease: "power3.in" }, 6.6);
       tl.to(q("f06-dim"), { opacity: 0, duration: 0.4, ease: "power1.in" }, 6.65);
       tl.to(q("f06-polpo-hl"), { opacity: 0, duration: 0.3 }, 6.7);
+      tl.fromTo(q("f06-barbg"), { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "power1.out" }, 6.8);
       tl.fromTo(q("f06-bar"), { y: 260, opacity: 0 }, { y: 0, opacity: 1, duration: 0.55, ease: spring }, 6.85);
       tl.fromTo(q("f06-badge"), { scale: 0 }, { scale: 1.25, duration: 0.18, ease: "power2.out" }, 7.2);
       tl.to(q("f06-badge"), { scale: 1, duration: 0.3, ease: spring }, 7.38);
@@ -506,5 +509,6 @@
       window.__timelines = window.__timelines || {};
       window.__timelines[FID] = tl;
     })();
-  </script>
+  ;(function(){var id="06-menu",k=1.1184;var inner=window.__timelines[id];if(!inner)return;var outer=gsap.timeline({paused:true});inner.paused(false);inner.timeScale(k);outer.add(inner,0);outer.set({},{},7.6);window.__timelines[id]=outer;})();
+</script>
 </template>

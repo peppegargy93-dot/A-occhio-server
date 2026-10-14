@@ -120,10 +120,10 @@
     }
   </style>
 
-  <div id="root" data-composition-id="05-si-sale" data-start="0" data-duration="2.8" data-width="1080" data-height="1920">
-    <div id="f05-ground" class="clip f05-ground" data-start="0" data-duration="2.8" data-track-index="0"></div>
+  <div id="root" data-composition-id="05-si-sale" data-start="0" data-duration="3" data-width="1080" data-height="1920">
+    <div id="f05-ground" class="clip f05-ground" data-start="0" data-duration="3" data-track-index="0"></div>
 
-    <div id="f05-stage" class="clip f05-stage" data-start="0" data-duration="2.8" data-track-index="1">
+    <div id="f05-stage" class="clip f05-stage" data-start="0" data-duration="3" data-track-index="1">
       <div class="f05-world" id="f05-world">
 
         <!-- titles (typed letter by letter) -->
@@ -164,7 +164,7 @@
       </div>
     </div>
 
-    <svg id="f05-grain" class="clip f05-grain" data-start="0" data-duration="2.8" data-track-index="2" xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920">
+    <svg id="f05-grain" class="clip f05-grain" data-start="0" data-duration="3" data-track-index="2" xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920">
       <filter id="f05-noise"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="7" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
       <rect width="1080" height="1920" filter="url(#f05-noise)"/>
     </svg>
@@ -256,5 +256,6 @@
       window.__timelines = window.__timelines || {};
       window.__timelines[FID] = tl;
     })();
-  </script>
+  ;(function(){var id="05-si-sale",k=1.12;var inner=window.__timelines[id];if(!inner)return;var outer=gsap.timeline({paused:true});inner.paused(false);inner.timeScale(k);outer.add(inner,0);outer.set({},{},2.5);window.__timelines[id]=outer;})();
+</script>
 </template>

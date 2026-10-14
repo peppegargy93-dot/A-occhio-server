@@ -1,5 +1,5 @@
 <template>
-  <div id="root" data-composition-id="01-voto" data-start="0" data-duration="3.2" data-width="1080" data-height="1920">
+  <div id="root" data-composition-id="01-voto" data-start="0" data-duration="3.84" data-width="1080" data-height="1920">
     <style>
       @font-face { font-family: "Space Grotesk"; src: url("assets/fonts/space-grotesk-latin-500-normal.woff2") format("woff2"); font-weight: 500; }
       @font-face { font-family: "Space Grotesk"; src: url("assets/fonts/space-grotesk-latin-700-normal.woff2") format("woff2"); font-weight: 700; }
@@ -24,9 +24,9 @@
       #root .f01-grain { position: absolute; inset: 0; opacity: 0.08; pointer-events: none; }
     </style>
 
-    <div id="f01-bg" class="f01-bg clip" data-start="0" data-duration="3.2" data-track-index="0"></div>
+    <div id="f01-bg" class="f01-bg clip" data-start="0" data-duration="3.84" data-track-index="0"></div>
 
-    <div class="f01-world clip" id="f01-world" data-start="0" data-duration="3.2" data-track-index="1">
+    <div class="f01-world clip" id="f01-world" data-start="0" data-duration="3.84" data-track-index="1">
       <svg class="f01-logo" id="f01-logo" viewBox="0 0 280 140" aria-hidden="true">
         <ellipse cx="140" cy="70" rx="134" ry="64" fill="#123247" stroke="#E0B04B" stroke-width="7" />
         <path d="M44 82 C 70 82, 82 58, 106 58 C 128 58, 132 78, 150 78 C 166 78, 172 54, 190 50 C 204 47, 214 56, 210 64 C 206 70, 196 66, 200 60 C 212 66, 222 82, 238 82"
@@ -51,7 +51,7 @@
       <div class="f01-rev"><span class="f01-rev-txt" id="f01-rev">34 recensioni<span class="f01-underline" id="f01-underline"></span></span></div>
     </div>
 
-    <svg id="f01-grain" class="f01-grain clip" data-start="0" data-duration="3.2" data-track-index="2" width="1080" height="1920" aria-hidden="true">
+    <svg id="f01-grain" class="f01-grain clip" data-start="0" data-duration="3.84" data-track-index="2" width="1080" height="1920" aria-hidden="true">
       <filter id="f01-noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" stitchTiles="stitch" /><feColorMatrix type="saturate" values="0" /></filter>
       <rect width="1080" height="1920" filter="url(#f01-noise)" />
     </svg>
@@ -114,6 +114,7 @@
         window.__timelines = window.__timelines || {};
         window.__timelines["01-voto"] = tl;
       })();
-    </script>
+    ;(function(){var id="01-voto",k=0.9302;var inner=window.__timelines[id];if(!inner)return;var outer=gsap.timeline({paused:true});inner.paused(false);inner.timeScale(k);outer.add(inner,0);outer.set({},{},3.44);window.__timelines[id]=outer;})();
+</script>
   </div>
 </template>

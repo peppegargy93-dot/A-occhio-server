@@ -5,7 +5,7 @@ message: "Fatti raccontare da chi ti ha scelto"
 arc: Voto alto → invisibilità su Google → targa bancone (tocco) → recensione + follower → salita → menu digitale → shooting → offerta → firma
 audience: titolari di ristoranti e locali, sul telefono, autoplay muto
 mode: autonomous
-music: warm light acoustic, soft piano and pluck, soft percussion, ~100 bpm
+music: none
 ---
 
 ## Video direction
@@ -24,7 +24,7 @@ music: warm light acoustic, soft piano and pluck, soft percussion, ~100 bpm
 
 - scene: Osteria Marea logo + name on warm white, five gold stars light one by one, huge "4,8", then small "34 recensioni" underlined in coral
 - voiceover: "Da te si mangia benissimo, e chi viene lo sa."
-- duration: 3.2s
+- duration: 3.44s
 - transition_in: cut
 - status: outline
 - src: compositions/frames/01-voto.html
@@ -40,7 +40,7 @@ Scene 3 (1.8–3.2s): "34 recensioni" (56 px, muted) appears under the number wi
 
 - scene: Phone (≈70% height) with search "ristoranti vicino a me": two blurred generic venues (2.341, 1.870) above Osteria Marea 4,8 · 34 recensioni circled in coral; title "Cinque stelle. Ma ti trovano in pochi."
 - voiceover: "Ma su Google, chi ti cerca trova prima gli altri."
-- duration: 3.4s
+- duration: 3.81s
 - transition_in: zoom-through
 - status: outline
 - src: compositions/frames/02-ricerca.html
@@ -56,7 +56,7 @@ Scene 3 (2.2–3.4s): coral hand-drawn circle draws around the Osteria Marea row
 
 - scene: Counter seen from the front, dark plexi plaque in Osteria Marea colors (navy, gold logo, "Com'è andata? Tocca qui", NFC icon); a phone enters from below and touches it; coral concentric waves; title "Basta un tocco."
 - voiceover: "Con Passaparola, sul bancone c'è una targa: basta avvicinare il telefono…"
-- duration: 3.4s
+- duration: 4.12s
 - transition_in: push-slide UP
 - status: outline
 - src: compositions/frames/03-bancone.html
@@ -72,7 +72,7 @@ Scene 3 (2.4–3.4s): title "Basta un tocco." types at top (y≈200); camera sta
 
 - scene: Phone (70% height) on Osteria Marea venue page: "Com'è andata?" with IT EN DE FR ES cycling; tap "Scrivi la recensione su Google" → stars fill → "Grazie di cuore" + confetti; then tap "Seguici su Instagram" → heart + "+1 follower"
 - voiceover: "…e in trenta secondi ti lascia la recensione, nella sua lingua. E con un tocco, ti segue anche su Instagram."
-- duration: 6.5s
+- duration: 6.4s
 - transition_in: cut
 - status: outline
 - src: compositions/frames/04-recensione-follower.html
@@ -90,7 +90,7 @@ Scene 5 (5.2–6.5s): heart pops + "+1 follower" badge; title swaps to "E un fol
 
 - scene: Huge "34" rolls to "300", then the search ranking: Osteria Marea climbs to #1 with an arrow; title "Più recensioni. Più in alto."
 - voiceover: "Più recensioni, più in alto su Google."
-- duration: 2.8s
+- duration: 2.5s
 - transition_in: zoom-through
 - status: outline
 - src: compositions/frames/05-si-sale.html
@@ -105,7 +105,7 @@ Scene 2 (1.2–2.8s): ranking card below (3 rows) reorders, Osteria Marea from #
 
 - scene: Table from above with the menu plaque (Osteria Marea colors); tap → digital menu: header + "Oggi in cucina: Linguine allo scoglio"; categories Antipasti / Primi / Secondi / Dolci scroll with dish photos; tap a dish → sheet with big photo, allergens, "Aggiungi a La mia scelta"; bottom bar "La mia scelta · 2" → "Mostrala al cameriere"
 - voiceover: "Sul tavolo c'è il tuo nuovo menu, da sfogliare col telefono: ogni piatto con la sua foto, gli allergeni e il piatto del giorno."
-- duration: 8.5s
+- duration: 7.6s
 - transition_in: push-slide UP
 - status: outline
 - src: compositions/frames/06-menu.html
@@ -123,7 +123,7 @@ Scene 5 (6.6–8.5s): bottom bar slides in "La mia scelta · 2" (badge pops), th
 
 - scene: Camera viewfinder with REC over linguine from above; shutter + flash; photo shrinks and flies into the menu on a phone, with Osteria Marea color swatches beside it; title "Le foto le facciamo noi."
 - voiceover: "E le foto le scattiamo noi, piatto per piatto."
-- duration: 3.2s
+- duration: 5.2s
 - transition_in: zoom-through
 - status: outline
 - src: compositions/frames/07-shooting.html
@@ -155,7 +155,7 @@ Scene 2 (1.2–2.6s): "Da 400 €" (200 px, ink, "400 €" coral) lands centered
 
 - scene: passaparola wordmark composes as in v2 with the mascot star; "Fatti raccontare da chi ti ha scelto." below; after ~1 s "una produzione" + Alici Come Prima logo (PNG, unmodified) enters small at the bottom; closes on white, 1.2 s hold
 - voiceover: "Passaparola. Fatti raccontare da chi ti ha scelto."
-- duration: 4.4s
+- duration: 4.65s
 - transition_in: blur-crossfade
 - status: outline
 - src: compositions/frames/09-finale.html

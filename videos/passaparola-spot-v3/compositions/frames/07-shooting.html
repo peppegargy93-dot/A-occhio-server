@@ -147,11 +147,11 @@
     #f07-grain { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; opacity: 0.08; pointer-events: none; z-index: 21; }
   </style>
 
-  <div id="root" data-composition-id="07-shooting" data-start="0" data-duration="3.2" data-width="1080" data-height="1920">
-    <div id="f07-ground-light" class="clip" data-start="0" data-duration="3.2" data-track-index="0"></div>
-    <div id="f07-ground-dark" class="clip" data-start="0" data-duration="3.2" data-track-index="1"></div>
+  <div id="root" data-composition-id="07-shooting" data-start="0" data-duration="5.7" data-width="1080" data-height="1920">
+    <div id="f07-ground-light" class="clip" data-start="0" data-duration="5.7" data-track-index="0"></div>
+    <div id="f07-ground-dark" class="clip" data-start="0" data-duration="5.7" data-track-index="1"></div>
 
-    <div id="f07-stage" class="clip" data-start="0" data-duration="3.2" data-track-index="2">
+    <div id="f07-stage" class="clip" data-start="0" data-duration="5.7" data-track-index="2">
       <div id="f07-world">
 
         <!-- phone with the Osteria Marea menu (enters after the shot) -->
@@ -217,9 +217,9 @@
       <div id="f07-title-b" class="f07-abs f07-title">le facciamo noi.</div>
     </div>
 
-    <div id="f07-flash" class="clip" data-start="0" data-duration="3.2" data-track-index="3"></div>
+    <div id="f07-flash" class="clip" data-start="0" data-duration="5.7" data-track-index="3"></div>
 
-    <svg id="f07-grain" class="clip" data-start="0" data-duration="3.2" data-track-index="4" width="1080" height="1920" aria-hidden="true">
+    <svg id="f07-grain" class="clip" data-start="0" data-duration="5.7" data-track-index="4" width="1080" height="1920" aria-hidden="true">
       <defs>
         <filter id="f07-grain-f" x="0" y="0" width="100%" height="100%">
           <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" stitchTiles="stitch"/>
@@ -321,5 +321,6 @@
       window.__timelines = window.__timelines || {};
       window.__timelines[FID] = tl;
     })();
-  </script>
+  ;(function(){var id="07-shooting",k=0.7442;var inner=window.__timelines[id];if(!inner)return;var outer=gsap.timeline({paused:true});inner.paused(false);inner.timeScale(k);outer.add(inner,0);outer.set({},{},5.2);window.__timelines[id]=outer;})();
+</script>
 </template>

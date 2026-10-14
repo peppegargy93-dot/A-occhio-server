@@ -1,0 +1,298 @@
+<template>
+  <div
+    id="root"
+    data-composition-id="09-finale"
+    data-start="0"
+    data-duration="4.4"
+    data-width="1080"
+    data-height="1920"
+  >
+    <style>
+      @font-face {
+        font-family: "Space Grotesk";
+        font-weight: 500;
+        font-style: normal;
+        src: url("assets/fonts/space-grotesk-latin-500-normal.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Space Grotesk";
+        font-weight: 700;
+        font-style: normal;
+        src: url("assets/fonts/space-grotesk-latin-700-normal.woff2") format("woff2");
+      }
+      #root {
+        position: relative;
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        font-family: "Space Grotesk", sans-serif;
+      }
+      #f09-bg {
+        position: absolute;
+        inset: 0;
+        background: #faf6ef;
+      }
+      #f09-world {
+        position: absolute;
+        inset: 0;
+        transform-origin: 540px 900px;
+      }
+      #f09-word {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 685px;
+        display: flex;
+        justify-content: center;
+        align-items: baseline;
+        font-weight: 700;
+        font-size: 150px;
+        line-height: 1;
+        letter-spacing: -0.01em;
+        color: #1f1a17;
+        white-space: nowrap;
+      }
+      .f09-ch {
+        display: inline-block;
+        position: relative;
+      }
+      .f09-p {
+        color: #b5392c;
+      }
+      .f09-tail {
+        position: absolute;
+        top: 15px;
+        width: 33px;
+        height: 33px;
+        background: #b5392c;
+        opacity: 0.25;
+      }
+      #f09-tail-a {
+        left: -24px;
+        border-radius: 50% 50% 0 50%;
+        transform-origin: 100% 100%;
+      }
+      #f09-tail-b {
+        right: -24px;
+        border-radius: 50% 50% 50% 0;
+        transform-origin: 0% 100%;
+      }
+      .f09-sline {
+        position: absolute;
+        left: 0;
+        right: 0;
+        text-align: center;
+        font-weight: 500;
+        font-size: 60px;
+        line-height: 1.2;
+        letter-spacing: 0.04em;
+        color: #1f1a17;
+        white-space: pre;
+      }
+      #f09-sline-1 { top: 892px; }
+      #f09-sline-2 { top: 966px; }
+      .f09-sl {
+        display: inline-block;
+      }
+      #f09-mascot {
+        position: absolute;
+        left: 858px;
+        top: 556px;
+        width: 108px;
+        height: 108px;
+        transform-origin: 50% 90%;
+      }
+      #f09-mascot img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+      }
+      #f09-prod {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 1150px;
+        text-align: center;
+        font-weight: 500;
+        font-size: 36px;
+        line-height: 1.2;
+        letter-spacing: 0.08em;
+        color: #6b625b;
+      }
+      #f09-logo {
+        position: absolute;
+        left: 350px;
+        top: 1206px;
+        width: 380px;
+        height: 243px;
+        display: block;
+      }
+      #f09-dolphin {
+        position: absolute;
+        left: 275px;
+        top: 1203px;
+        width: 250px;
+        height: 250px;
+        display: block;
+      }
+      #f09-grain {
+        position: absolute;
+        inset: 0;
+        opacity: 0.08;
+        pointer-events: none;
+      }
+      #f09-grain svg {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+    </style>
+
+    <div id="f09-bg" class="clip" data-start="0" data-duration="4.4" data-track-index="0"></div>
+
+    <div id="f09-world" class="clip" data-start="0" data-duration="4.4" data-track-index="1">
+      <div id="f09-word">
+        <span id="f09-p1" class="f09-ch f09-p">p<span id="f09-tail-a" class="f09-tail"></span></span><span class="f09-ch f09-mid">a</span><span class="f09-ch f09-mid">s</span><span class="f09-ch f09-mid">s</span><span class="f09-ch f09-mid">a</span><span id="f09-p2" class="f09-ch f09-p">p<span id="f09-tail-b" class="f09-tail"></span></span><span class="f09-ch f09-end">a</span><span class="f09-ch f09-end">r</span><span class="f09-ch f09-end">o</span><span class="f09-ch f09-end">l</span><span class="f09-ch f09-end">a</span>
+      </div>
+
+      <div id="f09-sline-1" class="f09-sline">Fatti raccontare</div>
+      <div id="f09-sline-2" class="f09-sline">da chi ti ha scelto.</div>
+
+      <div id="f09-mascot">
+        <img id="f09-m-open" src="assets/brand/mascot.svg" alt="" />
+        <img id="f09-m-wink" src="assets/brand/mascot-wink.svg" alt="" style="opacity:0" />
+      </div>
+
+      <div id="f09-prod">una produzione</div>
+      <img id="f09-logo" src="assets/logos/alici-come-prima-logo.png" alt="Alici Come Prima" />
+      <img id="f09-dolphin" src="assets/logos/alici-come-prima-delfino.png" alt="" />
+    </div>
+
+    <div id="f09-grain" class="clip" data-start="0" data-duration="4.4" data-track-index="2">
+      <svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920">
+        <filter id="f09-noise">
+          <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="9" stitchTiles="stitch" />
+          <feColorMatrix type="saturate" values="0" />
+        </filter>
+        <rect width="100%" height="100%" filter="url(#f09-noise)" />
+      </svg>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script>
+      (function () {
+        var root = document.querySelector('[data-composition-id="09-finale"]');
+        var q = function (sel) { return root.querySelector(sel); };
+        var qa = function (sel) { return Array.prototype.slice.call(root.querySelectorAll(sel)); };
+
+        // Critically damped spring (no overshoot), normalized to land at 1.
+        function critSpring(w) {
+          var end = 1 - (1 + w) * Math.exp(-w);
+          return function (p) { return (1 - (1 + w * p) * Math.exp(-w * p)) / end; };
+        }
+        var spring = critSpring(7);
+        var springSoft = critSpring(5);
+
+        // Split slogan lines into per-letter spans (deterministic, synchronous).
+        qa('.f09-sline').forEach(function (line) {
+          var text = line.textContent;
+          line.textContent = "";
+          for (var i = 0; i < text.length; i++) {
+            var s = document.createElement("span");
+            s.className = "f09-sl";
+            s.textContent = text[i] === " " ? " " : text[i];
+            line.appendChild(s);
+          }
+        });
+
+        var world = q('#f09-world');
+        var p1 = q('#f09-p1');
+        var p2 = q('#f09-p2');
+        var tailA = q('#f09-tail-a');
+        var tailB = q('#f09-tail-b');
+        var mid = qa('.f09-mid');
+        var end = qa('.f09-end');
+        var letters = qa('.f09-sl');
+        var mascot = q('#f09-mascot');
+        var mOpen = q('#f09-m-open');
+        var mWink = q('#f09-m-wink');
+        var prod = q('#f09-prod');
+        var logo = q('#f09-logo');
+        var dolphin = q('#f09-dolphin');
+
+        var tl = gsap.timeline({ paused: true });
+
+        // Virtual camera: motivated ~1 s legs, settling dead still at 3.2 s.
+        tl.fromTo(world,
+          { scale: 1.12, x: 40, y: 50, rotation: -1 },
+          { scale: 1.04, x: 10, y: 20, rotation: -0.3, duration: 1.0, ease: "power2.out" },
+          0);
+        tl.to(world,
+          { scale: 1.015, x: 0, y: 6, rotation: 0, duration: 1.0, ease: "sine.inOut" },
+          1.0);
+        tl.to(world,
+          { scale: 1, x: 0, y: 0, duration: 1.2, ease: springSoft },
+          2.0);
+
+        // Scene 1 (0.0-0.8): the two coral "p" enter from opposite sides, then the word completes.
+        tl.fromTo(p1,
+          { x: -760, rotation: -14, opacity: 0 },
+          { x: 0, rotation: 0, opacity: 1, duration: 0.6, ease: spring },
+          0.03);
+        tl.fromTo(p2,
+          { x: 760, rotation: 14, opacity: 0 },
+          { x: 0, rotation: 0, opacity: 1, duration: 0.6, ease: spring },
+          0.08);
+        tl.fromTo(tailA, { scale: 0 }, { scale: 1, duration: 0.3, ease: spring }, 0.4);
+        tl.fromTo(tailB, { scale: 0 }, { scale: 1, duration: 0.3, ease: spring }, 0.46);
+        tl.fromTo(mid,
+          { y: 56, scale: 0.6, opacity: 0 },
+          { y: 0, scale: 1, opacity: 1, duration: 0.34, ease: spring, stagger: 0.04 },
+          0.36);
+        tl.fromTo(end,
+          { y: 56, scale: 0.6, opacity: 0 },
+          { y: 0, scale: 1, opacity: 1, duration: 0.34, ease: spring, stagger: 0.04 },
+          0.48);
+
+        // Scene 2 (0.8-2.0): slogan types letter by letter; mascot lands (overshoot) and winks.
+        tl.fromTo(letters,
+          { y: 12, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.12, ease: spring, stagger: 0.022 },
+          0.85);
+        tl.fromTo(mascot,
+          { y: -240, scale: 0.4, rotation: -30, opacity: 0 },
+          { y: 0, scale: 1, rotation: 0, opacity: 1, duration: 0.42, ease: "back.out(2.2)" },
+          0.95);
+        tl.to(mascot, { scaleY: 0.9, duration: 0.07, ease: "power2.out" }, 1.55);
+        tl.to(mascot, { scaleY: 1, duration: 0.14, ease: "back.out(2)" }, 1.62);
+        tl.set(mOpen, { opacity: 0 }, 1.56);
+        tl.set(mWink, { opacity: 1 }, 1.56);
+        tl.set(mOpen, { opacity: 1 }, 1.82);
+        tl.set(mWink, { opacity: 0 }, 1.82);
+
+        // Scene 3 (2.0-3.2): "una produzione" + dolphin soft entrance, then the full logo settles.
+        tl.fromTo(prod,
+          { y: 24, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.5, ease: spring },
+          2.0);
+        tl.fromTo(dolphin,
+          { x: 133, y: 40, scale: 0.85, opacity: 0 },
+          { x: 133, y: 0, scale: 1, opacity: 1, duration: 0.45, ease: spring },
+          2.1);
+        tl.to(dolphin, { x: 0, duration: 0.45, ease: spring }, 2.55);
+        tl.fromTo(logo,
+          { y: 0, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.45, ease: "power1.inOut" },
+          2.65);
+        tl.to(dolphin, { opacity: 0, duration: 0.3, ease: "power1.inOut" }, 2.85);
+
+        // Scene 4 (3.2-4.4): hold still on white.
+        tl.to({}, { duration: 0.01 }, 4.39);
+
+        window.__timelines = window.__timelines || {};
+        window.__timelines["09-finale"] = tl;
+      })();
+    </script>
+  </div>
+</template>
