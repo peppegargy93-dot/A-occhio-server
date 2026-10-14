@@ -254,11 +254,11 @@
           <div id="f06-screen" class="f06-abs">
 
             <div id="f06-view" class="f06-abs">
-              <div id="f06-scroll">
+              <div id="f06-scroll" data-layout-allow-overlap>
                 <div id="f06-today" class="f06-abs">
                   <div id="f06-today-img"><div class="f06-img" style="background: url('assets/food/linguine-allo-scoglio.svg') center / cover no-repeat;"></div></div>
                   <div id="f06-today-kicker">Oggi in cucina</div>
-                  <div id="f06-today-name">Linguine allo scoglio</div>
+                  <div id="f06-today-name" data-layout-allow-overlap>Linguine allo scoglio</div>
                   <div id="f06-today-price">18 €</div>
                 </div>
 
@@ -296,10 +296,10 @@
 
               <!-- category tabs: dock to the top as the list scrolls -->
               <div id="f06-tabs" class="f06-abs">
-                <div class="f06-tab" id="f06-tab-0">Antipasti</div>
-                <div class="f06-tab" id="f06-tab-1">Primi</div>
-                <div class="f06-tab" id="f06-tab-2">Secondi</div>
-                <div class="f06-tab" id="f06-tab-3">Dolci</div>
+                <div class="f06-tab" id="f06-tab-0" data-layout-allow-overlap>Antipasti</div>
+                <div class="f06-tab" id="f06-tab-1" data-layout-allow-overlap>Primi</div>
+                <div class="f06-tab" id="f06-tab-2" data-layout-allow-overlap>Secondi</div>
+                <div class="f06-tab" id="f06-tab-3" data-layout-allow-overlap>Dolci</div>
                 <div class="f06-tab f06-tab-on" id="f06-tabon-0" data-layout-allow-overlap style="left:22px;width:160px;">Antipasti</div>
                 <div class="f06-tab f06-tab-on" id="f06-tabon-1" data-layout-allow-overlap style="left:196px;width:104px;">Primi</div>
                 <div class="f06-tab f06-tab-on" id="f06-tabon-2" data-layout-allow-overlap style="left:314px;width:148px;">Secondi</div>
@@ -308,7 +308,7 @@
               </div>
             </div>
 
-            <div id="f06-header" class="f06-abs">
+            <div id="f06-header" class="f06-abs" data-layout-allow-overlap>
               <svg id="f06-hdr-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 80">
                 <ellipse cx="80" cy="40" rx="74" ry="36" fill="none" stroke="#E0B04B" stroke-width="5"/>
                 <path d="M28 44 C 44 44, 50 26, 66 26 C 82 26, 86 52, 102 52 C 116 52, 122 40, 132 38" fill="none" stroke="#E0B04B" stroke-width="6" stroke-linecap="round"/>
@@ -460,6 +460,7 @@
       var scroll = q("f06-scroll"), tabs = q("f06-tabs");
       tl.fromTo(scroll, { y: 0 }, { y: -276, duration: 0.55, ease: "power2.inOut" }, 3.0);
       tl.to(tabs, { y: 0, duration: 0.55, ease: "power2.inOut" }, 3.0);                 // tabs dock
+      tl.to(q("f06-today"), { opacity: 0, duration: 0.3, ease: "power1.out" }, 3.1);   // card leaves under the header
       tl.to(scroll, { y: -560, duration: 0.45, ease: "power2.inOut" }, 3.6);
       setTab(1, 0, 3.75);
       tl.to(scroll, { y: -860, duration: 0.45, ease: "power2.inOut" }, 4.05);

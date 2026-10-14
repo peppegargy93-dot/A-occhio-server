@@ -1,0 +1,2812 @@
+{
+  "ok": false,
+  "strict": false,
+  "browserSkipped": false,
+  "lint": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 4,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "composition_file_too_large",
+        "severity": "warning",
+        "message": "This HTML composition file has 731 lines. Smaller sub-compositions are easier to read, iterate on, and diff.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "/home/user/A-occhio-server/videos/passaparola-spot-v3/index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Split coherent scenes or layers into separate .html files under compositions/, then mount them from the parent with data-composition-src so each file stays small enough to inspect, revise, and validate independently."
+      },
+      {
+        "code": "caption_track_kind_missing",
+        "severity": "warning",
+        "message": "<div id=\"el-captions\"> looks like captions but is not marked as such, so the timeline cannot group it on the caption track.",
+        "selector": "#el-captions",
+        "dataAttributes": {},
+        "sourceFile": "/home/user/A-occhio-server/videos/passaparola-spot-v3/index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Add data-track-kind=\"captions\" to <div id=\"el-captions\">."
+      },
+      {
+        "code": "composition_file_too_large",
+        "severity": "warning",
+        "message": "This HTML composition file has 323 lines. Smaller sub-compositions are easier to read, iterate on, and diff.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "/home/user/A-occhio-server/videos/passaparola-spot-v3/compositions/frames/02-ricerca.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Split this sub-composition further into smaller .html files, then mount them from the parent with data-composition-src so each file stays small enough to inspect, revise, and validate independently."
+      },
+      {
+        "code": "composition_file_too_large",
+        "severity": "warning",
+        "message": "This HTML composition file has 450 lines. Smaller sub-compositions are easier to read, iterate on, and diff.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "/home/user/A-occhio-server/videos/passaparola-spot-v3/compositions/frames/04-recensione-follower.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Split this sub-composition further into smaller .html files, then mount them from the parent with data-composition-src so each file stays small enough to inspect, revise, and validate independently."
+      }
+    ],
+    "filesScanned": 11
+  },
+  "runtime": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 6,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "clip_media_fit",
+        "severity": "warning",
+        "message": "Audio \"el-05-si-sale-voice\" is 2.42s but its slot (data-duration) is 2.50s — the slot is shortened to the media length when rendered. Set data-duration to ~2.42s if that isn't intended.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-duration": "38.02",
+          "data-width": "1080",
+          "data-height": "1920"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 1920
+        },
+        "time": 0
+      },
+      {
+        "code": "clip_media_fit",
+        "severity": "warning",
+        "message": "Audio \"el-06-menu-voice\" is 7.50s but its slot (data-duration) is 7.60s — the slot is shortened to the media length when rendered. Set data-duration to ~7.50s if that isn't intended.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-duration": "38.02",
+          "data-width": "1080",
+          "data-height": "1920"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 1920
+        },
+        "time": 0
+      },
+      {
+        "code": "clip_media_fit",
+        "severity": "warning",
+        "message": "Audio \"el-07-shooting-voice\" is 2.85s but its slot (data-duration) is 3.20s — the slot is shortened to the media length when rendered. Set data-duration to ~2.85s if that isn't intended.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-duration": "38.02",
+          "data-width": "1080",
+          "data-height": "1920"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 1920
+        },
+        "time": 0
+      },
+      {
+        "code": "clip_media_fit",
+        "severity": "warning",
+        "message": "Audio \"el-08-offerta-voice\" is 2.31s but its slot (data-duration) is 2.50s — the slot is shortened to the media length when rendered. Set data-duration to ~2.31s if that isn't intended.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-duration": "38.02",
+          "data-width": "1080",
+          "data-height": "1920"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 1920
+        },
+        "time": 0
+      },
+      {
+        "code": "clip_media_fit",
+        "severity": "warning",
+        "message": "Audio \"el-09-finale-voice\" is 3.41s but its slot (data-duration) is 4.45s — the slot is shortened to the media length when rendered. Set data-duration to ~3.41s if that isn't intended.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-duration": "38.02",
+          "data-width": "1080",
+          "data-height": "1920"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 1920
+        },
+        "time": 0
+      },
+      {
+        "code": "gsap_tween_tail",
+        "severity": "warning",
+        "message": "In timeline \"main\", a tween on scale of div.f04-heart ends at 16.544 s, 0.153 s after a later tween on scale ends at 16.392 s. For that tail the earlier tween takes scale back and leaves its own end value on screen, so the later tween's end never shows. End the earlier tween by 16.293 s, or add overwrite: \"auto\" to the later tween.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-duration": "38.02",
+          "data-width": "1080",
+          "data-height": "1920"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 1920
+        },
+        "time": 16.391662071681765
+      }
+    ]
+  },
+  "layout": {
+    "ok": false,
+    "errorCount": 1,
+    "warningCount": 8,
+    "infoCount": 50,
+    "findings": [
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 23.234,
+        "selector": "#f06-today-name",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 512.65,
+          "top": 585.85,
+          "right": 760.36,
+          "bottom": 681.27,
+          "width": 247.71,
+          "height": 95.41
+        },
+        "containerSelector": "#f06-header",
+        "text": "Linguine allo scoglio",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 0.78,
+        "dataAttributes": {
+          "data-layout-allow-overlap": ""
+        },
+        "sourceFile": "compositions/frames/06-menu.html",
+        "bbox": {
+          "x": 512.65,
+          "y": 585.85,
+          "width": 247.71,
+          "height": 95.41
+        },
+        "firstSeen": 23.234,
+        "lastSeen": 27.459,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          23.234,
+          27.459
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "warning",
+        "time": 17.95,
+        "selector": "div.f04-venue.f04-split > span:nth-of-type(3)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 412.44,
+          "top": 633.27,
+          "right": 439.74,
+          "bottom": 700.93,
+          "width": 27.3,
+          "height": 67.66
+        },
+        "containerSelector": "#f05-counter",
+        "text": "t",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/04-recensione-follower.html",
+        "bbox": {
+          "x": 412.44,
+          "y": 633.27,
+          "width": 27.3,
+          "height": 67.66
+        },
+        "firstSeen": 17.95,
+        "lastSeen": 18.075,
+        "occurrences": 2,
+        "heldMs": 125,
+        "times": [
+          17.95,
+          18.075
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "warning",
+        "time": 17.95,
+        "selector": "div.f04-venue.f04-split > span:nth-of-type(4)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 439.74,
+          "top": 633.27,
+          "right": 473.42,
+          "bottom": 700.93,
+          "width": 33.68,
+          "height": 67.66
+        },
+        "containerSelector": "#f05-counter",
+        "text": "e",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/04-recensione-follower.html",
+        "bbox": {
+          "x": 439.74,
+          "y": 633.27,
+          "width": 33.68,
+          "height": 67.66
+        },
+        "firstSeen": 17.95,
+        "lastSeen": 18.075,
+        "occurrences": 2,
+        "heldMs": 125,
+        "times": [
+          17.95,
+          18.075
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "warning",
+        "time": 17.95,
+        "selector": "div.f04-venue.f04-split > span:nth-of-type(5)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 473.42,
+          "top": 633.27,
+          "right": 497.54,
+          "bottom": 700.93,
+          "width": 24.12,
+          "height": 67.66
+        },
+        "containerSelector": "#f05-counter",
+        "text": "r",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/04-recensione-follower.html",
+        "bbox": {
+          "x": 473.42,
+          "y": 633.27,
+          "width": 24.12,
+          "height": 67.66
+        },
+        "firstSeen": 17.95,
+        "lastSeen": 18.075,
+        "occurrences": 2,
+        "heldMs": 125,
+        "times": [
+          17.95,
+          18.075
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "warning",
+        "time": 17.95,
+        "selector": "div.f04-venue.f04-split > span:nth-of-type(6)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 497.54,
+          "top": 633.27,
+          "right": 514.79,
+          "bottom": 700.93,
+          "width": 17.25,
+          "height": 67.66
+        },
+        "containerSelector": "#f05-counter",
+        "text": "i",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/04-recensione-follower.html",
+        "bbox": {
+          "x": 497.54,
+          "y": 633.27,
+          "width": 17.25,
+          "height": 67.66
+        },
+        "firstSeen": 17.95,
+        "lastSeen": 18.075,
+        "occurrences": 2,
+        "heldMs": 125,
+        "times": [
+          17.95,
+          18.075
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "warning",
+        "time": 17.95,
+        "selector": "div.f04-venue.f04-split > span:nth-of-type(7)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 514.79,
+          "top": 633.27,
+          "right": 548.52,
+          "bottom": 700.93,
+          "width": 33.73,
+          "height": 67.66
+        },
+        "containerSelector": "#f05-counter",
+        "text": "a",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/04-recensione-follower.html",
+        "bbox": {
+          "x": 514.79,
+          "y": 633.27,
+          "width": 33.73,
+          "height": 67.66
+        },
+        "firstSeen": 17.95,
+        "lastSeen": 18.075,
+        "occurrences": 2,
+        "heldMs": 125,
+        "times": [
+          17.95,
+          18.075
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "warning",
+        "time": 17.95,
+        "selector": "div.f04-venue.f04-split > span:nth-of-type(9)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 562.27,
+          "top": 633.27,
+          "right": 612.08,
+          "bottom": 700.93,
+          "width": 49.81,
+          "height": 67.66
+        },
+        "containerSelector": "#f05-counter",
+        "text": "M",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/04-recensione-follower.html",
+        "bbox": {
+          "x": 562.27,
+          "y": 633.27,
+          "width": 49.81,
+          "height": 67.66
+        },
+        "firstSeen": 17.95,
+        "lastSeen": 18.075,
+        "occurrences": 2,
+        "heldMs": 125,
+        "times": [
+          17.95,
+          18.075
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "warning",
+        "time": 17.95,
+        "selector": "div.f04-venue.f04-split > span:nth-of-type(10)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 612.08,
+          "top": 633.27,
+          "right": 645.82,
+          "bottom": 700.93,
+          "width": 33.74,
+          "height": 67.66
+        },
+        "containerSelector": "#f05-counter",
+        "text": "a",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/04-recensione-follower.html",
+        "bbox": {
+          "x": 612.08,
+          "y": 633.27,
+          "width": 33.74,
+          "height": 67.66
+        },
+        "firstSeen": 17.95,
+        "lastSeen": 18.075,
+        "occurrences": 2,
+        "heldMs": 125,
+        "times": [
+          17.95,
+          18.075
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "warning",
+        "time": 17.95,
+        "selector": "div.f04-venue.f04-split > span:nth-of-type(11)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 645.82,
+          "top": 633.27,
+          "right": 669.94,
+          "bottom": 700.93,
+          "width": 24.12,
+          "height": 67.66
+        },
+        "containerSelector": "#f05-counter",
+        "text": "r",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/04-recensione-follower.html",
+        "bbox": {
+          "x": 645.82,
+          "y": 633.27,
+          "width": 24.12,
+          "height": 67.66
+        },
+        "firstSeen": 17.95,
+        "lastSeen": 18.075,
+        "occurrences": 2,
+        "heldMs": 125,
+        "times": [
+          17.95,
+          18.075
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 2.112,
+        "selector": "#f01-world",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": -18.9,
+          "top": -49.01,
+          "right": 1098.9,
+          "bottom": 1938.19,
+          "width": 1117.8,
+          "height": 1987.2
+        },
+        "containerSelector": "#el-01-voto > div:nth-of-type(1)",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1080,
+          "bottom": 1920,
+          "width": 1080,
+          "height": 1920
+        },
+        "overflow": {
+          "left": 18.9,
+          "right": 18.9,
+          "top": 49.01,
+          "bottom": 18.19
+        },
+        "dataAttributes": {
+          "data-start": "0",
+          "data-duration": "3.84",
+          "data-track-index": "1"
+        },
+        "sourceFile": "compositions/frames/01-voto.html",
+        "bbox": {
+          "x": -18.9,
+          "y": -49.01,
+          "width": 1117.8,
+          "height": 1987.2
+        },
+        "firstSeen": 2.112,
+        "lastSeen": 2.112,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          2.112
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 3.615,
+        "selector": "#f01-name > span:nth-of-type(1)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 213.44,
+          "top": 222.59,
+          "right": 278.67,
+          "bottom": 344.83,
+          "width": 65.23,
+          "height": 122.24
+        },
+        "containerSelector": "#f02-l1 > span:nth-of-type(1)",
+        "text": "O",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/01-voto.html",
+        "bbox": {
+          "x": 213.44,
+          "y": 222.59,
+          "width": 65.23,
+          "height": 122.24
+        },
+        "firstSeen": 3.615,
+        "lastSeen": 3.615,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          3.615
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 3.615,
+        "selector": "#f01-name > span:nth-of-type(2)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 278.67,
+          "top": 222.59,
+          "right": 329.44,
+          "bottom": 344.83,
+          "width": 50.77,
+          "height": 122.24
+        },
+        "containerSelector": "#f02-l1 > span:nth-of-type(1)",
+        "text": "s",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/01-voto.html",
+        "bbox": {
+          "x": 278.67,
+          "y": 222.59,
+          "width": 50.77,
+          "height": 122.24
+        },
+        "firstSeen": 3.615,
+        "lastSeen": 3.615,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          3.615
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 7.729,
+        "selector": "#f03-pp",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 481.63,
+          "top": 1539.79,
+          "right": 600.39,
+          "bottom": 1561.15,
+          "width": 118.76,
+          "height": 21.36
+        },
+        "containerSelector": "#cap > div:nth-of-type(5) > span:nth-of-type(2)",
+        "text": "passaparola",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/03-bancone.html",
+        "bbox": {
+          "x": 481.63,
+          "y": 1539.79,
+          "width": 118.76,
+          "height": 21.36
+        },
+        "firstSeen": 7.729,
+        "lastSeen": 7.729,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          7.729
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 10.561,
+        "selector": "#f03-ask",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 318.46,
+          "top": 951.55,
+          "right": 763.65,
+          "bottom": 1032.88,
+          "width": 445.19,
+          "height": 81.33
+        },
+        "containerSelector": "#f03-screen-bloom",
+        "text": "Com'è andata?",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/03-bancone.html",
+        "bbox": {
+          "x": 318.46,
+          "y": 951.55,
+          "width": 445.19,
+          "height": 81.33
+        },
+        "firstSeen": 10.561,
+        "lastSeen": 10.561,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          10.561
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 10.561,
+        "selector": "#f03-tap",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 429.28,
+          "top": 1290.59,
+          "right": 652.82,
+          "bottom": 1349.74,
+          "width": 223.53,
+          "height": 59.15
+        },
+        "containerSelector": "#f03-screen-bloom",
+        "text": "Tocca qui",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/03-bancone.html",
+        "bbox": {
+          "x": 429.28,
+          "y": 1290.59,
+          "width": 223.53,
+          "height": 59.15
+        },
+        "firstSeen": 10.561,
+        "lastSeen": 10.561,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          10.561
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 10.561,
+        "selector": "#f03-pp",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 479.37,
+          "top": 1383.54,
+          "right": 602.73,
+          "bottom": 1405.72,
+          "width": 123.36,
+          "height": 22.18
+        },
+        "containerSelector": "#f03-screen-bloom",
+        "text": "passaparola",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/03-bancone.html",
+        "bbox": {
+          "x": 479.37,
+          "y": 1383.54,
+          "width": 123.36,
+          "height": 22.18
+        },
+        "firstSeen": 10.561,
+        "lastSeen": 10.561,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          10.561
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 10.561,
+        "selector": "#f03-cam",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": -30.35,
+          "top": -53.95,
+          "right": 1110.35,
+          "bottom": 1973.95,
+          "width": 1140.7,
+          "height": 2027.9
+        },
+        "containerSelector": "#f03-stage",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1080,
+          "bottom": 1920,
+          "width": 1080,
+          "height": 1920
+        },
+        "overflow": {
+          "left": 30.35,
+          "right": 30.35,
+          "top": 53.95,
+          "bottom": 53.95
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/03-bancone.html",
+        "bbox": {
+          "x": -30.35,
+          "y": -53.95,
+          "width": 1140.7,
+          "height": 2027.9
+        },
+        "firstSeen": 10.561,
+        "lastSeen": 10.561,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          10.561
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 12.964,
+        "selector": "div.f04-ask > div:nth-of-type(1)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 330.08,
+          "top": 853.73,
+          "right": 733.47,
+          "bottom": 924.49,
+          "width": 403.39,
+          "height": 70.76
+        },
+        "containerSelector": "div.f04-ask > div:nth-of-type(5)",
+        "text": "Com'è andata?",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/04-recensione-follower.html",
+        "bbox": {
+          "x": 330.08,
+          "y": 853.73,
+          "width": 403.39,
+          "height": 70.76
+        },
+        "firstSeen": 12.964,
+        "lastSeen": 12.964,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          12.964
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 14.786,
+        "selector": "div.f04-ask > div:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 343.28,
+          "top": 831.99,
+          "right": 736.67,
+          "bottom": 900.99,
+          "width": 393.39,
+          "height": 69
+        },
+        "containerSelector": "div.f04-card",
+        "text": "Com'è andata?",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/04-recensione-follower.html",
+        "bbox": {
+          "x": 343.28,
+          "y": 831.99,
+          "width": 393.39,
+          "height": 69
+        },
+        "firstSeen": 14.786,
+        "lastSeen": 14.786,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          14.786
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 14.786,
+        "selector": "div.f04-pills > div:nth-of-type(7)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 308.08,
+          "top": 936.49,
+          "right": 335.89,
+          "bottom": 975.49,
+          "width": 27.81,
+          "height": 39
+        },
+        "containerSelector": "div.f04-card",
+        "text": "IT",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/04-recensione-follower.html",
+        "bbox": {
+          "x": 308.08,
+          "y": 936.49,
+          "width": 27.81,
+          "height": 39
+        },
+        "firstSeen": 14.786,
+        "lastSeen": 14.786,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          14.786
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 14.786,
+        "selector": "div.f04-pills > div:nth-of-type(8)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 411.42,
+          "top": 936.49,
+          "right": 450.55,
+          "bottom": 975.49,
+          "width": 39.13,
+          "height": 39
+        },
+        "containerSelector": "div.f04-card",
+        "text": "EN",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/04-recensione-follower.html",
+        "bbox": {
+          "x": 411.42,
+          "y": 936.49,
+          "width": 39.13,
+          "height": 39
+        },
+        "firstSeen": 14.786,
+        "lastSeen": 14.786,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          14.786
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 14.786,
+        "selector": "div.f04-pills > div:nth-of-type(9)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 520.47,
+          "top": 936.49,
+          "right": 559.5,
+          "bottom": 975.49,
+          "width": 39.03,
+          "height": 39
+        },
+        "containerSelector": "div.f04-card",
+        "text": "DE",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/04-recensione-follower.html",
+        "bbox": {
+          "x": 520.47,
+          "y": 936.49,
+          "width": 39.03,
+          "height": 39
+        },
+        "firstSeen": 14.786,
+        "lastSeen": 14.786,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          14.786
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 14.786,
+        "selector": "div.f04-pills > div:nth-of-type(10)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 630.27,
+          "top": 936.49,
+          "right": 667.69,
+          "bottom": 975.49,
+          "width": 37.42,
+          "height": 39
+        },
+        "containerSelector": "div.f04-card",
+        "text": "FR",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/04-recensione-follower.html",
+        "bbox": {
+          "x": 630.27,
+          "y": 936.49,
+          "width": 37.42,
+          "height": 39
+        },
+        "firstSeen": 14.786,
+        "lastSeen": 14.786,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          14.786
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 14.786,
+        "selector": "div.f04-pills > div:nth-of-type(11)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 739.31,
+          "top": 936.49,
+          "right": 776.64,
+          "bottom": 975.49,
+          "width": 37.33,
+          "height": 39
+        },
+        "containerSelector": "div.f04-card",
+        "text": "ES",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/04-recensione-follower.html",
+        "bbox": {
+          "x": 739.31,
+          "y": 936.49,
+          "width": 37.33,
+          "height": 39
+        },
+        "firstSeen": 14.786,
+        "lastSeen": 14.786,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          14.786
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 14.786,
+        "selector": "div.f04-shine",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 894.99,
+          "top": 1113.99,
+          "right": 1004.99,
+          "bottom": 1249.99,
+          "width": 110,
+          "height": 136
+        },
+        "containerSelector": "div.f04-btn.f04-btn-g",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 254.99,
+          "top": 1125.99,
+          "right": 824.99,
+          "bottom": 1237.99,
+          "width": 570,
+          "height": 112
+        },
+        "overflow": {
+          "right": 180,
+          "top": 12,
+          "bottom": 12
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/04-recensione-follower.html",
+        "bbox": {
+          "x": 894.99,
+          "y": 1113.99,
+          "width": 110,
+          "height": 136
+        },
+        "firstSeen": 14.786,
+        "lastSeen": 14.786,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          14.786
+        ]
+      },
+      {
+        "code": "escaped_container",
+        "severity": "info",
+        "time": 14.786,
+        "selector": "div.f04-shine",
+        "message": "Positioned element renders far outside its offset parent — its coordinates were likely computed in a different frame (canvas/viewport pixels).",
+        "rect": {
+          "left": 894.99,
+          "top": 1113.99,
+          "right": 1004.99,
+          "bottom": 1249.99,
+          "width": 110,
+          "height": 136
+        },
+        "containerSelector": "div.f04-btn.f04-btn-g",
+        "text": "",
+        "fixHint": "Compute left/top in the offset parent's frame (subtract its rect), or mark intentional placement with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 254.99,
+          "top": 1125.99,
+          "right": 824.99,
+          "bottom": 1237.99,
+          "width": 570,
+          "height": 112
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/04-recensione-follower.html",
+        "bbox": {
+          "x": 894.99,
+          "y": 1113.99,
+          "width": 110,
+          "height": 136
+        },
+        "firstSeen": 14.786,
+        "lastSeen": 14.786,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          14.786
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 16.704,
+        "selector": "div.f04-tblock.f04-tA > span:nth-of-type(1) > span:nth-of-type(2)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 256.41,
+          "top": 153.78,
+          "right": 312.38,
+          "bottom": 266.78,
+          "width": 55.97,
+          "height": 113
+        },
+        "containerSelector": "div.f04-tblock.f04-tB > span:nth-of-type(1) > span:nth-of-type(1)",
+        "text": "n",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/04-recensione-follower.html",
+        "bbox": {
+          "x": 256.41,
+          "y": 153.78,
+          "width": 55.97,
+          "height": 113
+        },
+        "firstSeen": 16.704,
+        "lastSeen": 16.704,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          16.704
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 17.95,
+        "selector": "div.f04-venue.f04-split > span:nth-of-type(2)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 381.57,
+          "top": 633.27,
+          "right": 412.44,
+          "bottom": 700.93,
+          "width": 30.87,
+          "height": 67.66
+        },
+        "containerSelector": "#f05-counter",
+        "text": "s",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/04-recensione-follower.html",
+        "bbox": {
+          "x": 381.57,
+          "y": 633.27,
+          "width": 30.87,
+          "height": 67.66
+        },
+        "firstSeen": 17.95,
+        "lastSeen": 17.95,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          17.95
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 17.95,
+        "selector": "div.f04-venue.f04-split > span:nth-of-type(12)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 669.94,
+          "top": 633.27,
+          "right": 703.62,
+          "bottom": 700.93,
+          "width": 33.68,
+          "height": 67.66
+        },
+        "containerSelector": "#f05-counter",
+        "text": "e",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/04-recensione-follower.html",
+        "bbox": {
+          "x": 669.94,
+          "y": 633.27,
+          "width": 33.68,
+          "height": 67.66
+        },
+        "firstSeen": 17.95,
+        "lastSeen": 17.95,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          17.95
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 19.01,
+        "selector": "#f05-world",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": -14.2,
+          "top": -9.45,
+          "right": 1094.2,
+          "bottom": 1961.04,
+          "width": 1108.4,
+          "height": 1970.5
+        },
+        "containerSelector": "#f05-stage",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1080,
+          "bottom": 1920,
+          "width": 1080,
+          "height": 1920
+        },
+        "overflow": {
+          "left": 14.2,
+          "right": 14.2,
+          "top": 9.45,
+          "bottom": 41.04
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/05-si-sale.html",
+        "bbox": {
+          "x": -14.2,
+          "y": -9.45,
+          "width": 1108.4,
+          "height": 1970.5
+        },
+        "firstSeen": 19.01,
+        "lastSeen": 19.01,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.01
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 19.197,
+        "selector": "#f05-b-r2",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 122.21,
+          "top": 1056.98,
+          "right": 148.85,
+          "bottom": 1114.04,
+          "width": 26.64,
+          "height": 57.06
+        },
+        "containerSelector": "#f05-m-r3",
+        "text": "2",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/05-si-sale.html",
+        "bbox": {
+          "x": 122.21,
+          "y": 1056.98,
+          "width": 26.64,
+          "height": 57.06
+        },
+        "firstSeen": 19.197,
+        "lastSeen": 19.322,
+        "occurrences": 2,
+        "heldMs": 125,
+        "times": [
+          19.197,
+          19.322
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 19.197,
+        "selector": "#f05-row-b > div:nth-of-type(3) > div:nth-of-type(1)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 305.63,
+          "top": 1038.73,
+          "right": 588.12,
+          "bottom": 1087.64,
+          "width": 282.49,
+          "height": 48.91
+        },
+        "containerSelector": "#f05-row-marea > div:nth-of-type(5) > div:nth-of-type(1)",
+        "text": "Ristorante •••••",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/05-si-sale.html",
+        "bbox": {
+          "x": 305.63,
+          "y": 1038.73,
+          "width": 282.49,
+          "height": 48.91
+        },
+        "firstSeen": 19.197,
+        "lastSeen": 19.197,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.197
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 19.197,
+        "selector": "#f05-row-b > div:nth-of-type(3) > div:nth-of-type(2)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 338.81,
+          "top": 1091.51,
+          "right": 467.13,
+          "bottom": 1128.2,
+          "width": 128.32,
+          "height": 36.69
+        },
+        "containerSelector": "#f05-row-marea > div:nth-of-type(5) > div:nth-of-type(2) > span:nth-of-type(1)",
+        "text": "★ 4,5 · •••",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/05-si-sale.html",
+        "bbox": {
+          "x": 338.81,
+          "y": 1091.51,
+          "width": 128.32,
+          "height": 36.69
+        },
+        "firstSeen": 19.197,
+        "lastSeen": 19.197,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.197
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 19.197,
+        "selector": "#f05-row-b > div:nth-of-type(3) > div:nth-of-type(2) > span:nth-of-type(1)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 305.63,
+          "top": 1091.51,
+          "right": 338.81,
+          "bottom": 1128.2,
+          "width": 33.18,
+          "height": 36.69
+        },
+        "containerSelector": "#f05-row-marea > div:nth-of-type(5) > div:nth-of-type(2) > span:nth-of-type(1)",
+        "text": "★",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/05-si-sale.html",
+        "bbox": {
+          "x": 305.63,
+          "y": 1091.51,
+          "width": 33.18,
+          "height": 36.69
+        },
+        "firstSeen": 19.197,
+        "lastSeen": 19.197,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.197
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 19.322,
+        "selector": "#f05-row-a > div:nth-of-type(3) > div:nth-of-type(2)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 340.19,
+          "top": 943.03,
+          "right": 482.92,
+          "bottom": 979.46,
+          "width": 142.73,
+          "height": 36.43
+        },
+        "containerSelector": "#f05-row-marea > div:nth-of-type(5) > div:nth-of-type(1)",
+        "text": "★ 4,6 · ••••",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/05-si-sale.html",
+        "bbox": {
+          "x": 340.19,
+          "y": 943.03,
+          "width": 142.73,
+          "height": 36.43
+        },
+        "firstSeen": 19.322,
+        "lastSeen": 19.322,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.322
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 19.322,
+        "selector": "#f05-row-a > div:nth-of-type(3) > div:nth-of-type(2) > span:nth-of-type(1)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 307.24,
+          "top": 943.03,
+          "right": 340.19,
+          "bottom": 979.46,
+          "width": 32.95,
+          "height": 36.43
+        },
+        "containerSelector": "#f05-row-marea > div:nth-of-type(5) > div:nth-of-type(1)",
+        "text": "★",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/05-si-sale.html",
+        "bbox": {
+          "x": 307.24,
+          "y": 943.03,
+          "width": 32.95,
+          "height": 36.43
+        },
+        "firstSeen": 19.322,
+        "lastSeen": 19.322,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.322
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 19.446,
+        "selector": "#f05-a-r1",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 127.66,
+          "top": 997.01,
+          "right": 147.67,
+          "bottom": 1053.33,
+          "width": 20.01,
+          "height": 56.32
+        },
+        "containerSelector": "#f05-a-r2",
+        "text": "1",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/05-si-sale.html",
+        "bbox": {
+          "x": 127.66,
+          "y": 997.01,
+          "width": 20.01,
+          "height": 56.32
+        },
+        "firstSeen": 19.446,
+        "lastSeen": 19.446,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          19.446
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 23.234,
+        "selector": "#f06-today-kicker",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 512.65,
+          "top": 538.24,
+          "right": 723.73,
+          "bottom": 574.71,
+          "width": 211.08,
+          "height": 36.47
+        },
+        "containerSelector": "#f06-header",
+        "text": "Oggi in cucina",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/06-menu.html",
+        "bbox": {
+          "x": 512.65,
+          "y": 538.24,
+          "width": 211.08,
+          "height": 36.47
+        },
+        "firstSeen": 23.234,
+        "lastSeen": 27.459,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          23.234,
+          27.459
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 23.234,
+        "selector": "#f06-scroll > div:nth-of-type(8) > div:nth-of-type(2)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 401.22,
+          "top": 1551.42,
+          "right": 676.53,
+          "bottom": 1628.23,
+          "width": 275.31,
+          "height": 76.81
+        },
+        "containerSelector": "#cap > div:nth-of-type(13)",
+        "text": "Pescato all'acqua pazza",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 0.67,
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/06-menu.html",
+        "bbox": {
+          "x": 401.22,
+          "y": 1551.42,
+          "width": 275.31,
+          "height": 76.81
+        },
+        "firstSeen": 23.234,
+        "lastSeen": 27.459,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          23.234,
+          27.459
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 23.234,
+        "selector": "#f06-scroll > div:nth-of-type(8) > div:nth-of-type(3)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 743.82,
+          "top": 1570.49,
+          "right": 814.52,
+          "bottom": 1610,
+          "width": 70.7,
+          "height": 39.51
+        },
+        "containerSelector": "#cap > div:nth-of-type(13)",
+        "text": "22 €",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/06-menu.html",
+        "bbox": {
+          "x": 743.82,
+          "y": 1570.49,
+          "width": 70.7,
+          "height": 39.51
+        },
+        "firstSeen": 23.234,
+        "lastSeen": 27.459,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          23.234,
+          27.459
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 26.552,
+        "selector": "#f06-sheet-lbl",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 257.82,
+          "top": 1523.46,
+          "right": 389.47,
+          "bottom": 1560.13,
+          "width": 131.65,
+          "height": 36.67
+        },
+        "containerSelector": "#cap > div:nth-of-type(15) > span:nth-of-type(2)",
+        "text": "Allergeni",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/06-menu.html",
+        "bbox": {
+          "x": 257.82,
+          "y": 1523.46,
+          "width": 131.65,
+          "height": 36.67
+        },
+        "firstSeen": 26.552,
+        "lastSeen": 26.552,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          26.552
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 27.459,
+        "selector": "#f06-today-price",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 512.81,
+          "top": 601.23,
+          "right": 577.37,
+          "bottom": 640.5,
+          "width": 64.55,
+          "height": 39.27
+        },
+        "containerSelector": "#f06-chips > div:nth-of-type(3)",
+        "text": "18 €",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 0.33,
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/06-menu.html",
+        "bbox": {
+          "x": 512.81,
+          "y": 601.23,
+          "width": 64.55,
+          "height": 39.27
+        },
+        "firstSeen": 27.459,
+        "lastSeen": 27.459,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          27.459
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 27.459,
+        "selector": "#f06-scroll > div:nth-of-type(6) > div:nth-of-type(2)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 402.05,
+          "top": 1240.79,
+          "right": 599.03,
+          "bottom": 1317.14,
+          "width": 196.97,
+          "height": 76.35
+        },
+        "containerSelector": "#f06-barbg",
+        "text": "Linguine allo scoglio",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/06-menu.html",
+        "bbox": {
+          "x": 402.05,
+          "y": 1240.79,
+          "width": 196.97,
+          "height": 76.35
+        },
+        "firstSeen": 27.459,
+        "lastSeen": 27.459,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          27.459
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 27.459,
+        "selector": "#f06-scroll > div:nth-of-type(6) > div:nth-of-type(3)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 748.32,
+          "top": 1259.75,
+          "right": 812.87,
+          "bottom": 1299.02,
+          "width": 64.55,
+          "height": 39.27
+        },
+        "containerSelector": "#f06-barbg",
+        "text": "18 €",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/06-menu.html",
+        "bbox": {
+          "x": 748.32,
+          "y": 1259.75,
+          "width": 64.55,
+          "height": 39.27
+        },
+        "firstSeen": 27.459,
+        "lastSeen": 27.459,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          27.459
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 27.459,
+        "selector": "#f06-scroll > div:nth-of-type(7)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 263.1,
+          "top": 1376.55,
+          "right": 403.6,
+          "bottom": 1416.82,
+          "width": 140.49,
+          "height": 40.28
+        },
+        "containerSelector": "#f06-barbg",
+        "text": "Secondi",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/06-menu.html",
+        "bbox": {
+          "x": 263.1,
+          "y": 1376.55,
+          "width": 140.49,
+          "height": 40.28
+        },
+        "firstSeen": 27.459,
+        "lastSeen": 27.459,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          27.459
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 27.459,
+        "selector": "#f06-scroll > div:nth-of-type(9)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 263.1,
+          "top": 1594.04,
+          "right": 358.74,
+          "bottom": 1634.31,
+          "width": 95.64,
+          "height": 40.28
+        },
+        "containerSelector": "#f06-barbg",
+        "text": "Dolci",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/06-menu.html",
+        "bbox": {
+          "x": 263.1,
+          "y": 1594.04,
+          "width": 95.64,
+          "height": 40.28
+        },
+        "firstSeen": 27.459,
+        "lastSeen": 27.459,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          27.459
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 27.459,
+        "selector": "#f06-scroll > div:nth-of-type(10) > div:nth-of-type(2)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 402.05,
+          "top": 1693.8,
+          "right": 687.24,
+          "bottom": 1734.08,
+          "width": 285.19,
+          "height": 40.28
+        },
+        "containerSelector": "#f06-barbg",
+        "text": "Babà con la crema",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 0.67,
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/06-menu.html",
+        "bbox": {
+          "x": 402.05,
+          "y": 1693.8,
+          "width": 285.19,
+          "height": 40.28
+        },
+        "firstSeen": 27.459,
+        "lastSeen": 27.459,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          27.459
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 27.459,
+        "selector": "#f06-scroll > div:nth-of-type(10) > div:nth-of-type(3)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 764.44,
+          "top": 1694.73,
+          "right": 812.87,
+          "bottom": 1734,
+          "width": 48.43,
+          "height": 39.27
+        },
+        "containerSelector": "#f06-barbg",
+        "text": "7 €",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 0.67,
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/06-menu.html",
+        "bbox": {
+          "x": 764.44,
+          "y": 1694.73,
+          "width": 48.43,
+          "height": 39.27
+        },
+        "firstSeen": 27.459,
+        "lastSeen": 27.459,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          27.459
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 28.048,
+        "selector": "#f06-title-b2 > span:nth-of-type(5)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 376.06,
+          "top": 240.19,
+          "right": 402.28,
+          "bottom": 357.9,
+          "width": 26.22,
+          "height": 117.71
+        },
+        "containerSelector": "#f07-title-a > span:nth-of-type(1)",
+        "text": "l",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/06-menu.html",
+        "bbox": {
+          "x": 376.06,
+          "y": 240.19,
+          "width": 26.22,
+          "height": 117.71
+        },
+        "firstSeen": 28.048,
+        "lastSeen": 28.048,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          28.048
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 28.048,
+        "selector": "#f06-title-b2 > span:nth-of-type(6)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 402.28,
+          "top": 240.19,
+          "right": 457.1,
+          "bottom": 357.9,
+          "width": 54.82,
+          "height": 117.71
+        },
+        "containerSelector": "#f07-title-a > span:nth-of-type(1)",
+        "text": "a",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/06-menu.html",
+        "bbox": {
+          "x": 402.28,
+          "y": 240.19,
+          "width": 54.82,
+          "height": 117.71
+        },
+        "firstSeen": 28.048,
+        "lastSeen": 28.048,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          28.048
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 28.172,
+        "selector": "div.f06-chip.f06-chip-on",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 182.83,
+          "top": 480.81,
+          "right": 224.61,
+          "bottom": 533.67,
+          "width": 41.78,
+          "height": 52.86
+        },
+        "containerSelector": "#f07-recdot",
+        "text": "IT",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/06-menu.html",
+        "bbox": {
+          "x": 182.83,
+          "y": 480.81,
+          "width": 41.78,
+          "height": 52.86
+        },
+        "firstSeen": 28.172,
+        "lastSeen": 28.172,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          28.172
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 28.172,
+        "selector": "#f06-chips > div:nth-of-type(2)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 338.02,
+          "top": 480.81,
+          "right": 398.36,
+          "bottom": 533.67,
+          "width": 60.34,
+          "height": 52.86
+        },
+        "containerSelector": "#f07-rec",
+        "text": "EN",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/06-menu.html",
+        "bbox": {
+          "x": 338.02,
+          "y": 480.81,
+          "width": 60.34,
+          "height": 52.86
+        },
+        "firstSeen": 28.172,
+        "lastSeen": 28.172,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          28.172
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 28.172,
+        "selector": "#f06-chips > div:nth-of-type(3)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 503.36,
+          "top": 480.81,
+          "right": 561.93,
+          "bottom": 533.67,
+          "width": 58.57,
+          "height": 52.86
+        },
+        "containerSelector": "#f07-rec",
+        "text": "DE",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/06-menu.html",
+        "bbox": {
+          "x": 503.36,
+          "y": 480.81,
+          "width": 58.57,
+          "height": 52.86
+        },
+        "firstSeen": 28.172,
+        "lastSeen": 28.172,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          28.172
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 31.289,
+        "selector": "#f07-title-a > span:nth-of-type(1)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 383.38,
+          "top": 183,
+          "right": 431.95,
+          "bottom": 296,
+          "width": 48.57,
+          "height": 113
+        },
+        "containerSelector": "#f08-title > span:nth-of-type(1) > span:nth-of-type(1)",
+        "text": "L",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/07-shooting.html",
+        "bbox": {
+          "x": 383.38,
+          "y": 183,
+          "width": 48.57,
+          "height": 113
+        },
+        "firstSeen": 31.289,
+        "lastSeen": 31.289,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          31.289
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 31.289,
+        "selector": "#f07-title-a > span:nth-of-type(2)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 431.95,
+          "top": 183,
+          "right": 483.61,
+          "bottom": 296,
+          "width": 51.66,
+          "height": 113
+        },
+        "containerSelector": "#f08-title > span:nth-of-type(1) > span:nth-of-type(1)",
+        "text": "e",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/07-shooting.html",
+        "bbox": {
+          "x": 431.95,
+          "y": 183,
+          "width": 51.66,
+          "height": 113
+        },
+        "firstSeen": 31.289,
+        "lastSeen": 31.289,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          31.289
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 31.289,
+        "selector": "#f07-title-a > span:nth-of-type(4)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 506.84,
+          "top": 183,
+          "right": 546.09,
+          "bottom": 296,
+          "width": 39.25,
+          "height": 113
+        },
+        "containerSelector": "#f08-title > span:nth-of-type(1) > span:nth-of-type(2)",
+        "text": "f",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/07-shooting.html",
+        "bbox": {
+          "x": 506.84,
+          "y": 183,
+          "width": 39.25,
+          "height": 113
+        },
+        "firstSeen": 31.289,
+        "lastSeen": 31.289,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          31.289
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 31.289,
+        "selector": "#f07-title-a > span:nth-of-type(5)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 546.09,
+          "top": 183,
+          "right": 600.84,
+          "bottom": 296,
+          "width": 54.75,
+          "height": 113
+        },
+        "containerSelector": "#f08-title > span:nth-of-type(1) > span:nth-of-type(3)",
+        "text": "o",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/07-shooting.html",
+        "bbox": {
+          "x": 546.09,
+          "y": 183,
+          "width": 54.75,
+          "height": 113
+        },
+        "firstSeen": 31.289,
+        "lastSeen": 31.289,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          31.289
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 31.683,
+        "selector": "#f08-world",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": -5.35,
+          "top": 3.59,
+          "right": 1085.35,
+          "bottom": 1942.6,
+          "width": 1090.69,
+          "height": 1939.01
+        },
+        "containerSelector": "#el-08-offerta > div:nth-of-type(1)",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1080,
+          "bottom": 1920,
+          "width": 1080,
+          "height": 1920
+        },
+        "overflow": {
+          "left": 5.35,
+          "right": 5.35,
+          "bottom": 22.6
+        },
+        "dataAttributes": {
+          "data-start": "0",
+          "data-duration": "3.1",
+          "data-track-index": "1"
+        },
+        "sourceFile": "compositions/frames/08-offerta.html",
+        "bbox": {
+          "x": -5.35,
+          "y": 3.59,
+          "width": 1090.69,
+          "height": 1939.01
+        },
+        "firstSeen": 31.683,
+        "lastSeen": 31.683,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          31.683
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 35.908,
+        "selector": "#f09-world",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": -4.75,
+          "top": -4.42,
+          "right": 1084.75,
+          "bottom": 1932.48,
+          "width": 1089.5,
+          "height": 1936.9
+        },
+        "containerSelector": "#el-09-finale > div:nth-of-type(1)",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1080,
+          "bottom": 1920,
+          "width": 1080,
+          "height": 1920
+        },
+        "overflow": {
+          "left": 4.75,
+          "right": 4.75,
+          "top": 4.42,
+          "bottom": 12.48
+        },
+        "dataAttributes": {
+          "data-start": "0",
+          "data-duration": "4.45",
+          "data-track-index": "1"
+        },
+        "sourceFile": "compositions/frames/09-finale.html",
+        "bbox": {
+          "x": -4.75,
+          "y": -4.42,
+          "width": 1089.5,
+          "height": 1936.9
+        },
+        "firstSeen": 35.908,
+        "lastSeen": 35.908,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          35.908
+        ]
+      }
+    ],
+    "duration": 38.02,
+    "samples": [
+      2.112,
+      6.337,
+      10.561,
+      14.786,
+      19.01,
+      23.234,
+      27.459,
+      31.683,
+      35.908
+    ],
+    "transitionSamples": [],
+    "transitionSamplesDropped": 0,
+    "tolerance": 2,
+    "totalIssueCount": 59,
+    "truncated": false
+  },
+  "motion": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": false,
+    "samples": 0
+  },
+  "contrast": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 18,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 2.99:1; WCAG AA requires 3:1.",
+        "text": "chi",
+        "fg": "rgb(188,186,183)",
+        "bg": "rgb(105,101,95)",
+        "ratio": 2.99,
+        "requiredRatio": 3,
+        "suggestedColor": "rgb(189,187,184)",
+        "large": true,
+        "selector": "div > div:nth-of-type(10) > div > div > div:nth-of-type(2) > span:nth-of-type(2)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/captions.html",
+        "bbox": {
+          "x": 400.828125,
+          "y": 1532.5,
+          "width": 75.1875,
+          "height": 54
+        },
+        "time": 2.112,
+        "times": [
+          2.112
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 2.98:1; WCAG AA requires 3:1.",
+        "text": "viene",
+        "fg": "rgb(188,186,183)",
+        "bg": "rgb(106,101,96)",
+        "ratio": 2.98,
+        "requiredRatio": 3,
+        "suggestedColor": "rgb(189,187,184)",
+        "large": true,
+        "selector": "div > div:nth-of-type(10) > div > div > div:nth-of-type(2) > span:nth-of-type(3)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/captions.html",
+        "bbox": {
+          "x": 476.015625,
+          "y": 1532.5,
+          "width": 127.390625,
+          "height": 54
+        },
+        "time": 2.112,
+        "times": [
+          2.112
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 2.99:1; WCAG AA requires 3:1.",
+        "text": "lo",
+        "fg": "rgb(188,186,183)",
+        "bg": "rgb(105,101,95)",
+        "ratio": 2.99,
+        "requiredRatio": 3,
+        "suggestedColor": "rgb(189,187,184)",
+        "large": true,
+        "selector": "div > div:nth-of-type(10) > div > div > div:nth-of-type(2) > span:nth-of-type(4)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/captions.html",
+        "bbox": {
+          "x": 603.40625,
+          "y": 1532.5,
+          "width": 49.40625,
+          "height": 54
+        },
+        "time": 2.112,
+        "times": [
+          2.112
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 2.98:1; WCAG AA requires 3:1.",
+        "text": "sa.",
+        "fg": "rgb(188,186,183)",
+        "bg": "rgb(106,101,95)",
+        "ratio": 2.98,
+        "requiredRatio": 3,
+        "suggestedColor": "rgb(189,187,184)",
+        "large": true,
+        "selector": "div > div:nth-of-type(10) > div > div > div:nth-of-type(2) > span:nth-of-type(5)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/captions.html",
+        "bbox": {
+          "x": 652.8125,
+          "y": 1532.5,
+          "width": 63.46875,
+          "height": 54
+        },
+        "time": 2.112,
+        "times": [
+          2.112
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 1.06:1; WCAG AA requires 3:1.",
+        "text": "Com'è andata?",
+        "fg": "rgb(255,255,255)",
+        "bg": "rgb(248,248,248)",
+        "ratio": 1.06,
+        "requiredRatio": 3,
+        "suggestedColor": "rgb(144,144,144)",
+        "large": true,
+        "selector": "#f03-ask",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/03-bancone.html",
+        "bbox": {
+          "x": 245.3201904296875,
+          "y": 961.0562133789062,
+          "width": 591.4719848632812,
+          "height": 63.37200927734375
+        },
+        "time": 10.561,
+        "times": [
+          10.561
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 1.92:1; WCAG AA requires 3:1.",
+        "text": "Tocca qui",
+        "fg": "rgb(224,176,75)",
+        "bg": "rgb(250,250,250)",
+        "ratio": 1.92,
+        "requiredRatio": 3,
+        "suggestedColor": "rgb(177,139,59)",
+        "large": true,
+        "selector": "#f03-tap",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/03-bancone.html",
+        "bbox": {
+          "x": 245.3201904296875,
+          "y": 1296.9278564453125,
+          "width": 591.4719848632812,
+          "height": 46.4727783203125
+        },
+        "time": 10.561,
+        "times": [
+          10.561
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 1.03:1; WCAG AA requires 4.5:1.",
+        "text": "passaparola",
+        "fg": "rgb(252,252,252)",
+        "bg": "rgb(249,249,249)",
+        "ratio": 1.03,
+        "requiredRatio": 4.5,
+        "suggestedColor": "rgb(115,115,115)",
+        "large": false,
+        "selector": "#f03-pp",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/03-bancone.html",
+        "bbox": {
+          "x": 245.3201904296875,
+          "y": 1385.6485595703125,
+          "width": 591.4719848632812,
+          "height": 19.0115966796875
+        },
+        "time": 10.561,
+        "times": [
+          10.561
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 1.92:1; WCAG AA requires 3:1.",
+        "text": "★",
+        "fg": "rgb(226,176,79)",
+        "bg": "rgb(251,251,251)",
+        "ratio": 1.92,
+        "requiredRatio": 3,
+        "suggestedColor": "rgb(180,140,63)",
+        "large": true,
+        "selector": "div > div:nth-of-type(5) > div > div:nth-of-type(2) > div > div:nth-of-type(5) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > span",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/05-si-sale.html",
+        "bbox": {
+          "x": 303.9510192871094,
+          "y": 951.7438354492188,
+          "width": 33.41888427734375,
+          "height": 36.94677734375
+        },
+        "time": 19.01,
+        "times": [
+          19.01
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 1.92:1; WCAG AA requires 3:1.",
+        "text": "★",
+        "fg": "rgb(226,176,79)",
+        "bg": "rgb(251,251,251)",
+        "ratio": 1.92,
+        "requiredRatio": 3,
+        "suggestedColor": "rgb(180,140,63)",
+        "large": true,
+        "selector": "div > div:nth-of-type(5) > div > div:nth-of-type(2) > div > div:nth-of-type(5) > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(2) > span",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/05-si-sale.html",
+        "bbox": {
+          "x": 303.9510192871094,
+          "y": 1083.1103515625,
+          "width": 33.41888427734375,
+          "height": 36.94677734375
+        },
+        "time": 19.01,
+        "times": [
+          19.01
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 1.92:1; WCAG AA requires 3:1.",
+        "text": "★★★★★",
+        "fg": "rgb(226,176,79)",
+        "bg": "rgb(251,251,251)",
+        "ratio": 1.92,
+        "requiredRatio": 3,
+        "suggestedColor": "rgb(180,140,63)",
+        "large": true,
+        "selector": "div > div:nth-of-type(5) > div > div:nth-of-type(2) > div > div:nth-of-type(5) > div:nth-of-type(3) > div:nth-of-type(5) > div:nth-of-type(2) > span:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/05-si-sale.html",
+        "bbox": {
+          "x": 303.9510192871094,
+          "y": 1214.4765625,
+          "width": 167.03030395507812,
+          "height": 36.94677734375
+        },
+        "time": 19.01,
+        "times": [
+          19.01
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 1.07:1; WCAG AA requires 3:1.",
+        "text": "Oggi in cucina",
+        "fg": "rgb(18,50,71)",
+        "bg": "rgb(24,55,75)",
+        "ratio": 1.07,
+        "requiredRatio": 3,
+        "suggestedColor": "rgb(108,128,141)",
+        "large": true,
+        "selector": "#f06-today-kicker",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/06-menu.html",
+        "bbox": {
+          "x": 512.813720703125,
+          "y": 454.2270812988281,
+          "width": 209.81280517578125,
+          "height": 30.207000732421875
+        },
+        "time": 27.459,
+        "times": [
+          27.459
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 1.07:1; WCAG AA requires 3:1.",
+        "text": "Linguine allo scoglio",
+        "fg": "rgb(18,50,71)",
+        "bg": "rgb(24,55,75)",
+        "ratio": 1.07,
+        "requiredRatio": 3,
+        "suggestedColor": "rgb(108,128,141)",
+        "large": true,
+        "selector": "#f06-today-name",
+        "dataAttributes": {
+          "data-layout-allow-overlap": ""
+        },
+        "sourceFile": "compositions/frames/06-menu.html",
+        "bbox": {
+          "x": 512.813720703125,
+          "y": 502.55828857421875,
+          "width": 292.0009765625,
+          "height": 86.97100830078125
+        },
+        "time": 27.459,
+        "times": [
+          27.459
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 1.03:1; WCAG AA requires 3:1.",
+        "text": "18 €",
+        "fg": "rgb(255,255,255)",
+        "bg": "rgb(252,252,252)",
+        "ratio": 1.03,
+        "requiredRatio": 3,
+        "suggestedColor": "rgb(146,146,146)",
+        "large": true,
+        "selector": "#f06-today-price",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/06-menu.html",
+        "bbox": {
+          "x": 512.813720703125,
+          "y": 605.2620849609375,
+          "width": 64.5517578125,
+          "height": 32.2208251953125
+        },
+        "time": 27.459,
+        "times": [
+          27.459
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 1.51:1; WCAG AA requires 3:1.",
+        "text": "Secondi",
+        "fg": "rgb(176,134,36)",
+        "bg": "rgb(169,175,181)",
+        "ratio": 1.51,
+        "requiredRatio": 3,
+        "suggestedColor": "rgb(116,88,24)",
+        "large": true,
+        "selector": "div > div:nth-of-type(6) > div > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(7)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/06-menu.html",
+        "bbox": {
+          "x": 263.1025390625,
+          "y": 1380.5750732421875,
+          "width": 140.4940185546875,
+          "height": 32.2208251953125
+        },
+        "time": 27.459,
+        "times": [
+          27.459
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 2.58:1; WCAG AA requires 3:1.",
+        "text": "Antipasti",
+        "fg": "rgb(147,161,171)",
+        "bg": "rgb(252,252,252)",
+        "ratio": 2.58,
+        "requiredRatio": 3,
+        "suggestedColor": "rgb(135,148,158)",
+        "large": true,
+        "selector": "#f06-tab-0",
+        "dataAttributes": {
+          "data-layout-allow-overlap": ""
+        },
+        "sourceFile": "compositions/frames/06-menu.html",
+        "bbox": {
+          "x": 253.03353881835938,
+          "y": 711.9934692382812,
+          "width": 161.10400390625,
+          "height": 40.2760009765625
+        },
+        "time": 27.459,
+        "times": [
+          27.459
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 2.58:1; WCAG AA requires 3:1.",
+        "text": "Primi",
+        "fg": "rgb(147,161,171)",
+        "bg": "rgb(252,252,252)",
+        "ratio": 2.58,
+        "requiredRatio": 3,
+        "suggestedColor": "rgb(135,148,158)",
+        "large": true,
+        "selector": "#f06-tab-1",
+        "dataAttributes": {
+          "data-layout-allow-overlap": ""
+        },
+        "sourceFile": "compositions/frames/06-menu.html",
+        "bbox": {
+          "x": 428.234130859375,
+          "y": 711.9934692382812,
+          "width": 104.71759033203125,
+          "height": 40.2760009765625
+        },
+        "time": 27.459,
+        "times": [
+          27.459
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 2.58:1; WCAG AA requires 3:1.",
+        "text": "Secondi",
+        "fg": "rgb(147,161,171)",
+        "bg": "rgb(252,252,252)",
+        "ratio": 2.58,
+        "requiredRatio": 3,
+        "suggestedColor": "rgb(135,148,158)",
+        "large": true,
+        "selector": "#f06-tab-2",
+        "dataAttributes": {
+          "data-layout-allow-overlap": ""
+        },
+        "sourceFile": "compositions/frames/06-menu.html",
+        "bbox": {
+          "x": 547.04833984375,
+          "y": 711.9934692382812,
+          "width": 149.02117919921875,
+          "height": 40.2760009765625
+        },
+        "time": 27.459,
+        "times": [
+          27.459
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 2.58:1; WCAG AA requires 3:1.",
+        "text": "Dolci",
+        "fg": "rgb(147,161,171)",
+        "bg": "rgb(252,252,252)",
+        "ratio": 2.58,
+        "requiredRatio": 3,
+        "suggestedColor": "rgb(135,148,158)",
+        "large": true,
+        "selector": "#f06-tab-3",
+        "dataAttributes": {
+          "data-layout-allow-overlap": ""
+        },
+        "sourceFile": "compositions/frames/06-menu.html",
+        "bbox": {
+          "x": 710.1661376953125,
+          "y": 711.9934692382812,
+          "width": 112.77276611328125,
+          "height": 40.2760009765625
+        },
+        "time": 27.459,
+        "times": [
+          27.459
+        ]
+      }
+    ],
+    "enabled": true,
+    "samples": [
+      2.112,
+      10.561,
+      19.01,
+      27.459,
+      35.908
+    ],
+    "checked": 185,
+    "passed": 167
+  },
+  "hdr": {
+    "autoPromotion": null,
+    "inspection": "available"
+  },
+  "snapshots": {
+    "enabled": false,
+    "files": [],
+    "times": [],
+    "findingFiles": []
+  }
+}

@@ -1,5 +1,5 @@
 {
-  "total_duration_s": 40.32,
+  "total_duration_s": 38.02,
   "width": 1080,
   "height": 1920,
   "groups": [
@@ -660,14 +660,14 @@
     {
       "id": "caption-group-18",
       "frame": 7,
-      "start": 27.86,
+      "start": 27.87,
       "end": 29.49,
       "text": "E le foto le scattiamo noi,",
       "words": [
         {
           "id": "caption-word-18-0",
           "text": "E le",
-          "start": 27.86,
+          "start": 27.87,
           "end": 28.02
         },
         {
@@ -700,8 +700,8 @@
       "id": "caption-group-19",
       "frame": 7,
       "start": 29.49,
-      "end": 30.79,
-      "text": "piatto per piatto,",
+      "end": 30.85,
+      "text": "piatto per piatto.",
       "words": [
         {
           "id": "caption-word-19-0",
@@ -717,7 +717,7 @@
         },
         {
           "id": "caption-word-19-2",
-          "text": "piatto,",
+          "text": "piatto.",
           "start": 30.19,
           "end": 30.73
         }
@@ -725,115 +725,115 @@
     },
     {
       "id": "caption-group-20",
-      "frame": 7,
-      "start": 30.79,
-      "end": 31.08,
-      "text": "così",
+      "frame": 8,
+      "start": 31.15,
+      "end": 31.43,
+      "text": "Così",
       "words": [
         {
           "id": "caption-word-20-0",
-          "text": "così",
-          "start": 30.79,
-          "end": 30.96
+          "text": "Così",
+          "start": 31.15,
+          "end": 31.31
         }
       ]
     },
     {
       "id": "caption-group-21",
-      "frame": 7,
-      "start": 31.5,
-      "end": 33.12,
+      "frame": 8,
+      "start": 31.85,
+      "end": 33.47,
       "text": "personalizziamo i tuoi servizi.",
       "words": [
         {
           "id": "caption-word-21-0",
           "text": "personalizziamo",
-          "start": 31.5,
-          "end": 32.13
+          "start": 31.85,
+          "end": 32.48
         },
         {
           "id": "caption-word-21-1",
           "text": "i",
-          "start": 32.13,
-          "end": 32.21
+          "start": 32.48,
+          "end": 32.56
         },
         {
           "id": "caption-word-21-2",
           "text": "tuoi",
-          "start": 32.21,
-          "end": 32.48
+          "start": 32.56,
+          "end": 32.83
         },
         {
           "id": "caption-word-21-3",
           "text": "servizi.",
-          "start": 32.48,
-          "end": 33
+          "start": 32.83,
+          "end": 33.35
         }
       ]
     },
     {
       "id": "caption-group-22",
       "frame": 9,
-      "start": 35.84,
-      "end": 36.64,
+      "start": 33.74,
+      "end": 34.54,
       "text": "Passaparola.",
       "words": [
         {
           "id": "caption-word-22-0",
           "text": "Passaparola.",
-          "start": 35.84,
-          "end": 36.62
+          "start": 33.74,
+          "end": 34.52
         }
       ]
     },
     {
       "id": "caption-group-23",
       "frame": 9,
-      "start": 36.64,
-      "end": 39.16,
+      "start": 34.54,
+      "end": 37.06,
       "text": "Fatti raccontare da chi ti ha scelto.",
       "words": [
         {
           "id": "caption-word-23-0",
           "text": "Fatti",
-          "start": 36.64,
-          "end": 37
+          "start": 34.54,
+          "end": 34.9
         },
         {
           "id": "caption-word-23-1",
           "text": "raccontare",
-          "start": 37,
-          "end": 37.77
+          "start": 34.9,
+          "end": 35.67
         },
         {
           "id": "caption-word-23-2",
           "text": "da",
-          "start": 37.9,
-          "end": 37.93
+          "start": 35.8,
+          "end": 35.83
         },
         {
           "id": "caption-word-23-3",
           "text": "chi",
-          "start": 37.93,
-          "end": 38.16
+          "start": 35.83,
+          "end": 36.06
         },
         {
           "id": "caption-word-23-4",
           "text": "ti",
-          "start": 38.23,
-          "end": 38.31
+          "start": 36.13,
+          "end": 36.21
         },
         {
           "id": "caption-word-23-5",
           "text": "ha",
-          "start": 38.31,
-          "end": 38.46
+          "start": 36.21,
+          "end": 36.36
         },
         {
           "id": "caption-word-23-6",
           "text": "scelto.",
-          "start": 38.46,
-          "end": 39.04
+          "start": 36.36,
+          "end": 36.94
         }
       ]
     }
