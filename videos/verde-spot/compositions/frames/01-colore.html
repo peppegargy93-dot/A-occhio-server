@@ -8,8 +8,8 @@
       #v01-ground, #v01-tex, #v01-vig, #v01-flick, #v01-grainwrap { position:absolute; left:0; top:0; width:1080px; height:1920px; pointer-events:none; }
       #v01-ground { background:#EFE6D2; }
       #v01-tex svg, #v01-grainwrap svg { position:absolute; left:0; top:0; width:1080px; height:1920px; display:block; }
-      #v01-grainwrap svg { visibility:hidden; mix-blend-mode:multiply; }
-      #v01-vig { background:radial-gradient(ellipse 78% 62% at 50% 47%, rgba(20,20,20,0) 55%, rgba(20,20,20,0.34) 100%); }
+      #v01-grainwrap svg { opacity:0; mix-blend-mode:multiply; }
+      #v01-vig { background:radial-gradient(ellipse 78% 62% at 50% 47%, rgba(20,20,20,0) 55%, rgba(20,20,20,0.26) 100%); }
       #v01-flick { background:#141414; opacity:0.02; }
 
       #v01-plane { position:absolute; left:-200px; top:1240px; width:1500px; height:420px; background:#D9CDB2; opacity:0.85; clip-path:polygon(0 38%, 100% 0, 100% 64%, 0 100%); }
@@ -37,8 +37,8 @@
               <feTurbulence type="fractalNoise" baseFrequency="0.35 0.012" numOctaves="2" seed="4" />
               <feColorMatrix type="matrix" values="0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 1.4 -0.62" />
             </filter>
-            <rect width="1080" height="1920" filter="url(#v01-stain)" opacity="0.5" />
-            <rect width="1080" height="1920" filter="url(#v01-fibre)" opacity="0.18" />
+            <image width="1080" height="1920" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1080' height='1920' viewBox='0 0 1080 1920'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25'%3E %3CfeTurbulence type='fractalNoise' baseFrequency='0.006' numOctaves='4' seed='11' /%3E %3CfeColorMatrix type='matrix' values='0 0 0 0 0.851 0 0 0 0 0.804 0 0 0 0 0.698 0 0 0 1.8 -0.85' /%3E %3C/filter%3E%3Crect width='1080' height='1920' filter='url(%23f)'/%3E%3C/svg%3E" opacity="0.3"/>
+            <image width="1080" height="1920" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1080' height='1920' viewBox='0 0 1080 1920'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25'%3E %3CfeTurbulence type='fractalNoise' baseFrequency='0.35 0.012' numOctaves='2' seed='4' /%3E %3CfeColorMatrix type='matrix' values='0 0 0 0 0.08 0 0 0 0 0.08 0 0 0 0 0.08 0 0 0 1.4 -0.62' /%3E %3C/filter%3E%3Crect width='1080' height='1920' filter='url(%23f)'/%3E%3C/svg%3E" opacity="0.06"/>
           </svg>
         </div>
         <div id="v01-plane" class="clip" data-start="0" data-duration="6.1" data-track-index="2"></div>
@@ -61,48 +61,48 @@
         </div>
 
         <div id="v01-vig" class="clip" data-start="0" data-duration="6.1" data-track-index="4"></div>
-        <div id="v01-grainwrap" class="clip" data-start="0" data-duration="6.1" data-track-index="5" style="opacity:0.4">
+        <div id="v01-grainwrap" class="clip" data-start="0" data-duration="6.1" data-track-index="5" style="opacity:0.12">
           <svg class="v01-grain" viewBox="0 0 540 960" preserveAspectRatio="none" aria-hidden="true">
             <filter id="v01-gf0" x="0" y="0" width="100%" height="100%">
               <feTurbulence type="fractalNoise" baseFrequency="0.82" numOctaves="2" seed="3" />
               <feColorMatrix type="matrix" values="0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 4.2 -2.0" />
             </filter>
-            <rect width="540" height="960" filter="url(#v01-gf0)" />
+            <image width="540" height="960" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='540' height='960' viewBox='0 0 540 960'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25'%3E %3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' seed='3' /%3E %3CfeColorMatrix type='matrix' values='0 0 0 0 0.08 0 0 0 0 0.08 0 0 0 0 0.08 0 0 0 4.2 -2.0' /%3E %3C/filter%3E%3Crect width='540' height='960' filter='url(%23f)'/%3E%3C/svg%3E"/>
           </svg>
           <svg class="v01-grain" viewBox="0 0 540 960" preserveAspectRatio="none" aria-hidden="true">
             <filter id="v01-gf1" x="0" y="0" width="100%" height="100%">
               <feTurbulence type="fractalNoise" baseFrequency="0.82" numOctaves="2" seed="17" />
               <feColorMatrix type="matrix" values="0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 4.2 -2.0" />
             </filter>
-            <rect width="540" height="960" filter="url(#v01-gf1)" />
+            <image width="540" height="960" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='540' height='960' viewBox='0 0 540 960'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25'%3E %3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' seed='17' /%3E %3CfeColorMatrix type='matrix' values='0 0 0 0 0.08 0 0 0 0 0.08 0 0 0 0 0.08 0 0 0 4.2 -2.0' /%3E %3C/filter%3E%3Crect width='540' height='960' filter='url(%23f)'/%3E%3C/svg%3E"/>
           </svg>
           <svg class="v01-grain" viewBox="0 0 540 960" preserveAspectRatio="none" aria-hidden="true">
             <filter id="v01-gf2" x="0" y="0" width="100%" height="100%">
               <feTurbulence type="fractalNoise" baseFrequency="0.82" numOctaves="2" seed="29" />
               <feColorMatrix type="matrix" values="0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 4.2 -2.0" />
             </filter>
-            <rect width="540" height="960" filter="url(#v01-gf2)" />
+            <image width="540" height="960" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='540' height='960' viewBox='0 0 540 960'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25'%3E %3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' seed='29' /%3E %3CfeColorMatrix type='matrix' values='0 0 0 0 0.08 0 0 0 0 0.08 0 0 0 0 0.08 0 0 0 4.2 -2.0' /%3E %3C/filter%3E%3Crect width='540' height='960' filter='url(%23f)'/%3E%3C/svg%3E"/>
           </svg>
           <svg class="v01-grain" viewBox="0 0 540 960" preserveAspectRatio="none" aria-hidden="true">
             <filter id="v01-gf3" x="0" y="0" width="100%" height="100%">
               <feTurbulence type="fractalNoise" baseFrequency="0.82" numOctaves="2" seed="41" />
               <feColorMatrix type="matrix" values="0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 4.2 -2.0" />
             </filter>
-            <rect width="540" height="960" filter="url(#v01-gf3)" />
+            <image width="540" height="960" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='540' height='960' viewBox='0 0 540 960'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25'%3E %3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' seed='41' /%3E %3CfeColorMatrix type='matrix' values='0 0 0 0 0.08 0 0 0 0 0.08 0 0 0 0 0.08 0 0 0 4.2 -2.0' /%3E %3C/filter%3E%3Crect width='540' height='960' filter='url(%23f)'/%3E%3C/svg%3E"/>
           </svg>
           <svg class="v01-grain" viewBox="0 0 540 960" preserveAspectRatio="none" aria-hidden="true">
             <filter id="v01-gf4" x="0" y="0" width="100%" height="100%">
               <feTurbulence type="fractalNoise" baseFrequency="0.82" numOctaves="2" seed="53" />
               <feColorMatrix type="matrix" values="0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 4.2 -2.0" />
             </filter>
-            <rect width="540" height="960" filter="url(#v01-gf4)" />
+            <image width="540" height="960" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='540' height='960' viewBox='0 0 540 960'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25'%3E %3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' seed='53' /%3E %3CfeColorMatrix type='matrix' values='0 0 0 0 0.08 0 0 0 0 0.08 0 0 0 0 0.08 0 0 0 4.2 -2.0' /%3E %3C/filter%3E%3Crect width='540' height='960' filter='url(%23f)'/%3E%3C/svg%3E"/>
           </svg>
           <svg class="v01-grain" viewBox="0 0 540 960" preserveAspectRatio="none" aria-hidden="true">
             <filter id="v01-gf5" x="0" y="0" width="100%" height="100%">
               <feTurbulence type="fractalNoise" baseFrequency="0.82" numOctaves="2" seed="67" />
               <feColorMatrix type="matrix" values="0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 4.2 -2.0" />
             </filter>
-            <rect width="540" height="960" filter="url(#v01-gf5)" />
+            <image width="540" height="960" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='540' height='960' viewBox='0 0 540 960'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25'%3E %3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' seed='67' /%3E %3CfeColorMatrix type='matrix' values='0 0 0 0 0.08 0 0 0 0 0.08 0 0 0 0 0.08 0 0 0 4.2 -2.0' /%3E %3C/filter%3E%3Crect width='540' height='960' filter='url(%23f)'/%3E%3C/svg%3E"/>
           </svg>
         </div>
         <div id="v01-flick" class="clip" data-start="0" data-duration="6.1" data-track-index="6"></div>
@@ -163,11 +163,11 @@
           for (let k = 0; k < steps; k++) {
             const t = k / 15;
             const cur = order[k % 6];
-            if (prev >= 0) tl.set(grains[prev], { visibility: "hidden" }, t);
-            tl.set(grains[cur], { visibility: "visible" }, t);
+            if (prev >= 0) tl.set(grains[prev], { opacity: 0 }, t);
+            tl.set(grains[cur], { opacity: 1 }, t);
             prev = cur;
             const boosted = false;
-            const amp = boosted ? 0.055 : 0.032;
+            const amp = boosted ? 0.03 : 0.022;
             tl.set(flick, { opacity: 0.012 + rnd() * amp }, t);
           }
         })();

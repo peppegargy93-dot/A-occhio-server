@@ -7,8 +7,8 @@
     [data-composition-id="05-maestra"] * { box-sizing: border-box; margin: 0; padding: 0; }
     .v05-layer { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
     .v05-ground { background: #EFE6D2; }
-    .v05-vignette { background: radial-gradient(ellipse at 50% 45%, rgba(20,20,20,0) 52%, rgba(20,20,20,0.40) 100%); }
-    .v05-grain { mix-blend-mode: multiply; opacity: 0.30; }
+    .v05-vignette { background: radial-gradient(ellipse at 50% 45%, rgba(20,20,20,0) 52%, rgba(20,20,20,0.26) 100%); }
+    .v05-grain { mix-blend-mode: multiply; opacity: 0.09; }
     .v05-flicker { background: #141414; opacity: 0; }
     .v05-caption { position: absolute; left: 100px; right: 100px; top: 168px; text-align: center; font-family: "Special Elite", monospace; font-size: 50px; color: #141414; letter-spacing: 0.05em; white-space: pre; }
     .v05-caption-rule { position: absolute; left: 250px; width: 580px; top: 236px; height: 4px; background: #141414; transform-origin: 0 50%; }
@@ -32,8 +32,8 @@
           <filter id="v05-fibre"><feTurbulence type="fractalNoise" baseFrequency="0.012 0.08" numOctaves="3" seed="7"/><feColorMatrix type="matrix" values="0 0 0 0 0.35  0 0 0 0 0.28  0 0 0 0 0.16  0 0 0 0.55 -0.12"/></filter>
           <filter id="v05-stain"><feTurbulence type="fractalNoise" baseFrequency="0.004" numOctaves="2" seed="19"/><feColorMatrix type="matrix" values="0 0 0 0 0.45  0 0 0 0 0.36  0 0 0 0 0.2  0 0 0 0.9 -0.38"/></filter>
         </defs>
-        <rect width="1080" height="1920" filter="url(#v05-fibre)" opacity="0.5"/>
-        <rect width="1080" height="1920" filter="url(#v05-stain)" opacity="0.6"/>
+        <image width="1080" height="1920" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1080' height='1920' viewBox='0 0 1080 1920'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012 0.08' numOctaves='3' seed='7'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.35 0 0 0 0 0.28 0 0 0 0 0.16 0 0 0 0.55 -0.12'/%3E%3C/filter%3E%3Crect width='1080' height='1920' filter='url(%23f)'/%3E%3C/svg%3E" opacity="0.2"/>
+        <image width="1080" height="1920" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1080' height='1920' viewBox='0 0 1080 1920'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.004' numOctaves='2' seed='19'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.45 0 0 0 0 0.36 0 0 0 0 0.2 0 0 0 0.9 -0.38'/%3E%3C/filter%3E%3Crect width='1080' height='1920' filter='url(%23f)'/%3E%3C/svg%3E" opacity="0.3"/>
       </svg>
     </div>
 
@@ -165,12 +165,12 @@
         <filter id="v05-n4"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="61"/><feColorMatrix type="saturate" values="0"/></filter>
         <filter id="v05-n5"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="83"/><feColorMatrix type="saturate" values="0"/></filter>
       </defs>
-      <rect id="v05-g0" width="1080" height="1920" filter="url(#v05-n0)"/>
-      <rect id="v05-g1" width="1080" height="1920" filter="url(#v05-n1)" visibility="hidden"/>
-      <rect id="v05-g2" width="1080" height="1920" filter="url(#v05-n2)" visibility="hidden"/>
-      <rect id="v05-g3" width="1080" height="1920" filter="url(#v05-n3)" visibility="hidden"/>
-      <rect id="v05-g4" width="1080" height="1920" filter="url(#v05-n4)" visibility="hidden"/>
-      <rect id="v05-g5" width="1080" height="1920" filter="url(#v05-n5)" visibility="hidden"/>
+      <image width="1080" height="1920" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1080' height='1920' viewBox='0 0 1080 1920'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='3'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='1080' height='1920' filter='url(%23f)'/%3E%3C/svg%3E" id="v05-g0" opacity="1"/>
+      <image width="1080" height="1920" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1080' height='1920' viewBox='0 0 1080 1920'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='11'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='1080' height='1920' filter='url(%23f)'/%3E%3C/svg%3E" id="v05-g1" opacity="0"/>
+      <image width="1080" height="1920" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1080' height='1920' viewBox='0 0 1080 1920'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='29'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='1080' height='1920' filter='url(%23f)'/%3E%3C/svg%3E" id="v05-g2" opacity="0"/>
+      <image width="1080" height="1920" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1080' height='1920' viewBox='0 0 1080 1920'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='47'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='1080' height='1920' filter='url(%23f)'/%3E%3C/svg%3E" id="v05-g3" opacity="0"/>
+      <image width="1080" height="1920" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1080' height='1920' viewBox='0 0 1080 1920'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='61'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='1080' height='1920' filter='url(%23f)'/%3E%3C/svg%3E" id="v05-g4" opacity="0"/>
+      <image width="1080" height="1920" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1080' height='1920' viewBox='0 0 1080 1920'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='83'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='1080' height='1920' filter='url(%23f)'/%3E%3C/svg%3E" id="v05-g5" opacity="0"/>
     </svg>
     <div id="v05-flicker" class="clip v05-layer v05-flicker" data-start="0" data-duration="4.54" data-track-index="4"></div>
   </div>
@@ -188,9 +188,9 @@
       for (let k = 0; k < steps; k++) {
         const t = (k * 2) / FPS;
         const cur = k % 6, prev = (k + 5) % 6;
-        if (k > 0) tl.set(tiles[prev], { attr: { visibility: 'hidden' } }, t);
-        tl.set(tiles[cur], { attr: { visibility: 'visible' } }, t);
-        tl.set(q('#v05-flicker'), { opacity: flick[(k * 7) % flick.length] }, t);
+        if (k > 0) tl.set(tiles[prev], { attr: { opacity: 0 } }, t);
+        tl.set(tiles[cur], { attr: { opacity: 1 } }, t);
+        tl.set(q('#v05-flicker'), { opacity: 0.6 * flick[(k * 7) % flick.length] }, t);
       }
 
       // ---- macro camera: slow push toward the sheets ----

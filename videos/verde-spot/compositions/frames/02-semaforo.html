@@ -42,7 +42,7 @@
       opacity: 0;
     }
     .v02-vignette {
-      background: radial-gradient(ellipse 75% 62% at 50% 45%, rgba(20, 20, 20, 0) 55%, rgba(20, 20, 20, 0.38) 100%);
+      background: radial-gradient(ellipse 75% 62% at 50% 45%, rgba(20, 20, 20, 0) 55%, rgba(20, 20, 20, 0.28) 100%);
     }
     .v02-flicker {
       background: #141414;
@@ -164,8 +164,8 @@
           <filter id="v02-g3" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="53" /><feColorMatrix type="saturate" values="0" /></filter>
         </defs>
         <rect width="1080" height="1920" fill="#EFE6D2" />
-        <rect width="1080" height="1920" filter="url(#v02-stain)" opacity="0.55" />
-        <rect width="1080" height="1920" filter="url(#v02-fibre)" opacity="0.18" />
+        <image width="1080" height="1920" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1080' height='1920' viewBox='0 0 1080 1920'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25'%3E %3CfeTurbulence type='fractalNoise' baseFrequency='0.0045' numOctaves='3' seed='7' /%3E %3CfeColorMatrix type='matrix' values='0 0 0 0 0.85 0 0 0 0 0.80 0 0 0 0 0.70 1.6 0 0 0 -0.62' /%3E %3C/filter%3E%3Crect width='1080' height='1920' filter='url(%23f)'/%3E%3C/svg%3E" opacity="0.55"/>
+        <image width="1080" height="1920" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1080' height='1920' viewBox='0 0 1080 1920'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25'%3E %3CfeTurbulence type='fractalNoise' baseFrequency='0.012 0.18' numOctaves='2' seed='3' /%3E %3CfeColorMatrix type='matrix' values='0 0 0 0 0.08 0 0 0 0 0.08 0 0 0 0 0.08 0 0 1.2 0 -0.55' /%3E %3C/filter%3E%3Crect width='1080' height='1920' filter='url(%23f)'/%3E%3C/svg%3E" opacity="0.1"/>
       </svg>
       <!-- diagonal Depero planes (flat, hard edges) -->
       <svg class="v02-fill" width="1080" height="1920" viewBox="0 0 1080 1920">
@@ -299,10 +299,10 @@
 
     <!-- FILM: grain tiles + vignette + flicker -->
     <div id="v02-film" class="clip v02-layer" data-start="0" data-duration="3.85" data-track-index="2">
-      <svg id="v02-gr0" class="v02-fill v02-grain" width="1080" height="1920"><rect width="1080" height="1920" filter="url(#v02-g0)" /></svg>
-      <svg id="v02-gr1" class="v02-fill v02-grain" width="1080" height="1920"><rect width="1080" height="1920" filter="url(#v02-g1)" /></svg>
-      <svg id="v02-gr2" class="v02-fill v02-grain" width="1080" height="1920"><rect width="1080" height="1920" filter="url(#v02-g2)" /></svg>
-      <svg id="v02-gr3" class="v02-fill v02-grain" width="1080" height="1920"><rect width="1080" height="1920" filter="url(#v02-g3)" /></svg>
+      <svg id="v02-gr0" class="v02-fill v02-grain" width="1080" height="1920"><image width="1080" height="1920" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1080' height='1920' viewBox='0 0 1080 1920'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='11' /%3E%3CfeColorMatrix type='saturate' values='0' /%3E%3C/filter%3E%3Crect width='1080' height='1920' filter='url(%23f)'/%3E%3C/svg%3E"/></svg>
+      <svg id="v02-gr1" class="v02-fill v02-grain" width="1080" height="1920"><image width="1080" height="1920" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1080' height='1920' viewBox='0 0 1080 1920'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='23' /%3E%3CfeColorMatrix type='saturate' values='0' /%3E%3C/filter%3E%3Crect width='1080' height='1920' filter='url(%23f)'/%3E%3C/svg%3E"/></svg>
+      <svg id="v02-gr2" class="v02-fill v02-grain" width="1080" height="1920"><image width="1080" height="1920" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1080' height='1920' viewBox='0 0 1080 1920'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='37' /%3E%3CfeColorMatrix type='saturate' values='0' /%3E%3C/filter%3E%3Crect width='1080' height='1920' filter='url(%23f)'/%3E%3C/svg%3E"/></svg>
+      <svg id="v02-gr3" class="v02-fill v02-grain" width="1080" height="1920"><image width="1080" height="1920" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1080' height='1920' viewBox='0 0 1080 1920'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='53' /%3E%3CfeColorMatrix type='saturate' values='0' /%3E%3C/filter%3E%3Crect width='1080' height='1920' filter='url(%23f)'/%3E%3C/svg%3E"/></svg>
       <div class="v02-fill v02-vignette"></div>
       <div id="v02-flick" class="v02-fill v02-flicker"></div>
     </div>
@@ -325,8 +325,8 @@
         var t = i / 15;
         if (t > D) t = D;
         tl.set(tiles, { opacity: 0 }, t);
-        tl.set(tiles[order[i % order.length]], { opacity: 0.16 }, t);
-        tl.set(flick, { opacity: 0.03 + 0.03 * Math.sin(i * 2.399) * Math.cos(i * 0.77) }, t);
+        tl.set(tiles[order[i % order.length]], { opacity: 0.09 }, t);
+        tl.set(flick, { opacity: 0.03 + 0.015 * Math.sin(i * 2.399) * Math.cos(i * 0.77) }, t);
       }
 
       // ---- Scene 1 (0.0–1.0): traffic light slides in on the diagonal, nervous steps ----
