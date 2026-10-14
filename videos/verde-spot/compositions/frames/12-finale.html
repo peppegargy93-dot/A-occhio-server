@@ -116,8 +116,8 @@
           <feTurbulence type="fractalNoise" baseFrequency="0.012 0.32" numOctaves="2" seed="4" />
           <feColorMatrix type="matrix" values="0 0 0 0 0.937  0 0 0 0 0.902  0 0 0 0 0.824  2.6 0 0 0 -1.4" />
         </filter>
-        <rect width="1080" height="1920" filter="url(#v12-stain)" opacity="0.22" />
-        <rect width="1080" height="1920" filter="url(#v12-fibre)" opacity="0.28" />
+        <image width="1080" height="1920" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1080' height='1920' viewBox='0 0 1080 1920'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25'%3E %3CfeTurbulence type='fractalNoise' baseFrequency='0.004 0.006' numOctaves='3' seed='12' /%3E %3CfeColorMatrix type='matrix' values='0 0 0 0 0.078 0 0 0 0 0.078 0 0 0 0 0.078 1.6 0 0 0 -0.8' /%3E %3C/filter%3E%3Crect width='1080' height='1920' filter='url(%23f)'/%3E%3C/svg%3E" opacity="0.22"/>
+        <image width="1080" height="1920" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1080' height='1920' viewBox='0 0 1080 1920'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25'%3E %3CfeTurbulence type='fractalNoise' baseFrequency='0.012 0.32' numOctaves='2' seed='4' /%3E %3CfeColorMatrix type='matrix' values='0 0 0 0 0.937 0 0 0 0 0.902 0 0 0 0 0.824 2.6 0 0 0 -1.4' /%3E %3C/filter%3E%3Crect width='1080' height='1920' filter='url(%23f)'/%3E%3C/svg%3E" opacity="0.28"/>
       </svg>
     </div>
 
@@ -164,14 +164,15 @@
       SEEDS.forEach(function (seed, i) {
         g +=
           '<svg id="v12-grain-' + i + '" viewBox="0 0 1080 1920" preserveAspectRatio="none" style="opacity:0">' +
-          '<filter id="v12-gf-' + i + '" x="0" y="0" width="100%" height="100%">' +
+          '<image width="1080" height="1920" preserveAspectRatio="none" opacity="0.3" href="data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920">' +
+          '<filter id="f" x="0" y="0" width="100%" height="100%">' +
           '<feTurbulence type="fractalNoise" baseFrequency="0.82" numOctaves="2" seed="' + seed + '" stitchTiles="stitch"/>' +
           '<feComponentTransfer result="n"><feFuncA type="identity"/></feComponentTransfer>' +
           '<feColorMatrix in="n" type="matrix" values="0 0 0 0 0.078  0 0 0 0 0.078  0 0 0 0 0.078  2.4 0 0 0 -1.25" result="dark"/>' +
           '<feColorMatrix in="n" type="matrix" values="0 0 0 0 0.937  0 0 0 0 0.902  0 0 0 0 0.824  0 -2.4 0 0 1.05" result="light"/>' +
           '<feMerge><feMergeNode in="dark"/><feMergeNode in="light"/></feMerge>' +
           "</filter>" +
-          '<rect width="1080" height="1920" filter="url(#v12-gf-' + i + ')" opacity="0.3"/></svg>';
+          '<rect width="1080" height="1920" filter="url(#f)"/></svg>') + '"/></svg>';
       });
       document.getElementById("v12-grain").innerHTML = g;
       const tiles = SEEDS.map(function (_, i) { return document.getElementById("v12-grain-" + i); });
