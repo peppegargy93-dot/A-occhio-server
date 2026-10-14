@@ -7,68 +7,68 @@
    "words": [
     {
      "text": "C'è",
-     "start": 0.1,
-     "end": 0.3
+     "start": 0.089,
+     "end": 0.268
     },
     {
      "text": "un",
-     "start": 0.3,
-     "end": 0.49
+     "start": 0.268,
+     "end": 0.437
     },
     {
      "text": "colore",
-     "start": 0.51,
-     "end": 0.94
+     "start": 0.455,
+     "end": 0.839
     },
     {
      "text": "che",
-     "start": 1.27,
-     "end": 1.41
+     "start": 1.134,
+     "end": 1.259
     },
     {
      "text": "ci",
-     "start": 1.41,
-     "end": 1.52
+     "start": 1.259,
+     "end": 1.357
     },
     {
      "text": "perseguita",
-     "start": 1.57,
-     "end": 2.32
+     "start": 1.402,
+     "end": 2.071
     },
     {
      "text": "da",
-     "start": 2.32,
-     "end": 2.47
+     "start": 2.071,
+     "end": 2.205
     },
     {
      "text": "sempre,",
-     "start": 2.47,
-     "end": 3
+     "start": 2.205,
+     "end": 2.679
     },
     {
      "text": "e noi",
-     "start": 3.68,
-     "end": 4.44
+     "start": 2.74,
+     "end": 3.419
     },
     {
      "text": "facciamo",
-     "start": 4.44,
-     "end": 4.63
+     "start": 3.419,
+     "end": 3.588
     },
     {
      "text": "finta",
-     "start": 4.95,
-     "end": 5.2
+     "start": 3.874,
+     "end": 4.097
     },
     {
      "text": "di",
-     "start": 5.2,
-     "end": 5.32
+     "start": 4.097,
+     "end": 4.204
     },
     {
      "text": "niente.",
-     "start": 5.32,
-     "end": 5.86
+     "start": 4.204,
+     "end": 4.686
     }
    ]
   },
@@ -78,48 +78,48 @@
    "words": [
     {
      "text": "Il",
-     "start": 0.0,
-     "end": 0.25
+     "start": 0,
+     "end": 0.12
     },
     {
      "text": "rosso",
-     "start": 0.31,
-     "end": 0.6
+     "start": 0.173,
+     "end": 0.432
     },
     {
      "text": "del",
-     "start": 0.66,
-     "end": 0.98
+     "start": 0.486,
+     "end": 0.771
     },
     {
      "text": "semaforo,",
-     "start": 0.98,
-     "end": 2.09
+     "start": 0.771,
+     "end": 1.674
     },
     {
      "text": "quando",
-     "start": 2.1,
-     "end": 2.47
+     "start": 1.683,
+     "end": 2.014
     },
     {
      "text": "sei",
-     "start": 2.47,
-     "end": 2.65
+     "start": 2.014,
+     "end": 2.174
     },
     {
      "text": "già",
-     "start": 2.65,
-     "end": 2.77
+     "start": 2.174,
+     "end": 2.281
     },
     {
      "text": "in",
-     "start": 2.85,
-     "end": 2.95
+     "start": 2.353,
+     "end": 2.442
     },
     {
      "text": "ritardo.",
-     "start": 2.95,
-     "end": 3.61
+     "start": 2.442,
+     "end": 3.031
     }
    ]
   },
@@ -129,38 +129,38 @@
    "words": [
     {
      "text": "Il",
-     "start": 0.0,
-     "end": 0.25
+     "start": 0,
+     "end": 0.183
     },
     {
      "text": "rosso",
-     "start": 0.26,
-     "end": 0.51
+     "start": 0.192,
+     "end": 0.415
     },
     {
      "text": "della",
-     "start": 0.51,
-     "end": 1.04
+     "start": 0.415,
+     "end": 0.889
     },
     {
      "text": "batteria",
-     "start": 1.04,
-     "end": 1.91
+     "start": 0.889,
+     "end": 1.665
     },
     {
      "text": "all'uno per cento,",
-     "start": 1.91,
-     "end": 2.81
+     "start": 1.665,
+     "end": 2.469
     },
     {
      "text": "fuori",
-     "start": 2.81,
-     "end": 3.03
+     "start": 2.469,
+     "end": 2.62
     },
     {
      "text": "casa.",
-     "start": 3.24,
-     "end": 3.93
+     "start": 2.807,
+     "end": 3.423
     }
    ]
   },
@@ -170,53 +170,53 @@
    "words": [
     {
      "text": "Il",
-     "start": 0.0,
-     "end": 0.25
+     "start": 0,
+     "end": 0.176
     },
     {
      "text": "rosso",
-     "start": 0.495,
-     "end": 1.18
+     "start": 0.395,
+     "end": 0.901
     },
     {
      "text": "del",
-     "start": 1.18,
-     "end": 1.44
+     "start": 0.901,
+     "end": 1.133
     },
     {
      "text": "conto,",
-     "start": 1.44,
-     "end": 2.58
+     "start": 1.133,
+     "end": 2.151
     },
     {
      "text": "quando",
-     "start": 2.62,
-     "end": 3.07
+     "start": 2.187,
+     "end": 2.588
     },
     {
      "text": "al",
-     "start": 3.07,
-     "end": 3.22
+     "start": 2.588,
+     "end": 2.722
     },
     {
      "text": "ventisette",
-     "start": 3.22,
-     "end": 3.64
+     "start": 2.722,
+     "end": 3.097
     },
     {
      "text": "mancano",
-     "start": 3.72,
-     "end": 3.95
+     "start": 3.169,
+     "end": 3.374
     },
     {
      "text": "dodici",
-     "start": 4.16,
-     "end": 4.67
+     "start": 3.562,
+     "end": 4.017
     },
     {
      "text": "giorni.",
-     "start": 4.86,
-     "end": 5.17
+     "start": 4.187,
+     "end": 4.463
     }
    ]
   },
@@ -226,58 +226,58 @@
    "words": [
     {
      "text": "Il",
-     "start": 0.0,
-     "end": 0.25
+     "start": 0,
+     "end": 0.189
     },
     {
      "text": "rosso",
-     "start": 0.19,
-     "end": 0.35
+     "start": 0.136,
+     "end": 0.278
     },
     {
      "text": "della",
-     "start": 0.35,
-     "end": 0.77
+     "start": 0.278,
+     "end": 0.653
     },
     {
      "text": "penna",
-     "start": 0.77,
-     "end": 1.04
+     "start": 0.653,
+     "end": 0.895
     },
     {
      "text": "della",
-     "start": 1.37,
-     "end": 1.6
+     "start": 1.189,
+     "end": 1.395
     },
     {
      "text": "maestra",
-     "start": 1.6,
-     "end": 2.22
+     "start": 1.395,
+     "end": 1.948
     },
     {
      "text": "sul",
-     "start": 2.22,
-     "end": 2.45
+     "start": 1.948,
+     "end": 2.153
     },
     {
      "text": "compito",
-     "start": 2.45,
-     "end": 2.96
+     "start": 2.153,
+     "end": 2.609
     },
     {
      "text": "che",
-     "start": 2.96,
-     "end": 3.0
+     "start": 2.609,
+     "end": 2.659
     },
     {
      "text": "avevi",
-     "start": 3.19,
-     "end": 3.56
+     "start": 2.814,
+     "end": 3.145
     },
     {
      "text": "copiato.",
-     "start": 3.81,
-     "end": 4.14
+     "start": 3.368,
+     "end": 3.662
     }
    ]
   },
@@ -287,18 +287,18 @@
    "words": [
     {
      "text": "Quante",
-     "start": 0.0,
-     "end": 0.25
+     "start": 0,
+     "end": 0.05
     },
     {
      "text": "volte",
-     "start": 0.57,
-     "end": 0.93
+     "start": 0.173,
+     "end": 0.494
     },
     {
      "text": "ancora?",
-     "start": 0.95,
-     "end": 2.08
+     "start": 0.512,
+     "end": 1.521
     }
    ]
   },
@@ -308,43 +308,43 @@
    "words": [
     {
      "text": "E poi,",
-     "start": 0.3,
-     "end": 0.31
+     "start": 0.049,
+     "end": 0.099
     },
     {
      "text": "diciamolo,",
-     "start": 0.43,
-     "end": 1.98
+     "start": 0.165,
+     "end": 1.471
     },
     {
      "text": "il",
-     "start": 2.55,
-     "end": 2.7
+     "start": 1.702,
+     "end": 1.836
     },
     {
      "text": "rosso",
-     "start": 2.7,
-     "end": 3.35
+     "start": 1.836,
+     "end": 2.416
     },
     {
      "text": "è",
-     "start": 3.41,
-     "end": 3.42
+     "start": 2.47,
+     "end": 2.52
     },
     {
      "text": "anche",
-     "start": 3.69,
-     "end": 3.78
+     "start": 2.72,
+     "end": 2.8
     },
     {
      "text": "il",
-     "start": 3.82,
-     "end": 3.92
+     "start": 2.836,
+     "end": 2.925
     },
     {
      "text": "comunismo.",
-     "start": 3.92,
-     "end": 4.7
+     "start": 2.925,
+     "end": 3.621
     }
    ]
   },
@@ -354,33 +354,33 @@
    "words": [
     {
      "text": "Ma",
-     "start": 0.1,
-     "end": 0.25
+     "start": 0.089,
+     "end": 0.223
     },
     {
      "text": "la",
-     "start": 0.25,
-     "end": 0.5
+     "start": 0.223,
+     "end": 0.446
     },
     {
      "text": "soluzione",
-     "start": 0.5,
-     "end": 2.18
+     "start": 0.446,
+     "end": 1.806
     },
     {
      "text": "c'è",
-     "start": 2.18,
-     "end": 2.36
+     "start": 1.806,
+     "end": 1.966
     },
     {
      "text": "sempre",
-     "start": 2.36,
-     "end": 2.7
+     "start": 1.966,
+     "end": 2.27
     },
     {
      "text": "stata.",
-     "start": 2.75,
-     "end": 3.09
+     "start": 2.314,
+     "end": 2.612
     }
    ]
   },
@@ -390,78 +390,78 @@
    "words": [
     {
      "text": "Semaforo",
-     "start": 0.24,
-     "end": 0.78
+     "start": 0.137,
+     "end": 0.619
     },
     {
      "text": "rosso?",
-     "start": 0.85,
-     "end": 1.38
+     "start": 0.682,
+     "end": 1.155
     },
     {
      "text": "Verde.",
-     "start": 1.91,
-     "end": 2.42
+     "start": 1.515,
+     "end": 1.864
     },
     {
      "text": "Batteria",
-     "start": 2.49,
-     "end": 2.98
+     "start": 1.926,
+     "end": 2.364
     },
     {
      "text": "scarica?",
-     "start": 2.98,
-     "end": 3.62
+     "start": 2.364,
+     "end": 2.935
     },
     {
      "text": "Verde.",
-     "start": 3.62,
-     "end": 4.54
+     "start": 2.935,
+     "end": 3.692
     },
     {
      "text": "Conto",
-     "start": 4.64,
-     "end": 4.96
+     "start": 3.782,
+     "end": 4.067
     },
     {
      "text": "in",
-     "start": 4.96,
-     "end": 5.14
+     "start": 4.067,
+     "end": 4.228
     },
     {
      "text": "rosso?",
-     "start": 5.14,
-     "end": 5.74
+     "start": 4.228,
+     "end": 4.758
     },
     {
      "text": "Verde.",
-     "start": 5.74,
-     "end": 6.58
+     "start": 4.758,
+     "end": 5.422
     },
     {
      "text": "La",
-     "start": 6.68,
-     "end": 6.88
+     "start": 5.512,
+     "end": 5.69
     },
     {
      "text": "maestra?",
-     "start": 6.88,
-     "end": 8.38
+     "start": 5.69,
+     "end": 6.828
     },
     {
      "text": "Soprattutto",
-     "start": 8.48,
-     "end": 9.5
+     "start": 6.917,
+     "end": 7.828
     },
     {
      "text": "la",
-     "start": 9.5,
-     "end": 9.59
+     "start": 7.828,
+     "end": 7.908
     },
     {
      "text": "maestra.",
-     "start": 9.59,
-     "end": 10.34
+     "start": 7.908,
+     "end": 8.494
     }
    ]
   },
@@ -471,158 +471,158 @@
    "words": [
     {
      "text": "Guarda",
-     "start": 0.26,
-     "end": 0.72
+     "start": 0.158,
+     "end": 0.568
     },
     {
      "text": "la",
-     "start": 0.72,
-     "end": 0.9
+     "start": 0.568,
+     "end": 0.729
     },
     {
      "text": "nostra",
-     "start": 0.9,
-     "end": 1.35
+     "start": 0.729,
+     "end": 1.131
     },
     {
      "text": "bandiera.",
-     "start": 1.45,
-     "end": 2.32
+     "start": 1.22,
+     "end": 1.83
     },
     {
      "text": "A",
-     "start": 2.32,
-     "end": 2.99
+     "start": 1.83,
+     "end": 2.428
     },
     {
      "text": "destra",
-     "start": 2.99,
-     "end": 3.66
+     "start": 2.428,
+     "end": 2.567
     },
     {
      "text": "il",
-     "start": 3.66,
-     "end": 3.89
+     "start": 2.567,
+     "end": 2.772
     },
     {
      "text": "rosso:",
-     "start": 3.89,
-     "end": 4.8
+     "start": 2.772,
+     "end": 3.585
     },
     {
      "text": "il male,",
-     "start": 5.5,
-     "end": 6.16
+     "start": 4.21,
+     "end": 4.799
     },
     {
      "text": "tutto",
-     "start": 6.26,
-     "end": 6.49
+     "start": 4.888,
+     "end": 5.093
     },
     {
      "text": "ciò",
-     "start": 6.49,
-     "end": 6.68
+     "start": 5.093,
+     "end": 5.263
     },
     {
      "text": "che",
-     "start": 6.68,
-     "end": 6.88
+     "start": 5.263,
+     "end": 5.442
     },
     {
      "text": "dobbiamo",
-     "start": 6.88,
-     "end": 7.35
+     "start": 5.442,
+     "end": 5.861
     },
     {
      "text": "combattere.",
-     "start": 7.35,
-     "end": 8.32
+     "start": 5.861,
+     "end": 6.643
     },
     {
      "text": "Al",
-     "start": 8.42,
-     "end": 8.51
+     "start": 6.733,
+     "end": 6.813
     },
     {
      "text": "centro",
-     "start": 8.51,
-     "end": 9.09
+     "start": 6.813,
+     "end": 7.331
     },
     {
      "text": "il",
-     "start": 9.09,
-     "end": 9.28
+     "start": 7.331,
+     "end": 7.5
     },
     {
      "text": "bianco:",
-     "start": 9.28,
-     "end": 9.88
+     "start": 7.5,
+     "end": 8.036
     },
     {
      "text": "come",
-     "start": 9.98,
-     "end": 10.17
+     "start": 8.125,
+     "end": 8.295
     },
     {
      "text": "l'italiano",
-     "start": 10.17,
-     "end": 10.89
+     "start": 8.295,
+     "end": 8.938
     },
     {
      "text": "medio",
-     "start": 10.89,
-     "end": 11.08
+     "start": 8.938,
+     "end": 9.108
     },
     {
      "text": "tira avanti.",
-     "start": 11.08,
-     "end": 12.16
+     "start": 9.108,
+     "end": 10.072
     },
     {
      "text": "E il",
-     "start": 13.14,
-     "end": 13.31
+     "start": 10.673,
+     "end": 10.824
     },
     {
      "text": "verde…",
-     "start": 13.31,
-     "end": 14.25
+     "start": 10.824,
+     "end": 11.664
     },
     {
      "text": "e il",
-     "start": 14.63,
-     "end": 14.82
+     "start": 11.797,
+     "end": 11.967
     },
     {
      "text": "verde.",
-     "start": 14.82,
-     "end": 15.62
+     "start": 11.967,
+     "end": 12.601
     },
     {
      "text": "Ti",
-     "start": 15.72,
-     "end": 15.8
+     "start": 12.691,
+     "end": 12.762
     },
     {
      "text": "fa",
-     "start": 15.8,
-     "end": 15.98
+     "start": 12.762,
+     "end": 12.923
     },
     {
      "text": "stare",
-     "start": 15.98,
-     "end": 16.43
+     "start": 12.923,
+     "end": 13.325
     },
     {
      "text": "chill, bro.",
-     "start": 16.44,
-     "end": 17.3
+     "start": 13.333,
+     "end": 14.054
     },
     {
      "text": "Tranquillo.",
-     "start": 17.4,
-     "end": 18.3
+     "start": 14.144,
+     "end": 14.947
     }
    ]
   },
@@ -632,18 +632,18 @@
    "words": [
     {
      "text": "Verde.",
-     "start": 0.22,
-     "end": 1.02
+     "start": 0.142,
+     "end": 0.786
     },
     {
      "text": "Facciamola",
-     "start": 1.02,
-     "end": 1.56
+     "start": 0.786,
+     "end": 1.268
     },
     {
      "text": "passare.",
-     "start": 1.99,
-     "end": 2.22
+     "start": 1.652,
+     "end": 1.858
     }
    ]
   }
@@ -653,14 +653,14 @@
    "frame": 1,
    "file": "assets/sfx/meccanico-bed.wav",
    "offset_s": 0,
-   "duration_s": 26.5,
+   "duration_s": 21.581,
    "volume": 0.3,
    "source": "host"
   },
   {
    "frame": 2,
    "file": "assets/sfx/semaforo-click.wav",
-   "offset_s": 1.17,
+   "offset_s": 0.969,
    "duration_s": 0.12,
    "volume": 0.45,
    "source": "host"
@@ -668,7 +668,7 @@
   {
    "frame": 9,
    "file": "assets/sfx/semaforo-click.wav",
-   "offset_s": 0.74,
+   "offset_s": 0.606,
    "duration_s": 0.12,
    "volume": 0.45,
    "source": "host"
@@ -676,7 +676,7 @@
   {
    "frame": 10,
    "file": "assets/sfx/stamp.wav",
-   "offset_s": 1.64,
+   "offset_s": 1.271,
    "duration_s": 0.45,
    "volume": 0.7,
    "source": "host"
@@ -684,7 +684,7 @@
   {
    "frame": 10,
    "file": "assets/sfx/stamp.wav",
-   "offset_s": 3.79,
+   "offset_s": 3.084,
    "duration_s": 0.45,
    "volume": 0.7,
    "source": "host"
@@ -692,7 +692,7 @@
   {
    "frame": 10,
    "file": "assets/sfx/stamp.wav",
-   "offset_s": 5.779999999999999,
+   "offset_s": 4.791,
    "duration_s": 0.45,
    "volume": 0.7,
    "source": "host"
@@ -700,7 +700,7 @@
   {
    "frame": 10,
    "file": "assets/sfx/chime.mp3",
-   "offset_s": 8.5,
+   "offset_s": 7.003,
    "duration_s": 2.544,
    "volume": 0.35,
    "source": "host"
@@ -708,7 +708,7 @@
   {
    "frame": 11,
    "file": "assets/sfx/sniff.wav",
-   "offset_s": 11.85,
+   "offset_s": 9.784,
    "duration_s": 0.75,
    "volume": 0.6,
    "source": "host"
@@ -725,7 +725,7 @@
    "frame": 9,
    "file": "assets/bgm/lofi.wav",
    "offset_s": 0,
-   "duration_s": 36.6,
+   "duration_s": 30.59,
    "volume": 0.18,
    "source": "host"
   }

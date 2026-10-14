@@ -125,9 +125,9 @@
     }
   </style>
 
-  <div id="root" data-composition-id="11-bandiera" data-width="1080" data-height="1920" data-duration="19.08">
+  <div id="root" data-composition-id="11-bandiera" data-width="1080" data-height="1920" data-duration="15.484">
     <!-- Ground: aged paper + fibres/stains (static, fixed seed) -->
-    <div id="v11-ground" class="v11-layer clip" data-start="0" data-duration="19.08" data-track-index="0">
+    <div id="v11-ground" class="v11-layer clip" data-start="0" data-duration="15.484" data-track-index="0">
       <svg viewBox="0 0 1080 1920" preserveAspectRatio="none">
         <filter id="v11-stain" x="0" y="0" width="100%" height="100%">
           <feTurbulence type="fractalNoise" baseFrequency="0.004 0.006" numOctaves="3" seed="11" />
@@ -143,7 +143,7 @@
     </div>
 
     <!-- Content -->
-    <div id="v11-stage" class="v11-layer clip" data-start="0" data-duration="19.08" data-track-index="1">
+    <div id="v11-stage" class="v11-layer clip" data-start="0" data-duration="15.484" data-track-index="1">
       <div id="v11-flag">
         <div id="v11-red-wrap">
           <svg id="v11-red-svg" viewBox="-60 -60 380 900">
@@ -160,7 +160,7 @@
     </div>
 
     <!-- Overlay: film grain tiles, flicker, vignette -->
-    <div id="v11-overlay" class="v11-layer clip" data-start="0" data-duration="19.08" data-track-index="2">
+    <div id="v11-overlay" class="v11-layer clip" data-start="0" data-duration="15.484" data-track-index="2">
       <div id="v11-grain"></div>
       <div id="v11-flicker"></div>
       <div id="v11-vignette"></div>
@@ -170,8 +170,8 @@
   <script>
     (function () {
       // Voice beats (seconds). Everything below is driven from these.
-      const BEATS = { rosso: 3.85, bianco: 11.95, verde: 13.2 };
-      const DUR = 19.08;
+      const BEATS = { rosso: 2.736, bianco: 9.884, verde: 10.726 };
+      const DUR = 15.484;
       const FPS = 30;
       const tl = gsap.timeline({ paused: true });
 

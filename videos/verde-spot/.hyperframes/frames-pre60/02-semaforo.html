@@ -1,0 +1,429 @@
+<template>
+  <style>
+    @font-face {
+      font-family: "Anton";
+      src: url("assets/fonts/anton-latin-400-normal.woff2") format("woff2");
+      font-weight: 400;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: "Special Elite";
+      src: url("assets/fonts/special-elite-latin-400-normal.woff2") format("woff2");
+      font-weight: 400;
+      font-style: normal;
+    }
+    #root {
+      position: absolute;
+      inset: 0;
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+    }
+    .v02-layer {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+    }
+    .v02-ground {
+      background: #efe6d2;
+    }
+    .v02-fill {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1080px;
+      height: 1920px;
+    }
+    .v02-grain {
+      mix-blend-mode: multiply;
+      opacity: 0;
+    }
+    .v02-vignette {
+      background: radial-gradient(ellipse 75% 62% at 50% 45%, rgba(20, 20, 20, 0) 55%, rgba(20, 20, 20, 0.28) 100%);
+    }
+    .v02-flicker {
+      background: #141414;
+      opacity: 0.03;
+    }
+    #v02-light {
+      position: absolute;
+      left: 220px;
+      top: 420px;
+      width: 324px;
+      height: 900px;
+    }
+    #v02-light svg {
+      width: 324px;
+      height: 900px;
+      display: block;
+      overflow: visible;
+    }
+    .v02-car {
+      position: absolute;
+      top: 1262px;
+      width: 240px;
+      height: 156px;
+    }
+    .v02-carbody {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 240px;
+      height: 156px;
+    }
+    .v02-carbody svg,
+    .v02-speed {
+      display: block;
+      overflow: visible;
+    }
+    .v02-speed {
+      position: absolute;
+      left: -230px;
+      top: 18px;
+      width: 220px;
+      height: 110px;
+    }
+    #v02-carA { left: 640px; }
+    #v02-carB { left: 400px; }
+    #v02-carC { left: 250px; }
+    #v02-clock {
+      position: absolute;
+      left: 660px;
+      top: 690px;
+      width: 300px;
+      height: 300px;
+    }
+    #v02-clock svg {
+      width: 300px;
+      height: 300px;
+      display: block;
+      overflow: visible;
+    }
+    #v02-title {
+      position: absolute;
+      left: 80px;
+      width: 920px;
+      top: 212px;
+      height: 180px;
+      text-align: center;
+      font-family: "Anton", sans-serif;
+      font-size: 170px;
+      line-height: 180px;
+      color: #ce2b37;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .v02-tl {
+      display: inline-block;
+    }
+    #v02-fig {
+      position: absolute;
+      left: 600px;
+      top: 452px;
+      width: 400px;
+      font-family: "Special Elite", monospace;
+      font-size: 32px;
+      line-height: 40px;
+      color: #141414;
+      white-space: nowrap;
+    }
+    #v02-figrule {
+      position: absolute;
+      left: 600px;
+      top: 500px;
+      width: 360px;
+      height: 3px;
+      background: #141414;
+      transform-origin: 0 50%;
+    }
+    .v02-ch {
+      display: inline-block;
+      white-space: pre;
+    }
+  </style>
+
+  <div id="root" data-composition-id="02-semaforo" data-width="1080" data-height="1920">
+    <!-- GROUND: paper + stains + grain + vignette + flicker -->
+    <div id="v02-ground" class="clip v02-layer v02-ground" data-start="0" data-duration="3.85" data-track-index="0">
+      <svg class="v02-fill" width="1080" height="1920" viewBox="0 0 1080 1920">
+        <defs>
+          <filter id="v02-stain" x="0" y="0" width="100%" height="100%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.0045" numOctaves="3" seed="7" />
+            <feColorMatrix type="matrix" values="0 0 0 0 0.85  0 0 0 0 0.80  0 0 0 0 0.70  1.6 0 0 0 -0.62" />
+          </filter>
+          <filter id="v02-fibre" x="0" y="0" width="100%" height="100%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.012 0.18" numOctaves="2" seed="3" />
+            <feColorMatrix type="matrix" values="0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 0 0.08  0 0 1.2 0 -0.55" />
+          </filter>
+          <filter id="v02-g0" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="11" /><feColorMatrix type="saturate" values="0" /></filter>
+          <filter id="v02-g1" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="23" /><feColorMatrix type="saturate" values="0" /></filter>
+          <filter id="v02-g2" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="37" /><feColorMatrix type="saturate" values="0" /></filter>
+          <filter id="v02-g3" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="53" /><feColorMatrix type="saturate" values="0" /></filter>
+        </defs>
+        <rect width="1080" height="1920" fill="#EFE6D2" />
+        <image width="1080" height="1920" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1080' height='1920' viewBox='0 0 1080 1920'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25'%3E %3CfeTurbulence type='fractalNoise' baseFrequency='0.0045' numOctaves='3' seed='7' /%3E %3CfeColorMatrix type='matrix' values='0 0 0 0 0.85 0 0 0 0 0.80 0 0 0 0 0.70 1.6 0 0 0 -0.62' /%3E %3C/filter%3E%3Crect width='1080' height='1920' filter='url(%23f)'/%3E%3C/svg%3E" opacity="0.55"/>
+        <image width="1080" height="1920" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1080' height='1920' viewBox='0 0 1080 1920'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25'%3E %3CfeTurbulence type='fractalNoise' baseFrequency='0.012 0.18' numOctaves='2' seed='3' /%3E %3CfeColorMatrix type='matrix' values='0 0 0 0 0.08 0 0 0 0 0.08 0 0 0 0 0.08 0 0 1.2 0 -0.55' /%3E %3C/filter%3E%3Crect width='1080' height='1920' filter='url(%23f)'/%3E%3C/svg%3E" opacity="0.1"/>
+      </svg>
+      <!-- diagonal Depero planes (flat, hard edges) -->
+      <svg class="v02-fill" width="1080" height="1920" viewBox="0 0 1080 1920">
+        <polygon points="0,1180 1080,880 1080,1460 0,1460" fill="#D9CDB2" opacity="0.7" />
+        <polygon points="760,0 1080,0 1080,520" fill="#D9CDB2" opacity="0.6" />
+      </svg>
+    </div>
+
+    <!-- CONTENT -->
+    <div id="v02-stage" class="clip v02-layer" data-start="0" data-duration="3.85" data-track-index="1">
+      <!-- the futurist traffic light (shared drawing with frame 09) -->
+      <div id="v02-light">
+        <svg viewBox="0 0 360 1000" width="324" height="900">
+          <!-- base cone + pole -->
+          <polygon points="96,1000 180,930 264,1000" fill="#141414" />
+          <rect x="160" y="730" width="40" height="214" fill="#141414" />
+          <rect x="160" y="730" width="13" height="214" fill="#3a3a3a" />
+          <!-- cylinder body -->
+          <rect x="70" y="170" width="220" height="560" fill="#141414" />
+          <ellipse cx="180" cy="730" rx="110" ry="22" fill="#141414" />
+          <polygon points="70,170 122,170 122,752 70,730" fill="#2e2e2e" />
+          <ellipse cx="180" cy="170" rx="110" ry="22" fill="#2e2e2e" />
+          <!-- cone hood -->
+          <polygon points="36,176 180,18 324,176" fill="#141414" />
+          <polygon points="36,176 180,18 132,176" fill="#3a3a3a" />
+          <rect x="174" y="0" width="12" height="26" fill="#141414" />
+          <!-- three discs: rings + off lenses -->
+          <g>
+            <circle cx="180" cy="290" r="76" fill="#2e2e2e" />
+            <circle cx="180" cy="290" r="64" fill="#4a4740" />
+            <circle cx="180" cy="450" r="76" fill="#2e2e2e" />
+            <circle cx="180" cy="450" r="64" fill="#4a4740" />
+            <circle cx="180" cy="610" r="76" fill="#2e2e2e" />
+            <circle cx="180" cy="610" r="64" fill="#4a4740" />
+          </g>
+          <!-- lit lenses -->
+          <circle id="v02-red" cx="180" cy="290" r="64" fill="#CE2B37" />
+          <circle id="v02-redflash" cx="180" cy="290" r="82" fill="none" stroke="#CE2B37" stroke-width="10" />
+          <!-- visors (cut planes) -->
+          <polygon points="98,222 262,222 300,250 60,250" fill="#141414" />
+          <polygon points="98,382 262,382 300,410 60,410" fill="#141414" />
+          <polygon points="98,542 262,542 300,570 60,570" fill="#141414" />
+        </svg>
+      </div>
+
+      <!-- FIG caption -->
+      <div id="v02-fig"><span class="v02-ch">F</span><span class="v02-ch">I</span><span class="v02-ch">G</span><span class="v02-ch">.</span><span class="v02-ch"> </span><span class="v02-ch">2</span><span class="v02-ch">:</span><span class="v02-ch"> </span><span class="v02-ch">I</span><span class="v02-ch">L</span><span class="v02-ch"> </span><span class="v02-ch">S</span><span class="v02-ch">E</span><span class="v02-ch">M</span><span class="v02-ch">A</span><span class="v02-ch">F</span><span class="v02-ch">O</span><span class="v02-ch">R</span><span class="v02-ch">O</span></div>
+      <div id="v02-figrule"></div>
+
+      <!-- cube cars (C = last, A = first/front) -->
+      <div id="v02-carC" class="v02-car">
+        <svg class="v02-speed" viewBox="0 0 220 110" width="220" height="110">
+          <polygon points="0,20 196,14 220,20 196,26" fill="#141414" />
+          <polygon points="40,56 196,50 220,56 196,62" fill="#141414" />
+          <polygon points="80,92 196,87 220,92 196,97" fill="#141414" />
+        </svg>
+        <div class="v02-carbody">
+          <svg viewBox="0 0 240 156" width="240" height="156">
+            <polygon points="40,62 72,14 162,14 188,62" fill="#141414" />
+            <polygon points="82,24 150,24 168,58 82,58" fill="#EFE6D2" />
+            <polygon points="0,62 172,62 240,96 240,132 0,132" fill="#CE2B37" />
+            <polygon points="0,62 64,62 0,132" fill="#141414" opacity="0.3" />
+            <circle cx="56" cy="134" r="21" fill="#141414" /><circle cx="56" cy="134" r="7" fill="#EFE6D2" />
+            <circle cx="192" cy="134" r="21" fill="#141414" /><circle cx="192" cy="134" r="7" fill="#EFE6D2" />
+          </svg>
+        </div>
+      </div>
+      <div id="v02-carB" class="v02-car">
+        <svg class="v02-speed" viewBox="0 0 220 110" width="220" height="110">
+          <polygon points="0,20 196,14 220,20 196,26" fill="#141414" />
+          <polygon points="40,56 196,50 220,56 196,62" fill="#141414" />
+          <polygon points="80,92 196,87 220,92 196,97" fill="#141414" />
+        </svg>
+        <div class="v02-carbody">
+          <svg viewBox="0 0 240 156" width="240" height="156">
+            <polygon points="40,62 72,14 162,14 188,62" fill="#CE2B37" />
+            <polygon points="82,24 150,24 168,58 82,58" fill="#EFE6D2" />
+            <polygon points="0,62 172,62 240,96 240,132 0,132" fill="#141414" />
+            <polygon points="0,62 64,62 0,132" fill="#3a3a3a" />
+            <circle cx="56" cy="134" r="21" fill="#141414" /><circle cx="56" cy="134" r="7" fill="#EFE6D2" />
+            <circle cx="192" cy="134" r="21" fill="#141414" /><circle cx="192" cy="134" r="7" fill="#EFE6D2" />
+          </svg>
+        </div>
+      </div>
+      <div id="v02-carA" class="v02-car">
+        <svg class="v02-speed" viewBox="0 0 220 110" width="220" height="110">
+          <polygon points="0,20 196,14 220,20 196,26" fill="#141414" />
+          <polygon points="40,56 196,50 220,56 196,62" fill="#141414" />
+          <polygon points="80,92 196,87 220,92 196,97" fill="#141414" />
+        </svg>
+        <div class="v02-carbody">
+          <svg viewBox="0 0 240 156" width="240" height="156">
+            <polygon points="40,62 72,14 162,14 188,62" fill="#141414" />
+            <polygon points="82,24 150,24 168,58 82,58" fill="#EFE6D2" />
+            <polygon points="0,62 172,62 240,96 240,132 0,132" fill="#CE2B37" />
+            <polygon points="0,62 64,62 0,132" fill="#141414" opacity="0.3" />
+            <circle cx="56" cy="134" r="21" fill="#141414" /><circle cx="56" cy="134" r="7" fill="#EFE6D2" />
+            <circle cx="192" cy="134" r="21" fill="#141414" /><circle cx="192" cy="134" r="7" fill="#EFE6D2" />
+          </svg>
+        </div>
+      </div>
+
+      <!-- clock -->
+      <div id="v02-clock">
+        <svg viewBox="0 0 300 300" width="300" height="300">
+          <circle cx="150" cy="150" r="138" fill="#EFE6D2" stroke="#141414" stroke-width="24" />
+          <g fill="#141414">
+            <rect x="146" y="26" width="8" height="26" />
+            <rect x="146" y="248" width="8" height="26" />
+            <rect x="26" y="146" width="26" height="8" />
+            <rect x="248" y="146" width="26" height="8" />
+            <rect x="146" y="30" width="5" height="14" transform="rotate(30 150 150)" />
+            <rect x="146" y="30" width="5" height="14" transform="rotate(60 150 150)" />
+            <rect x="146" y="30" width="5" height="14" transform="rotate(120 150 150)" />
+            <rect x="146" y="30" width="5" height="14" transform="rotate(150 150 150)" />
+            <rect x="146" y="30" width="5" height="14" transform="rotate(210 150 150)" />
+            <rect x="146" y="30" width="5" height="14" transform="rotate(240 150 150)" />
+            <rect x="146" y="30" width="5" height="14" transform="rotate(300 150 150)" />
+            <rect x="146" y="30" width="5" height="14" transform="rotate(330 150 150)" />
+          </g>
+          <polygon id="v02-hhour" points="141,152 150,80 159,152" fill="#141414" />
+          <polygon id="v02-hmin" points="145,156 150,44 155,156" fill="#141414" />
+          <rect id="v02-hsec" x="148" y="40" width="4" height="130" fill="#CE2B37" />
+          <circle cx="150" cy="150" r="11" fill="#141414" />
+        </svg>
+      </div>
+
+      <!-- title -->
+      <div id="v02-title"><span class="v02-tl">R</span><span class="v02-tl">I</span><span class="v02-tl">T</span><span class="v02-tl">A</span><span class="v02-tl">R</span><span class="v02-tl">D</span><span class="v02-tl">O</span><span class="v02-tl">!</span></div>
+    </div>
+
+    <!-- FILM: grain tiles + vignette + flicker -->
+    <div id="v02-film" class="clip v02-layer" data-start="0" data-duration="3.85" data-track-index="2">
+      <svg id="v02-gr0" class="v02-fill v02-grain" width="1080" height="1920"><image width="1080" height="1920" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1080' height='1920' viewBox='0 0 1080 1920'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='11' /%3E%3CfeColorMatrix type='saturate' values='0' /%3E%3C/filter%3E%3Crect width='1080' height='1920' filter='url(%23f)'/%3E%3C/svg%3E"/></svg>
+      <svg id="v02-gr1" class="v02-fill v02-grain" width="1080" height="1920"><image width="1080" height="1920" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1080' height='1920' viewBox='0 0 1080 1920'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='23' /%3E%3CfeColorMatrix type='saturate' values='0' /%3E%3C/filter%3E%3Crect width='1080' height='1920' filter='url(%23f)'/%3E%3C/svg%3E"/></svg>
+      <svg id="v02-gr2" class="v02-fill v02-grain" width="1080" height="1920"><image width="1080" height="1920" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1080' height='1920' viewBox='0 0 1080 1920'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='37' /%3E%3CfeColorMatrix type='saturate' values='0' /%3E%3C/filter%3E%3Crect width='1080' height='1920' filter='url(%23f)'/%3E%3C/svg%3E"/></svg>
+      <svg id="v02-gr3" class="v02-fill v02-grain" width="1080" height="1920"><image width="1080" height="1920" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1080' height='1920' viewBox='0 0 1080 1920'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='53' /%3E%3CfeColorMatrix type='saturate' values='0' /%3E%3C/filter%3E%3Crect width='1080' height='1920' filter='url(%23f)'/%3E%3C/svg%3E"/></svg>
+      <div class="v02-fill v02-vignette"></div>
+      <div id="v02-flick" class="v02-fill v02-flicker"></div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    (function () {
+      var D = 3.3;
+      var q = function (s) { return document.querySelector('[data-composition-id="02-semaforo"] ' + s); };
+      var qa = function (s) { return document.querySelectorAll('[data-composition-id="02-semaforo"] ' + s); };
+      var tl = gsap.timeline({ paused: true });
+
+      // ---- film grain (tile swap every 2 frames) + flicker, deterministic ----
+      var tiles = [q("#v02-gr0"), q("#v02-gr1"), q("#v02-gr2"), q("#v02-gr3")];
+      var order = [0, 2, 1, 3, 2, 0, 3, 1];
+      var flick = q("#v02-flick");
+      var steps = Math.ceil(D * 15);
+      for (var i = 0; i <= steps; i++) {
+        var t = i / 15;
+        if (t > D) t = D;
+        tl.set(tiles, { opacity: 0 }, t);
+        tl.set(tiles[order[i % order.length]], { opacity: 0.09 }, t);
+        tl.set(flick, { opacity: 0.03 + 0.015 * Math.sin(i * 2.399) * Math.cos(i * 0.77) }, t);
+      }
+
+      // ---- Scene 1 (0.0–1.0): traffic light slides in on the diagonal, nervous steps ----
+      var light = q("#v02-light");
+      tl.fromTo(light, { x: -560, y: 720, rotation: -24, transformOrigin: "50% 60%" },
+        { x: 0, y: 0, rotation: -8, duration: 0.8, ease: "steps(7)" }, 0.04);
+      var shake = [[14, -6.5], [-10, -9.5], [7, -7], [-4, -8.6], [0, -8]];
+      shake.forEach(function (s, k) {
+        tl.to(light, { x: s[0], rotation: s[1], duration: 0.03, ease: "none" }, 0.84 + k * 0.03);
+      });
+
+      // typewriter caption
+      tl.fromTo(qa("#v02-fig .v02-ch"), { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.01, stagger: 0.032 }, 0.3);
+      tl.fromTo(q("#v02-figrule"), { scaleX: 0 }, { scaleX: 1, duration: 0.18, ease: "steps(6)" }, 0.9);
+
+      // ---- Scene 2 (1.0–2.0): red snaps on; cube cars accordion-crash ----
+      tl.fromTo(q("#v02-red"), { opacity: 0, scale: 1.35, transformOrigin: "50% 50%" },
+        { opacity: 1, scale: 1, duration: 0.12, ease: "steps(3)" }, 1.0);
+      tl.fromTo(q("#v02-redflash"), { opacity: 0, scale: 0.8, transformOrigin: "50% 50%" },
+        { opacity: 1, duration: 0.001, ease: "none" }, 1.0);
+      tl.to(q("#v02-redflash"), { opacity: 0, scale: 1.7, duration: 0.24, ease: "steps(4)" }, 1.001);
+      tl.to(light, { rotation: -10.5, x: -8, duration: 0.04, ease: "none" }, 1.0);
+      tl.to(light, { rotation: -6.5, x: 6, duration: 0.04, ease: "none" }, 1.04);
+      tl.to(light, { rotation: -8, x: 0, duration: 0.04, ease: "none" }, 1.08);
+
+      var carA = q("#v02-carA"), carB = q("#v02-carB"), carC = q("#v02-carC");
+      var bodyA = q("#v02-carA .v02-carbody"), bodyB = q("#v02-carB .v02-carbody"), bodyC = q("#v02-carC .v02-carbody");
+      var spA = q("#v02-carA .v02-speed"), spB = q("#v02-carB .v02-speed"), spC = q("#v02-carC .v02-speed");
+
+      // car A arrives and slams to a stop
+      tl.fromTo(carA, { x: -1000 }, { x: 0, duration: 0.22, ease: "steps(5)" }, 1.05);
+      tl.fromTo(bodyA, { scaleX: 1, skewX: 0, transformOrigin: "100% 100%" },
+        { scaleX: 0.86, skewX: -6, duration: 0.03, ease: "none" }, 1.27);
+      tl.to(bodyA, { scaleX: 1, skewX: 0, duration: 0.09, ease: "steps(3)" }, 1.3);
+      tl.to(spA, { opacity: 0, duration: 0.06, ease: "steps(2)" }, 1.27);
+
+      // car B slams into A
+      tl.fromTo(carB, { x: -1250 }, { x: 0, duration: 0.22, ease: "steps(5)" }, 1.2);
+      tl.fromTo(bodyB, { scaleX: 1, skewX: 0, transformOrigin: "100% 100%" },
+        { scaleX: 0.74, skewX: -8, duration: 0.03, ease: "none" }, 1.42);
+      tl.to(bodyB, { scaleX: 0.84, skewX: -4, duration: 0.08, ease: "steps(2)" }, 1.45);
+      tl.to(spB, { opacity: 0, duration: 0.06, ease: "steps(2)" }, 1.42);
+      tl.to(carA, { x: 22, rotation: 3, duration: 0.04, ease: "none" }, 1.42);
+
+      // car C slams into B
+      tl.fromTo(carC, { x: -1500 }, { x: 0, duration: 0.22, ease: "steps(5)" }, 1.38);
+      tl.fromTo(bodyC, { scaleX: 1, skewX: 0, transformOrigin: "100% 100%" },
+        { scaleX: 0.7, skewX: -10, duration: 0.03, ease: "none" }, 1.6);
+      tl.to(bodyC, { scaleX: 0.82, skewX: -5, duration: 0.08, ease: "steps(2)" }, 1.63);
+      tl.to(spC, { opacity: 0, duration: 0.06, ease: "steps(2)" }, 1.6);
+      tl.to(carB, { x: 30, rotation: -2, duration: 0.04, ease: "none" }, 1.6);
+      tl.to(bodyB, { scaleX: 0.66, skewX: -9, duration: 0.04, ease: "none" }, 1.6);
+      tl.to(carA, { x: 36, rotation: 5, duration: 0.04, ease: "none" }, 1.6);
+      // row rattles after the pile-up
+      var rattle = [[0, 1.7, -4], [0, 1.76, 3], [0, 1.82, -2], [0, 1.88, 0]];
+      rattle.forEach(function (r) {
+        tl.to([carA, carB, carC], { y: r[2], duration: 0.03, ease: "none" }, r[1]);
+      });
+
+      // ---- Scene 3 (2.0–3.3): clock with wild hands; RITARDO! slams in ----
+      var clock = q("#v02-clock");
+      tl.fromTo(clock, { scale: 0, rotation: -40, transformOrigin: "50% 50%" },
+        { scale: 1, rotation: 0, duration: 0.18, ease: "steps(4)" }, 2.0);
+      tl.fromTo(q("#v02-hhour"), { rotation: 0, svgOrigin: "150 150" },
+        { rotation: 900, duration: 1.3, ease: "steps(26)" }, 2.0);
+      tl.fromTo(q("#v02-hmin"), { rotation: 0, svgOrigin: "150 150" },
+        { rotation: 4320, duration: 1.3, ease: "steps(39)" }, 2.0);
+      tl.fromTo(q("#v02-hsec"), { rotation: 0, svgOrigin: "150 150" },
+        { rotation: -2600, duration: 1.3, ease: "steps(39)" }, 2.0);
+
+      var title = q("#v02-title");
+      tl.fromTo(title, { scale: 2.4, skewX: -30, x: -140, opacity: 0, transformOrigin: "50% 50%" },
+        { scale: 1, skewX: -8, x: 0, opacity: 1, duration: 0.14, ease: "steps(3)" }, 2.15);
+      tl.to(title, { scaleX: 1.14, scaleY: 0.82, duration: 0.04, ease: "none" }, 2.29);
+      tl.to(title, { scaleX: 1, scaleY: 1, duration: 0.12, ease: "back.out(4)" }, 2.33);
+      var letterScale = [1.8, 0.6, 1.5, 0.7, 1.6, 0.8, 1.4, 1.9];
+      var letterSkew = [-20, 12, -14, 18, -10, 16, -22, 10];
+      qa("#v02-title .v02-tl").forEach(function (el, k) {
+        tl.fromTo(el, { scaleY: letterScale[k], skewX: letterSkew[k], transformOrigin: "50% 100%" },
+          { scaleY: 1, skewX: 0, duration: 0.2, ease: "steps(4)" }, 2.2 + k * 0.025);
+      });
+      // nervous aftershocks through the end
+      var jit = [[2.62, 10, -10], [2.65, -8, -6], [2.68, 0, -8], [2.95, -12, -9], [2.98, 7, -7], [3.01, 0, -8], [3.18, 6, -8.5], [3.21, 0, -8]];
+      jit.forEach(function (j) {
+        tl.to(title, { x: j[1], skewX: j[2], duration: 0.03, ease: "none" }, j[0]);
+      });
+      var cj = [[2.7, 6, 4], [2.74, -5, -3], [2.78, 0, 0], [3.05, -6, -4], [3.09, 4, 2], [3.13, 0, 0]];
+      cj.forEach(function (c) {
+        tl.to(clock, { x: c[1], rotation: c[2], duration: 0.04, ease: "none" }, c[0]);
+      });
+      tl.to(light, { x: -5, duration: 0.03, ease: "none" }, 2.85);
+      tl.to(light, { x: 0, duration: 0.03, ease: "none" }, 2.88);
+
+      tl.set({}, {}, D);
+      window.__timelines = window.__timelines || {};
+      window.__timelines["02-semaforo"] = tl;
+    })();
+  ;(function(){var id="02-semaforo",k=0.8571;var inner=window.__timelines[id];if(!inner)return;var outer=gsap.timeline({paused:true});inner.paused(false);inner.timeScale(k);outer.add(inner,0);outer.set({},{},3.85);window.__timelines[id]=outer;})();
+</script>
+</template>

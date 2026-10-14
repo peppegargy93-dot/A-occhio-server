@@ -1,0 +1,232 @@
+<template>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <style>
+    @font-face { font-family: "Anton"; src: url("assets/fonts/anton-latin-400-normal.woff2") format("woff2"); }
+    @font-face { font-family: "Special Elite"; src: url("assets/fonts/special-elite-latin-400-normal.woff2") format("woff2"); }
+    [data-composition-id="06-quante-volte"] { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; overflow: hidden; }
+    [data-composition-id="06-quante-volte"] * { box-sizing: border-box; margin: 0; padding: 0; }
+    .v06-layer { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
+    .v06-ground { background: #EFE6D2; }
+    .v06-vignette { background: radial-gradient(ellipse at 50% 45%, rgba(20,20,20,0) 52%, rgba(20,20,20,0.26) 100%); }
+    .v06-grain { mix-blend-mode: multiply; opacity: 0.09; }
+    .v06-flicker { background: #141414; opacity: 0; }
+    .v06-flash-art { position: absolute; left: 140px; top: 520px; width: 800px; height: 800px; }
+    .v06-hub { position: absolute; left: 540px; top: 960px; width: 0; height: 0; }
+    .v06-arm { position: absolute; left: 0; top: 0; width: 0; height: 0; }
+    .v06-item { position: absolute; left: -150px; top: -150px; width: 300px; height: 300px; }
+    .v06-title { position: absolute; left: 80px; right: 80px; top: 170px; height: 180px; text-align: center; font-family: "Anton", sans-serif; font-size: 150px; line-height: 180px; color: #141414; white-space: nowrap; }
+    .v06-title span { display: inline-block; }
+  </style>
+  <div id="v06-root" data-composition-id="06-quante-volte" data-start="0" data-duration="2.5" data-width="1080" data-height="1920">
+    <!-- shared generic red symbols (no real sign text, no brand) -->
+    <svg width="0" height="0" style="position:absolute;" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <!-- referee red card held by a block hand -->
+        <g id="v06-s-card">
+          <g transform="rotate(9 300 300)">
+            <rect x="175" y="50" width="250" height="360" fill="#CE2B37"/>
+            <polygon points="300,50 425,50 425,410 380,410" fill="#141414" fill-opacity="0.2"/>
+          </g>
+          <rect x="190" y="380" width="200" height="120" fill="#141414"/>
+          <rect x="150" y="380" width="56" height="70" fill="#2E2E2E"/>
+          <rect x="230" y="500" width="120" height="100" fill="#141414"/>
+        </g>
+        <!-- engine warning light (generic engine block glyph) -->
+        <g id="v06-s-engine">
+          <rect x="40" y="40" width="520" height="520" rx="60" fill="#141414"/>
+          <polygon points="40,560 560,40 560,560" fill="#2E2E2E"/>
+          <rect x="190" y="150" width="170" height="48" fill="#CE2B37"/>
+          <rect x="250" y="198" width="50" height="40" fill="#CE2B37"/>
+          <rect x="150" y="238" width="290" height="190" fill="#CE2B37"/>
+          <rect x="100" y="290" width="50" height="90" fill="#CE2B37"/>
+          <rect x="70" y="270" width="30" height="130" fill="#CE2B37"/>
+          <polygon points="440,280 510,230 510,450 440,400" fill="#CE2B37"/>
+          <rect x="220" y="300" width="150" height="20" fill="#141414"/>
+          <rect x="220" y="350" width="150" height="20" fill="#141414"/>
+        </g>
+        <!-- app tile with red badge (99+ drawn separately) -->
+        <g id="v06-s-tile">
+          <rect x="70" y="150" width="380" height="380" rx="70" fill="#141414"/>
+          <polygon points="70,530 450,150 450,460 380,530" fill="#2E2E2E"/>
+          <rect x="150" y="270" width="220" height="150" fill="#D9CDB2"/>
+          <polygon points="150,270 370,270 260,350" fill="#EFE6D2" stroke="#141414" stroke-width="8"/>
+          <circle cx="430" cy="170" r="150" fill="#CE2B37" stroke="#EFE6D2" stroke-width="14"/>
+        </g>
+        <!-- round motorway-style badge: generic shapes only -->
+        <g id="v06-s-badge">
+          <circle cx="300" cy="300" r="270" fill="#CE2B37"/>
+          <circle cx="300" cy="300" r="190" fill="#EFE6D2"/>
+          <polygon points="150,250 330,250 300,290 150,290" fill="#141414"/>
+          <polygon points="150,315 400,315 370,355 150,355" fill="#141414"/>
+          <polygon points="370,250 450,250 420,290 340,290" fill="#CE2B37"/>
+          <path d="M 300 30 A 270 270 0 0 1 570 300 L 490 300 A 190 190 0 0 0 300 110 Z" fill="#141414" fill-opacity="0.18"/>
+        </g>
+        <!-- weather alert triangle -->
+        <g id="v06-s-alert">
+          <polygon points="300,40 570,520 30,520" fill="#CE2B37"/>
+          <polygon points="300,170 460,450 140,450" fill="#EFE6D2"/>
+          <polygon points="300,40 570,520 300,520" fill="#141414" fill-opacity="0.18"/>
+          <polygon points="278,230 322,230 312,370 288,370" fill="#141414"/>
+          <rect x="280" y="392" width="40" height="40" fill="#141414"/>
+        </g>
+      </defs>
+    </svg>
+
+    <!-- ground -->
+    <div id="v06-ground" class="clip v06-layer v06-ground" data-start="0" data-duration="2.5" data-track-index="0">
+      <svg width="1080" height="1920" viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg" style="position:absolute;left:0;top:0;">
+        <defs>
+          <filter id="v06-fibre"><feTurbulence type="fractalNoise" baseFrequency="0.012 0.08" numOctaves="3" seed="7"/><feColorMatrix type="matrix" values="0 0 0 0 0.35  0 0 0 0 0.28  0 0 0 0 0.16  0 0 0 0.55 -0.12"/></filter>
+          <filter id="v06-stain"><feTurbulence type="fractalNoise" baseFrequency="0.004" numOctaves="2" seed="23"/><feColorMatrix type="matrix" values="0 0 0 0 0.45  0 0 0 0 0.36  0 0 0 0 0.2  0 0 0 0.9 -0.38"/></filter>
+        </defs>
+        <image width="1080" height="1920" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1080' height='1920' viewBox='0 0 1080 1920'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012 0.08' numOctaves='3' seed='7'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.35 0 0 0 0 0.28 0 0 0 0 0.16 0 0 0 0.55 -0.12'/%3E%3C/filter%3E%3Crect width='1080' height='1920' filter='url(%23f)'/%3E%3C/svg%3E" opacity="0.2"/>
+        <image width="1080" height="1920" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1080' height='1920' viewBox='0 0 1080 1920'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.004' numOctaves='2' seed='23'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.45 0 0 0 0 0.36 0 0 0 0 0.2 0 0 0 0.9 -0.38'/%3E%3C/filter%3E%3Crect width='1080' height='1920' filter='url(%23f)'/%3E%3C/svg%3E" opacity="0.3"/>
+      </svg>
+    </div>
+
+    <!-- Scene 1: hard-cut flashes, exactly 6 frames (0.2 s) each -->
+    <div id="v06-f1" class="clip v06-layer" data-start="0" data-duration="0.2" data-track-index="1">
+      <svg class="v06-layer" viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg"><polygon points="0,700 1080,380 1080,1240 0,1520" fill="#D9CDB2"/></svg>
+      <svg id="v06-a1" class="v06-flash-art" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg"><use href="#v06-s-card"/></svg>
+    </div>
+    <div id="v06-f2" class="clip v06-layer" data-start="0.2" data-duration="0.2" data-track-index="1">
+      <svg class="v06-layer" viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg"><polygon points="0,420 1080,760 1080,1500 0,1180" fill="#D9CDB2"/></svg>
+      <svg id="v06-a2" class="v06-flash-art" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg"><use href="#v06-s-engine"/></svg>
+    </div>
+    <div id="v06-f3" class="clip v06-layer" data-start="0.4" data-duration="0.2" data-track-index="1">
+      <svg class="v06-layer" viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg"><polygon points="0,640 1080,440 1080,1300 0,1460" fill="#D9CDB2"/></svg>
+      <svg id="v06-a3" class="v06-flash-art" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+        <use href="#v06-s-tile"/>
+        <text x="430" y="218" text-anchor="middle" font-family="Anton" font-size="130" fill="#EFE6D2">99+</text>
+      </svg>
+    </div>
+    <div id="v06-f4" class="clip v06-layer" data-start="0.6" data-duration="0.2" data-track-index="2">
+      <svg class="v06-layer" viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg"><polygon points="0,380 1080,700 1080,1520 0,1240" fill="#D9CDB2"/></svg>
+      <svg id="v06-a4" class="v06-flash-art" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg"><use href="#v06-s-badge"/></svg>
+    </div>
+    <div id="v06-f5" class="clip v06-layer" data-start="0.8" data-duration="0.2" data-track-index="2">
+      <svg class="v06-layer" viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg"><polygon points="0,720 1080,420 1080,1280 0,1500" fill="#D9CDB2"/></svg>
+      <svg id="v06-a5" class="v06-flash-art" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg"><use href="#v06-s-alert"/></svg>
+    </div>
+
+    <!-- Scene 2: all five reappear and spin into a vortex -->
+    <div id="v06-vortex" class="clip v06-layer" data-start="1.0" data-duration="1.2" data-track-index="2">
+      <svg id="v06-spiral" class="v06-layer" viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg">
+        <g id="v06-spiral-g">
+          <path id="v06-sp0" fill="none" stroke="#CE2B37" stroke-width="22" stroke-linecap="butt"/>
+          <path id="v06-sp1" fill="none" stroke="#141414" stroke-width="10" stroke-linecap="butt"/>
+          <path id="v06-sp2" fill="none" stroke="#CE2B37" stroke-width="22" stroke-linecap="butt"/>
+        </g>
+      </svg>
+      <div id="v06-hub" class="v06-hub">
+        <div class="v06-arm" style="transform: rotate(0deg);"><div id="v06-i0" class="v06-item"><svg width="300" height="300" viewBox="0 0 600 600"><use href="#v06-s-card"/></svg></div></div>
+        <div class="v06-arm" style="transform: rotate(72deg);"><div id="v06-i1" class="v06-item"><svg width="300" height="300" viewBox="0 0 600 600"><use href="#v06-s-engine"/></svg></div></div>
+        <div class="v06-arm" style="transform: rotate(144deg);"><div id="v06-i2" class="v06-item"><svg width="300" height="300" viewBox="0 0 600 600"><use href="#v06-s-tile"/></svg></div></div>
+        <div class="v06-arm" style="transform: rotate(216deg);"><div id="v06-i3" class="v06-item"><svg width="300" height="300" viewBox="0 0 600 600"><use href="#v06-s-badge"/></svg></div></div>
+        <div class="v06-arm" style="transform: rotate(288deg);"><div id="v06-i4" class="v06-item"><svg width="300" height="300" viewBox="0 0 600 600"><use href="#v06-s-alert"/></svg></div></div>
+      </div>
+    </div>
+    <div id="v06-title-clip" class="clip v06-layer" data-start="1.0" data-duration="1.2" data-track-index="3">
+      <div id="v06-title" class="v06-title"><span>Q</span><span>U</span><span>A</span><span>N</span><span>T</span><span>E</span><span>&nbsp;</span><span>V</span><span>O</span><span>L</span><span>T</span><span>E</span><span>?</span></div>
+    </div>
+
+    <!-- vignette, grain, flicker -->
+    <div id="v06-vignette" class="clip v06-layer v06-vignette" data-start="0" data-duration="2.5" data-track-index="4"></div>
+    <svg id="v06-grain" class="clip v06-layer v06-grain" data-start="0" data-duration="2.5" data-track-index="5" width="1080" height="1920" viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="v06-n0"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="5"/><feColorMatrix type="saturate" values="0"/></filter>
+        <filter id="v06-n1"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="13"/><feColorMatrix type="saturate" values="0"/></filter>
+        <filter id="v06-n2"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="31"/><feColorMatrix type="saturate" values="0"/></filter>
+        <filter id="v06-n3"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="43"/><feColorMatrix type="saturate" values="0"/></filter>
+        <filter id="v06-n4"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="67"/><feColorMatrix type="saturate" values="0"/></filter>
+        <filter id="v06-n5"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="89"/><feColorMatrix type="saturate" values="0"/></filter>
+      </defs>
+      <image width="1080" height="1920" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1080' height='1920' viewBox='0 0 1080 1920'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='5'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='1080' height='1920' filter='url(%23f)'/%3E%3C/svg%3E" id="v06-g0" opacity="1"/>
+      <image width="1080" height="1920" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1080' height='1920' viewBox='0 0 1080 1920'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='13'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='1080' height='1920' filter='url(%23f)'/%3E%3C/svg%3E" id="v06-g1" opacity="0"/>
+      <image width="1080" height="1920" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1080' height='1920' viewBox='0 0 1080 1920'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='31'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='1080' height='1920' filter='url(%23f)'/%3E%3C/svg%3E" id="v06-g2" opacity="0"/>
+      <image width="1080" height="1920" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1080' height='1920' viewBox='0 0 1080 1920'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='43'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='1080' height='1920' filter='url(%23f)'/%3E%3C/svg%3E" id="v06-g3" opacity="0"/>
+      <image width="1080" height="1920" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1080' height='1920' viewBox='0 0 1080 1920'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='67'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='1080' height='1920' filter='url(%23f)'/%3E%3C/svg%3E" id="v06-g4" opacity="0"/>
+      <image width="1080" height="1920" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1080' height='1920' viewBox='0 0 1080 1920'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='89'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='1080' height='1920' filter='url(%23f)'/%3E%3C/svg%3E" id="v06-g5" opacity="0"/>
+    </svg>
+    <div id="v06-flicker" class="clip v06-layer v06-flicker" data-start="0" data-duration="2.5" data-track-index="6"></div>
+  </div>
+  <script>
+    (function () {
+      const D = 2.2, FPS = 30;
+      const tl = gsap.timeline({ paused: true });
+      const q = (s) => document.querySelector('[data-composition-id="06-quante-volte"] ' + s);
+      const qa = (s) => document.querySelectorAll('[data-composition-id="06-quante-volte"] ' + s);
+
+      // ---- archival grain (swap every 2 frames) + flicker ----
+      const tiles = [0, 1, 2, 3, 4, 5].map((i) => q('#v06-g' + i));
+      const flick = [0.02, 0.05, 0.01, 0.04, 0.0, 0.03, 0.05, 0.015, 0.035, 0.005, 0.045, 0.025];
+      const steps = Math.ceil(D * FPS / 2);
+      for (let k = 0; k < steps; k++) {
+        const t = (k * 2) / FPS;
+        const cur = k % 6, prev = (k + 5) % 6;
+        if (k > 0) tl.set(tiles[prev], { attr: { opacity: 0 } }, t);
+        tl.set(tiles[cur], { attr: { opacity: 1 } }, t);
+        tl.set(q('#v06-flicker'), { opacity: 0.6 * flick[(k * 5) % flick.length] }, t);
+      }
+
+      // ---- Scene 1 (0.0-1.0): five hard-cut flashes, each a 6-frame clip ----
+      // inside each flash: a jerky stepped punch (scale + tilt), no exit (the clip cut is the exit)
+      const tilts = [-6, 5, -4, 7, -5];
+      for (let i = 0; i < 5; i++) {
+        const a = q('#v06-a' + (i + 1));
+        const t0 = i * 0.2;
+        tl.fromTo(a, { scale: 1.22, rotation: tilts[i], x: -18 }, { scale: 1, rotation: 0, x: 0, duration: 0.1, ease: 'steps(3)' }, t0);
+        tl.to(a, { x: 8, y: -6, duration: 0.033, ease: 'steps(1)' }, t0 + 0.13);
+        tl.to(a, { x: -5, y: 4, duration: 0.033, ease: 'steps(1)' }, t0 + 0.166);
+      }
+
+      // ---- Scene 2 (1.0-2.2): reappear + spiral vortex ----
+      // spiral arms (Archimedean, deterministic)
+      function spiral(phase) {
+        let d = '';
+        for (let j = 0; j <= 120; j++) {
+          const th = phase + j * 0.09;
+          const r = 30 + j * 5.4;
+          const x = 540 + r * Math.cos(th), y = 960 + r * Math.sin(th);
+          d += (j ? ' L ' : 'M ') + x.toFixed(1) + ' ' + y.toFixed(1);
+        }
+        return d;
+      }
+      ['#v06-sp0', '#v06-sp1', '#v06-sp2'].forEach((s, i) => {
+        const p = q(s);
+        p.setAttribute('d', spiral(i * 2.094));
+        let len = 6000; try { len = p.getTotalLength() || 6000; } catch (e) { len = 6000; }
+        p.setAttribute('stroke-dasharray', len);
+        tl.fromTo(p, { attr: { 'stroke-dashoffset': len } }, { attr: { 'stroke-dashoffset': 0 }, duration: 0.36, ease: 'steps(6)' }, 1.0 + i * 0.04);
+      });
+      tl.fromTo(q('#v06-spiral-g'), { rotation: 0, svgOrigin: '540 960' }, { rotation: 400, svgOrigin: '540 960', duration: 1.2, ease: 'power2.in' }, 1.0);
+
+      // items pop back in (stepped), then swirl inward, spinning faster and faster
+      for (let i = 0; i < 5; i++) {
+        const it = q('#v06-i' + i);
+        tl.fromTo(it, { scale: 0, x: 400, rotation: -40 }, { scale: 1, duration: 0.12, ease: 'steps(3)' }, 1.0 + i * 0.035);
+        tl.to(it, { x: 150, scale: 0.62, rotation: 520 + i * 40, duration: 1.04, ease: 'power2.in' }, 1.16);
+      }
+      tl.fromTo(q('#v06-hub'), { rotation: 0 }, { rotation: 760, duration: 1.2, ease: 'power3.in' }, 1.0);
+
+      // title slams in: overshoot squash/stretch + skew + per-letter scale distortion
+      const title = q('#v06-title');
+      tl.fromTo(title, { scale: 2.4, skewX: -22, autoAlpha: 0, transformOrigin: '50% 50%' },
+        { scale: 1, skewX: 0, autoAlpha: 1, duration: 0.1, ease: 'steps(3)' }, 1.06);
+      tl.to(title, { scaleX: 1.08, scaleY: 0.82, duration: 0.05, ease: 'steps(1)' }, 1.16);
+      tl.to(title, { scaleX: 0.97, scaleY: 1.06, duration: 0.05, ease: 'steps(1)' }, 1.21);
+      tl.to(title, { scaleX: 1, scaleY: 1, duration: 0.05, ease: 'steps(1)' }, 1.26);
+      const ls = [1.6, 0.6, 1.4, 0.75, 1.7, 0.8, 1, 1.5, 0.7, 1.35, 0.65, 1.55, 1.9];
+      qa('#v06-title span').forEach((sp, i) => {
+        tl.fromTo(sp, { scale: ls[i], y: (i % 2 ? 14 : -14) }, { scale: 1, y: 0, duration: 0.24, ease: 'steps(4)' }, 1.1 + (i % 4) * 0.02);
+      });
+      // nervous tremor on the title while the vortex accelerates
+      const tx = [3, -4, 2, -3, 4, -2, 3, -4, 2, -3];
+      tx.forEach((v, i) => tl.set(title, { x: v, rotation: v * 0.15 }, 1.4 + i * 0.08));
+
+      tl.to({}, { duration: 0.001 }, D - 0.001);
+      window.__timelines = window.__timelines || {};
+      window.__timelines["06-quante-volte"] = tl;
+    })();
+  </script>
+</template>
