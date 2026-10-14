@@ -257,10 +257,13 @@
       // title types 1.0-1.58s (as the phone rises); its screen-space layer sits above the stage's white bloom, covered only by the handoff page at 3.18
       tl.to($$("ch"), { opacity: 1, y: 0, duration: 0.18, ease: "power2.out", stagger: 0.033 }, 1.0);
 
-      // coordinate-target zoom onto screen center (540,1540): T = (0, 960-1540), cam scale 2.9
-      tl.to(world, { x: 0, y: -580, duration: 0.7, ease: "power3.inOut" }, 2.5);
-      tl.to(cam, { scale: 2.9, duration: 0.7, ease: "power3.inOut" }, 2.5);
-      tl.to($("bloom"), { scale: 14, duration: 0.5, ease: "power2.in" }, 2.7);
+      // zoom-in on the screen: the PHONE lifts toward the lens (world stays put, so the plaque never
+      // rises behind the title — plaque top stays ~y 625). Camera keeps a gentle push.
+      // Phone origin = contact (world 540,1210); screen center lands at screen y 960:
+      // 1210 + dy + 330*3.4 = 1010 -> dy = -1322. Screen fill: 412*3.4*1.08 = 1513 w, 892*3.4*1.08 = 3275 h.
+      tl.to(cam, { scale: 1.08, duration: 0.7, ease: "sine.inOut" }, 2.5);
+      tl.to(phone, { y: -1322, scale: 3.4, duration: 0.7, ease: "power3.inOut" }, 2.5);
+      tl.to($("bloom"), { scale: 30, duration: 0.5, ease: "power2.in" }, 2.7);
 
       // handoff: pure white full-bleed, scale 1, for the last 0.2s
       tl.fromTo($("page"), { opacity: 0, scale: 1 }, { opacity: 1, scale: 1, duration: 0.04, ease: "none" }, 3.18);

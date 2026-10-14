@@ -1,7 +1,7 @@
 {
   "version": 1,
   "historyId": "813fbbeb-92a3-4df5-b3d2-97b6809078b9",
-  "currentRevision": "2d1a58f2-a9c6-4eed-a01b-bfb1f9f23d3b",
+  "currentRevision": "446885c6-f9bb-42ef-b18e-59c2080a3eb1",
   "pendingChanges": false,
   "files": {
     "AGENTS.md": {
@@ -249,8 +249,8 @@
       "content": "/root/.cache/hyperframes/history/813fbbeb-92a3-4df5-b3d2-97b6809078b9/blobs/67/6760d8ebe6a6209d1e4daa0d178389f627aa15273f44b2c12f074d8d13e77179"
     },
     "compositions/frames/03-bancone.html": {
-      "hash": "bb2d7eafde6ecd1169124ef4ac81d20ffea1a71d470fd4e58502c5642ac238dc",
-      "content": "/root/.cache/hyperframes/history/813fbbeb-92a3-4df5-b3d2-97b6809078b9/blobs/bb/bb2d7eafde6ecd1169124ef4ac81d20ffea1a71d470fd4e58502c5642ac238dc"
+      "hash": "7358928be6cd94434db8b861fea218b38bb0e2ef73bfb52c646415851a89e9eb",
+      "content": "/root/.cache/hyperframes/history/813fbbeb-92a3-4df5-b3d2-97b6809078b9/blobs/73/7358928be6cd94434db8b861fea218b38bb0e2ef73bfb52c646415851a89e9eb"
     },
     "compositions/frames/04-recensione-follower.html": {
       "hash": "0498d83fde0c70d86a988498369b3c2cea28b5430c6030823bf9b869e4a1faba",
@@ -311,6 +311,50 @@
     "assets/bgm/track.wav": {
       "hash": "9424f947a65c95b01b2c3b104612fbbedf4105e7223b616b7154f057b652f2ea",
       "content": "/root/.cache/hyperframes/history/813fbbeb-92a3-4df5-b3d2-97b6809078b9/blobs/94/9424f947a65c95b01b2c3b104612fbbedf4105e7223b616b7154f057b652f2ea"
+    },
+    "review/scena-01.jpg": {
+      "hash": "4eb412e704ffbf79b4baef9c656de353e0f2b4d963cde62dfe3d71aae5783536",
+      "content": "/root/.cache/hyperframes/history/813fbbeb-92a3-4df5-b3d2-97b6809078b9/blobs/4e/4eb412e704ffbf79b4baef9c656de353e0f2b4d963cde62dfe3d71aae5783536"
+    },
+    "review/scena-02.jpg": {
+      "hash": "b8752de45dc08d063ca7430d9fd45719a74dfd1514406d4188bbedb51b641dba",
+      "content": "/root/.cache/hyperframes/history/813fbbeb-92a3-4df5-b3d2-97b6809078b9/blobs/b8/b8752de45dc08d063ca7430d9fd45719a74dfd1514406d4188bbedb51b641dba"
+    },
+    "review/scena-03.jpg": {
+      "hash": "877cd4f13a439c5aec5966bc05f6098129280daacab33779bc184f58c084316b",
+      "content": "/root/.cache/hyperframes/history/813fbbeb-92a3-4df5-b3d2-97b6809078b9/blobs/87/877cd4f13a439c5aec5966bc05f6098129280daacab33779bc184f58c084316b"
+    },
+    "review/scena-04.jpg": {
+      "hash": "ab2a549e1bcf306e868bf00d79fe34b61c60a4f8914e40985e3687e2fb021fb5",
+      "content": "/root/.cache/hyperframes/history/813fbbeb-92a3-4df5-b3d2-97b6809078b9/blobs/ab/ab2a549e1bcf306e868bf00d79fe34b61c60a4f8914e40985e3687e2fb021fb5"
+    },
+    "review/scena-05.jpg": {
+      "hash": "f55d2650688ecc7af7db91f67ebb84ec6c18e60970a9fa371fb5d8df53f11eeb",
+      "content": "/root/.cache/hyperframes/history/813fbbeb-92a3-4df5-b3d2-97b6809078b9/blobs/f5/f55d2650688ecc7af7db91f67ebb84ec6c18e60970a9fa371fb5d8df53f11eeb"
+    },
+    "review/scena-06.jpg": {
+      "hash": "1f7b02c7070d010d4a1ae1b760578792fe515ff5a8d5262cb149448f1b6d5ab1",
+      "content": "/root/.cache/hyperframes/history/813fbbeb-92a3-4df5-b3d2-97b6809078b9/blobs/1f/1f7b02c7070d010d4a1ae1b760578792fe515ff5a8d5262cb149448f1b6d5ab1"
+    },
+    "review/scena-07.jpg": {
+      "hash": "b4646b90b21401e101832d584605dd3e4d59e346f664086d04a5395d7cb0d1c4",
+      "content": "/root/.cache/hyperframes/history/813fbbeb-92a3-4df5-b3d2-97b6809078b9/blobs/b4/b4646b90b21401e101832d584605dd3e4d59e346f664086d04a5395d7cb0d1c4"
+    },
+    "review/scena-08.jpg": {
+      "hash": "f975d1c368444e74840590537f82bfa5b30eee41559a3d2fc6546e8fd989fa79",
+      "content": "/root/.cache/hyperframes/history/813fbbeb-92a3-4df5-b3d2-97b6809078b9/blobs/f9/f975d1c368444e74840590537f82bfa5b30eee41559a3d2fc6546e8fd989fa79"
+    },
+    "review/scena-09.jpg": {
+      "hash": "e38e1270f0604f36c04701f00434323e97e922d14c016ca7a1aa79260c6fe101",
+      "content": "/root/.cache/hyperframes/history/813fbbeb-92a3-4df5-b3d2-97b6809078b9/blobs/e3/e38e1270f0604f36c04701f00434323e97e922d14c016ca7a1aa79260c6fe101"
+    },
+    "review/scena-10.jpg": {
+      "hash": "3d31bdda2fbe9042f1eb08594e67822e9938e885361c496ddc50004ae8d7a0f3",
+      "content": "/root/.cache/hyperframes/history/813fbbeb-92a3-4df5-b3d2-97b6809078b9/blobs/3d/3d31bdda2fbe9042f1eb08594e67822e9938e885361c496ddc50004ae8d7a0f3"
+    },
+    "review/v3-un-frame-per-scena.jpg": {
+      "hash": "35668bd19499852dc575a1ae34ad1d0bbd8c738a16b6811dae5ba2b442a2a1cf",
+      "content": "/root/.cache/hyperframes/history/813fbbeb-92a3-4df5-b3d2-97b6809078b9/blobs/35/35668bd19499852dc575a1ae34ad1d0bbd8c738a16b6811dae5ba2b442a2a1cf"
     }
   },
   "revisions": {
@@ -330,6 +374,65 @@
         "compositions/frames/06-menu.html": {
           "before": "/root/.cache/hyperframes/history/813fbbeb-92a3-4df5-b3d2-97b6809078b9/blobs/74/743a07f190010deff1006349fb92e483ffe1447c0687519922c4be0a3fa140a3",
           "after": "/root/.cache/hyperframes/history/813fbbeb-92a3-4df5-b3d2-97b6809078b9/blobs/f2/f2b3241b7ae435646cbf7aa2d8d98104897e2ab01ec14ef0021a0a46b4e6a6d0"
+        }
+      }
+    },
+    "446885c6-f9bb-42ef-b18e-59c2080a3eb1": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1791976537682,
+      "endedAt": 1791976537725,
+      "files": {
+        "compositions/frames/03-bancone.html": {
+          "before": "/root/.cache/hyperframes/history/813fbbeb-92a3-4df5-b3d2-97b6809078b9/blobs/bb/bb2d7eafde6ecd1169124ef4ac81d20ffea1a71d470fd4e58502c5642ac238dc",
+          "after": "/root/.cache/hyperframes/history/813fbbeb-92a3-4df5-b3d2-97b6809078b9/blobs/73/7358928be6cd94434db8b861fea218b38bb0e2ef73bfb52c646415851a89e9eb"
+        },
+        "review/scena-01.jpg": {
+          "before": null,
+          "after": "/root/.cache/hyperframes/history/813fbbeb-92a3-4df5-b3d2-97b6809078b9/blobs/4e/4eb412e704ffbf79b4baef9c656de353e0f2b4d963cde62dfe3d71aae5783536"
+        },
+        "review/scena-02.jpg": {
+          "before": null,
+          "after": "/root/.cache/hyperframes/history/813fbbeb-92a3-4df5-b3d2-97b6809078b9/blobs/b8/b8752de45dc08d063ca7430d9fd45719a74dfd1514406d4188bbedb51b641dba"
+        },
+        "review/scena-03.jpg": {
+          "before": null,
+          "after": "/root/.cache/hyperframes/history/813fbbeb-92a3-4df5-b3d2-97b6809078b9/blobs/87/877cd4f13a439c5aec5966bc05f6098129280daacab33779bc184f58c084316b"
+        },
+        "review/scena-04.jpg": {
+          "before": null,
+          "after": "/root/.cache/hyperframes/history/813fbbeb-92a3-4df5-b3d2-97b6809078b9/blobs/ab/ab2a549e1bcf306e868bf00d79fe34b61c60a4f8914e40985e3687e2fb021fb5"
+        },
+        "review/scena-05.jpg": {
+          "before": null,
+          "after": "/root/.cache/hyperframes/history/813fbbeb-92a3-4df5-b3d2-97b6809078b9/blobs/f5/f55d2650688ecc7af7db91f67ebb84ec6c18e60970a9fa371fb5d8df53f11eeb"
+        },
+        "review/scena-06.jpg": {
+          "before": null,
+          "after": "/root/.cache/hyperframes/history/813fbbeb-92a3-4df5-b3d2-97b6809078b9/blobs/1f/1f7b02c7070d010d4a1ae1b760578792fe515ff5a8d5262cb149448f1b6d5ab1"
+        },
+        "review/scena-07.jpg": {
+          "before": null,
+          "after": "/root/.cache/hyperframes/history/813fbbeb-92a3-4df5-b3d2-97b6809078b9/blobs/b4/b4646b90b21401e101832d584605dd3e4d59e346f664086d04a5395d7cb0d1c4"
+        },
+        "review/scena-08.jpg": {
+          "before": null,
+          "after": "/root/.cache/hyperframes/history/813fbbeb-92a3-4df5-b3d2-97b6809078b9/blobs/f9/f975d1c368444e74840590537f82bfa5b30eee41559a3d2fc6546e8fd989fa79"
+        },
+        "review/scena-09.jpg": {
+          "before": null,
+          "after": "/root/.cache/hyperframes/history/813fbbeb-92a3-4df5-b3d2-97b6809078b9/blobs/e3/e38e1270f0604f36c04701f00434323e97e922d14c016ca7a1aa79260c6fe101"
+        },
+        "review/scena-10.jpg": {
+          "before": null,
+          "after": "/root/.cache/hyperframes/history/813fbbeb-92a3-4df5-b3d2-97b6809078b9/blobs/3d/3d31bdda2fbe9042f1eb08594e67822e9938e885361c496ddc50004ae8d7a0f3"
+        },
+        "review/v3-un-frame-per-scena.jpg": {
+          "before": null,
+          "after": "/root/.cache/hyperframes/history/813fbbeb-92a3-4df5-b3d2-97b6809078b9/blobs/35/35668bd19499852dc575a1ae34ad1d0bbd8c738a16b6811dae5ba2b442a2a1cf"
         }
       }
     }
@@ -402,8 +505,8 @@
   },
   "snapshots": {
     "latest": {
-      "revision": "2d1a58f2-a9c6-4eed-a01b-bfb1f9f23d3b",
-      "id": "7cd0ff66-e0ad-43ab-880c-f3d22f0f8c2d-10"
+      "revision": "446885c6-f9bb-42ef-b18e-59c2080a3eb1",
+      "id": "456ec020-cc13-4be3-bdee-b4fb698c2f56-4"
     },
     "revisions": {
       "2d1a58f2-a9c6-4eed-a01b-bfb1f9f23d3b": [
@@ -884,6 +987,108 @@
           "contentHash": "9d06a26b6fe29afdac711ebcd21888bdcf508ec30551e94b08d02a1d7e005867",
           "revision": "2d1a58f2-a9c6-4eed-a01b-bfb1f9f23d3b",
           "inputFingerprint": "50367d095e2e3128aa119a8cd6feca1ba44632c7d74e6f83fa1c2db51e0207e1",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        }
+      ],
+      "446885c6-f9bb-42ef-b18e-59c2080a3eb1": [
+        {
+          "scope": "full",
+          "id": "456ec020-cc13-4be3-bdee-b4fb698c2f56-0",
+          "image": "/home/user/A-occhio-server/videos/passaparola-spot-v3/.hyperframes/artifacts/snapshots/a88d5268-d3d7-46f0-bd2f-b019693c3128/frame-00-at-8.6s.png",
+          "time": 8.6,
+          "metadata": {
+            "width": 1080,
+            "height": 1920,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1791976549724,
+          "contentHash": "4ebbdd00890398d627a8c100b6d7930b4544c551960aad1eae82760a226c631b",
+          "revision": "446885c6-f9bb-42ef-b18e-59c2080a3eb1",
+          "inputFingerprint": "ff06de3d937db04e2753791cc79fbb3249e8720b1e445e705b94f9f2b351a748",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "456ec020-cc13-4be3-bdee-b4fb698c2f56-1",
+          "image": "/home/user/A-occhio-server/videos/passaparola-spot-v3/.hyperframes/artifacts/snapshots/a88d5268-d3d7-46f0-bd2f-b019693c3128/frame-01-at-9.6s.png",
+          "time": 9.6,
+          "metadata": {
+            "width": 1080,
+            "height": 1920,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1791976549724,
+          "contentHash": "fd43cebe90137a5eb886424154ab26426171dc6b59247aee2b37bda1dd48ff9f",
+          "revision": "446885c6-f9bb-42ef-b18e-59c2080a3eb1",
+          "inputFingerprint": "ff06de3d937db04e2753791cc79fbb3249e8720b1e445e705b94f9f2b351a748",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "456ec020-cc13-4be3-bdee-b4fb698c2f56-2",
+          "image": "/home/user/A-occhio-server/videos/passaparola-spot-v3/.hyperframes/artifacts/snapshots/a88d5268-d3d7-46f0-bd2f-b019693c3128/frame-02-at-10.4s.png",
+          "time": 10.4,
+          "metadata": {
+            "width": 1080,
+            "height": 1920,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1791976549724,
+          "contentHash": "156680f92bff655f21e0989aac9393517fcfda21b2f8135918337ef9de1637f9",
+          "revision": "446885c6-f9bb-42ef-b18e-59c2080a3eb1",
+          "inputFingerprint": "ff06de3d937db04e2753791cc79fbb3249e8720b1e445e705b94f9f2b351a748",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "456ec020-cc13-4be3-bdee-b4fb698c2f56-3",
+          "image": "/home/user/A-occhio-server/videos/passaparola-spot-v3/.hyperframes/artifacts/snapshots/a88d5268-d3d7-46f0-bd2f-b019693c3128/frame-03-at-10.9s.png",
+          "time": 10.9,
+          "metadata": {
+            "width": 1080,
+            "height": 1920,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1791976549724,
+          "contentHash": "c056600b7f63f5b9429856fb335118f051a5a2fbdc34e5dbbbe3d8bc0e96a871",
+          "revision": "446885c6-f9bb-42ef-b18e-59c2080a3eb1",
+          "inputFingerprint": "ff06de3d937db04e2753791cc79fbb3249e8720b1e445e705b94f9f2b351a748",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "456ec020-cc13-4be3-bdee-b4fb698c2f56-4",
+          "image": "/home/user/A-occhio-server/videos/passaparola-spot-v3/.hyperframes/artifacts/snapshots/a88d5268-d3d7-46f0-bd2f-b019693c3128/frame-04-at-39.11s.png",
+          "time": 39.11,
+          "metadata": {
+            "width": 1080,
+            "height": 1920,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1791976549724,
+          "contentHash": "9d06a26b6fe29afdac711ebcd21888bdcf508ec30551e94b08d02a1d7e005867",
+          "revision": "446885c6-f9bb-42ef-b18e-59c2080a3eb1",
+          "inputFingerprint": "ff06de3d937db04e2753791cc79fbb3249e8720b1e445e705b94f9f2b351a748",
           "inputScope": "local-project-files",
           "attribution": "recorded-revision"
         }
