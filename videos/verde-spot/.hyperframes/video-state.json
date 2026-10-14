@@ -1,7 +1,7 @@
 {
   "version": 1,
   "historyId": "dbd931c2-a15e-4257-8a0d-d5c3a5c7b643",
-  "currentRevision": "6a58d605-0e19-4784-84f8-0a251cea2410",
+  "currentRevision": "7dc7fbd2-4a6d-464e-ab02-1f14d9cb20de",
   "pendingChanges": false,
   "files": {
     "AGENTS.md": {
@@ -193,8 +193,8 @@
       "content": "/root/.cache/hyperframes/history/dbd931c2-a15e-4257-8a0d-d5c3a5c7b643/blobs/ad/ad5dadeef78a520800a9e5cdd27a92ff5ac37f11b6a07f611b6b52b9f8c79a17"
     },
     "index.html": {
-      "hash": "cc80a705528f20f03885cc0cc1697fdd8fb982484e9c7fe554f6f5d88ce20b6b",
-      "content": "/root/.cache/hyperframes/history/dbd931c2-a15e-4257-8a0d-d5c3a5c7b643/blobs/cc/cc80a705528f20f03885cc0cc1697fdd8fb982484e9c7fe554f6f5d88ce20b6b"
+      "hash": "bd69d9c406b03b3db23047f0158a928de50c4d0630e95f9e5840355be0872798",
+      "content": "/root/.cache/hyperframes/history/dbd931c2-a15e-4257-8a0d-d5c3a5c7b643/blobs/bd/bd69d9c406b03b3db23047f0158a928de50c4d0630e95f9e5840355be0872798"
     },
     "meta.json": {
       "hash": "6dc1dfbff01d2ca19f3fccd9d8ac4a0f95f8121bb8466f77e801654772265efd",
@@ -1081,6 +1081,21 @@
         "compositions/frames/11-bandiera.html": {
           "before": "/root/.cache/hyperframes/history/dbd931c2-a15e-4257-8a0d-d5c3a5c7b643/blobs/39/39e3db769ff2bf9fa8f9d9e63fcf551d822b02818775a1d35f283d9549e239ea",
           "after": "/root/.cache/hyperframes/history/dbd931c2-a15e-4257-8a0d-d5c3a5c7b643/blobs/63/6347ac3e8e8cf515ebe1c3cfe757dd957c791cc1caffe74be5eb6c713a7fda89"
+        }
+      }
+    },
+    "7dc7fbd2-4a6d-464e-ab02-1f14d9cb20de": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1792017118352,
+      "endedAt": 1792017118354,
+      "files": {
+        "index.html": {
+          "before": "/root/.cache/hyperframes/history/dbd931c2-a15e-4257-8a0d-d5c3a5c7b643/blobs/cc/cc80a705528f20f03885cc0cc1697fdd8fb982484e9c7fe554f6f5d88ce20b6b",
+          "after": "/root/.cache/hyperframes/history/dbd931c2-a15e-4257-8a0d-d5c3a5c7b643/blobs/bd/bd69d9c406b03b3db23047f0158a928de50c4d0630e95f9e5840355be0872798"
         }
       }
     }
