@@ -12,7 +12,7 @@
 
 - scene: Phone (70% height) on Osteria Marea venue page: "Com'è andata?" with IT EN DE FR ES cycling; tap "Scrivi la recensione su Google" → stars fill → "Grazie di cuore" + confetti; then tap "Seguici su Instagram" → heart + "+1 follower"
 - voiceover: "…e in trenta secondi ti lascia la recensione, nella sua lingua. E con un tocco, ti segue anche su Instagram."
-- duration: 6.5s
+- duration: 6.4s
 - transition_in: cut
 - status: outline
 - src: compositions/frames/04-recensione-follower.html

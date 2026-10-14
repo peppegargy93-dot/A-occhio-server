@@ -12,7 +12,7 @@
 
 - scene: Phone (≈70% height) with search "ristoranti vicino a me": two blurred generic venues (2.341, 1.870) above Osteria Marea 4,8 · 34 recensioni circled in coral; title "Cinque stelle. Ma ti trovano in pochi."
 - voiceover: "Ma su Google, chi ti cerca trova prima gli altri."
-- duration: 3.4s
+- duration: 3.81s
 - transition_in: zoom-through
 - status: outline
 - src: compositions/frames/02-ricerca.html

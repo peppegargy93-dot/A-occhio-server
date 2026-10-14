@@ -12,7 +12,7 @@
 
 - scene: passaparola wordmark composes as in v2 with the mascot star; "Fatti raccontare da chi ti ha scelto." below; after ~1 s "una produzione" + Alici Come Prima logo (PNG, unmodified) enters small at the bottom; closes on white, 1.2 s hold
 - voiceover: "Passaparola. Fatti raccontare da chi ti ha scelto."
-- duration: 4.4s
+- duration: 4.45s
 - transition_in: blur-crossfade
 - status: outline
 - src: compositions/frames/09-finale.html

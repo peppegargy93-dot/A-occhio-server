@@ -12,7 +12,7 @@
 
 - scene: Counter seen from the front, dark plexi plaque in Osteria Marea colors (navy, gold logo, "Com'è andata? Tocca qui", NFC icon); a phone enters from below and touches it; coral concentric waves; title "Basta un tocco."
 - voiceover: "Con Passaparola, sul bancone c'è una targa: basta avvicinare il telefono…"
-- duration: 3.4s
+- duration: 4.12s
 - transition_in: push-slide UP
 - status: outline
 - src: compositions/frames/03-bancone.html

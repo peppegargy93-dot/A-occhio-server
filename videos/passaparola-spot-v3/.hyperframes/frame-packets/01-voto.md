@@ -12,7 +12,7 @@
 
 - scene: Osteria Marea logo + name on warm white, five gold stars light one by one, huge "4,8", then small "34 recensioni" underlined in coral
 - voiceover: "Da te si mangia benissimo, e chi viene lo sa."
-- duration: 3.2s
+- duration: 3.44s
 - transition_in: cut
 - status: outline
 - src: compositions/frames/01-voto.html

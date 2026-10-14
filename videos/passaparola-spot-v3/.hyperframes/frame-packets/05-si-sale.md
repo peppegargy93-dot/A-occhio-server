@@ -12,7 +12,7 @@
 
 - scene: Huge "34" rolls to "300", then the search ranking: Osteria Marea climbs to #1 with an arrow; title "Più recensioni. Più in alto."
 - voiceover: "Più recensioni, più in alto su Google."
-- duration: 2.8s
+- duration: 2.5s
 - transition_in: zoom-through
 - status: outline
 - src: compositions/frames/05-si-sale.html

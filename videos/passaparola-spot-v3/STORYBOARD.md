@@ -122,8 +122,8 @@ Scene 5 (6.6–8.5s): bottom bar slides in "La mia scelta · 2" (badge pops), th
 ## Frame 7 — Lo shooting
 
 - scene: Camera viewfinder with REC over linguine from above; shutter + flash; photo shrinks and flies into the menu on a phone, with Osteria Marea color swatches beside it; title "Le foto le facciamo noi."
-- voiceover: "E le foto le scattiamo noi, piatto per piatto."
-- duration: 5.2s
+- voiceover: "E le foto le scattiamo noi, piatto per piatto,"
+- duration: 3.2s
 - transition_in: zoom-through
 - status: outline
 - src: compositions/frames/07-shooting.html
@@ -135,27 +135,26 @@ Scene 1 (0.0–1.2s): full-frame dark viewfinder (REC · 1/250 · f2.8, grid, co
 Scene 2 (1.2–1.6s): shutter + white flash.
 Scene 3 (1.6–3.2s): the photo shrinks and flies into a dish slot of the menu on a phone (light background returns); two swatches navy #123247 and gold #E0B04B pop beside the phone with tiny hex labels.
 
-## Frame 8 — L'offerta
+## Frame 8 — Su misura
 
-- scene: Three icons in a row light up (camera, menu, plaque) with "Shooting · Menu · Targhe"; then "Da 400 €" big and "poi 10 € al mese" small
-- voiceover: "Shooting, menu e targhe, da quattrocento euro."
-- duration: 2.6s
+- scene: Three icon tiles (camera = shooting, menu card = menu, NFC plaque = targhe) appear one by one and each flips from a neutral outline to the Osteria Marea look (navy #123247 tile, gold #E0B04B icon, tiny wave-oval logo); title "Tutto su misura." and subline "Con i colori e il logo del tuo locale."
+- voiceover: "così personalizziamo i tuoi servizi."
+- duration: 2.5s
 - transition_in: crossfade
 - status: outline
 - src: compositions/frames/08-offerta.html
-- type: cta
+- type: benefits
 - blueprint: kinetic-type-beats (Adapt)
-- sfx: pop×3; impact-soft
-- optional: price-version-only
+- sfx: pop×3; sparkle
 
-Scene 1 (0.0–1.2s): three coral line icons (stylized camera, menu card, NFC plaque) light up one per spoken word, labels "Shooting · Menu · Targhe" (56 px) under them, y≈500–760.
-Scene 2 (1.2–2.6s): "Da 400 €" (200 px, ink, "400 €" coral) lands centered y≈1050; "poi 10 € al mese" (56 px muted) under it.
+Scene 1 (0.0–1.2s): title "Tutto su misura." types at top (y≈200–330, ≥ 84 px); three neutral outline tiles (ink outline on warm white) spring in left→right, centered row y≈620–900, labels "Shooting · Menu · Targhe" (56 px) under them.
+Scene 2 (1.2–2.5s): each tile flips (3D card flip, springy not bouncy) to the venue version — navy fill, gold icon, tiny gold wave-oval in the corner — one per ~0.25 s; subline "Con i colori e il logo del tuo locale." (56 px, muted, max 2 lines) appears under the labels at y≈1050–1180; mascot gives a small hop. NO prices anywhere.
 
 ## Frame 9 — Il finale
 
 - scene: passaparola wordmark composes as in v2 with the mascot star; "Fatti raccontare da chi ti ha scelto." below; after ~1 s "una produzione" + Alici Come Prima logo (PNG, unmodified) enters small at the bottom; closes on white, 1.2 s hold
 - voiceover: "Passaparola. Fatti raccontare da chi ti ha scelto."
-- duration: 4.65s
+- duration: 4.45s
 - transition_in: blur-crossfade
 - status: outline
 - src: compositions/frames/09-finale.html

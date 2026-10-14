@@ -11,7 +11,7 @@
 ## Frame 7 — Lo shooting
 
 - scene: Camera viewfinder with REC over linguine from above; shutter + flash; photo shrinks and flies into the menu on a phone, with Osteria Marea color swatches beside it; title "Le foto le facciamo noi."
-- voiceover: "E le foto le scattiamo noi, piatto per piatto."
+- voiceover: "E le foto le scattiamo noi, piatto per piatto,"
 - duration: 3.2s
 - transition_in: zoom-through
 - status: outline

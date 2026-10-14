@@ -23,7 +23,7 @@ Passaparola oggi: due targhe NFC + shooting del menu, per ristoranti e locali.
 - Targa sul bancone → pagina del locale: pulsante "Scrivi la recensione su Google" + pulsante "Seguici su Instagram".
 - Targhe sui tavoli → menu digitale interattivo: foto di ogni piatto, allergeni, piatto del giorno in cima, categorie, lista "La mia scelta" da mostrare al cameriere, cinque lingue.
 - Shooting di tutto il menu, piatto per piatto; targhe e menu con l'identità del locale (colori e logo).
-- Prezzo: da 400 €, poi 10 € al mese. Passaparola è una produzione Alici Come Prima.
+- Prezzi: NON più nello spot (decisione utente 14/10: il testo ufficiale è quello della voce caricata; la scena 8 diventa "così personalizziamo i tuoi servizi"). Passaparola è una produzione Alici Come Prima.
 - La prenotazione del tavolo NON esiste più: non deve comparire da nessuna parte.
 
 ## Assets
@@ -49,5 +49,5 @@ Passaparola oggi: due targhe NFC + shooting del menu, per ristoranti e locali.
 
 ## Notes
 
-- Consegne: passaparola-spot-v3-9x16.mp4 (H.264, faststart, < 6 MB); passaparola-spot-v3-9x16-senza-prezzo.mp4 (senza scena 8 e senza la frase del prezzo, ~35 s); stesse due in WebM VP9; poster JPG del frame finale; traccia voce WAV da sola.
+- Consegne (aggiornate): una sola versione senza prezzi — passaparola-spot-v3-9x16.mp4 (H.264, faststart, < 6 MB), stessa in WebM VP9, poster JPG del frame finale, traccia voce WAV da sola.
 - Prima del render finale: un frame per scena all'utente per controllo testi e leggibilità.

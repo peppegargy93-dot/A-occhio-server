@@ -12,7 +12,7 @@
 
 - scene: Table from above with the menu plaque (Osteria Marea colors); tap → digital menu: header + "Oggi in cucina: Linguine allo scoglio"; categories Antipasti / Primi / Secondi / Dolci scroll with dish photos; tap a dish → sheet with big photo, allergens, "Aggiungi a La mia scelta"; bottom bar "La mia scelta · 2" → "Mostrala al cameriere"
 - voiceover: "Sul tavolo c'è il tuo nuovo menu, da sfogliare col telefono: ogni piatto con la sua foto, gli allergeni e il piatto del giorno."
-- duration: 8.5s
+- duration: 7.6s
 - transition_in: push-slide UP
 - status: outline
 - src: compositions/frames/06-menu.html
