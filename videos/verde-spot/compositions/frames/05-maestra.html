@@ -1,0 +1,266 @@
+<template>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <style>
+    @font-face { font-family: "Anton"; src: url("assets/fonts/anton-latin-400-normal.woff2") format("woff2"); }
+    @font-face { font-family: "Special Elite"; src: url("assets/fonts/special-elite-latin-400-normal.woff2") format("woff2"); }
+    [data-composition-id="05-maestra"] { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; overflow: hidden; }
+    [data-composition-id="05-maestra"] * { box-sizing: border-box; margin: 0; padding: 0; }
+    .v05-layer { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
+    .v05-ground { background: #EFE6D2; }
+    .v05-vignette { background: radial-gradient(ellipse at 50% 45%, rgba(20,20,20,0) 52%, rgba(20,20,20,0.40) 100%); }
+    .v05-grain { mix-blend-mode: multiply; opacity: 0.30; }
+    .v05-flicker { background: #141414; opacity: 0; }
+    .v05-caption { position: absolute; left: 100px; right: 100px; top: 186px; text-align: center; font-family: "Special Elite", monospace; font-size: 50px; color: #141414; letter-spacing: 0.05em; white-space: pre; }
+    .v05-caption-rule { position: absolute; left: 250px; width: 580px; top: 262px; height: 4px; background: #141414; transform-origin: 0 50%; }
+    .v05-sheet { position: absolute; width: 360px; height: 340px; }
+    .v05-half { position: absolute; left: 0; top: 0; width: 360px; height: 340px; }
+    .v05-paper { position: absolute; inset: 0; background: #F6F0E1; border: 3px solid #141414; box-shadow: 10px 12px 0 rgba(20,20,20,0.22); }
+    .v05-head-line { position: absolute; left: 26px; top: 24px; width: 150px; height: 10px; background: #141414; }
+    .v05-head-line2 { position: absolute; right: 26px; top: 24px; width: 70px; height: 10px; background: rgba(20,20,20,0.55); }
+    .v05-rows { position: absolute; left: 26px; right: 26px; top: 62px; }
+    .v05-rows i { display: block; height: 7px; margin-bottom: 15px; background: rgba(20,20,20,0.62); }
+    .v05-four { position: absolute; left: 600px; top: 1020px; width: 360px; height: 470px; text-align: center; font-family: "Anton", sans-serif; font-size: 420px; line-height: 470px; color: #CE2B37; }
+    .v05-pen { position: absolute; left: 0; top: 0; width: 0; height: 0; }
+    .v05-pen svg { position: absolute; left: -460px; top: -40px; overflow: visible; }
+    .v05-speed { position: absolute; height: 8px; background: #141414; transform-origin: 0 50%; }
+  </style>
+  <div id="v05-root" data-composition-id="05-maestra" data-start="0" data-duration="3.8" data-width="1080" data-height="1920">
+    <!-- ground: paper + fibre/stain texture -->
+    <div id="v05-ground" class="clip v05-layer v05-ground" data-start="0" data-duration="3.8" data-track-index="0">
+      <svg width="1080" height="1920" viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg" style="position:absolute;left:0;top:0;">
+        <defs>
+          <filter id="v05-fibre"><feTurbulence type="fractalNoise" baseFrequency="0.012 0.08" numOctaves="3" seed="7"/><feColorMatrix type="matrix" values="0 0 0 0 0.35  0 0 0 0 0.28  0 0 0 0 0.16  0 0 0 0.55 -0.12"/></filter>
+          <filter id="v05-stain"><feTurbulence type="fractalNoise" baseFrequency="0.004" numOctaves="2" seed="19"/><feColorMatrix type="matrix" values="0 0 0 0 0.45  0 0 0 0 0.36  0 0 0 0 0.2  0 0 0 0.9 -0.38"/></filter>
+        </defs>
+        <rect width="1080" height="1920" filter="url(#v05-fibre)" opacity="0.5"/>
+        <rect width="1080" height="1920" filter="url(#v05-stain)" opacity="0.6"/>
+      </svg>
+    </div>
+
+    <!-- stage -->
+    <div id="v05-stage" class="clip v05-layer" data-start="0" data-duration="3.8" data-track-index="1">
+      <div id="v05-cam" class="v05-layer">
+        <div id="v05-shake" class="v05-layer">
+          <!-- caption -->
+          <div id="v05-caption" class="v05-caption"><span>F</span><span>I</span><span>G</span><span>.</span><span> </span><span>5</span><span>:</span><span> </span><span>L</span><span>A</span><span> </span><span>M</span><span>A</span><span>E</span><span>S</span><span>T</span><span>R</span><span>A</span></div>
+          <div id="v05-caption-rule" class="v05-caption-rule"></div>
+
+          <!-- teacher: Depero block mannequin -->
+          <svg id="v05-teacher" class="v05-layer" width="1080" height="1920" viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg">
+            <g id="v05-body">
+              <!-- cone skirt -->
+              <polygon points="452,860 628,860 790,1110 290,1110" fill="#141414"/>
+              <polygon points="540,860 628,860 790,1110 610,1110" fill="#2E2E2E"/>
+              <polygon points="470,930 520,930 400,1110 330,1110" fill="#D9CDB2"/>
+              <!-- cylinder torso -->
+              <rect x="430" y="540" width="220" height="330" fill="#141414"/>
+              <polygon points="540,540 650,540 650,870 600,870" fill="#2E2E2E"/>
+              <ellipse cx="540" cy="540" rx="110" ry="26" fill="#2E2E2E"/>
+              <!-- collar -->
+              <polygon points="500,530 580,530 540,600" fill="#EFE6D2" stroke="#141414" stroke-width="4"/>
+              <!-- upper arms -->
+              <rect x="388" y="560" width="46" height="170" fill="#141414"/>
+              <rect x="646" y="560" width="46" height="170" fill="#2E2E2E"/>
+              <!-- folded block arms -->
+              <rect x="388" y="664" width="304" height="78" fill="#D9CDB2" stroke="#141414" stroke-width="6"/>
+              <polygon points="540,664 692,664 692,742 600,742" fill="#C9BC9E"/>
+              <line x1="540" y1="664" x2="510" y2="742" stroke="#141414" stroke-width="5"/>
+              <rect x="372" y="676" width="46" height="54" fill="#141414"/>
+              <rect x="662" y="676" width="46" height="54" fill="#141414"/>
+            </g>
+            <g id="v05-head">
+              <rect x="522" y="488" width="36" height="52" fill="#141414"/>
+              <circle cx="540" cy="296" r="44" fill="#141414"/>
+              <rect x="532" y="246" width="16" height="30" fill="#2E2E2E" transform="rotate(30 540 261)"/>
+              <circle cx="540" cy="408" r="90" fill="#D9CDB2" stroke="#141414" stroke-width="6"/>
+              <path d="M 540 318 A 90 90 0 0 1 630 408 L 540 408 Z" fill="#C9BC9E"/>
+              <path d="M 452 386 Q 540 300 628 386 L 628 360 Q 540 290 452 360 Z" fill="#141414"/>
+              <!-- glasses -->
+              <circle cx="505" cy="414" r="27" fill="#EFE6D2" stroke="#141414" stroke-width="6"/>
+              <circle cx="575" cy="414" r="27" fill="#EFE6D2" stroke="#141414" stroke-width="6"/>
+              <line x1="532" y1="414" x2="548" y2="414" stroke="#141414" stroke-width="6"/>
+              <g id="v05-eyes">
+                <rect x="497" y="406" width="16" height="16" fill="#141414"/>
+                <rect x="567" y="406" width="16" height="16" fill="#141414"/>
+              </g>
+              <!-- severe brows -->
+              <g id="v05-brows">
+                <line x1="478" y1="374" x2="526" y2="384" stroke="#141414" stroke-width="8"/>
+                <line x1="554" y1="384" x2="602" y2="374" stroke="#141414" stroke-width="8"/>
+              </g>
+              <!-- mouth: flat line -->
+              <rect x="514" y="458" width="52" height="8" fill="#141414"/>
+            </g>
+          </svg>
+
+          <!-- desk plane -->
+          <svg class="v05-layer" width="1080" height="1920" viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="96,1060 984,1060 1040,1470 40,1470" fill="#D9CDB2"/>
+            <polygon points="540,1060 984,1060 1040,1470 760,1470" fill="#CDBF9F"/>
+            <rect x="96" y="1052" width="888" height="12" fill="#141414"/>
+          </svg>
+
+          <!-- left sheet (the original) -->
+          <div id="v05-sheetL" class="v05-sheet" style="left:120px;top:1100px;">
+            <div class="v05-paper"></div>
+            <div class="v05-head-line"></div><div class="v05-head-line2"></div>
+            <div class="v05-rows"><i style="width:92%"></i><i style="width:78%"></i><i style="width:96%"></i><i style="width:64%"></i><i style="width:88%"></i><i style="width:72%"></i><i style="width:94%"></i><i style="width:50%"></i><i style="width:84%"></i><i style="width:60%"></i><i style="width:90%"></i><i style="width:40%"></i></div>
+          </div>
+
+          <!-- slash mark left on the desk -->
+          <svg class="v05-layer" width="1080" height="1920" viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg">
+            <line id="v05-gash" x1="612" y1="1096" x2="968" y2="1448" stroke="#CE2B37" stroke-width="12" stroke-linecap="square" stroke-dasharray="501" stroke-dashoffset="501"/>
+          </svg>
+
+          <!-- right sheet (the copy) split in two halves along the cut -->
+          <div id="v05-sheetR" class="v05-sheet" style="left:600px;top:1100px;">
+            <div id="v05-halfA" class="v05-half" style="clip-path: polygon(-20px -20px, 380px -20px, 380px 352px);">
+              <div class="v05-paper"></div>
+              <div class="v05-head-line"></div><div class="v05-head-line2"></div>
+              <div class="v05-rows"><i style="width:92%"></i><i style="width:78%"></i><i style="width:96%"></i><i style="width:64%"></i><i style="width:88%"></i><i style="width:72%"></i><i style="width:94%"></i><i style="width:50%"></i><i style="width:84%"></i><i style="width:60%"></i><i style="width:90%"></i><i style="width:40%"></i></div>
+            </div>
+            <div id="v05-halfB" class="v05-half" style="clip-path: polygon(-20px -20px, 380px 352px, 380px 370px, -20px 370px);">
+              <div class="v05-paper"></div>
+              <div class="v05-head-line"></div><div class="v05-head-line2"></div>
+              <div class="v05-rows"><i style="width:92%"></i><i style="width:78%"></i><i style="width:96%"></i><i style="width:64%"></i><i style="width:88%"></i><i style="width:72%"></i><i style="width:94%"></i><i style="width:50%"></i><i style="width:84%"></i><i style="width:60%"></i><i style="width:90%"></i><i style="width:40%"></i></div>
+            </div>
+          </div>
+
+          <!-- speed lines (point right) -->
+          <div id="v05-sp1" class="v05-speed" style="left:700px;top:1180px;width:300px;"></div>
+          <div id="v05-sp2" class="v05-speed" style="left:760px;top:1262px;width:240px;background:#CE2B37;"></div>
+          <div id="v05-sp3" class="v05-speed" style="left:820px;top:1344px;width:180px;"></div>
+
+          <!-- the grade -->
+          <div id="v05-four" class="v05-four">4</div>
+          <svg class="v05-layer" width="1080" height="1920" viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg">
+            <path id="v05-ring" d="M 790 1048 C 930 1040 1000 1150 990 1268 C 980 1390 880 1462 770 1458 C 650 1454 572 1360 578 1250 C 584 1140 660 1060 800 1040 C 840 1036 870 1044 890 1058" fill="none" stroke="#CE2B37" stroke-width="13" stroke-linecap="round" stroke-dasharray="1600" stroke-dashoffset="1600"/>
+          </svg>
+
+          <!-- blade pen: tip at wrapper origin, pointing along +x before rotation -->
+          <div id="v05-pen" class="v05-pen">
+            <svg width="520" height="80" viewBox="-460 -40 520 80" xmlns="http://www.w3.org/2000/svg">
+              <polygon points="0,0 -130,-24 -130,24" fill="#CE2B37"/>
+              <polygon points="0,0 -130,0 -130,24" fill="#141414" fill-opacity="0.22"/>
+              <line x1="-6" y1="0" x2="-118" y2="0" stroke="#141414" stroke-width="3"/>
+              <rect x="-150" y="-30" width="20" height="60" fill="#141414"/>
+              <rect x="-380" y="-24" width="230" height="48" fill="#CE2B37"/>
+              <polygon points="-380,0 -150,0 -150,24 -380,24" fill="#141414" fill-opacity="0.22"/>
+              <rect x="-450" y="-26" width="70" height="52" fill="#141414"/>
+              <rect x="-430" y="-38" width="90" height="10" fill="#141414"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- vignette, grain, flicker -->
+    <div id="v05-vignette" class="clip v05-layer v05-vignette" data-start="0" data-duration="3.8" data-track-index="2"></div>
+    <svg id="v05-grain" class="clip v05-layer v05-grain" data-start="0" data-duration="3.8" data-track-index="3" width="1080" height="1920" viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="v05-n0"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="3"/><feColorMatrix type="saturate" values="0"/></filter>
+        <filter id="v05-n1"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="11"/><feColorMatrix type="saturate" values="0"/></filter>
+        <filter id="v05-n2"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="29"/><feColorMatrix type="saturate" values="0"/></filter>
+        <filter id="v05-n3"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="47"/><feColorMatrix type="saturate" values="0"/></filter>
+        <filter id="v05-n4"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="61"/><feColorMatrix type="saturate" values="0"/></filter>
+        <filter id="v05-n5"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="83"/><feColorMatrix type="saturate" values="0"/></filter>
+      </defs>
+      <rect id="v05-g0" width="1080" height="1920" filter="url(#v05-n0)"/>
+      <rect id="v05-g1" width="1080" height="1920" filter="url(#v05-n1)" visibility="hidden"/>
+      <rect id="v05-g2" width="1080" height="1920" filter="url(#v05-n2)" visibility="hidden"/>
+      <rect id="v05-g3" width="1080" height="1920" filter="url(#v05-n3)" visibility="hidden"/>
+      <rect id="v05-g4" width="1080" height="1920" filter="url(#v05-n4)" visibility="hidden"/>
+      <rect id="v05-g5" width="1080" height="1920" filter="url(#v05-n5)" visibility="hidden"/>
+    </svg>
+    <div id="v05-flicker" class="clip v05-layer v05-flicker" data-start="0" data-duration="3.8" data-track-index="4"></div>
+  </div>
+  <script>
+    (function () {
+      const D = 3.8, FPS = 30;
+      const tl = gsap.timeline({ paused: true });
+      const q = (s) => document.querySelector('[data-composition-id="05-maestra"] ' + s);
+      const qa = (s) => document.querySelectorAll('[data-composition-id="05-maestra"] ' + s);
+
+      // ---- archival grain (swap tile every 2 frames) + flicker (+-3%) ----
+      const tiles = [0, 1, 2, 3, 4, 5].map((i) => q('#v05-g' + i));
+      const flick = [0.02, 0.05, 0.01, 0.04, 0.0, 0.03, 0.05, 0.015, 0.035, 0.005, 0.045, 0.025];
+      const steps = Math.ceil(D * FPS / 2);
+      for (let k = 0; k < steps; k++) {
+        const t = (k * 2) / FPS;
+        const cur = k % 6, prev = (k + 5) % 6;
+        if (k > 0) tl.set(tiles[prev], { attr: { visibility: 'hidden' } }, t);
+        tl.set(tiles[cur], { attr: { visibility: 'visible' } }, t);
+        tl.set(q('#v05-flicker'), { opacity: flick[(k * 7) % flick.length] }, t);
+      }
+
+      // ---- macro camera: slow push toward the sheets ----
+      tl.fromTo(q('#v05-cam'), { scale: 1, transformOrigin: '540px 1150px' }, { scale: 1.05, duration: D, ease: 'none' }, 0);
+
+      // ---- Scene 1 (0.0-1.4): teacher, sheets, caption ----
+      tl.fromTo(q('#v05-teacher'), { y: 90, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: 'steps(4)' }, 0);
+      tl.fromTo(q('#v05-sheetL'), { y: 60, rotation: -9, opacity: 0 }, { y: 0, rotation: -2.5, opacity: 1, duration: 0.24, ease: 'steps(3)' }, 0.12);
+      tl.fromTo(q('#v05-sheetR'), { y: 60, rotation: 9, opacity: 0 }, { y: 0, rotation: 2.5, opacity: 1, duration: 0.24, ease: 'steps(3)' }, 0.22);
+      // caption typed letter by letter
+      const chars = qa('#v05-caption span');
+      chars.forEach((c, i) => tl.fromTo(c, { opacity: 0 }, { opacity: 1, duration: 0.01, immediateRender: true }, 0.3 + i * 0.04));
+      tl.fromTo(q('#v05-caption-rule'), { scaleX: 0 }, { scaleX: 1, duration: 0.2, ease: 'steps(5)' }, 0.3 + chars.length * 0.04);
+      // eyes compare the two identical sheets (nervous, stepped)
+      const eyes = q('#v05-eyes');
+      tl.fromTo(eyes, { x: 0, y: 0 }, { x: -9, y: 6, duration: 0.05, ease: 'steps(1)' }, 0.45);
+      tl.to(eyes, { x: 9, y: 6, duration: 0.05, ease: 'steps(1)' }, 0.75);
+      tl.to(eyes, { x: -9, y: 6, duration: 0.05, ease: 'steps(1)' }, 0.98);
+      tl.to(eyes, { x: 9, y: 7, duration: 0.05, ease: 'steps(1)' }, 1.16);
+      tl.fromTo(q('#v05-head'), { rotation: 0 }, { rotation: -5, transformOrigin: '540px 520px', duration: 0.05, ease: 'steps(1)' }, 0.75);
+      tl.to(q('#v05-head'), { rotation: 4, duration: 0.05, ease: 'steps(1)' }, 1.16);
+      tl.fromTo(q('#v05-brows'), { y: 0 }, { y: 8, duration: 0.05, ease: 'steps(1)' }, 1.2);
+
+      // ---- Scene 2 (1.4-2.4): blade pen slashes the copy ----
+      const pen = q('#v05-pen');
+      tl.fromTo(pen, { x: 260, y: 640, rotation: 44, autoAlpha: 0 }, { x: 590, y: 1060, autoAlpha: 1, duration: 0.24, ease: 'steps(4)' }, 1.0);
+      tl.to(pen, { x: 560, y: 1028, rotation: 40, duration: 0.12, ease: 'power2.out' }, 1.3);   // wind-up
+      tl.to(pen, { x: 612, y: 1096, rotation: 45, duration: 0.04, ease: 'steps(1)' }, 1.44);
+      tl.to(pen, { x: 978, y: 1458, duration: 0.12, ease: 'expo.in' }, 1.5);                    // the slash
+      tl.fromTo(q('#v05-gash'), { attr: { 'stroke-dashoffset': 501 } }, { attr: { 'stroke-dashoffset': 0 }, duration: 0.12, ease: 'expo.in' }, 1.5);
+      // the cut splits the sheet
+      tl.fromTo(q('#v05-halfA'), { x: 0, y: 0, rotation: 0 }, { x: 22, y: -26, rotation: -4, transformOrigin: '260px 80px', duration: 0.18, ease: 'steps(3)' }, 1.62);
+      tl.fromTo(q('#v05-halfB'), { x: 0, y: 0, rotation: 0 }, { x: -20, y: 22, rotation: 3, transformOrigin: '100px 260px', duration: 0.18, ease: 'steps(3)' }, 1.62);
+      // impact shake
+      const sh = q('#v05-shake');
+      const shakeX = [14, -12, 9, -7, 5, -3, 0], shakeY = [-8, 7, -5, 4, -2, 1, 0];
+      shakeX.forEach((v, i) => tl.set(sh, { x: v, y: shakeY[i] }, 1.62 + i * 0.033));
+      // speed lines pointing right
+      ['#v05-sp1', '#v05-sp2', '#v05-sp3'].forEach((s, i) => tl.fromTo(q(s), { scaleX: 0 }, { scaleX: 1, duration: 0.1, ease: 'steps(3)' }, 1.62 + i * 0.05));
+      // teacher reacts: eyes snap to the copy, head jolts
+      tl.to(eyes, { x: 10, y: 9, duration: 0.03, ease: 'steps(1)' }, 1.62);
+      tl.to(q('#v05-head'), { rotation: 7, duration: 0.03, ease: 'steps(1)' }, 1.66);
+      // pen recoils, then hovers twitching
+      tl.to(pen, { x: 930, y: 1000, rotation: 62, duration: 0.24, ease: 'steps(4)' }, 1.82);
+      tl.to(pen, { x: 920, y: 990, duration: 0.05, ease: 'steps(1)' }, 2.14);
+      tl.to(pen, { x: 930, y: 1004, duration: 0.05, ease: 'steps(1)' }, 2.26);
+
+      // ---- Scene 3 (2.4-3.8): a huge red "4", written and circled ----
+      const four = q('#v05-four');
+      tl.fromTo(four, { clipPath: 'inset(0% 0% 100% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 0.54, ease: 'steps(9)' }, 2.42);
+      // pen tip traces the strokes of the 4 (stepped)
+      const write = [[820, 1080], [740, 1180], [660, 1300], [700, 1320], [860, 1320], [830, 1200], [830, 1290], [830, 1380], [830, 1440]];
+      write.forEach((p, i) => tl.to(pen, { x: p[0], y: p[1], rotation: 66, duration: 0.03, ease: 'steps(1)' }, 2.42 + i * 0.06));
+      // the 4 lands: squash + small bounce
+      tl.fromTo(four, { scaleX: 1, scaleY: 1 }, { scaleX: 1.12, scaleY: 0.9, transformOrigin: '50% 80%', duration: 0.06, ease: 'steps(1)' }, 2.98);
+      tl.to(four, { scaleX: 0.96, scaleY: 1.06, duration: 0.06, ease: 'steps(1)' }, 3.04);
+      tl.to(four, { scaleX: 1, scaleY: 1, duration: 0.06, ease: 'steps(1)' }, 3.1);
+      // circle it
+      tl.fromTo(q('#v05-ring'), { attr: { 'stroke-dashoffset': 1600 } }, { attr: { 'stroke-dashoffset': 0 }, duration: 0.5, ease: 'steps(10)' }, 3.08);
+      const ring = [[990, 1268], [930, 1420], [770, 1458], [610, 1380], [578, 1250], [640, 1100], [800, 1040], [890, 1058]];
+      ring.forEach((p, i) => tl.to(pen, { x: p[0], y: p[1], rotation: 58, duration: 0.03, ease: 'steps(1)' }, 3.1 + i * 0.062));
+      // teacher: verdict nod, brows down
+      tl.to(q('#v05-head'), { rotation: 0, y: 10, duration: 0.04, ease: 'steps(1)' }, 3.6);
+      tl.to(eyes, { x: 0, y: 2, duration: 0.03, ease: 'steps(1)' }, 3.6);
+      tl.to(q('#v05-brows'), { y: 12, duration: 0.03, ease: 'steps(1)' }, 3.6);
+      tl.to(pen, { x: 940, y: 1000, rotation: 50, duration: 0.12, ease: 'steps(3)' }, 3.62);
+
+      tl.to({}, { duration: 0.001 }, D - 0.001);
+      window.__timelines = window.__timelines || {};
+      window.__timelines["05-maestra"] = tl;
+    })();
+  </script>
+</template>
