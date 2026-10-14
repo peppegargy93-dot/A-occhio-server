@@ -1,7 +1,7 @@
 {
   "version": 1,
   "historyId": "dbd931c2-a15e-4257-8a0d-d5c3a5c7b643",
-  "currentRevision": "52d85f18-7b0e-45eb-8535-a8699d8530ea",
+  "currentRevision": "cb7e61b7-569a-4c00-acc7-5c87f794706d",
   "pendingChanges": false,
   "files": {
     "AGENTS.md": {
@@ -169,20 +169,20 @@
       "content": "/root/.cache/hyperframes/history/dbd931c2-a15e-4257-8a0d-d5c3a5c7b643/blobs/c7/c72397856c6a3c572793d2fde4f0906160b18b186755a709c4835d435b90634a"
     },
     "compositions/frames/09-svolta.html": {
-      "hash": "f78034983d5c0832f15fc8d51dc584333df74068d00bf7c306e72f8749905273",
-      "content": "/root/.cache/hyperframes/history/dbd931c2-a15e-4257-8a0d-d5c3a5c7b643/blobs/f7/f78034983d5c0832f15fc8d51dc584333df74068d00bf7c306e72f8749905273"
+      "hash": "391ec38c270f76d922105d0046e7678fa133bbc53733fe44785488bc51361ffc",
+      "content": "/root/.cache/hyperframes/history/dbd931c2-a15e-4257-8a0d-d5c3a5c7b643/blobs/39/391ec38c270f76d922105d0046e7678fa133bbc53733fe44785488bc51361ffc"
     },
     "compositions/frames/10-botta-risposta.html": {
-      "hash": "446fe0b80763bf4a2fa12323b90f660e3d186d2e936295895b3004b317ebda54",
-      "content": "/root/.cache/hyperframes/history/dbd931c2-a15e-4257-8a0d-d5c3a5c7b643/blobs/44/446fe0b80763bf4a2fa12323b90f660e3d186d2e936295895b3004b317ebda54"
+      "hash": "907937d67095f16b3a678254d2f1b98be6ecbe6990cf85221f4e2cb9d5055054",
+      "content": "/root/.cache/hyperframes/history/dbd931c2-a15e-4257-8a0d-d5c3a5c7b643/blobs/90/907937d67095f16b3a678254d2f1b98be6ecbe6990cf85221f4e2cb9d5055054"
     },
     "compositions/frames/11-bandiera.html": {
       "hash": "39e3db769ff2bf9fa8f9d9e63fcf551d822b02818775a1d35f283d9549e239ea",
       "content": "/root/.cache/hyperframes/history/dbd931c2-a15e-4257-8a0d-d5c3a5c7b643/blobs/39/39e3db769ff2bf9fa8f9d9e63fcf551d822b02818775a1d35f283d9549e239ea"
     },
     "compositions/frames/12-finale.html": {
-      "hash": "4807fa47f64e9a8d15bbb6ed459f4dfb43dc1d6f8c2c41df9c78b415fa590e3c",
-      "content": "/root/.cache/hyperframes/history/dbd931c2-a15e-4257-8a0d-d5c3a5c7b643/blobs/48/4807fa47f64e9a8d15bbb6ed459f4dfb43dc1d6f8c2c41df9c78b415fa590e3c"
+      "hash": "0df50a694934c77fb8c20391f43c7121a4e7f126ed6514efdda0a56aca96d8a4",
+      "content": "/root/.cache/hyperframes/history/dbd931c2-a15e-4257-8a0d-d5c3a5c7b643/blobs/0d/0df50a694934c77fb8c20391f43c7121a4e7f126ed6514efdda0a56aca96d8a4"
     },
     "frame.md": {
       "hash": "b1133d9d67d450aac4fd0e7cdcd7c2fcc19504d97d21b8138edd2778403288bf",
@@ -267,6 +267,10 @@
     "review/verde-60s-un-frame-per-scena.jpg": {
       "hash": "b3e1017bdbc3032e9948b6486638cd4126da10c1fde82200e96f0aaec870b43f",
       "content": "/root/.cache/hyperframes/history/dbd931c2-a15e-4257-8a0d-d5c3a5c7b643/blobs/b3/b3e1017bdbc3032e9948b6486638cd4126da10c1fde82200e96f0aaec870b43f"
+    },
+    "assets/brand/foglia.svg": {
+      "hash": "7c429e9320fe3413b0def022863927d2aff42ad724ae75ee42e51de6f7406595",
+      "content": "/root/.cache/hyperframes/history/dbd931c2-a15e-4257-8a0d-d5c3a5c7b643/blobs/7c/7c429e9320fe3413b0def022863927d2aff42ad724ae75ee42e51de6f7406595"
     }
   },
   "revisions": {
@@ -1018,6 +1022,48 @@
           "after": "/root/.cache/hyperframes/history/dbd931c2-a15e-4257-8a0d-d5c3a5c7b643/blobs/cc/cc80a705528f20f03885cc0cc1697fdd8fb982484e9c7fe554f6f5d88ce20b6b"
         }
       }
+    },
+    "85fd12c1-2923-4da0-a544-332ebd02f65e": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1792016851657,
+      "endedAt": 1792016851675,
+      "files": {
+        "assets/brand/foglia.svg": {
+          "before": null,
+          "after": "/root/.cache/hyperframes/history/dbd931c2-a15e-4257-8a0d-d5c3a5c7b643/blobs/7c/7c429e9320fe3413b0def022863927d2aff42ad724ae75ee42e51de6f7406595"
+        },
+        "compositions/frames/09-svolta.html": {
+          "before": "/root/.cache/hyperframes/history/dbd931c2-a15e-4257-8a0d-d5c3a5c7b643/blobs/f7/f78034983d5c0832f15fc8d51dc584333df74068d00bf7c306e72f8749905273",
+          "after": "/root/.cache/hyperframes/history/dbd931c2-a15e-4257-8a0d-d5c3a5c7b643/blobs/39/391ec38c270f76d922105d0046e7678fa133bbc53733fe44785488bc51361ffc"
+        },
+        "compositions/frames/10-botta-risposta.html": {
+          "before": "/root/.cache/hyperframes/history/dbd931c2-a15e-4257-8a0d-d5c3a5c7b643/blobs/44/446fe0b80763bf4a2fa12323b90f660e3d186d2e936295895b3004b317ebda54",
+          "after": "/root/.cache/hyperframes/history/dbd931c2-a15e-4257-8a0d-d5c3a5c7b643/blobs/c6/c6a491b578668b5f2dcc344ba964ba7b9ec90cdc261b611a0fcc97286b603b70"
+        }
+      }
+    },
+    "cb7e61b7-569a-4c00-acc7-5c87f794706d": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1792016887983,
+      "endedAt": 1792016888002,
+      "files": {
+        "compositions/frames/10-botta-risposta.html": {
+          "before": "/root/.cache/hyperframes/history/dbd931c2-a15e-4257-8a0d-d5c3a5c7b643/blobs/c6/c6a491b578668b5f2dcc344ba964ba7b9ec90cdc261b611a0fcc97286b603b70",
+          "after": "/root/.cache/hyperframes/history/dbd931c2-a15e-4257-8a0d-d5c3a5c7b643/blobs/90/907937d67095f16b3a678254d2f1b98be6ecbe6990cf85221f4e2cb9d5055054"
+        },
+        "compositions/frames/12-finale.html": {
+          "before": "/root/.cache/hyperframes/history/dbd931c2-a15e-4257-8a0d-d5c3a5c7b643/blobs/48/4807fa47f64e9a8d15bbb6ed459f4dfb43dc1d6f8c2c41df9c78b415fa590e3c",
+          "after": "/root/.cache/hyperframes/history/dbd931c2-a15e-4257-8a0d-d5c3a5c7b643/blobs/0d/0df50a694934c77fb8c20391f43c7121a4e7f126ed6514efdda0a56aca96d8a4"
+        }
+      }
     }
   },
   "checks": {
@@ -1145,8 +1191,8 @@
   },
   "snapshots": {
     "latest": {
-      "revision": "182f124b-4adb-4646-b2f6-3fbfc1efbcd4",
-      "id": "92e3bd26-b8d7-4247-81c5-9bec2a0d8cdc-4"
+      "revision": "cb7e61b7-569a-4c00-acc7-5c87f794706d",
+      "id": "af6e8399-d169-41f8-8e1f-c6abb8df56b0-2"
     },
     "revisions": {
       "48e7d39a-738e-4d6d-80bb-f6b4ae31c19e": [
@@ -2532,6 +2578,275 @@
           "contentHash": "d2857fa9fe3d7b5010adfe1f6fa2f92df9cb2f4027ae2d37a1a7ce1460e307ae",
           "revision": "182f124b-4adb-4646-b2f6-3fbfc1efbcd4",
           "inputFingerprint": "b49248674b7d7ccafbf5c944512a5df687416cbd5501df60f255adb8da05be07",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        }
+      ],
+      "85fd12c1-2923-4da0-a544-332ebd02f65e": [
+        {
+          "scope": "full",
+          "id": "793f5ff5-cb01-4e67-b1b7-c7c50920d4f0-0",
+          "image": "/home/user/A-occhio-server/videos/verde-spot/.hyperframes/artifacts/snapshots/1443a413-95d0-4e18-9c1c-effdcab8eed3/frame-00-at-31.6s.png",
+          "time": 31.6,
+          "metadata": {
+            "width": 1080,
+            "height": 1920,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792016872599,
+          "contentHash": "fb2a4bc3bdb2267de69ac827c12ac605199a730b4c19e707f12976384c7a25f3",
+          "revision": "85fd12c1-2923-4da0-a544-332ebd02f65e",
+          "inputFingerprint": "588a539ceeb72dd01e230f183c13c38aaa2f8c4a040d0caffd48df819be21631",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "793f5ff5-cb01-4e67-b1b7-c7c50920d4f0-1",
+          "image": "/home/user/A-occhio-server/videos/verde-spot/.hyperframes/artifacts/snapshots/1443a413-95d0-4e18-9c1c-effdcab8eed3/frame-01-at-32.05s.png",
+          "time": 32.05,
+          "metadata": {
+            "width": 1080,
+            "height": 1920,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792016872599,
+          "contentHash": "472ca6e7d1dbdf483f2cbb3e5e492d1eb329c0d5c7736e6939db4b8395f9459f",
+          "revision": "85fd12c1-2923-4da0-a544-332ebd02f65e",
+          "inputFingerprint": "588a539ceeb72dd01e230f183c13c38aaa2f8c4a040d0caffd48df819be21631",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "793f5ff5-cb01-4e67-b1b7-c7c50920d4f0-2",
+          "image": "/home/user/A-occhio-server/videos/verde-spot/.hyperframes/artifacts/snapshots/1443a413-95d0-4e18-9c1c-effdcab8eed3/frame-02-at-32.9s.png",
+          "time": 32.9,
+          "metadata": {
+            "width": 1080,
+            "height": 1920,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792016872599,
+          "contentHash": "e68f55c8b96b31c9acca89d29d0fcf1f76deb9088dbcc22339ade3580ca671b0",
+          "revision": "85fd12c1-2923-4da0-a544-332ebd02f65e",
+          "inputFingerprint": "588a539ceeb72dd01e230f183c13c38aaa2f8c4a040d0caffd48df819be21631",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "793f5ff5-cb01-4e67-b1b7-c7c50920d4f0-3",
+          "image": "/home/user/A-occhio-server/videos/verde-spot/.hyperframes/artifacts/snapshots/1443a413-95d0-4e18-9c1c-effdcab8eed3/frame-03-at-35s.png",
+          "time": 35,
+          "metadata": {
+            "width": 1080,
+            "height": 1920,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792016872599,
+          "contentHash": "eb6d25d64cca1ea84e2dff62d330f7b2f288aa46af89f6665ec317af27aca31c",
+          "revision": "85fd12c1-2923-4da0-a544-332ebd02f65e",
+          "inputFingerprint": "588a539ceeb72dd01e230f183c13c38aaa2f8c4a040d0caffd48df819be21631",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "793f5ff5-cb01-4e67-b1b7-c7c50920d4f0-4",
+          "image": "/home/user/A-occhio-server/videos/verde-spot/.hyperframes/artifacts/snapshots/1443a413-95d0-4e18-9c1c-effdcab8eed3/frame-04-at-36.9s.png",
+          "time": 36.9,
+          "metadata": {
+            "width": 1080,
+            "height": 1920,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792016872599,
+          "contentHash": "e6707d17bcdce1ebfb5139a2c0b73547aea356c2a215cd1b9267e405a275c9e6",
+          "revision": "85fd12c1-2923-4da0-a544-332ebd02f65e",
+          "inputFingerprint": "588a539ceeb72dd01e230f183c13c38aaa2f8c4a040d0caffd48df819be21631",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "793f5ff5-cb01-4e67-b1b7-c7c50920d4f0-5",
+          "image": "/home/user/A-occhio-server/videos/verde-spot/.hyperframes/artifacts/snapshots/1443a413-95d0-4e18-9c1c-effdcab8eed3/frame-05-at-40.9s.png",
+          "time": 40.9,
+          "metadata": {
+            "width": 1080,
+            "height": 1920,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792016872599,
+          "contentHash": "09b9398d57d56e84558e4a65760ca7b5d0d40a2b5d9adfee6dd0b3118c17937e",
+          "revision": "85fd12c1-2923-4da0-a544-332ebd02f65e",
+          "inputFingerprint": "588a539ceeb72dd01e230f183c13c38aaa2f8c4a040d0caffd48df819be21631",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "793f5ff5-cb01-4e67-b1b7-c7c50920d4f0-6",
+          "image": "/home/user/A-occhio-server/videos/verde-spot/.hyperframes/artifacts/snapshots/1443a413-95d0-4e18-9c1c-effdcab8eed3/frame-06-at-41.6s.png",
+          "time": 41.6,
+          "metadata": {
+            "width": 1080,
+            "height": 1920,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792016872599,
+          "contentHash": "3869551f5fc4e76a475bd4409800cd33a5e5efc4efbd2e51550e8bd13bb1d825",
+          "revision": "85fd12c1-2923-4da0-a544-332ebd02f65e",
+          "inputFingerprint": "588a539ceeb72dd01e230f183c13c38aaa2f8c4a040d0caffd48df819be21631",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "full",
+          "id": "793f5ff5-cb01-4e67-b1b7-c7c50920d4f0-7",
+          "image": "/home/user/A-occhio-server/videos/verde-spot/.hyperframes/artifacts/snapshots/1443a413-95d0-4e18-9c1c-effdcab8eed3/frame-07-at-59.76s.png",
+          "time": 59.76,
+          "metadata": {
+            "width": 1080,
+            "height": 1920,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792016872599,
+          "contentHash": "d2857fa9fe3d7b5010adfe1f6fa2f92df9cb2f4027ae2d37a1a7ce1460e307ae",
+          "revision": "85fd12c1-2923-4da0-a544-332ebd02f65e",
+          "inputFingerprint": "588a539ceeb72dd01e230f183c13c38aaa2f8c4a040d0caffd48df819be21631",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        }
+      ],
+      "cb7e61b7-569a-4c00-acc7-5c87f794706d": [
+        {
+          "scope": "crop",
+          "id": "af6e8399-d169-41f8-8e1f-c6abb8df56b0-0",
+          "image": "/home/user/A-occhio-server/videos/verde-spot/.hyperframes/artifacts/snapshots/a7b3b004-60e3-4efe-a62b-7b7b02c396d8/frame-00-at-40.9s.png",
+          "time": 40.9,
+          "metadata": {
+            "width": 3240,
+            "height": 2100,
+            "crop": {
+              "x": 0,
+              "y": 800,
+              "width": 1080,
+              "height": 700
+            },
+            "zoom": {
+              "kind": "region",
+              "region": {
+                "x": 0,
+                "y": 800,
+                "width": 1080,
+                "height": 700
+              }
+            },
+            "zoomScale": 3,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792016906205,
+          "contentHash": "8930d239aec01f24d4d2a8fde993c0b76e171594dda82e0533b70460c290faee",
+          "revision": "cb7e61b7-569a-4c00-acc7-5c87f794706d",
+          "inputFingerprint": "7c0e259f181c34f60355abd790c578113074a2284839ed420bd2fbee345864af",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "crop",
+          "id": "af6e8399-d169-41f8-8e1f-c6abb8df56b0-1",
+          "image": "/home/user/A-occhio-server/videos/verde-spot/.hyperframes/artifacts/snapshots/a7b3b004-60e3-4efe-a62b-7b7b02c396d8/frame-01-at-41.3s.png",
+          "time": 41.3,
+          "metadata": {
+            "width": 3240,
+            "height": 2100,
+            "crop": {
+              "x": 0,
+              "y": 800,
+              "width": 1080,
+              "height": 700
+            },
+            "zoom": {
+              "kind": "region",
+              "region": {
+                "x": 0,
+                "y": 800,
+                "width": 1080,
+                "height": 700
+              }
+            },
+            "zoomScale": 3,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792016906206,
+          "contentHash": "e76e967b2d8e50623ebfc442954052c92d10567d1847bbaae2fee0d8b59306af",
+          "revision": "cb7e61b7-569a-4c00-acc7-5c87f794706d",
+          "inputFingerprint": "7c0e259f181c34f60355abd790c578113074a2284839ed420bd2fbee345864af",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "scope": "crop",
+          "id": "af6e8399-d169-41f8-8e1f-c6abb8df56b0-2",
+          "image": "/home/user/A-occhio-server/videos/verde-spot/.hyperframes/artifacts/snapshots/a7b3b004-60e3-4efe-a62b-7b7b02c396d8/frame-02-at-41.6s.png",
+          "time": 41.6,
+          "metadata": {
+            "width": 3240,
+            "height": 2100,
+            "crop": {
+              "x": 0,
+              "y": 800,
+              "width": 1080,
+              "height": 700
+            },
+            "zoom": {
+              "kind": "region",
+              "region": {
+                "x": 0,
+                "y": 800,
+                "width": 1080,
+                "height": 700
+              }
+            },
+            "zoomScale": 3,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792016906206,
+          "contentHash": "a89e53c8f767159490fa525d8ffb9d975baffb46db003f6ca57da58a853ed94f",
+          "revision": "cb7e61b7-569a-4c00-acc7-5c87f794706d",
+          "inputFingerprint": "7c0e259f181c34f60355abd790c578113074a2284839ed420bd2fbee345864af",
           "inputScope": "local-project-files",
           "attribution": "recorded-revision"
         }
