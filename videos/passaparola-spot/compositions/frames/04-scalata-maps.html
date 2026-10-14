@@ -1,0 +1,339 @@
+<template>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <style>
+    @font-face { font-family: "Space Grotesk"; src: url("assets/fonts/space-grotesk-latin-500-normal.woff2") format("woff2"); font-weight: 500; font-style: normal; }
+    @font-face { font-family: "Space Grotesk"; src: url("assets/fonts/space-grotesk-latin-600-normal.woff2") format("woff2"); font-weight: 600; font-style: normal; }
+    @font-face { font-family: "Space Grotesk"; src: url("assets/fonts/space-grotesk-latin-700-normal.woff2") format("woff2"); font-weight: 700; font-style: normal; }
+    @font-face { font-family: "Inter"; src: url("assets/fonts/inter-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-style: normal; }
+    @font-face { font-family: "Inter"; src: url("assets/fonts/inter-latin-500-normal.woff2") format("woff2"); font-weight: 500; font-style: normal; }
+
+    #root {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      font-family: "Inter", sans-serif;
+      color: #1F1A17;
+    }
+    #root * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    .f04-ground {
+      position: absolute; left: 0; top: 0; width: 1920px; height: 1080px;
+      background: #FAF6EF;
+    }
+    .f04-drift {
+      position: absolute; left: 0; top: 0; width: 1920px; height: 1080px;
+      transform-origin: 960px 540px;
+    }
+    .f04-world {
+      position: absolute; left: 0; top: 0; width: 1920px; height: 1080px;
+      transform-origin: 0 0;
+    }
+    .f04-abs { position: absolute; }
+
+    /* ---------- counter (hero) ---------- */
+    .f04-counter-block { left: 115px; top: 173px; width: 620px; }
+    .f04-counter-wrap { width: 620px; height: 260px; display: flex; align-items: flex-end; }
+    .f04-counter {
+      display: inline-block;
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 700;
+      font-size: 288px;
+      line-height: 0.9;
+      letter-spacing: -0.01em;
+      color: #B5392C;
+      font-variant-numeric: tabular-nums;
+      transform-origin: 0% 100%;
+    }
+    .f04-label {
+      margin-top: 22px;
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 600;
+      font-size: 35px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #6B625B;
+      display: flex;
+      align-items: center;
+      gap: 22px;
+    }
+    .f04-old { position: relative; display: inline-block; color: #6B625B; font-variant-numeric: tabular-nums; }
+    .f04-strike {
+      position: absolute; left: -4px; right: -4px; top: 52%; height: 4px; border-radius: 2px;
+      background: #B5392C; transform-origin: 0% 50%;
+    }
+
+    /* ---------- ranking card ---------- */
+    .f04-card {
+      left: 998px; top: 115px; width: 806px; height: 430px;
+      background: #FFFFFF;
+      border-radius: 32px;
+      box-shadow: 0 40px 80px -24px rgba(31,26,23,0.28), 0 12px 24px -12px rgba(31,26,23,0.18);
+    }
+    .f04-row {
+      position: absolute; left: 35px; top: 35px; width: 736px; height: 108px;
+      border-radius: 23px;
+      display: flex; align-items: center; gap: 23px;
+      padding: 0 26px;
+    }
+    .f04-row-hl {
+      position: absolute; left: 0; top: 0; width: 736px; height: 108px;
+      border: 5px solid #B5392C; border-radius: 23px;
+      background: rgba(181,57,44,0.04);
+    }
+    .f04-row-faint {
+      position: absolute; left: 0; top: 0; width: 736px; height: 108px;
+      border: 2px solid rgba(181,57,44,0.2); border-radius: 23px;
+    }
+    .f04-rank {
+      position: relative; width: 58px; height: 48px;
+      font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 40px; line-height: 48px;
+      color: #6B625B;
+    }
+    .f04-rank span { position: absolute; left: 0; top: 0; }
+    .f04-row-marea .f04-rank { font-size: 42px; color: #B5392C; }
+    .f04-name {
+      font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 31px; line-height: 1.15;
+      letter-spacing: 0; color: #1F1A17;
+    }
+    .f04-row-marea .f04-name { font-size: 35px; }
+    .f04-sub { font-family: "Inter", sans-serif; font-size: 21px; line-height: 1.4; color: #6B625B; margin-top: 4px; font-variant-numeric: tabular-nums; }
+    .f04-row-marea .f04-sub { font-size: 23px; }
+    .f04-stars { color: #E2B04F; letter-spacing: 0.04em; }
+    .f04-blur { filter: blur(6px); }
+    .f04-arrow {
+      margin-left: auto;
+      font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 40px; line-height: 1;
+      color: #B5392C;
+    }
+    .f04-row-text { position: relative; }
+
+    /* ---------- toasts ---------- */
+    .f04-toast {
+      left: 1075px; top: 634px; height: 64px;
+      background: #FFFFFF;
+      border-radius: 20px;
+      padding: 0 28px;
+      display: flex; align-items: center; gap: 15px;
+      font-family: "Space Grotesk", sans-serif; font-weight: 600; font-size: 24px; color: #1F1A17;
+      white-space: nowrap;
+      box-shadow: 0 30px 60px -22px rgba(31,26,23,0.30), 0 10px 20px -10px rgba(31,26,23,0.18);
+      transform-origin: 0% 50%;
+    }
+    .f04-toast .f04-star { color: #E2B04F; font-size: 26px; }
+
+    /* ---------- mascot ---------- */
+    .f04-mascot-pos { left: 0; top: 0; width: 81px; height: 81px; }
+    .f04-mascot-arc { position: absolute; left: 0; top: 0; width: 81px; height: 81px; }
+    .f04-mascot { position: absolute; left: 0; top: 0; width: 81px; height: 81px; transform-origin: 50% 100%; }
+    .f04-mascot svg { width: 81px; height: 81px; display: block; }
+
+    /* ---------- headline ---------- */
+    .f04-headline {
+      left: 115px; top: 672px; width: 900px;
+      font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 74px; line-height: 1.06;
+      letter-spacing: 0.04em; color: #1F1A17;
+    }
+    .f04-headline .f04-coral { color: #B5392C; }
+    .f04-ch { display: inline-block; white-space: pre; }
+
+    .f04-grain {
+      position: absolute; left: 0; top: 0; width: 1920px; height: 1080px;
+      opacity: 0.08; pointer-events: none;
+    }
+  </style>
+
+  <div id="root" data-composition-id="04-scalata-maps" data-start="0" data-duration="3.5" data-width="1920" data-height="1080">
+    <div id="f04-ground" class="clip f04-ground" data-start="0" data-duration="3.5" data-track-index="0"></div>
+
+    <div id="f04-stage" class="clip f04-drift" data-start="0" data-duration="3.5" data-track-index="1">
+      <div class="f04-world" id="f04-world">
+
+        <!-- hero counter -->
+        <div class="f04-abs f04-counter-block">
+          <div class="f04-counter-wrap"><span class="f04-counter" id="f04-counter">34</span></div>
+          <div class="f04-label" id="f04-label">recensioni <span class="f04-old" id="f04-old">34<span class="f04-strike" id="f04-strike"></span></span></div>
+        </div>
+
+        <!-- ranking card (Maps-style) -->
+        <div class="f04-abs f04-card" id="f04-card">
+          <div class="f04-row" id="f04-row-trat">
+            <div class="f04-rank f04-blur"><span id="f04-trat-r1">1</span><span id="f04-trat-r2">2</span></div>
+            <div class="f04-row-text f04-blur"><div class="f04-name">Trattoria ••••••</div><div class="f04-sub">4,6 · 2.341</div></div>
+          </div>
+          <div class="f04-row" id="f04-row-rist">
+            <div class="f04-rank f04-blur"><span id="f04-rist-r2">2</span><span id="f04-rist-r3">3</span></div>
+            <div class="f04-row-text f04-blur"><div class="f04-name">Ristorante •••••</div><div class="f04-sub">4,5 · 1.870</div></div>
+          </div>
+          <div class="f04-row f04-row-marea" id="f04-row-marea">
+            <div class="f04-row-faint"></div>
+            <div class="f04-row-hl" id="f04-row-hl"></div>
+            <div class="f04-rank"><span id="f04-marea-r3">3</span><span id="f04-marea-r1">1</span></div>
+            <div class="f04-row-text"><div class="f04-name">Osteria Marea</div><div class="f04-sub"><span class="f04-stars">★★★★★</span> 4,8 · <span id="f04-row-count">34</span></div></div>
+            <div class="f04-arrow" id="f04-arrow">↑</div>
+          </div>
+        </div>
+
+        <!-- notification toasts -->
+        <div class="f04-abs f04-toast" id="f04-toast-1"><span class="f04-star">★</span>Nuova recensione · 5 stelle</div>
+        <div class="f04-abs f04-toast" id="f04-toast-2"><span class="f04-star">★</span>Nuova recensione · 5 stelle</div>
+        <div class="f04-abs f04-toast" id="f04-toast-3"><span class="f04-star">★</span>Nuova recensione · 5 stelle</div>
+
+        <!-- headline -->
+        <div class="f04-abs f04-headline" id="f04-headline"><span id="f04-h-a">Più recensioni.</span> <span class="f04-coral" id="f04-h-b">Più in alto.</span></div>
+
+        <!-- mascot -->
+        <div class="f04-abs f04-mascot-pos" id="f04-mascot-pos">
+          <div class="f04-mascot-arc" id="f04-mascot-arc">
+            <div class="f04-mascot" id="f04-mascot">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50 6 L62 37 L95 38 L69 58 L78 91 L50 72 L22 91 L31 58 L5 38 L38 37 Z" fill="#B5392C" stroke="#B5392C" stroke-width="6" stroke-linejoin="round"/><ellipse cx="41" cy="50" rx="5" ry="7" fill="#fff"/><ellipse cx="59" cy="50" rx="5" ry="7" fill="#fff"/><circle cx="42" cy="52" r="3" fill="#1F1A17"/><circle cx="60" cy="52" r="3" fill="#1F1A17"/></svg>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <svg id="f04-grain" class="clip f04-grain" data-start="0" data-duration="3.5" data-track-index="2" xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+      <filter id="f04-noise"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="7" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+      <rect width="1920" height="1080" filter="url(#f04-noise)"/>
+    </svg>
+  </div>
+
+  <script>
+    (function () {
+      var FID = "04-scalata-maps";
+      var root = document.querySelector('[data-composition-id="04-scalata-maps"]');
+      var q = function (id) { return root.querySelector("#" + id); };
+
+      // Critically damped spring (zeta = 1): springy, no overshoot.
+      function springEase(w) {
+        var norm = 1 - (1 + w) * Math.exp(-w);
+        return function (p) { return (1 - (1 + w * p) * Math.exp(-w * p)) / norm; };
+      }
+      var spring = springEase(9);
+      var springSoft = springEase(6);
+
+      // Italian thousands formatting (2.341)
+      function fmtIT(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, "."); }
+
+      // Split headline into per-character spans (synchronous, deterministic)
+      function splitChars(el) {
+        var text = el.textContent;
+        el.textContent = "";
+        var out = [];
+        for (var i = 0; i < text.length; i++) {
+          var s = document.createElement("span");
+          s.className = "f04-ch";
+          s.textContent = text[i];
+          el.appendChild(s);
+          out.push(s);
+        }
+        return out;
+      }
+      var charsA = splitChars(q("f04-h-a"));
+      var charsB = splitChars(q("f04-h-b"));
+
+      var tl = gsap.timeline({ paused: true });
+
+      // ---------- slots for the ranking rows ----------
+      var SLOT = [35, 159, 283];
+      gsap.set(q("f04-row-trat"), { y: 0 });
+      gsap.set(q("f04-row-rist"), { y: SLOT[1] - SLOT[0] });
+      gsap.set(q("f04-row-marea"), { y: SLOT[2] - SLOT[0] });
+
+      // ---------- camera: .world legs + never-stopping drift ----------
+      function cam(fx, fy, s) { return { x: 960 - fx * s, y: 540 - fy * s, scale: s }; }
+      var c0 = cam(800, 470, 1.13), c1 = cam(900, 500, 1.07), c2 = cam(985, 520, 1.04);
+      tl.fromTo(q("f04-world"), c0, Object.assign({ duration: 1.4, ease: "power1.out" }, c1), 0);
+      tl.to(q("f04-world"), Object.assign({ duration: 1.2, ease: "sine.inOut" }, c2), 1.4);
+      // whip left into 05's push-slide (cut at peak velocity)
+      tl.to(q("f04-world"), { x: c2.x - 230, duration: 0.4, ease: "power2.in" }, 2.6);
+      tl.fromTo(q("f04-stage"), { scale: 1 }, { scale: 1.025, duration: 3, ease: "none" }, 0);
+
+      // ---------- Scene 1: counter 34 -> 300 (counting-dynamic-scale) ----------
+      var counter = q("f04-counter"), rowCount = q("f04-row-count");
+      var state = { v: 34 };
+      var COUNT_AT = 0.1, COUNT_DUR = 1.3, COUNT_EASE = "power3.out";
+      tl.fromTo(state, { v: 34 }, {
+        v: 300, duration: COUNT_DUR, ease: COUNT_EASE,
+        onUpdate: function () { var t = fmtIT(Math.round(state.v)); counter.textContent = t; rowCount.textContent = t; }
+      }, COUNT_AT);
+      tl.fromTo(counter, { scale: 0.5 }, { scale: 1, duration: COUNT_DUR, ease: COUNT_EASE }, COUNT_AT);
+      tl.fromTo(q("f04-label"), { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.45, ease: spring }, 0.25);
+      tl.fromTo(q("f04-strike"), { scaleX: 0 }, { scaleX: 1, duration: 0.35, ease: spring }, 0.75);
+
+      // ranking card present (it was the setting of frame 01), settles in on a spring
+      tl.fromTo(q("f04-card"), { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.6, ease: spring }, 0.05);
+
+      // toasts: spring in at each tick group, older ones step down and fade out
+      var toasts = [q("f04-toast-1"), q("f04-toast-2"), q("f04-toast-3")];
+      var TOAST_AT = [0.18, 0.55, 0.92];
+      toasts.forEach(function (t, i) {
+        tl.fromTo(t, { opacity: 0, x: 90, scale: 0.9 }, { opacity: 1, x: 0, scale: 1, duration: 0.4, ease: spring }, TOAST_AT[i]);
+      });
+      // toast 1 steps down when 2 arrives, then leaves when 3 arrives
+      tl.to(toasts[0], { y: 78, scale: 0.94, opacity: 0.55, duration: 0.35, ease: spring }, TOAST_AT[1]);
+      tl.to(toasts[0], { y: 140, opacity: 0, duration: 0.3, ease: spring }, TOAST_AT[2]);
+      tl.to(toasts[1], { y: 78, scale: 0.94, opacity: 0.55, duration: 0.35, ease: spring }, TOAST_AT[2]);
+      tl.to(toasts[1], { y: 140, opacity: 0, duration: 0.3, ease: spring }, 1.5);
+
+      // headline part A types letter by letter on "Più recensioni."
+      tl.fromTo(charsA, { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: 0.22, ease: spring, stagger: 0.04 }, 0.3);
+
+      // ---------- mascot: perched on the counter, hops on each toast ----------
+      var M0 = { x: 590, y: 96 };     // on top of the "300"
+      var M1 = { x: 1651, y: 72 };    // on top of Osteria Marea row (#1)
+      tl.fromTo(q("f04-mascot-pos"), { x: M0.x, y: M0.y }, { x: M0.x, y: M0.y, duration: 0.01 }, 0);
+      tl.fromTo(q("f04-mascot"), { scale: 0, rotation: -20 }, { scale: 1, rotation: 0, duration: 0.45, ease: "back.out(2.2)" }, 0.05);
+      TOAST_AT.forEach(function (at) {
+        tl.to(q("f04-mascot-arc"), { y: -34, duration: 0.14, ease: "power2.out" }, at);
+        tl.to(q("f04-mascot-arc"), { y: 0, duration: 0.16, ease: "power2.in" }, at + 0.14);
+      });
+
+      // ---------- Scene 2: FLIP reorder — Marea climbs #3 -> #1 ----------
+      var CLIMB_AT = 1.45, CLIMB_DUR = 0.7;
+      tl.fromTo(q("f04-row-hl"), { opacity: 0 }, { opacity: 1, duration: 0.25, ease: "power1.out" }, CLIMB_AT - 0.05);
+      tl.fromTo(q("f04-arrow"), { opacity: 0, y: 24, scale: 0.6 }, { opacity: 1, y: 0, scale: 1, duration: 0.4, ease: spring }, CLIMB_AT);
+      tl.fromTo(q("f04-row-marea"), { y: SLOT[2] - SLOT[0], scale: 1 }, { y: 0, duration: CLIMB_DUR, ease: spring }, CLIMB_AT);
+      tl.to(q("f04-row-marea"), { scale: 1.03, duration: 0.3, ease: "power2.out" }, CLIMB_AT);
+      tl.to(q("f04-row-marea"), { scale: 1, duration: 0.4, ease: spring }, CLIMB_AT + 0.3);
+      // competitors are pushed down as Marea passes them
+      tl.fromTo(q("f04-row-rist"), { y: SLOT[1] - SLOT[0] }, { y: SLOT[2] - SLOT[0], duration: 0.55, ease: spring }, CLIMB_AT + 0.08);
+      tl.fromTo(q("f04-row-trat"), { y: 0 }, { y: SLOT[1] - SLOT[0], duration: 0.55, ease: spring }, CLIMB_AT + 0.26);
+      // rank numbers swap
+      tl.fromTo(q("f04-rist-r2"), { opacity: 1 }, { opacity: 0, duration: 0.15 }, CLIMB_AT + 0.2);
+      tl.fromTo(q("f04-rist-r3"), { opacity: 0 }, { opacity: 1, duration: 0.15 }, CLIMB_AT + 0.2);
+      tl.fromTo(q("f04-trat-r1"), { opacity: 1 }, { opacity: 0, duration: 0.15 }, CLIMB_AT + 0.38);
+      tl.fromTo(q("f04-trat-r2"), { opacity: 0 }, { opacity: 1, duration: 0.15 }, CLIMB_AT + 0.38);
+      tl.fromTo(q("f04-marea-r3"), { opacity: 1, y: 0 }, { opacity: 0, y: 18, duration: 0.18 }, CLIMB_AT + 0.4);
+      tl.fromTo(q("f04-marea-r1"), { opacity: 0, y: -18 }, { opacity: 1, y: 0, duration: 0.3, ease: spring }, CLIMB_AT + 0.45);
+      // arrow nudge as it lands
+      tl.to(q("f04-arrow"), { y: -10, duration: 0.15, ease: "power2.out" }, CLIMB_AT + 0.62);
+      tl.to(q("f04-arrow"), { y: 0, duration: 0.3, ease: spring }, CLIMB_AT + 0.77);
+
+      // mascot leaps from the counter onto the top row (overshoot allowed: mascot only)
+      var JUMP_AT = 1.55, JUMP_DUR = 0.65;
+      tl.to(q("f04-mascot"), { scaleY: 0.8, scaleX: 1.12, duration: 0.1, ease: "power2.out" }, JUMP_AT - 0.1);
+      tl.to(q("f04-mascot"), { scaleY: 1, scaleX: 1, duration: 0.2, ease: "back.out(2)" }, JUMP_AT);
+      tl.to(q("f04-mascot-pos"), { x: M1.x, y: M1.y, duration: JUMP_DUR, ease: "power1.inOut" }, JUMP_AT);
+      tl.to(q("f04-mascot-arc"), { y: -170, duration: JUMP_DUR * 0.5, ease: "power2.out" }, JUMP_AT);
+      tl.to(q("f04-mascot-arc"), { y: 0, duration: JUMP_DUR * 0.5, ease: "power2.in" }, JUMP_AT + JUMP_DUR * 0.5);
+      tl.to(q("f04-mascot"), { rotation: 360, duration: JUMP_DUR, ease: "power1.inOut" }, JUMP_AT);
+      // landing squash + celebratory overshoot
+      var LAND = JUMP_AT + JUMP_DUR;
+      tl.to(q("f04-mascot"), { scaleY: 0.72, scaleX: 1.2, duration: 0.08, ease: "power2.out" }, LAND);
+      tl.to(q("f04-mascot"), { scaleY: 1, scaleX: 1, duration: 0.45, ease: "back.out(3)" }, LAND + 0.08);
+      tl.to(q("f04-mascot-arc"), { y: -26, duration: 0.14, ease: "power2.out" }, LAND + 0.2);
+      tl.to(q("f04-mascot-arc"), { y: 0, duration: 0.16, ease: "power2.in" }, LAND + 0.34);
+
+      // ---------- Scene 3: headline completes letter by letter ----------
+      tl.fromTo(charsB, { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: 0.2, ease: spring, stagger: 0.05 }, 2.05);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines[FID] = tl;
+    })();
+  </script>
+</template>

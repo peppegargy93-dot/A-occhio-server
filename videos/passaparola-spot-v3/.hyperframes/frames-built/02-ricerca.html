@@ -1,0 +1,570 @@
+<template>
+  <div
+    id="root"
+    data-composition-id="02-ricerca"
+    data-start="0"
+    data-duration="3.4"
+    data-width="1080"
+    data-height="1920"
+  >
+    <style>
+      @font-face {
+        font-family: "Space Grotesk";
+        font-weight: 500;
+        font-style: normal;
+        src: url("assets/fonts/space-grotesk-latin-500-normal.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Space Grotesk";
+        font-weight: 700;
+        font-style: normal;
+        src: url("assets/fonts/space-grotesk-latin-700-normal.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Inter";
+        font-weight: 400;
+        font-style: normal;
+        src: url("assets/fonts/inter-latin-400-normal.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Inter";
+        font-weight: 600;
+        font-style: normal;
+        src: url("assets/fonts/inter-latin-600-normal.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Inter";
+        font-weight: 700;
+        font-style: normal;
+        src: url("assets/fonts/inter-latin-700-normal.woff2") format("woff2");
+      }
+      #root {
+        position: relative;
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        font-family: "Inter", sans-serif;
+      }
+      #f02-bg {
+        position: absolute;
+        inset: 0;
+        background: #faf6ef;
+      }
+      #f02-stage {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+      }
+      /* virtual camera: world coords == layout coords at scale 1 */
+      #f02-world {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 1080px;
+        height: 1920px;
+        transform-origin: 0 0;
+      }
+      .f02-abs {
+        position: absolute;
+      }
+
+      /* ---------- title (top band) ---------- */
+      .f02-line {
+        left: 0;
+        width: 1080px;
+        text-align: center;
+        font: 700 92px/1.05 "Space Grotesk", sans-serif;
+        letter-spacing: 0.03em;
+        color: #1f1a17;
+        white-space: nowrap;
+        z-index: 4;
+      }
+      .f02-coral {
+        color: #b5392c;
+      }
+      .f02-ch {
+        display: inline-block;
+      }
+
+      /* ---------- phone (generic search app, white UI) ---------- */
+      #f02-phone {
+        left: 215px;
+        top: 540px;
+        width: 650px;
+        height: 1340px;
+        border-radius: 76px;
+        background: #1f1a17;
+        box-shadow:
+          0 40px 80px -24px rgba(31, 26, 23, 0.28),
+          0 12px 24px -12px rgba(31, 26, 23, 0.18);
+        z-index: 2;
+      }
+      #f02-screen {
+        left: 18px;
+        top: 18px;
+        width: 614px;
+        height: 1304px;
+        border-radius: 58px;
+        background: #ffffff;
+        overflow: hidden;
+      }
+      #f02-island {
+        left: 237px;
+        top: 22px;
+        width: 140px;
+        height: 40px;
+        border-radius: 100px;
+        background: #1f1a17;
+      }
+      .f02-sb {
+        top: 32px;
+        height: 20px;
+        border-radius: 6px;
+        background: #1f1a17;
+      }
+      #f02-search {
+        left: 28px;
+        top: 96px;
+        width: 558px;
+        height: 84px;
+        border-radius: 100px;
+        background: #f3eee6;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 0 30px;
+        box-sizing: border-box;
+        font: 400 31px/1 "Inter", sans-serif;
+        color: #1f1a17;
+        white-space: nowrap;
+      }
+      #f02-search svg {
+        width: 30px;
+        height: 30px;
+        flex: none;
+        display: block;
+      }
+      .f02-row {
+        left: 28px;
+        width: 558px;
+        height: 180px;
+        display: flex;
+        align-items: center;
+        gap: 26px;
+      }
+      .f02-rule {
+        left: 28px;
+        width: 558px;
+        height: 2px;
+        background: #efe8de;
+      }
+      .f02-thumb {
+        width: 124px;
+        height: 124px;
+        flex: none;
+        border-radius: 24px;
+        background: repeating-linear-gradient(135deg, #e9dfd0 0 15px, #e2d6c4 15px 30px);
+      }
+      .f02-soft {
+        filter: blur(7px);
+        opacity: 0.75;
+      }
+      .f02-name {
+        font: 700 38px/1 "Space Grotesk", sans-serif;
+        color: #1f1a17;
+        white-space: nowrap;
+      }
+      .f02-stars {
+        margin-top: 14px;
+        display: flex;
+        gap: 5px;
+        height: 32px;
+      }
+      .f02-star {
+        position: relative;
+        width: 32px;
+        height: 32px;
+      }
+      .f02-star svg {
+        position: absolute;
+        inset: 0;
+        width: 32px;
+        height: 32px;
+        display: block;
+      }
+      .f02-meta {
+        margin-top: 14px;
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+        font: 400 30px/1 "Inter", sans-serif;
+        color: #6b625b;
+        white-space: nowrap;
+      }
+      .f02-count {
+        font: 700 40px/1 "Space Grotesk", sans-serif;
+        color: #1f1a17;
+      }
+      /* Osteria Marea row */
+      #f02-sel .f02-name {
+        font-size: 40px;
+      }
+      #f02-logo {
+        width: 124px;
+        height: 124px;
+        flex: none;
+        border-radius: 24px;
+        background: #123247;
+        overflow: hidden;
+      }
+      #f02-logo svg {
+        width: 124px;
+        height: 124px;
+        display: block;
+      }
+      #f02-selmeta {
+        font-weight: 600;
+        color: #1f1a17;
+      }
+      #f02-selmeta .f02-dot {
+        color: #9a9a9a;
+      }
+      #f02-rev {
+        color: #b5392c;
+      }
+
+      /* hand-drawn coral circle overlay */
+      #f02-ring {
+        left: 0;
+        top: 0;
+        width: 1080px;
+        height: 1920px;
+        z-index: 3;
+        pointer-events: none;
+      }
+
+      #f02-grain {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        opacity: 0.08;
+        mix-blend-mode: multiply;
+      }
+      #f02-grain svg {
+        width: 1080px;
+        height: 1920px;
+        display: block;
+      }
+    </style>
+
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+      <defs>
+        <path
+          id="f02-starpath"
+          d="M12 1.6l3.05 6.6 7.2.8-5.35 4.9 1.5 7.1L12 17.4 5.6 21l1.5-7.1L1.75 9l7.2-.8z"
+        />
+      </defs>
+    </svg>
+
+    <div id="f02-bg" class="clip" data-start="0" data-duration="3.4" data-track-index="0"></div>
+
+    <div id="f02-stage" class="clip" data-start="0" data-duration="3.4" data-track-index="1">
+      <div id="f02-world" data-layout-allow-overflow>
+        <!-- title -->
+        <div id="f02-l1" class="f02-abs f02-line" style="top: 214px" data-text="Cinque stelle."></div>
+        <div id="f02-l2" class="f02-abs f02-line f02-coral" style="top: 322px" data-text="Ma ti trovano"></div>
+        <div id="f02-l3" class="f02-abs f02-line f02-coral" style="top: 420px" data-text="in pochi."></div>
+
+        <!-- phone -->
+        <div id="f02-phone" class="f02-abs">
+          <div id="f02-screen" class="f02-abs">
+            <div id="f02-island" class="f02-abs"></div>
+            <div class="f02-abs f02-sb" style="left: 470px; width: 34px"></div>
+            <div class="f02-abs f02-sb" style="left: 514px; width: 50px; border-radius: 7px"></div>
+            <div class="f02-abs f02-sb" style="left: 54px; width: 70px"></div>
+
+            <div id="f02-search" class="f02-abs">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#6B625B" stroke-width="2.4" stroke-linecap="round">
+                <circle cx="10.5" cy="10.5" r="6.5" />
+                <path d="M15.5 15.5 L21 21" />
+              </svg>
+              <span id="f02-query" data-text="ristoranti vicino a me"></span>
+            </div>
+
+            <div class="f02-row f02-abs f02-comp" style="top: 214px">
+              <div class="f02-thumb f02-soft"></div>
+              <div>
+                <div class="f02-name f02-soft">Trattoria ••••</div>
+                <div class="f02-stars f02-soft" data-rating="4.6"></div>
+                <div class="f02-meta">
+                  <span class="f02-soft">4,6 ·</span>
+                  <span class="f02-count">2.341</span>
+                  <span>recensioni</span>
+                </div>
+              </div>
+            </div>
+            <div class="f02-rule f02-abs f02-comp" style="top: 404px"></div>
+
+            <div class="f02-row f02-abs f02-comp" style="top: 416px">
+              <div class="f02-thumb f02-soft"></div>
+              <div>
+                <div class="f02-name f02-soft">Ristorante ••••</div>
+                <div class="f02-stars f02-soft" data-rating="4.5"></div>
+                <div class="f02-meta">
+                  <span class="f02-soft">4,5 ·</span>
+                  <span class="f02-count">1.870</span>
+                  <span>recensioni</span>
+                </div>
+              </div>
+            </div>
+            <div class="f02-rule f02-abs f02-comp" style="top: 606px"></div>
+
+            <div id="f02-sel" class="f02-row f02-abs" style="top: 630px">
+              <div id="f02-logo">
+                <svg viewBox="0 0 124 124" fill="none" stroke="#E0B04B" stroke-linecap="round">
+                  <ellipse cx="62" cy="62" rx="44" ry="22" stroke-width="4" />
+                  <path d="M28 66 C38 66 42 52 52 54 C60 56 58 68 66 68 C76 68 80 58 96 60" stroke-width="5" />
+                  <path d="M50 54 C53 50 57 50 59 53" stroke-width="3.5" />
+                </svg>
+              </div>
+              <div>
+                <div class="f02-name">Osteria Marea</div>
+                <div id="f02-bigstars" class="f02-stars"></div>
+                <div id="f02-selmeta" class="f02-meta">
+                  <span>4,8</span>
+                  <span class="f02-dot">·</span>
+                  <span id="f02-rev">34 recensioni</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- coral hand-drawn circle around the Osteria Marea row -->
+        <svg id="f02-ring" class="f02-abs" viewBox="0 0 1080 1920" fill="none">
+          <path
+            id="f02-ringpath"
+            stroke="#B5392C"
+            stroke-width="10"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            pathLength="1"
+            stroke-dasharray="1"
+            stroke-dashoffset="1"
+          />
+        </svg>
+      </div>
+    </div>
+
+    <div id="f02-grain" class="clip" data-start="0" data-duration="3.4" data-track-index="2">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" preserveAspectRatio="none">
+        <filter id="f02-noise" x="0" y="0" width="100%" height="100%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="11" stitchTiles="stitch" />
+          <feColorMatrix type="saturate" values="0" />
+        </filter>
+        <rect width="1080" height="1920" filter="url(#f02-noise)" />
+      </svg>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script>
+      (function () {
+        const ID = "02-ricerca";
+        const DUR = 3.4;
+        const root = document.querySelector('[data-composition-id="' + ID + '"]');
+        const $ = (sel) => root.querySelector(sel);
+        const $$ = (sel) => Array.from(root.querySelectorAll(sel));
+        const NS = "http://www.w3.org/2000/svg";
+        const OCHRE = "#E2B04F";
+        const GRAY = "#E6DED2";
+
+        function starSvg(color, clip) {
+          const svg = document.createElementNS(NS, "svg");
+          svg.setAttribute("viewBox", "0 0 24 24");
+          const use = document.createElementNS(NS, "use");
+          use.setAttribute("href", "#f02-starpath");
+          use.setAttribute("fill", color);
+          svg.appendChild(use);
+          if (clip) svg.style.clipPath = clip;
+          return svg;
+        }
+
+        // competitor star rows (static)
+        $$(".f02-comp .f02-stars").forEach((row) => {
+          const r = parseFloat(row.getAttribute("data-rating"));
+          for (let i = 0; i < 5; i++) {
+            const frac = Math.max(0, Math.min(1, r - i));
+            const box = document.createElement("div");
+            box.className = "f02-star";
+            box.appendChild(starSvg(GRAY));
+            box.appendChild(starSvg(OCHRE, "inset(0 " + (100 - frac * 100) + "% 0 0)"));
+            row.appendChild(box);
+          }
+        });
+
+        // Osteria Marea stars: gray base + ochre wipe (4.8)
+        const RATING = 4.8;
+        const big = $("#f02-bigstars");
+        const golds = [];
+        const boxes = [];
+        for (let i = 0; i < 5; i++) {
+          const box = document.createElement("div");
+          box.className = "f02-star";
+          box.appendChild(starSvg(GRAY));
+          const g = starSvg(OCHRE, "inset(0 100% 0 0)");
+          box.appendChild(g);
+          big.appendChild(box);
+          golds.push(g);
+          boxes.push(box);
+        }
+
+        // per-letter spans (titles + search query type letter by letter)
+        $$("[data-text]").forEach((el) => {
+          for (const c of el.getAttribute("data-text")) {
+            const s = document.createElement("span");
+            s.className = "f02-ch";
+            s.textContent = c === " " ? "\u00a0" : c;
+            el.appendChild(s);
+          }
+        });
+
+        // hand-drawn ellipse around the Osteria row (deterministic wobble, overlapping tail)
+        (function buildRing() {
+          const cx = 540, cy = 1286, rx = 336, ry = 128;
+          const a0 = Math.PI * 1.08;
+          const sweep = Math.PI * 2 + 0.42;
+          const N = 72;
+          let d = "";
+          for (let i = 0; i <= N; i++) {
+            const p = i / N;
+            const a = a0 + sweep * p;
+            const k = 1 + 0.022 * Math.sin(3 * a + 0.6) + 0.035 * p;
+            const x = cx + rx * k * Math.cos(a) + 6 * Math.sin(2 * a);
+            const y = cy + ry * k * Math.sin(a) - 10 * p;
+            d += (i ? " L" : "M") + x.toFixed(1) + " " + y.toFixed(1);
+          }
+          const path = $("#f02-ringpath");
+          path.setAttribute("d", d);
+          path.setAttribute("transform", "rotate(-3 " + cx + " " + cy + ")");
+        })();
+
+        const tl = gsap.timeline({ paused: true });
+
+        // ---------------- virtual camera (single writer, ~1s motivated legs) ----------------
+        const L = Math.log;
+        const KEYS = [
+          { t: 0.0, x: 540, y: 1000, s: L(1.035) },
+          { t: 1.0, x: 540, y: 962, s: L(1.0), ease: "power2.out" }, // settle with the phone arrival
+          { t: 2.2, x: 540, y: 990, s: L(1.018), ease: "sine.inOut" }, // drift down the list
+          { t: 3.4, x: 540, y: 1012, s: L(1.035), ease: "power2.inOut" }, // lean into the circled row
+        ];
+        KEYS.forEach((k) => {
+          if (k.ease) k.fn = gsap.parseEase(k.ease);
+        });
+        function camAt(t) {
+          if (t <= KEYS[0].t) return KEYS[0];
+          for (let i = 1; i < KEYS.length; i++) {
+            const a = KEYS[i - 1];
+            const b = KEYS[i];
+            if (t <= b.t) {
+              const p = b.fn((t - a.t) / (b.t - a.t));
+              return { x: a.x + (b.x - a.x) * p, y: a.y + (b.y - a.y) * p, s: a.s + (b.s - a.s) * p };
+            }
+          }
+          return KEYS[KEYS.length - 1];
+        }
+        const world = $("#f02-world");
+        const clock = { t: 0 };
+        function writeCam() {
+          const t = clock.t;
+          const c = camAt(t);
+          const sc = Math.exp(c.s);
+          const ph = (t / DUR) * Math.PI * 2 * 1.2;
+          const dx = Math.sin(ph) * 4;
+          const dy = Math.sin(ph * 1.3) * 2.5;
+          const tx = 540 - c.x * sc + dx;
+          const ty = 960 - c.y * sc + dy;
+          world.style.transform =
+            "translate(" + tx.toFixed(2) + "px," + ty.toFixed(2) + "px) scale(" + sc.toFixed(5) + ")";
+        }
+        writeCam();
+        tl.to(clock, { t: DUR, duration: DUR, ease: "none", onUpdate: writeCam }, 0);
+
+        // ---------------- Scene 1 (0.0–1.0): "Cinque stelle." types; phone rises ----------------
+        tl.fromTo(
+          $$("#f02-l1 .f02-ch"),
+          { opacity: 0, yPercent: 35 },
+          { opacity: 1, yPercent: 0, duration: 0.26, ease: "expo.out", stagger: 0.035 },
+          0.08
+        );
+        tl.fromTo(
+          "#f02-phone",
+          { y: 760, rotation: 2.5 },
+          { y: 0, rotation: 0, duration: 0.85, ease: "power3.out" },
+          0.05
+        );
+        // query types into the search pill
+        tl.fromTo(
+          $$("#f02-query .f02-ch"),
+          { opacity: 0 },
+          { opacity: 1, duration: 0.01, ease: "none", stagger: 0.022 },
+          0.5
+        );
+
+        // ---------------- Scene 2 (1.0–2.2): results populate ----------------
+        const comps = $$(".f02-comp.f02-row");
+        const rules = $$(".f02-comp.f02-rule");
+        [0, 1].forEach((i) => {
+          const at = 1.02 + i * 0.3;
+          tl.fromTo(comps[i], { y: 46, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, ease: "power3.out" }, at);
+          tl.fromTo(rules[i], { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power1.out" }, at + 0.1);
+        });
+        // count punch on the big competitor numbers
+        $$(".f02-comp .f02-count").forEach((el, i) => {
+          tl.fromTo(
+            el,
+            { scale: 0.8, transformOrigin: "0% 80%" },
+            { scale: 1, duration: 0.4, ease: "expo.out" },
+            1.1 + i * 0.3
+          );
+        });
+        // Osteria Marea arrives third
+        tl.fromTo("#f02-sel", { y: 46, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, ease: "power3.out" }, 1.68);
+        golds.forEach((g, i) => {
+          const at = 1.82 + i * 0.06;
+          const frac = Math.max(0, Math.min(1, RATING - i));
+          tl.fromTo(
+            g,
+            { clipPath: "inset(0 100% 0 0)" },
+            { clipPath: "inset(0 " + (100 - frac * 100).toFixed(1) + "% 0 0)", duration: 0.18, ease: "power2.out" },
+            at
+          );
+          tl.fromTo(boxes[i], { scale: 0.85 }, { scale: 1, duration: 0.35, ease: "expo.out" }, at);
+        });
+
+        // ---------------- Scene 3 (2.2–3.4): coral circle draws; title completes ----------------
+        tl.fromTo(
+          "#f02-ringpath",
+          { strokeDashoffset: 1 },
+          { strokeDashoffset: 0, duration: 0.6, ease: "power2.inOut" },
+          2.2
+        );
+        tl.fromTo(
+          comps,
+          { filter: "blur(0px)", opacity: 1 },
+          { filter: "blur(1.5px)", opacity: 0.78, duration: 0.6, ease: "power2.out", immediateRender: false },
+          2.25
+        );
+        tl.fromTo(
+          $$("#f02-l2 .f02-ch").concat($$("#f02-l3 .f02-ch")),
+          { opacity: 0, yPercent: 35 },
+          { opacity: 1, yPercent: 0, duration: 0.26, ease: "expo.out", stagger: 0.034 },
+          2.3
+        );
+
+        window.__timelines = window.__timelines || {};
+        window.__timelines[ID] = tl;
+      })();
+    </script>
+  </div>
+</template>

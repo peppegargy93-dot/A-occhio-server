@@ -1,0 +1,374 @@
+<template>
+  <div id="root" data-composition-id="10-botta-risposta" data-start="0" data-duration="8.494" data-width="1080" data-height="1920">
+    <style>
+      @font-face { font-family: "Anton"; src: url("assets/fonts/anton-latin-400-normal.woff2") format("woff2"); font-weight: 400; }
+      @font-face { font-family: "Special Elite"; src: url("assets/fonts/special-elite-latin-400-normal.woff2") format("woff2"); font-weight: 400; }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; }
+      #root .v10-layer { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
+      #root .v10-paper { background: #EFE6D2; }
+      #root .v10-full { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
+      #root .v10-grain { opacity: 0; mix-blend-mode: multiply; }
+      #root .v10-grain.v10-g0 { opacity: 1; }
+      #root .v10-flicker { background: #141414; opacity: 0.03; }
+      #root .v10-vignette { background: radial-gradient(ellipse 78% 62% at 50% 46%, rgba(20,20,20,0) 58%, rgba(20,20,20,0.34) 100%); }
+      #root .v10-group { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; transform-origin: 540px 860px; }
+      #root .v10-svg { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; overflow: visible; }
+
+      /* Beat 3 — conto */
+      #root .v10-27 { position: absolute; left: 140px; width: 800px; top: 300px; height: 360px; text-align: center; font-family: "Anton"; font-size: 320px; line-height: 360px; color: #CE2B37; transform-origin: 50% 50%; }
+      #root .v10-row { position: absolute; left: 80px; width: 920px; top: 1170px; height: 190px; text-align: center; font-family: "Anton"; font-size: 150px; line-height: 190px; white-space: nowrap; }
+      #root .v10-ch { position: relative; display: inline-block; color: #CE2B37; transform-origin: 50% 80%; }
+      #root .v10-sign { position: relative; display: inline-block; width: 0.5em; height: 190px; vertical-align: top; transform-origin: 50% 60%; }
+      #root .v10-sign span { position: absolute; left: 0; top: 0; width: 100%; text-align: center; }
+      #root .v10-minus { color: #CE2B37; }
+      #root .v10-plus { color: #009246; opacity: 0; }
+
+      /* Beat 4 — maestra: sheet text */
+      #root .v10-four { position: absolute; left: 560px; width: 380px; top: 500px; height: 440px; text-align: center; font-family: "Anton"; font-size: 380px; line-height: 440px; color: #CE2B37; transform-origin: 50% 55%; }
+      #root .v10-lode { position: absolute; left: 560px; width: 380px; top: 540px; height: 400px; text-align: center; font-family: "Anton"; color: #009246; transform-origin: 50% 50%; }
+      #root .v10-lode-10 { display: block; font-size: 250px; line-height: 270px; }
+      #root .v10-lode-e { display: block; font-size: 88px; line-height: 100px; }
+
+      /* ================= THE STAMP — begin (copy this block to frame 12; rename v10- → v12-) =================
+         Spec (frame.md): rectangular rubber stamp, green #009246 ink, double border, "VERDE" Anton ~200 px,
+         rotated −12° (applied by GSAP, never by CSS transform), slight ink-texture mask, centre at x=540 y≈820,
+         lands with squash + small bounce: scale 1.35 → 0.94 → 1, then stays.
+         Markup: one <svg> defs (filter #v10-stamp-ink) + one .v10-stamp div per landing (fresh copy each time). */
+      #root .v10-stamp { position: absolute; left: 230px; top: 675px; width: 620px; height: 290px; border: 12px solid #009246; border-radius: 10px; opacity: 0; transform-origin: 50% 50%; }
+      #root .v10-stamp-inner { position: absolute; left: 10px; top: 10px; right: 10px; bottom: 10px; border: 5px solid #009246; border-radius: 4px; display: flex; align-items: center; justify-content: center; }
+      #root .v10-stamp-word { font-family: "Anton"; font-size: 200px; line-height: 1; letter-spacing: 0.04em; color: #009246; padding-top: 6px; }
+      #root .v10-stamp-tex { position: absolute; left: -12px; top: -12px; width: 620px; height: 290px; }
+      /* ================= THE STAMP — CSS end ================= */
+    </style>
+
+    <!-- ===== Ground: paper + fibre (full-duration clip, lowest track) ===== -->
+    <div id="v10-ground" class="v10-layer v10-paper clip" data-start="0" data-duration="8.494" data-track-index="0">
+      <svg class="v10-full" viewBox="0 0 1080 1920" aria-hidden="true">
+        <filter id="v10-fibre" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+          <feTurbulence type="fractalNoise" baseFrequency="0.011 0.045" numOctaves="4" seed="7" />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.851  0 0 0 0 0.804  0 0 0 0 0.698  2.2 0 0 0 -0.95" />
+        </filter>
+        <filter id="v10-stain" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+          <feTurbulence type="fractalNoise" baseFrequency="0.0035" numOctaves="3" seed="21" />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.851  0 0 0 0 0.804  0 0 0 0 0.698  3 0 0 0 -1.55" />
+        </filter>
+        <image width="1080" height="1920" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1080' height='1920' viewBox='0 0 1080 1920'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25' color-interpolation-filters='sRGB'%3E %3CfeTurbulence type='fractalNoise' baseFrequency='0.011 0.045' numOctaves='4' seed='7' /%3E %3CfeColorMatrix type='matrix' values='0 0 0 0 0.851 0 0 0 0 0.804 0 0 0 0 0.698 2.2 0 0 0 -0.95' /%3E %3C/filter%3E%3Crect width='1080' height='1920' filter='url(%23f)'/%3E%3C/svg%3E" opacity="0.55"/>
+        <image width="1080" height="1920" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1080' height='1920' viewBox='0 0 1080 1920'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25' color-interpolation-filters='sRGB'%3E %3CfeTurbulence type='fractalNoise' baseFrequency='0.0035' numOctaves='3' seed='21' /%3E %3CfeColorMatrix type='matrix' values='0 0 0 0 0.851 0 0 0 0 0.804 0 0 0 0 0.698 3 0 0 0 -1.55' /%3E %3C/filter%3E%3Crect width='1080' height='1920' filter='url(%23f)'/%3E%3C/svg%3E" opacity="0.7"/>
+      </svg>
+    </div>
+
+    <!-- ===== Stage: the four beats + stamps ===== -->
+    <div id="v10-stage" class="v10-layer clip" data-start="0" data-duration="8.494" data-track-index="1">
+
+      <!-- Depero diagonal plane behind every beat (constant) -->
+      <svg class="v10-svg" viewBox="0 0 1080 1920" aria-hidden="true">
+        <polygon id="v10-plane" points="120,520 980,330 960,1330 100,1470" fill="#D9CDB2" />
+      </svg>
+
+      <!-- ---------- Beat 1: SEMAFORO ---------- -->
+      <div id="v10-sem" class="v10-group">
+        <svg class="v10-svg" viewBox="0 0 1080 1920" aria-hidden="true">
+          <g id="v10-sem-light">
+            <g id="v10-sem-jit">
+              <polygon points="430,470 650,470 610,412 470,412" fill="#141414" />
+              <rect x="520" y="960" width="40" height="300" fill="#141414" />
+              <polygon points="470,1290 610,1290 580,1255 500,1255" fill="#141414" />
+              <rect x="450" y="460" width="180" height="510" rx="44" fill="#141414" />
+              <circle id="v10-sem-red" cx="540" cy="560" r="62" fill="#CE2B37" />
+              <circle cx="540" cy="715" r="62" fill="#141414" stroke="#D9CDB2" stroke-width="4" opacity="0.9" />
+              <circle cx="540" cy="870" r="62" fill="#141414" stroke="#D9CDB2" stroke-width="4" opacity="0.9" />
+              <circle id="v10-sem-green" cx="540" cy="870" r="62" fill="#009246" opacity="0" />
+              <polygon points="400,520 450,520 450,600" fill="#141414" />
+              <polygon points="680,520 630,520 630,600" fill="#141414" />
+            </g>
+          </g>
+          <!-- soft curved speed lines (green state) -->
+          <g fill="none" stroke="#141414" stroke-width="6" stroke-linecap="round">
+            <path class="v10-sem-line" d="M110,1330 Q190,1305 270,1328" stroke-dasharray="180" stroke-dashoffset="180" />
+            <path class="v10-sem-line" d="M140,1372 Q230,1350 320,1372" stroke-dasharray="200" stroke-dashoffset="200" />
+            <path class="v10-sem-line" d="M100,1412 Q180,1392 260,1410" stroke-dasharray="180" stroke-dashoffset="180" />
+          </g>
+          <!-- cube cars -->
+          <g id="v10-car-a"><g transform="translate(330,1360)">
+            <rect x="-80" y="-40" width="160" height="70" fill="#141414" /><rect x="-46" y="-80" width="80" height="44" fill="#141414" />
+            <rect x="-34" y="-72" width="22" height="26" fill="#EFE6D2" /><rect x="-4" y="-72" width="22" height="26" fill="#EFE6D2" />
+            <circle cx="-48" cy="34" r="20" fill="#141414" stroke="#EFE6D2" stroke-width="5" /><circle cx="48" cy="34" r="20" fill="#141414" stroke="#EFE6D2" stroke-width="5" />
+          </g></g>
+          <g id="v10-car-b"><g transform="translate(500,1360)">
+            <rect x="-80" y="-40" width="160" height="70" fill="#CE2B37" /><rect x="-46" y="-80" width="80" height="44" fill="#CE2B37" />
+            <rect x="-34" y="-72" width="22" height="26" fill="#EFE6D2" /><rect x="-4" y="-72" width="22" height="26" fill="#EFE6D2" />
+            <circle cx="-48" cy="34" r="20" fill="#141414" stroke="#EFE6D2" stroke-width="5" /><circle cx="48" cy="34" r="20" fill="#141414" stroke="#EFE6D2" stroke-width="5" />
+          </g></g>
+          <g id="v10-car-c"><g transform="translate(670,1360)">
+            <rect x="-80" y="-40" width="160" height="70" fill="#141414" /><rect x="-46" y="-80" width="80" height="44" fill="#141414" />
+            <rect x="-34" y="-72" width="22" height="26" fill="#EFE6D2" /><rect x="-4" y="-72" width="22" height="26" fill="#EFE6D2" />
+            <circle cx="-48" cy="34" r="20" fill="#141414" stroke="#EFE6D2" stroke-width="5" /><circle cx="48" cy="34" r="20" fill="#141414" stroke="#EFE6D2" stroke-width="5" />
+          </g></g>
+        </svg>
+      </div>
+
+      <!-- ---------- Beat 2: BATTERIA ---------- -->
+      <div id="v10-bat" class="v10-group">
+        <svg class="v10-svg" viewBox="0 0 1080 1920" aria-hidden="true">
+          <defs>
+            <clipPath id="v10-bat-clip"><rect x="414" y="484" width="252" height="672" rx="18" /></clipPath>
+          </defs>
+          <g id="v10-bat-body">
+            <rect x="490" y="420" width="100" height="50" rx="8" fill="#141414" />
+            <g clip-path="url(#v10-bat-clip)">
+              <rect id="v10-bat-fill" x="414" y="484" width="252" height="672" fill="#009246" />
+              <rect id="v10-bat-notch" x="414" y="1086" width="252" height="70" fill="#CE2B37" />
+            </g>
+            <rect x="407" y="477" width="266" height="686" rx="24" fill="none" stroke="#141414" stroke-width="16" />
+            <!-- bolt icon -->
+            <g id="v10-bat-bolt"><g transform="translate(540,560)">
+              <polygon points="10,-46 -26,6 -4,6 -12,46 26,-8 4,-8" fill="#141414" />
+            </g></g>
+            <!-- tiny stylized leaf (fleeting on green) -->
+            <g id="v10-bat-leaf"><g transform="translate(540,560) rotate(18)">
+              <path d="M0,-40 C26,-22 26,20 0,40 C-26,20 -26,-22 0,-40 Z" fill="#EFE6D2" stroke="#141414" stroke-width="6" />
+              <path d="M0,-30 L0,52" stroke="#141414" stroke-width="5" stroke-linecap="round" />
+              <path d="M0,-6 L13,-18 M0,10 L-13,-2" stroke="#141414" stroke-width="4" stroke-linecap="round" />
+            </g></g>
+          </g>
+        </svg>
+      </div>
+
+      <!-- ---------- Beat 3: CONTO ---------- -->
+      <div id="v10-con" class="v10-group">
+        <div id="v10-27" class="v10-27">27</div>
+        <div class="v10-row" id="v10-row"><span class="v10-sign" id="v10-sign"><span class="v10-minus">-</span><span class="v10-plus">+</span></span><span class="v10-ch">1</span><span class="v10-ch">.</span><span class="v10-ch">2</span><span class="v10-ch">4</span><span class="v10-ch">7</span><span class="v10-ch">,</span><span class="v10-ch">0</span><span class="v10-ch">0</span></div>
+      </div>
+
+      <!-- ---------- Beat 4: MAESTRA ---------- -->
+      <div id="v10-mae" class="v10-group">
+        <svg class="v10-svg" viewBox="0 0 1080 1920" aria-hidden="true">
+          <defs>
+            <pattern id="v10-stripes" width="44" height="44" patternUnits="userSpaceOnUse" patternTransform="rotate(-24)">
+              <rect width="44" height="44" fill="#EFE6D2" /><rect width="22" height="44" fill="#009246" />
+            </pattern>
+          </defs>
+          <!-- homework sheet -->
+          <g id="v10-sheet">
+            <rect x="560" y="420" width="380" height="580" fill="#EFE6D2" stroke="#141414" stroke-width="6" />
+            <g fill="#141414" opacity="0.55">
+              <rect x="600" y="465" width="250" height="8" /><rect x="600" y="495" width="300" height="8" /><rect x="600" y="940" width="280" height="8" /><rect x="600" y="965" width="200" height="8" />
+            </g>
+            <ellipse id="v10-circle-red" cx="750" cy="725" rx="160" ry="200" fill="none" stroke="#CE2B37" stroke-width="10" />
+            <ellipse id="v10-circle-green" cx="750" cy="725" rx="164" ry="204" fill="none" stroke="#009246" stroke-width="10" stroke-dasharray="1160" stroke-dashoffset="1160" />
+          </g>
+          <!-- standing teacher (question, red) -->
+          <g id="v10-teach-stand">
+            <rect x="260" y="1270" width="26" height="90" fill="#141414" /><rect x="320" y="1270" width="26" height="90" fill="#141414" />
+            <polygon points="303,940 180,1290 426,1290" fill="#CE2B37" />
+            <rect x="243" y="790" width="120" height="210" rx="40" fill="#141414" />
+            <rect x="223" y="880" width="160" height="46" rx="20" fill="#141414" stroke="#EFE6D2" stroke-width="4" />
+            <rect x="290" y="740" width="26" height="56" fill="#141414" />
+            <circle cx="303" cy="700" r="56" fill="#141414" />
+            <circle cx="303" cy="632" r="28" fill="#141414" />
+            <rect x="276" y="692" width="20" height="8" fill="#EFE6D2" /><rect x="311" y="692" width="20" height="8" fill="#EFE6D2" />
+            <polygon points="380,872 470,830 476,840 388,884" fill="#CE2B37" />
+          </g>
+          <!-- reclined teacher on striped deckchair (answer, green) -->
+          <g id="v10-teach-chair">
+            <g stroke="#141414" stroke-width="12" stroke-linecap="round">
+              <line x1="190" y1="1120" x2="270" y2="1460" />
+              <line x1="330" y1="1395" x2="620" y2="1460" />
+              <line x1="600" y1="1355" x2="370" y2="1460" />
+            </g>
+            <polygon points="176,1112 236,1100 336,1372 292,1392" fill="url(#v10-stripes)" stroke="#141414" stroke-width="6" />
+            <polygon points="292,1388 650,1330 660,1362 300,1412" fill="url(#v10-stripes)" stroke="#141414" stroke-width="6" />
+            <g id="v10-lounger">
+              <rect x="520" y="1318" width="180" height="22" rx="10" fill="#141414" /><rect x="520" y="1344" width="190" height="22" rx="10" fill="#141414" />
+              <polygon points="316,1355 528,1300 534,1382" fill="#009246" />
+              <g transform="translate(262,1240) rotate(-23)"><rect x="-46" y="-118" width="92" height="236" rx="34" fill="#141414" /></g>
+              <circle cx="222" cy="1076" r="48" fill="#141414" />
+              <circle cx="190" cy="1036" r="24" fill="#141414" />
+              <path d="M200,1078 q10,8 20,0 M232,1072 q10,8 20,0" fill="none" stroke="#EFE6D2" stroke-width="5" stroke-linecap="round" />
+              <g id="v10-arm"><polygon points="250,1150 268,1172 372,1072 352,1056" fill="#141414" /></g>
+              <polygon id="v10-pen" points="340,1092 356,1076 456,968 462,956 452,962 368,1054" fill="#009246" stroke="#009246" stroke-width="6" stroke-linejoin="round" />
+            </g>
+          </g>
+        </svg>
+        <div id="v10-four" class="v10-four">4</div>
+        <div id="v10-lode" class="v10-lode"><span class="v10-lode-10">10</span><span class="v10-lode-e">e lode</span></div>
+      </div>
+
+      <!-- ================= THE STAMP — markup begin (copy to frame 12; one .v10-stamp per landing) ================= -->
+      <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+        <filter id="v10-stamp-ink" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+          <feTurbulence type="fractalNoise" baseFrequency="0.09 0.06" numOctaves="2" seed="5" />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.937  0 0 0 0 0.902  0 0 0 0 0.824  11 0 0 0 -7.1" />
+        </filter>
+      </svg>
+      <div class="v10-stamp" id="v10-stamp-1"><div class="v10-stamp-inner"><span class="v10-stamp-word">VERDE</span></div><svg class="v10-stamp-tex" viewBox="0 0 620 290" aria-hidden="true"><image width="620" height="290" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='620' height='290' viewBox='0 0 620 290'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25' color-interpolation-filters='sRGB'%3E %3CfeTurbulence type='fractalNoise' baseFrequency='0.09 0.06' numOctaves='2' seed='5' /%3E %3CfeColorMatrix type='matrix' values='0 0 0 0 0.937 0 0 0 0 0.902 0 0 0 0 0.824 11 0 0 0 -7.1' /%3E %3C/filter%3E%3Crect width='620' height='290' filter='url(%23f)'/%3E%3C/svg%3E"/></svg></div>
+      <div class="v10-stamp" id="v10-stamp-2"><div class="v10-stamp-inner"><span class="v10-stamp-word">VERDE</span></div><svg class="v10-stamp-tex" viewBox="0 0 620 290" aria-hidden="true"><image width="620" height="290" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='620' height='290' viewBox='0 0 620 290'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25' color-interpolation-filters='sRGB'%3E %3CfeTurbulence type='fractalNoise' baseFrequency='0.09 0.06' numOctaves='2' seed='5' /%3E %3CfeColorMatrix type='matrix' values='0 0 0 0 0.937 0 0 0 0 0.902 0 0 0 0 0.824 11 0 0 0 -7.1' /%3E %3C/filter%3E%3Crect width='620' height='290' filter='url(%23f)'/%3E%3C/svg%3E"/></svg></div>
+      <div class="v10-stamp" id="v10-stamp-3"><div class="v10-stamp-inner"><span class="v10-stamp-word">VERDE</span></div><svg class="v10-stamp-tex" viewBox="0 0 620 290" aria-hidden="true"><image width="620" height="290" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='620' height='290' viewBox='0 0 620 290'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25' color-interpolation-filters='sRGB'%3E %3CfeTurbulence type='fractalNoise' baseFrequency='0.09 0.06' numOctaves='2' seed='5' /%3E %3CfeColorMatrix type='matrix' values='0 0 0 0 0.937 0 0 0 0 0.902 0 0 0 0 0.824 11 0 0 0 -7.1' /%3E %3C/filter%3E%3Crect width='620' height='290' filter='url(%23f)'/%3E%3C/svg%3E"/></svg></div>
+      <!-- ================= THE STAMP — markup end ================= -->
+    </div>
+
+    <!-- ===== Atmosphere: grain tiles + flicker + vignette (full-duration clip, top) ===== -->
+    <div id="v10-atmos" class="v10-layer clip" data-start="0" data-duration="8.494" data-track-index="2">
+      <svg class="v10-full v10-grain v10-g0" viewBox="0 0 1080 1920" aria-hidden="true"><filter id="v10-gr0" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="11" /><feColorMatrix type="matrix" values="0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 -2.4 1.25" /></filter><image width="1080" height="1920" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1080' height='1920' viewBox='0 0 1080 1920'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='11' /%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.08 0 0 0 0 0.08 0 0 0 0 0.08 0 0 0 -2.4 1.25' /%3E%3C/filter%3E%3Crect width='1080' height='1920' filter='url(%23f)'/%3E%3C/svg%3E" opacity="0.5"/></svg>
+      <svg class="v10-full v10-grain" viewBox="0 0 1080 1920" aria-hidden="true"><filter id="v10-gr1" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="29" /><feColorMatrix type="matrix" values="0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 -2.4 1.25" /></filter><image width="1080" height="1920" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1080' height='1920' viewBox='0 0 1080 1920'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='29' /%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.08 0 0 0 0 0.08 0 0 0 0 0.08 0 0 0 -2.4 1.25' /%3E%3C/filter%3E%3Crect width='1080' height='1920' filter='url(%23f)'/%3E%3C/svg%3E" opacity="0.5"/></svg>
+      <svg class="v10-full v10-grain" viewBox="0 0 1080 1920" aria-hidden="true"><filter id="v10-gr2" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="47" /><feColorMatrix type="matrix" values="0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 -2.4 1.25" /></filter><image width="1080" height="1920" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1080' height='1920' viewBox='0 0 1080 1920'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='47' /%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.08 0 0 0 0 0.08 0 0 0 0 0.08 0 0 0 -2.4 1.25' /%3E%3C/filter%3E%3Crect width='1080' height='1920' filter='url(%23f)'/%3E%3C/svg%3E" opacity="0.5"/></svg>
+      <svg class="v10-full v10-grain" viewBox="0 0 1080 1920" aria-hidden="true"><filter id="v10-gr3" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="83" /><feColorMatrix type="matrix" values="0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 -2.4 1.25" /></filter><image width="1080" height="1920" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1080' height='1920' viewBox='0 0 1080 1920'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='83' /%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.08 0 0 0 0 0.08 0 0 0 0 0.08 0 0 0 -2.4 1.25' /%3E%3C/filter%3E%3Crect width='1080' height='1920' filter='url(%23f)'/%3E%3C/svg%3E" opacity="0.5"/></svg>
+      <div id="v10-flicker" class="v10-full v10-flicker"></div>
+      <div class="v10-full v10-vignette"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script>
+      (function () {
+        var ID = "10-botta-risposta";
+        var DUR = 8.494;
+        var root = document.querySelector('[data-composition-id="' + ID + '"]');
+        var q = function (s) { return root.querySelector(s); };
+        var qa = function (s) { return Array.prototype.slice.call(root.querySelectorAll(s)); };
+
+        // ---- Retime here: every tween below is driven from these beat times (seconds) ----
+        const BEATS = { semaforo:0.057, verde1:1.301, batteria:1.89, verde2:3.114, conto:3.746, verde3:4.821, maestraQ:5.485, maestraA:6.433 };
+        var STAMP_LEAD = 0.1;   // stamp starts falling this much before its "Verde" so the impact lands on the word
+        var LIFT_LEAD = 0.32;   // previous stamp lifts away this much before the next beat
+        var SWAP_LEAD = 0.26;   // outgoing illustration leaves this much before the next beat
+
+        var tl = gsap.timeline({ paused: true });
+        var stage = q("#v10-stage");
+
+        // ---------- THE STAMP — timeline helper (copy with the stamp block) ----------
+        function landStamp(el, t, liftAt) {
+          var s = t - STAMP_LEAD;
+          tl.fromTo(el, { opacity: 0, scale: 1.35, rotation: -12, y: 0 },
+                        { opacity: 0.94, scale: 0.94, duration: 0.12, ease: "power3.in" }, s);
+          tl.to(el, { scale: 1, duration: 0.22, ease: "back.out(2.4)" }, s + 0.12);
+          // thud: stage nudges down a few px on impact
+          tl.fromTo(stage, { y: 0 }, { y: 7, duration: 0.05, ease: "power2.out", immediateRender: false }, s + 0.12);
+          tl.to(stage, { y: 0, duration: 0.22, ease: "sine.out" }, s + 0.17);
+          if (liftAt != null) {
+            tl.to(el, { opacity: 0, scale: 1.1, y: -60, duration: 0.3, ease: "sine.in" }, liftAt);
+          }
+        }
+
+        // ---------- generic soft swap in / out of an illustration group ----------
+        function groupIn(el, t) {
+          tl.fromTo(el, { opacity: 0, x: 70 }, { opacity: 1, x: 0, duration: 0.3, ease: "power3.out" }, t);
+        }
+        function groupOut(el, t) {
+          tl.to(el, { opacity: 0, x: -70, duration: SWAP_LEAD, ease: "sine.in" }, t);
+        }
+        // stepped "red" jitter (deterministic offsets, steps)
+        function jitter(el, t0, t1, amp) {
+          var offs = [-1, 0.8, -0.6, 1, -0.4, 0.7, -0.9, 0.5];
+          var n = Math.max(2, Math.floor((t1 - t0) / 0.07));
+          for (var i = 0; i < n; i++) tl.set(el, { x: offs[i % offs.length] * amp, rotation: offs[(i + 3) % offs.length] * amp * 0.25 }, t0 + i * 0.07);
+          tl.set(el, { x: 0, rotation: 0 }, t1);
+        }
+
+        // ================= Beat 1: SEMAFORO =================
+        var sem = q("#v10-sem");
+        tl.fromTo(sem, { opacity: 0, x: -90, y: 90 }, { opacity: 1, x: 0, y: 0, duration: 0.28, ease: "power3.out" }, BEATS.semaforo);
+        jitter(q("#v10-sem-jit"), BEATS.semaforo + 0.3, BEATS.verde1, 5);
+        // red disc blinks once (stepped) while waiting
+        tl.set(q("#v10-sem-red"), { opacity: 0.35 }, BEATS.semaforo + 0.5);
+        tl.set(q("#v10-sem-red"), { opacity: 1 }, BEATS.semaforo + 0.6);
+        // jammed cars shudder
+        jitter(q("#v10-car-a"), BEATS.semaforo + 0.32, BEATS.verde1, 4);
+        jitter(q("#v10-car-c"), BEATS.semaforo + 0.36, BEATS.verde1, 4);
+        // GREEN
+        tl.to(q("#v10-sem-red"), { opacity: 0.0, duration: 0.25, ease: "sine.out" }, BEATS.verde1);
+        tl.fromTo(q("#v10-sem-green"), { opacity: 0, scale: 0.8, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, duration: 0.45, ease: "sine.out" }, BEATS.verde1);
+        // cars restart relaxed, curves to the right
+        var relax = BEATS.batteria - SWAP_LEAD - BEATS.verde1;
+        tl.to(q("#v10-car-a"), { x: 40, duration: relax, ease: "sine.inOut" }, BEATS.verde1 + 0.05);
+        tl.to(q("#v10-car-b"), { x: 110, duration: relax, ease: "sine.inOut" }, BEATS.verde1 + 0.1);
+        tl.to(q("#v10-car-c"), { x: 180, duration: relax, ease: "sine.inOut" }, BEATS.verde1 + 0.15);
+        tl.to(qa(".v10-sem-line"), { strokeDashoffset: 0, duration: 0.5, ease: "sine.out", stagger: 0.08 }, BEATS.verde1 + 0.1);
+        tl.to(q("#v10-sem-light"), { rotation: 1.5, svgOrigin: "540 1290", duration: relax, ease: "sine.inOut" }, BEATS.verde1);
+        landStamp(q("#v10-stamp-1"), BEATS.verde1, BEATS.batteria - LIFT_LEAD);
+        groupOut(sem, BEATS.batteria - SWAP_LEAD);
+
+        // ================= Beat 2: BATTERIA =================
+        var bat = q("#v10-bat");
+        groupIn(bat, BEATS.batteria);
+        tl.set(q("#v10-bat-fill"), { scaleY: 0.0, transformOrigin: "50% 100%" }, 0);
+        tl.set(q("#v10-bat-leaf"), { opacity: 0 }, 0);
+        // last red notch blinks (stepped)
+        var blinkEnd = BEATS.verde2;
+        for (var b = BEATS.batteria + 0.2, k = 0; b < blinkEnd - 0.05; b += 0.16, k++) {
+          tl.set(q("#v10-bat-notch"), { opacity: k % 2 ? 1 : 0.15 }, b);
+        }
+        tl.set(q("#v10-bat-notch"), { opacity: 1 }, blinkEnd);
+        jitter(q("#v10-bat-body"), BEATS.batteria + 0.35, BEATS.verde2, 4);
+        // GREEN: fills softly, bolt → tiny leaf (fleeting) → bolt
+        tl.to(q("#v10-bat-notch"), { opacity: 0, duration: 0.3, ease: "sine.out" }, BEATS.verde2);
+        tl.to(q("#v10-bat-fill"), { scaleY: 0.88, duration: 0.6, ease: "sine.inOut" }, BEATS.verde2);
+        tl.set(q("#v10-bat-bolt"), { opacity: 0 }, BEATS.verde2 + 0.04);
+        tl.set(q("#v10-bat-leaf"), { opacity: 1 }, BEATS.verde2 + 0.04);
+        tl.set(q("#v10-bat-leaf"), { opacity: 0 }, BEATS.verde2 + 0.44);
+        tl.set(q("#v10-bat-bolt"), { opacity: 1 }, BEATS.verde2 + 0.44);
+        tl.to(q("#v10-bat-body"), { rotation: -1.2, svgOrigin: "540 1160", duration: BEATS.conto - SWAP_LEAD - BEATS.verde2, ease: "sine.inOut" }, BEATS.verde2);
+        landStamp(q("#v10-stamp-2"), BEATS.verde2, BEATS.conto - LIFT_LEAD);
+        groupOut(bat, BEATS.conto - SWAP_LEAD);
+
+        // ================= Beat 3: CONTO =================
+        var con = q("#v10-con");
+        groupIn(con, BEATS.conto);
+        var t27 = q("#v10-27");
+        tl.set(t27, { scale: 0.2, y: -40, color: "#CE2B37" }, 0);
+        jitter(t27, BEATS.conto + 0.1, BEATS.verde3, 6);
+        // red digits fall into a collapsed pile (jerky)
+        var chars = [q("#v10-sign")].concat(qa("#v10-row .v10-ch"));
+        var pile = [[-30, 40, -70], [10, 60, 24], [-20, 80, -40], [30, 30, 62], [-10, 70, -18], [20, 50, 80], [0, 85, -55], [15, 40, 34], [-25, 65, -88]];
+        chars.forEach(function (c, i) {
+          var p = pile[i];
+          tl.fromTo(c, { x: p[0], y: -420 - i * 30, rotation: 0 }, { x: p[0], y: p[1], rotation: p[2], duration: 0.22, ease: "power4.in" }, BEATS.conto + 0.04 * i);
+        });
+        tl.set(qa("#v10-row .v10-ch"), { color: "#CE2B37" }, BEATS.conto);
+        // GREEN: digits climb back neatly, minus becomes plus, 27 comes close
+        chars.forEach(function (c, i) {
+          tl.to(c, { x: 0, y: 0, rotation: 0, duration: 0.26, ease: "sine.out" }, BEATS.verde3 - 0.05 + 0.012 * i);
+        });
+        tl.to(qa("#v10-row .v10-ch"), { color: "#009246", duration: 0.25, ease: "sine.out", stagger: 0.012 }, BEATS.verde3 - 0.05);
+        tl.to(q("#v10-sign .v10-minus"), { opacity: 0, duration: 0.3, ease: "sine.out" }, BEATS.verde3 + 0.1);
+        tl.to(q("#v10-sign .v10-plus"), { opacity: 1, duration: 0.3, ease: "sine.out" }, BEATS.verde3 + 0.1);
+        tl.to(t27, { scale: 1, y: 0, color: "#009246", duration: 0.32, ease: "sine.inOut" }, BEATS.verde3 + 0.02);
+        landStamp(q("#v10-stamp-3"), BEATS.verde3, BEATS.maestraQ - LIFT_LEAD);
+        groupOut(con, BEATS.maestraQ - SWAP_LEAD);
+
+        // ================= Beat 4: MAESTRA (no stamp) =================
+        var mae = q("#v10-mae");
+        groupIn(mae, BEATS.maestraQ);
+        tl.set([q("#v10-teach-chair"), q("#v10-lode")], { opacity: 0 }, 0);
+        tl.fromTo(q("#v10-four"), { scale: 1.3, rotation: 6, opacity: 0 }, { scale: 1, rotation: 0, opacity: 1, duration: 0.18, ease: "power4.in" }, BEATS.maestraQ + 0.12);
+        jitter(q("#v10-teach-stand"), BEATS.maestraQ + 0.3, BEATS.maestraA, 4);
+        // ANSWER: teacher reclines on the deckchair, green pen; 4 morphs into "10 e lode"
+        tl.to(q("#v10-teach-stand"), { opacity: 0, y: 60, duration: 0.4, ease: "sine.in" }, BEATS.maestraA);
+        tl.fromTo(q("#v10-teach-chair"), { opacity: 0, y: 70 }, { opacity: 1, y: 0, duration: 0.6, ease: "sine.out", immediateRender: false }, BEATS.maestraA + 0.15);
+        tl.fromTo(q("#v10-arm"), { rotation: 18 }, { rotation: 0, svgOrigin: "258 1160", duration: 0.7, ease: "sine.inOut" }, BEATS.maestraA + 0.3);
+        tl.fromTo(q("#v10-pen"), { rotation: 18 }, { rotation: 0, svgOrigin: "258 1160", duration: 0.7, ease: "sine.inOut" }, BEATS.maestraA + 0.3);
+        tl.to(q("#v10-four"), { scaleX: 0.15, scaleY: 1.1, opacity: 0, duration: 0.35, ease: "sine.in" }, BEATS.maestraA + 0.1);
+        tl.to(q("#v10-circle-red"), { opacity: 0, duration: 0.3, ease: "sine.out" }, BEATS.maestraA + 0.1);
+        tl.fromTo(q("#v10-lode"), { opacity: 0, scaleX: 0.2, scaleY: 1.1 }, { opacity: 1, scaleX: 1, scaleY: 1, duration: 0.55, ease: "sine.out", immediateRender: false }, BEATS.maestraA + 0.38);
+        tl.to(q("#v10-circle-green"), { strokeDashoffset: 0, duration: 0.6, ease: "sine.inOut" }, BEATS.maestraA + 0.5);
+        // gentle sway to the end
+        tl.fromTo(q("#v10-lounger"), { rotation: 0 }, { rotation: -2, svgOrigin: "420 1380", duration: DUR - BEATS.maestraA - 0.9, ease: "sine.inOut" }, BEATS.maestraA + 0.9);
+        tl.fromTo(q("#v10-sheet"), { rotation: 0 }, { rotation: 1.5, svgOrigin: "750 1000", duration: DUR - BEATS.maestraA - 0.6, ease: "sine.inOut" }, BEATS.maestraA + 0.6);
+
+        // ================= Atmosphere: grain swap every 2 frames + flicker =================
+        var tiles = qa(".v10-grain");
+        var flick = q("#v10-flicker");
+        var steps = Math.ceil(DUR * 15);
+        for (var i = 1; i < steps; i++) {
+          var t = i / 15;
+          tl.set(tiles[(i + 3) % 4], { opacity: 0 }, t);
+          tl.set(tiles[i % 4], { opacity: 1 }, t);
+          tl.set(flick, { opacity: 0.015 + 0.04 * (((i * 37) % 11) / 10) }, t);
+        }
+        tl.set({}, {}, DUR);
+
+        window.__timelines = window.__timelines || {};
+        window.__timelines[ID] = tl;
+      })();
+    </script>
+  </div>
+</template>

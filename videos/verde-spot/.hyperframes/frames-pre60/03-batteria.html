@@ -1,0 +1,283 @@
+<template>
+  <div id="root" data-composition-id="03-batteria" data-start="0" data-duration="4.12" data-width="1080" data-height="1920">
+    <style>
+      @font-face { font-family: "Anton"; src: url("assets/fonts/anton-latin-400-normal.woff2") format("woff2"); font-weight: 400; }
+      @font-face { font-family: "Special Elite"; src: url("assets/fonts/special-elite-latin-400-normal.woff2") format("woff2"); font-weight: 400; }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; }
+
+      /* --- paper ground (full-duration clip) --- */
+      #root .v03-ground { position: absolute; inset: 0; background: #EFE6D2; overflow: hidden; }
+      #root .v03-ground svg { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
+      #root .v03-fibre { opacity: 0.12; mix-blend-mode: multiply; }
+      #root .v03-plane { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
+
+      /* --- world (content) --- */
+      #root .v03-world { position: absolute; inset: 0; transform-origin: 540px 900px; }
+      #root .v03-speed { position: absolute; height: 10px; background: #141414; }
+      #root .v03-batt { position: absolute; left: 110px; top: 520px; width: 400px; height: 860px; overflow: visible; transform-origin: 50% 100%; }
+      #root .v03-wall { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
+      #root .v03-socket { position: absolute; left: 870px; top: 820px; width: 140px; height: 190px; overflow: visible; transform-origin: 50% 50%; }
+      #root .v03-man { position: absolute; left: 540px; top: 900px; width: 460px; height: 480px; overflow: visible; transform-origin: 30% 100%; }
+      #root .v03-mspeed { position: absolute; left: 470px; top: 1000px; width: 120px; height: 260px; }
+      #root .v03-mspeed i { position: absolute; left: 0; height: 9px; background: #141414; display: block; }
+
+      #root .v03-pct { position: absolute; left: 80px; right: 80px; top: 190px; height: 310px; text-align: center; }
+      #root .v03-pct-in { display: inline-block; font-family: "Anton"; font-size: 300px; line-height: 1; color: #CE2B37; text-transform: uppercase; transform-origin: 50% 70%; white-space: nowrap; }
+      #root .v03-pct-in span { display: inline-block; transform-origin: 50% 100%; }
+
+      #root .v03-cap { position: absolute; left: 110px; top: 1405px; font-family: "Special Elite"; font-size: 46px; line-height: 1; color: #141414; letter-spacing: 0.04em; white-space: pre; }
+      #root .v03-cap span { display: inline-block; }
+      #root .v03-rule { position: absolute; left: 110px; top: 1462px; width: 520px; height: 4px; background: #141414; transform-origin: 0% 50%; }
+
+      /* --- grain + flicker + vignette --- */
+      #root .v03-fx { position: absolute; inset: 0; pointer-events: none; }
+      #root .v03-fx svg { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; opacity: 0; mix-blend-mode: multiply; }
+      #root .v03-fx[data-g="0"] .v03-g0, #root .v03-fx[data-g="1"] .v03-g1, #root .v03-fx[data-g="2"] .v03-g2,
+      #root .v03-fx[data-g="3"] .v03-g3, #root .v03-fx[data-g="4"] .v03-g4, #root .v03-fx[data-g="5"] .v03-g5 { opacity: 0.09; }
+      #root .v03-vig { position: absolute; inset: 0; background: radial-gradient(ellipse 78% 62% at 50% 46%, rgba(20,20,20,0) 55%, rgba(20,20,20,0.26) 100%); }
+      #root .v03-flick { position: absolute; inset: 0; background: #141414; opacity: 0.02; }
+    </style>
+
+    <!-- GROUND: paper + fibres + stains + diagonal Depero plane -->
+    <div id="v03-ground" class="v03-ground clip" data-start="0" data-duration="4.12" data-track-index="0">
+      <svg class="v03-fibre" viewBox="0 0 1080 1920" aria-hidden="true">
+        <filter id="v03-fib" x="0" y="0" width="100%" height="100%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.006 0.11" numOctaves="3" seed="3" />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 0 0.08  0.9 0 0 0 -0.48" />
+        </filter>
+        <filter id="v03-stain" x="0" y="0" width="100%" height="100%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.0045" numOctaves="4" seed="11" />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.2  0 0 0 0 0.16  0 0 0 0 0.1  1.6 0 0 0 -0.78" />
+        </filter>
+        <image width="1080" height="1920" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1080' height='1920' viewBox='0 0 1080 1920'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25'%3E %3CfeTurbulence type='fractalNoise' baseFrequency='0.006 0.11' numOctaves='3' seed='3' /%3E %3CfeColorMatrix type='matrix' values='0 0 0 0 0.08 0 0 0 0 0.08 0 0 0 0 0.08 0.9 0 0 0 -0.48' /%3E %3C/filter%3E%3Crect width='1080' height='1920' filter='url(%23f)'/%3E%3C/svg%3E"/>
+        <image width="1080" height="1920" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1080' height='1920' viewBox='0 0 1080 1920'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25'%3E %3CfeTurbulence type='fractalNoise' baseFrequency='0.0045' numOctaves='4' seed='11' /%3E %3CfeColorMatrix type='matrix' values='0 0 0 0 0.2 0 0 0 0 0.16 0 0 0 0 0.1 1.6 0 0 0 -0.78' /%3E %3C/filter%3E%3Crect width='1080' height='1920' filter='url(%23f)'/%3E%3C/svg%3E" opacity="0.25"/>
+      </svg>
+      <svg class="v03-plane" viewBox="0 0 1080 1920" aria-hidden="true">
+        <polygon id="v03-diag" points="0,1180 1080,560 1080,1020 0,1640" fill="#D9CDB2" />
+      </svg>
+    </div>
+
+    <!-- WORLD -->
+    <div id="v03-world" class="v03-world clip" data-start="0" data-duration="4.12" data-track-index="1">
+
+      <!-- empty wall plane + crossed-out socket (Scene 3) -->
+      <svg class="v03-wall" viewBox="0 0 1080 1920" aria-hidden="true">
+        <polygon id="v03-wallp" points="840,640 1080,600 1080,1380 800,1380" fill="#D9CDB2" stroke="#141414" stroke-width="6" />
+      </svg>
+      <svg id="v03-socket" class="v03-socket" viewBox="0 0 140 190" aria-hidden="true">
+        <rect x="8" y="8" width="124" height="174" rx="16" fill="none" stroke="#141414" stroke-width="7" stroke-dasharray="18 12" />
+        <circle cx="48" cy="80" r="11" fill="none" stroke="#141414" stroke-width="5" stroke-dasharray="6 5" />
+        <circle cx="92" cy="80" r="11" fill="none" stroke="#141414" stroke-width="5" stroke-dasharray="6 5" />
+        <line id="v03-x1" x1="-14" y1="-14" x2="154" y2="204" stroke="#CE2B37" stroke-width="16" stroke-linecap="square" stroke-dasharray="276" stroke-dashoffset="276" />
+        <line id="v03-x2" x1="154" y1="-14" x2="-14" y2="204" stroke="#CE2B37" stroke-width="16" stroke-linecap="square" stroke-dasharray="276" stroke-dashoffset="276" />
+      </svg>
+
+      <!-- BATTERY — reusable drawing (frame 10 recolours notches green, swaps bolt for leaf) -->
+      <svg id="v03-batt" class="v03-batt" viewBox="0 0 400 860" aria-hidden="true">
+        <g class="v03-batt-shape">
+          <rect x="130" y="0" width="140" height="62" fill="#141414" />
+          <rect x="11" y="52" width="378" height="797" rx="30" fill="#EFE6D2" stroke="#141414" stroke-width="22" />
+          <rect class="v03-notch-empty" x="50" y="90" width="300" height="122" fill="none" stroke="#141414" stroke-opacity="0.22" stroke-width="5" stroke-dasharray="16 11" />
+          <rect class="v03-notch-empty" x="50" y="240" width="300" height="122" fill="none" stroke="#141414" stroke-opacity="0.22" stroke-width="5" stroke-dasharray="16 11" />
+          <rect class="v03-notch-empty" x="50" y="390" width="300" height="122" fill="none" stroke="#141414" stroke-opacity="0.22" stroke-width="5" stroke-dasharray="16 11" />
+          <rect class="v03-notch-empty" x="50" y="540" width="300" height="122" fill="none" stroke="#141414" stroke-opacity="0.22" stroke-width="5" stroke-dasharray="16 11" />
+          <rect id="v03-notch" x="50" y="690" width="300" height="122" fill="#CE2B37" />
+          <path id="v03-bolt" d="M222 250 L140 430 L198 430 L168 590 L262 380 L204 380 L238 250 Z" fill="none" stroke="#141414" stroke-width="10" stroke-linejoin="miter" />
+        </g>
+      </svg>
+
+      <!-- speed lines behind the mannequin, pointing right -->
+      <div id="v03-mspeed" class="v03-mspeed">
+        <i style="top: 30px; width: 110px;"></i>
+        <i style="top: 110px; width: 80px; left: 30px;"></i>
+        <i style="top: 190px; width: 120px;"></i>
+      </div>
+
+      <!-- DEPERO BLOCK MANNEQUIN with plug cable -->
+      <svg id="v03-man" class="v03-man" viewBox="0 0 460 480" aria-hidden="true">
+        <g id="v03-body">
+          <!-- legs -->
+          <rect id="v03-legl" x="112" y="300" width="34" height="170" fill="#141414" />
+          <rect id="v03-legr" x="160" y="300" width="34" height="170" fill="#141414" />
+          <rect x="100" y="456" width="52" height="20" fill="#141414" />
+          <rect x="156" y="456" width="56" height="20" fill="#141414" />
+          <!-- cone torso -->
+          <polygon points="74,130 232,130 196,308 110,308" fill="#CE2B37" stroke="#141414" stroke-width="6" />
+          <polygon points="74,130 232,130 214,170 92,170" fill="#141414" />
+          <!-- left arm (cylinder, thrown up in panic) -->
+          <g id="v03-arml">
+            <rect x="44" y="40" width="28" height="112" fill="#141414" />
+            <circle cx="58" cy="38" r="17" fill="#141414" />
+          </g>
+          <!-- head block -->
+          <g id="v03-head">
+            <rect x="112" y="24" width="84" height="94" fill="#141414" />
+            <polygon points="104,26 204,26 154,-26" fill="#CE2B37" stroke="#141414" stroke-width="5" />
+            <circle cx="138" cy="66" r="14" fill="#EFE6D2" />
+            <circle cx="138" cy="66" r="5" fill="#141414" />
+            <circle cx="176" cy="62" r="20" fill="#EFE6D2" />
+            <circle cx="179" cy="60" r="6" fill="#141414" />
+            <rect x="140" y="94" width="34" height="8" fill="#EFE6D2" />
+          </g>
+          <!-- right arm + cable + plug (rotates about the shoulder) -->
+          <g id="v03-armr">
+            <rect x="214" y="138" width="112" height="28" fill="#141414" />
+            <circle cx="330" cy="152" r="16" fill="#141414" />
+            <path id="v03-cable" d="M332 152 C 352 120, 368 190, 384 150 S 404 96, 418 118" fill="none" stroke="#141414" stroke-width="8" />
+            <g id="v03-plug">
+              <rect x="408" y="100" width="40" height="34" fill="#CE2B37" stroke="#141414" stroke-width="5" />
+              <rect x="446" y="106" width="16" height="6" fill="#141414" />
+              <rect x="446" y="122" width="16" height="6" fill="#141414" />
+            </g>
+          </g>
+        </g>
+      </svg>
+
+      <!-- TITLE 1% -->
+      <div class="v03-pct"><span id="v03-pct" class="v03-pct-in"><span id="v03-p1">1</span><span id="v03-p2">%</span></span></div>
+
+      <!-- speed lines right of the title -->
+      <div id="v03-sp1" class="v03-speed" style="left: 760px; top: 270px; width: 180px;"></div>
+      <div id="v03-sp2" class="v03-speed" style="left: 800px; top: 330px; width: 150px;"></div>
+      <div id="v03-sp3" class="v03-speed" style="left: 770px; top: 390px; width: 200px;"></div>
+
+      <!-- CAPTION -->
+      <div id="v03-cap" class="v03-cap"></div>
+      <div id="v03-rule" class="v03-rule"></div>
+    </div>
+
+    <!-- FX: grain tiles (swapped every 2 frames), vignette, flicker -->
+    <div id="v03-fx" class="v03-fx clip" data-g="0" data-start="0" data-duration="4.12" data-track-index="2">
+      <svg class="v03-g0" viewBox="0 0 540 960" aria-hidden="true"><filter id="v03-n0"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="1" seed="21" /><feColorMatrix type="matrix" values="0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 0 0.08  2.2 0 0 0 -1.05" /></filter><image width="540" height="960" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='540' height='960' viewBox='0 0 540 960'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='1' seed='21' /%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.08 0 0 0 0 0.08 0 0 0 0 0.08 2.2 0 0 0 -1.05' /%3E%3C/filter%3E%3Crect width='540' height='960' filter='url(%23f)'/%3E%3C/svg%3E"/></svg>
+      <svg class="v03-g1" viewBox="0 0 540 960" aria-hidden="true"><filter id="v03-n1"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="1" seed="42" /><feColorMatrix type="matrix" values="0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 0 0.08  2.2 0 0 0 -1.05" /></filter><image width="540" height="960" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='540' height='960' viewBox='0 0 540 960'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='1' seed='42' /%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.08 0 0 0 0 0.08 0 0 0 0 0.08 2.2 0 0 0 -1.05' /%3E%3C/filter%3E%3Crect width='540' height='960' filter='url(%23f)'/%3E%3C/svg%3E"/></svg>
+      <svg class="v03-g2" viewBox="0 0 540 960" aria-hidden="true"><filter id="v03-n2"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="1" seed="63" /><feColorMatrix type="matrix" values="0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 0 0.08  2.2 0 0 0 -1.05" /></filter><image width="540" height="960" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='540' height='960' viewBox='0 0 540 960'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='1' seed='63' /%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.08 0 0 0 0 0.08 0 0 0 0 0.08 2.2 0 0 0 -1.05' /%3E%3C/filter%3E%3Crect width='540' height='960' filter='url(%23f)'/%3E%3C/svg%3E"/></svg>
+      <svg class="v03-g3" viewBox="0 0 540 960" aria-hidden="true"><filter id="v03-n3"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="1" seed="84" /><feColorMatrix type="matrix" values="0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 0 0.08  2.2 0 0 0 -1.05" /></filter><image width="540" height="960" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='540' height='960' viewBox='0 0 540 960'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='1' seed='84' /%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.08 0 0 0 0 0.08 0 0 0 0 0.08 2.2 0 0 0 -1.05' /%3E%3C/filter%3E%3Crect width='540' height='960' filter='url(%23f)'/%3E%3C/svg%3E"/></svg>
+      <svg class="v03-g4" viewBox="0 0 540 960" aria-hidden="true"><filter id="v03-n4"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="1" seed="105" /><feColorMatrix type="matrix" values="0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 0 0.08  2.2 0 0 0 -1.05" /></filter><image width="540" height="960" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='540' height='960' viewBox='0 0 540 960'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='1' seed='105' /%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.08 0 0 0 0 0.08 0 0 0 0 0.08 2.2 0 0 0 -1.05' /%3E%3C/filter%3E%3Crect width='540' height='960' filter='url(%23f)'/%3E%3C/svg%3E"/></svg>
+      <svg class="v03-g5" viewBox="0 0 540 960" aria-hidden="true"><filter id="v03-n5"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="1" seed="126" /><feColorMatrix type="matrix" values="0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 0 0.08  2.2 0 0 0 -1.05" /></filter><image width="540" height="960" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='540' height='960' viewBox='0 0 540 960'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='1' seed='126' /%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.08 0 0 0 0 0.08 0 0 0 0 0.08 2.2 0 0 0 -1.05' /%3E%3C/filter%3E%3Crect width='540' height='960' filter='url(%23f)'/%3E%3C/svg%3E"/></svg>
+      <div class="v03-vig"></div>
+      <div id="v03-flick" class="v03-flick"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script>
+      (function () {
+        var ID = "03-batteria", D = 3.2, FPS = 30;
+        var root = document.querySelector('[data-composition-id="' + ID + '"]');
+        var q = function (s) { return root.querySelector(s); };
+        var qa = function (s) { return root.querySelectorAll(s); };
+        var hash = function (n) { var x = Math.sin(n * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
+
+        // typed caption letters
+        var capEl = q("#v03-cap"), CAP = "FIG. 3: LA BATTERIA";
+        capEl.innerHTML = "";
+        for (var c = 0; c < CAP.length; c++) {
+          var sp = document.createElement("span");
+          sp.textContent = CAP[c] === " " ? " " : CAP[c];
+          capEl.appendChild(sp);
+        }
+        var capChars = capEl.querySelectorAll("span");
+
+        var tl = gsap.timeline({ paused: true });
+
+        // ---- grain swap every 2 frames + deterministic flicker (±3%) ----
+        var fx = q("#v03-fx"), flick = q("#v03-flick");
+        var steps = Math.ceil(D * FPS / 2);
+        for (var s = 0; s < steps; s++) {
+          var t = s * 2 / FPS;
+          tl.set(fx, { attr: { "data-g": String(Math.floor(hash(s + 3) * 6) % 6) } }, t);
+          tl.set(flick, { opacity: 0.02 + 0.5 * (hash(s * 7 + 1) - 0.5) * 0.06 }, t);
+        }
+
+        // ---- camera: stepped push-in across the whole shot ----
+        tl.fromTo(q("#v03-world"), { scale: 1, x: 0 }, { scale: 1.05, x: -10, duration: D, ease: "steps(16)" }, 0);
+
+        // ---- Scene 1 (0.0–1.0): battery snaps in, red notch blinks, caption types ----
+        tl.fromTo(q("#v03-diag"), { x: -1100 }, { x: 0, duration: 0.18, ease: "steps(3)" }, 0);
+        var batt = q("#v03-batt");
+        tl.fromTo(batt, { scaleY: 0.25, scaleX: 1.35, skewX: -14, opacity: 0 },
+          { scaleY: 1.12, scaleX: 0.9, skewX: 6, opacity: 1, duration: 0.12, ease: "power4.in" }, 0.02);
+        tl.to(batt, { scaleY: 0.95, scaleX: 1.04, skewX: -3, duration: 0.07, ease: "steps(2)" }, 0.14);
+        tl.to(batt, { scaleY: 1, scaleX: 1, skewX: 0, duration: 0.07, ease: "steps(2)" }, 0.21);
+        // nervous shake after landing
+        var shake = [10, -8, 6, -4, 0];
+        for (var k = 0; k < shake.length; k++) tl.set(batt, { x: shake[k] }, 0.3 + k * 0.035);
+
+        // the last red notch blinks, stepped, all shot long
+        var notch = q("#v03-notch");
+        var bt = 0.36, on = false;
+        while (bt < D) {
+          tl.set(notch, { opacity: on ? 1 : 0.12 }, bt);
+          on = !on;
+          bt += on ? 0.14 : 0.2;
+        }
+        tl.fromTo(q("#v03-bolt"), { opacity: 0 }, { opacity: 1, duration: 0.15, ease: "steps(3)" }, 0.3);
+
+        // caption typed letter by letter
+        for (var i = 0; i < capChars.length; i++) {
+          tl.fromTo(capChars[i], { opacity: 0 }, { opacity: 1, duration: 0.01, ease: "none" }, 0.42 + i * 0.03);
+        }
+        tl.fromTo(q("#v03-rule"), { scaleX: 0 }, { scaleX: 1, duration: 0.24, ease: "steps(6)" }, 0.5);
+
+        // ---- Scene 2 (1.0–2.2): "1%" punches in ----
+        var pct = q("#v03-pct");
+        tl.fromTo(pct, { scale: 2.6, skewX: -20, opacity: 0, y: -60 },
+          { scale: 0.86, skewX: 8, opacity: 1, y: 0, duration: 0.1, ease: "power4.in" }, 1.0);
+        tl.to(pct, { scale: 1.07, skewX: -4, duration: 0.06, ease: "steps(2)" }, 1.1);
+        tl.to(pct, { scale: 1, skewX: 0, duration: 0.06, ease: "steps(2)" }, 1.16);
+        // parole in libertà: letters land distorted then settle unevenly
+        tl.fromTo(q("#v03-p1"), { scaleY: 1.4, scaleX: 0.8 }, { scaleY: 1, scaleX: 1, duration: 0.16, ease: "steps(3)" }, 1.06);
+        tl.fromTo(q("#v03-p2"), { scaleY: 0.7, scaleX: 1.35, rotation: 8 }, { scaleY: 1.06, scaleX: 0.96, rotation: -4, duration: 0.18, ease: "steps(3)" }, 1.08);
+        // jerky tremor on the number through the rest of the shot
+        for (var j = 0; j < 14; j++) {
+          var tj = 1.32 + j * 0.13;
+          tl.set(pct, { x: (hash(j + 40) - 0.5) * 16, rotation: (hash(j + 70) - 0.5) * 3 }, tj);
+        }
+        // speed lines to the right flash in with the punch
+        var sps = [q("#v03-sp1"), q("#v03-sp2"), q("#v03-sp3")];
+        for (var m = 0; m < sps.length; m++) {
+          tl.fromTo(sps[m], { scaleX: 0, transformOrigin: "0% 50%", x: -40 }, { scaleX: 1, x: 0, duration: 0.12, ease: "steps(3)" }, 1.08 + m * 0.04);
+        }
+
+        // ---- Scene 3 (2.2–3.2): mannequin jerks left/right, cable waves at the crossed-out socket ----
+        var man = q("#v03-man");
+        tl.fromTo(man, { x: -240, opacity: 0, skewX: -16 }, { x: 0, opacity: 1, skewX: 0, duration: 0.16, ease: "steps(4)" }, 2.2);
+        tl.fromTo(q("#v03-wallp"), { x: 300 }, { x: 0, duration: 0.12, ease: "steps(3)" }, 2.2);
+        var sock = q("#v03-socket");
+        tl.fromTo(sock, { scale: 1.5, opacity: 0, rotation: -10 }, { scale: 1, opacity: 1, rotation: 0, duration: 0.1, ease: "steps(2)" }, 2.32);
+        tl.fromTo(q("#v03-x1"), { attr: { "stroke-dashoffset": 276 } }, { attr: { "stroke-dashoffset": 0 }, duration: 0.12, ease: "steps(4)" }, 2.52);
+        tl.fromTo(q("#v03-x2"), { attr: { "stroke-dashoffset": 276 } }, { attr: { "stroke-dashoffset": 0 }, duration: 0.12, ease: "steps(4)" }, 2.68);
+        tl.set(sock, { x: 8 }, 2.66); tl.set(sock, { x: -6 }, 2.7); tl.set(sock, { x: 0 }, 2.74);
+
+        var jerkX = [-46, 34, -58, 22, -30, 48, -18, 30];
+        var armRot = [-30, 8, -42, 14, -22, -48, 6, -26];
+        var headRot = [-8, 10, -12, 6, -10, 12, -6, 8];
+        var mspeed = q("#v03-mspeed");
+        for (var r = 0; r < jerkX.length; r++) {
+          var tr = 2.4 + r * 0.1;
+          tl.set(man, { x: jerkX[r], rotation: jerkX[r] > 0 ? 3 : -3 }, tr);
+          tl.set(q("#v03-armr"), { rotation: armRot[r], svgOrigin: "222 152" }, tr);
+          tl.set(q("#v03-arml"), { rotation: -armRot[r] * 0.6, svgOrigin: "58 150" }, tr);
+          tl.set(q("#v03-head"), { rotation: headRot[r], svgOrigin: "154 118" }, tr);
+          tl.set(q("#v03-legl"), { y: r % 2 ? -14 : 0 }, tr);
+          tl.set(q("#v03-legr"), { y: r % 2 ? 0 : -14 }, tr);
+          tl.set(mspeed, { opacity: jerkX[r] > 0 ? 1 : 0, x: jerkX[r] }, tr);
+        }
+        tl.set(mspeed, { opacity: 0 }, 0);
+        // the cable whips (stepped redraw)
+        var cablePaths = [
+          "M332 152 C 352 120, 368 190, 384 150 S 404 96, 418 118",
+          "M332 152 C 350 190, 370 100, 386 140 S 402 170, 418 118",
+          "M332 152 C 346 110, 372 120, 380 160 S 410 140, 418 118"
+        ];
+        for (var w = 0; w < 10; w++) {
+          tl.set(q("#v03-cable"), { attr: { d: cablePaths[w % 3] } }, 2.24 + w * 0.095);
+          tl.set(q("#v03-plug"), { rotation: (w % 2 ? 14 : -12), svgOrigin: "418 118" }, 2.24 + w * 0.095);
+        }
+
+        window.__timelines = window.__timelines || {};
+        window.__timelines[ID] = tl;
+      })();
+    ;(function(){var id="03-batteria",k=0.7767;var inner=window.__timelines[id];if(!inner)return;var outer=gsap.timeline({paused:true});inner.paused(false);inner.timeScale(k);outer.add(inner,0);outer.set({},{},4.12);window.__timelines[id]=outer;})();
+</script>
+  </div>
+</template>

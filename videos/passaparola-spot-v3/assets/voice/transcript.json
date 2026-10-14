@@ -1,0 +1,626 @@
+[
+  {
+    "text": "Da",
+    "start": 0.19,
+    "end": 0.2,
+    "id": "w0"
+  },
+  {
+    "text": "te",
+    "start": 0.2,
+    "end": 0.38,
+    "id": "w1"
+  },
+  {
+    "text": "si",
+    "start": 0.38,
+    "end": 0.57,
+    "id": "w2"
+  },
+  {
+    "text": "mangia",
+    "start": 0.57,
+    "end": 1.12,
+    "id": "w3"
+  },
+  {
+    "text": "benissimo",
+    "start": 1.13,
+    "end": 1.88,
+    "id": "w4"
+  },
+  {
+    "text": "e",
+    "start": 1.98,
+    "end": 2.1,
+    "id": "w5"
+  },
+  {
+    "text": "chi",
+    "start": 2.26,
+    "end": 2.42,
+    "id": "w6"
+  },
+  {
+    "text": "viene",
+    "start": 2.45,
+    "end": 2.95,
+    "id": "w7"
+  },
+  {
+    "text": "lo",
+    "start": 2.95,
+    "end": 3.15,
+    "id": "w8"
+  },
+  {
+    "text": "sa.",
+    "start": 3.15,
+    "end": 3.4,
+    "id": "w9"
+  },
+  {
+    "text": "Ma",
+    "start": 3.6,
+    "end": 3.63,
+    "id": "w10"
+  },
+  {
+    "text": "su",
+    "start": 3.63,
+    "end": 3.81,
+    "id": "w11"
+  },
+  {
+    "text": "Google,",
+    "start": 3.89,
+    "end": 4.8,
+    "id": "w12"
+  },
+  {
+    "text": "chi",
+    "start": 4.8,
+    "end": 5.09,
+    "id": "w13"
+  },
+  {
+    "text": "ti",
+    "start": 5.11,
+    "end": 5.28,
+    "id": "w14"
+  },
+  {
+    "text": "cerca",
+    "start": 5.66,
+    "end": 5.84,
+    "id": "w15"
+  },
+  {
+    "text": "trova",
+    "start": 5.85,
+    "end": 6.15,
+    "id": "w16"
+  },
+  {
+    "text": "prima",
+    "start": 6.15,
+    "end": 6.44,
+    "id": "w17"
+  },
+  {
+    "text": "gli",
+    "start": 6.46,
+    "end": 6.56,
+    "id": "w18"
+  },
+  {
+    "text": "altri.",
+    "start": 6.98,
+    "end": 7.2,
+    "id": "w19"
+  },
+  {
+    "text": "Compassa",
+    "start": 7.4,
+    "end": 7.8,
+    "id": "w20"
+  },
+  {
+    "text": "parola",
+    "start": 7.8,
+    "end": 8.24,
+    "id": "w21"
+  },
+  {
+    "text": "sul",
+    "start": 8.24,
+    "end": 8.46,
+    "id": "w22"
+  },
+  {
+    "text": "bancone",
+    "start": 8.46,
+    "end": 8.98,
+    "id": "w23"
+  },
+  {
+    "text": "c'è",
+    "start": 8.98,
+    "end": 9.19,
+    "id": "w24"
+  },
+  {
+    "text": "una",
+    "start": 9.19,
+    "end": 9.46,
+    "id": "w25"
+  },
+  {
+    "text": "targa,",
+    "start": 9.46,
+    "end": 9.95,
+    "id": "w26"
+  },
+  {
+    "text": "basta",
+    "start": 9.95,
+    "end": 10.22,
+    "id": "w27"
+  },
+  {
+    "text": "avvicinare",
+    "start": 10.22,
+    "end": 10.79,
+    "id": "w28"
+  },
+  {
+    "text": "il",
+    "start": 10.79,
+    "end": 10.9,
+    "id": "w29"
+  },
+  {
+    "text": "telefono",
+    "start": 10.9,
+    "end": 11.4,
+    "id": "w30"
+  },
+  {
+    "text": "e",
+    "start": 11.4,
+    "end": 11.44,
+    "id": "w31"
+  },
+  {
+    "text": "in",
+    "start": 11.44,
+    "end": 11.55,
+    "id": "w32"
+  },
+  {
+    "text": "30",
+    "start": 11.61,
+    "end": 11.88,
+    "id": "w33"
+  },
+  {
+    "text": "secondi",
+    "start": 12.07,
+    "end": 12.58,
+    "id": "w34"
+  },
+  {
+    "text": "ti",
+    "start": 12.58,
+    "end": 12.8,
+    "id": "w35"
+  },
+  {
+    "text": "lascia",
+    "start": 12.8,
+    "end": 13.16,
+    "id": "w36"
+  },
+  {
+    "text": "la",
+    "start": 13.16,
+    "end": 13.29,
+    "id": "w37"
+  },
+  {
+    "text": "recensione",
+    "start": 13.31,
+    "end": 14,
+    "id": "w38"
+  },
+  {
+    "text": "nella",
+    "start": 14,
+    "end": 14.35,
+    "id": "w39"
+  },
+  {
+    "text": "sua",
+    "start": 14.35,
+    "end": 14.48,
+    "id": "w40"
+  },
+  {
+    "text": "lingua",
+    "start": 14.84,
+    "end": 15,
+    "id": "w41"
+  },
+  {
+    "text": "e",
+    "start": 15,
+    "end": 15.07,
+    "id": "w42"
+  },
+  {
+    "text": "con",
+    "start": 15.07,
+    "end": 15.29,
+    "id": "w43"
+  },
+  {
+    "text": "un",
+    "start": 15.29,
+    "end": 15.44,
+    "id": "w44"
+  },
+  {
+    "text": "tocco",
+    "start": 15.44,
+    "end": 15.76,
+    "id": "w45"
+  },
+  {
+    "text": "ti",
+    "start": 15.76,
+    "end": 16.3,
+    "id": "w46"
+  },
+  {
+    "text": "segue",
+    "start": 16.3,
+    "end": 16.33,
+    "id": "w47"
+  },
+  {
+    "text": "anche",
+    "start": 16.33,
+    "end": 16.7,
+    "id": "w48"
+  },
+  {
+    "text": "su",
+    "start": 16.7,
+    "end": 16.85,
+    "id": "w49"
+  },
+  {
+    "text": "Instagram.",
+    "start": 16.85,
+    "end": 17.8,
+    "id": "w50"
+  },
+  {
+    "text": "Più",
+    "start": 17.95,
+    "end": 18.02,
+    "id": "w51"
+  },
+  {
+    "text": "recensioni,",
+    "start": 18.02,
+    "end": 18.89,
+    "id": "w52"
+  },
+  {
+    "text": "più",
+    "start": 18.89,
+    "end": 19.1,
+    "id": "w53"
+  },
+  {
+    "text": "in",
+    "start": 19.1,
+    "end": 19.25,
+    "id": "w54"
+  },
+  {
+    "text": "alto",
+    "start": 19.25,
+    "end": 19.56,
+    "id": "w55"
+  },
+  {
+    "text": "su",
+    "start": 19.56,
+    "end": 19.68,
+    "id": "w56"
+  },
+  {
+    "text": "Google.",
+    "start": 20.06,
+    "end": 20.2,
+    "id": "w57"
+  },
+  {
+    "text": "Sul",
+    "start": 20.39,
+    "end": 20.4,
+    "id": "w58"
+  },
+  {
+    "text": "tavolo",
+    "start": 20.4,
+    "end": 20.8,
+    "id": "w59"
+  },
+  {
+    "text": "c'è",
+    "start": 20.8,
+    "end": 20.97,
+    "id": "w60"
+  },
+  {
+    "text": "il",
+    "start": 20.98,
+    "end": 21.11,
+    "id": "w61"
+  },
+  {
+    "text": "tuo",
+    "start": 21.11,
+    "end": 21.31,
+    "id": "w62"
+  },
+  {
+    "text": "nuovo",
+    "start": 21.31,
+    "end": 21.64,
+    "id": "w63"
+  },
+  {
+    "text": "menu,",
+    "start": 21.64,
+    "end": 22.04,
+    "id": "w64"
+  },
+  {
+    "text": "da",
+    "start": 22.04,
+    "end": 22.09,
+    "id": "w65"
+  },
+  {
+    "text": "sfogliare",
+    "start": 22.19,
+    "end": 22.73,
+    "id": "w66"
+  },
+  {
+    "text": "col",
+    "start": 22.79,
+    "end": 22.96,
+    "id": "w67"
+  },
+  {
+    "text": "telefono.",
+    "start": 22.96,
+    "end": 23.6,
+    "id": "w68"
+  },
+  {
+    "text": "Ogni",
+    "start": 23.74,
+    "end": 23.88,
+    "id": "w69"
+  },
+  {
+    "text": "piatto",
+    "start": 23.88,
+    "end": 24.29,
+    "id": "w70"
+  },
+  {
+    "text": "con",
+    "start": 24.31,
+    "end": 24.53,
+    "id": "w71"
+  },
+  {
+    "text": "la",
+    "start": 24.53,
+    "end": 24.67,
+    "id": "w72"
+  },
+  {
+    "text": "sua",
+    "start": 24.67,
+    "end": 24.89,
+    "id": "w73"
+  },
+  {
+    "text": "foto,",
+    "start": 24.89,
+    "end": 25.32,
+    "id": "w74"
+  },
+  {
+    "text": "gli",
+    "start": 25.32,
+    "end": 25.48,
+    "id": "w75"
+  },
+  {
+    "text": "allergeni",
+    "start": 25.86,
+    "end": 26.2,
+    "id": "w76"
+  },
+  {
+    "text": "e",
+    "start": 26.2,
+    "end": 26.27,
+    "id": "w77"
+  },
+  {
+    "text": "il",
+    "start": 26.27,
+    "end": 26.41,
+    "id": "w78"
+  },
+  {
+    "text": "piatto",
+    "start": 26.41,
+    "end": 26.76,
+    "id": "w79"
+  },
+  {
+    "text": "del",
+    "start": 26.76,
+    "end": 27.3,
+    "id": "w80"
+  },
+  {
+    "text": "giorno.",
+    "start": 27.3,
+    "end": 27.6,
+    "id": "w81"
+  },
+  {
+    "text": "Ele",
+    "start": 27.66,
+    "end": 27.82,
+    "id": "w82"
+  },
+  {
+    "text": "foto",
+    "start": 27.82,
+    "end": 28.12,
+    "id": "w83"
+  },
+  {
+    "text": "le",
+    "start": 28.12,
+    "end": 28.27,
+    "id": "w84"
+  },
+  {
+    "text": "scattiamo",
+    "start": 28.27,
+    "end": 28.93,
+    "id": "w85"
+  },
+  {
+    "text": "noi,",
+    "start": 28.93,
+    "end": 29.29,
+    "id": "w86"
+  },
+  {
+    "text": "piatto",
+    "start": 29.29,
+    "end": 29.49,
+    "id": "w87"
+  },
+  {
+    "text": "per",
+    "start": 29.86,
+    "end": 29.92,
+    "id": "w88"
+  },
+  {
+    "text": "piatto,",
+    "start": 29.99,
+    "end": 30.53,
+    "id": "w89"
+  },
+  {
+    "text": "così",
+    "start": 30.59,
+    "end": 30.76,
+    "id": "w90"
+  },
+  {
+    "text": "personalizziamo",
+    "start": 31.3,
+    "end": 31.93,
+    "id": "w91"
+  },
+  {
+    "text": "i",
+    "start": 31.93,
+    "end": 32.01,
+    "id": "w92"
+  },
+  {
+    "text": "tuoi",
+    "start": 32.01,
+    "end": 32.28,
+    "id": "w93"
+  },
+  {
+    "text": "servizi.",
+    "start": 32.28,
+    "end": 32.8,
+    "id": "w94"
+  },
+  {
+    "text": "Passa",
+    "start": 33,
+    "end": 33.18,
+    "id": "w95"
+  },
+  {
+    "text": "parola,",
+    "start": 33.18,
+    "end": 33.78,
+    "id": "w96"
+  },
+  {
+    "text": "fatti",
+    "start": 33.8,
+    "end": 34.16,
+    "id": "w97"
+  },
+  {
+    "text": "raccontare",
+    "start": 34.16,
+    "end": 34.93,
+    "id": "w98"
+  },
+  {
+    "text": "da",
+    "start": 35.06,
+    "end": 35.09,
+    "id": "w99"
+  },
+  {
+    "text": "chi",
+    "start": 35.09,
+    "end": 35.32,
+    "id": "w100"
+  },
+  {
+    "text": "ti",
+    "start": 35.39,
+    "end": 35.47,
+    "id": "w101"
+  },
+  {
+    "text": "ha",
+    "start": 35.47,
+    "end": 35.62,
+    "id": "w102"
+  },
+  {
+    "text": "scelto.",
+    "start": 35.62,
+    "end": 36.2,
+    "id": "w103"
+  }
+]

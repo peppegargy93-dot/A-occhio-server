@@ -1,0 +1,178 @@
+<template>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <style>
+      @font-face { font-family: "Anton"; src: url("assets/fonts/anton-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-style: normal; }
+      @font-face { font-family: "Special Elite"; src: url("assets/fonts/special-elite-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-style: normal; }
+      #root { position:absolute; left:0; top:0; width:1080px; height:1920px; overflow:hidden; }
+
+      #v01-ground, #v01-tex, #v01-vig, #v01-flick, #v01-grainwrap { position:absolute; left:0; top:0; width:1080px; height:1920px; pointer-events:none; }
+      #v01-ground { background:#EFE6D2; }
+      #v01-tex svg, #v01-grainwrap svg { position:absolute; left:0; top:0; width:1080px; height:1920px; display:block; }
+      #v01-grainwrap svg { visibility:hidden; mix-blend-mode:multiply; }
+      #v01-vig { background:radial-gradient(ellipse 78% 62% at 50% 47%, rgba(20,20,20,0) 55%, rgba(20,20,20,0.34) 100%); }
+      #v01-flick { background:#141414; opacity:0.02; }
+
+      #v01-plane { position:absolute; left:-200px; top:1240px; width:1500px; height:420px; background:#D9CDB2; opacity:0.85; clip-path:polygon(0 38%, 100% 0, 100% 64%, 0 100%); }
+      #v01-cam { position:absolute; left:0; top:0; width:1080px; height:1920px; }
+      .v01-speed { position:absolute; left:0; transform-origin:0% 50%; }
+      #v01-speeds { position:absolute; left:0; top:0; width:1080px; height:1920px; }
+      #v01-disc { position:absolute; left:160px; top:520px; width:760px; height:760px; border-radius:50%; background:#CE2B37; }
+      #v01-echo { position:absolute; left:160px; top:520px; width:760px; height:760px; border-radius:50%; border:6px solid #141414; opacity:0; }
+      #v01-fig { position:absolute; left:120px; top:268px; font-family:"Special Elite", monospace; font-size:34px; letter-spacing:0.08em; color:#141414; white-space:nowrap; }
+      #v01-type { position:absolute; left:120px; top:322px; font-family:"Special Elite", monospace; font-size:64px; letter-spacing:0.04em; color:#141414; white-space:nowrap; line-height:1.1; }
+      .v01-ch { display:none; }
+      #v01-caret { display:inline-block; width:0.55em; height:0.12em; background:#141414; margin-left:0.06em; vertical-align:-0.05em; }
+      #v01-rule { position:absolute; left:120px; top:420px; width:300px; height:4px; background:#141414; transform-origin:0% 50%; }
+  </style>
+  <div id="root" data-composition-id="01-colore" data-start="0" data-duration="4.5" data-width="1080" data-height="1920">
+
+        <div id="v01-ground" class="clip" data-start="0" data-duration="4.5" data-track-index="0"></div>
+        <div id="v01-tex" class="clip" data-start="0" data-duration="4.5" data-track-index="1">
+          <svg viewBox="0 0 1080 1920" preserveAspectRatio="none" aria-hidden="true">
+            <filter id="v01-stain" x="0" y="0" width="100%" height="100%">
+              <feTurbulence type="fractalNoise" baseFrequency="0.006" numOctaves="4" seed="11" />
+              <feColorMatrix type="matrix" values="0 0 0 0 0.851  0 0 0 0 0.804  0 0 0 0 0.698  0 0 0 1.8 -0.85" />
+            </filter>
+            <filter id="v01-fibre" x="0" y="0" width="100%" height="100%">
+              <feTurbulence type="fractalNoise" baseFrequency="0.35 0.012" numOctaves="2" seed="4" />
+              <feColorMatrix type="matrix" values="0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 1.4 -0.62" />
+            </filter>
+            <rect width="1080" height="1920" filter="url(#v01-stain)" opacity="0.5" />
+            <rect width="1080" height="1920" filter="url(#v01-fibre)" opacity="0.18" />
+          </svg>
+        </div>
+        <div id="v01-plane" class="clip" data-start="0" data-duration="4.5" data-track-index="2"></div>
+        <div id="v01-cam" class="clip" data-start="0" data-duration="4.5" data-track-index="3">
+          <div id="v01-speeds">
+          <div class="v01-speed" data-d="0.0" style="top:700px; width:620px; height:14px; background:#141414;"></div>
+          <div class="v01-speed" data-d="0.03" style="top:760px; width:880px; height:30px; background:#CE2B37;"></div>
+          <div class="v01-speed" data-d="0.06" style="top:830px; width:520px; height:8px; background:#141414;"></div>
+          <div class="v01-speed" data-d="0.02" style="top:905px; width:980px; height:44px; background:#CE2B37;"></div>
+          <div class="v01-speed" data-d="0.08" style="top:985px; width:700px; height:12px; background:#141414;"></div>
+          <div class="v01-speed" data-d="0.05" style="top:1050px; width:860px; height:24px; background:#CE2B37;"></div>
+          <div class="v01-speed" data-d="0.1" style="top:1120px; width:560px; height:10px; background:#141414;"></div>
+          <div class="v01-speed" data-d="0.04" style="top:1180px; width:760px; height:18px; background:#CE2B37;"></div>
+          </div>
+          <div id="v01-echo"></div>
+          <div id="v01-disc"></div>
+          <div id="v01-fig">FIG. 1</div>
+          <div id="v01-type"><span class="v01-ch">I</span><span class="v01-ch">T</span><span class="v01-ch">A</span><span class="v01-ch">L</span><span class="v01-ch">I</span><span class="v01-ch">A</span><span class="v01-ch">,</span><span class="v01-ch">&nbsp;</span><span class="v01-ch">O</span><span class="v01-ch">G</span><span class="v01-ch">G</span><span class="v01-ch">I</span><span class="v01-ch">.</span><span id="v01-caret"></span></div>
+          <div id="v01-rule"></div>
+        </div>
+
+        <div id="v01-vig" class="clip" data-start="0" data-duration="4.5" data-track-index="4"></div>
+        <div id="v01-grainwrap" class="clip" data-start="0" data-duration="4.5" data-track-index="5" style="opacity:0.4">
+          <svg class="v01-grain" viewBox="0 0 540 960" preserveAspectRatio="none" aria-hidden="true">
+            <filter id="v01-gf0" x="0" y="0" width="100%" height="100%">
+              <feTurbulence type="fractalNoise" baseFrequency="0.82" numOctaves="2" seed="3" />
+              <feColorMatrix type="matrix" values="0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 4.2 -2.0" />
+            </filter>
+            <rect width="540" height="960" filter="url(#v01-gf0)" />
+          </svg>
+          <svg class="v01-grain" viewBox="0 0 540 960" preserveAspectRatio="none" aria-hidden="true">
+            <filter id="v01-gf1" x="0" y="0" width="100%" height="100%">
+              <feTurbulence type="fractalNoise" baseFrequency="0.82" numOctaves="2" seed="17" />
+              <feColorMatrix type="matrix" values="0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 4.2 -2.0" />
+            </filter>
+            <rect width="540" height="960" filter="url(#v01-gf1)" />
+          </svg>
+          <svg class="v01-grain" viewBox="0 0 540 960" preserveAspectRatio="none" aria-hidden="true">
+            <filter id="v01-gf2" x="0" y="0" width="100%" height="100%">
+              <feTurbulence type="fractalNoise" baseFrequency="0.82" numOctaves="2" seed="29" />
+              <feColorMatrix type="matrix" values="0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 4.2 -2.0" />
+            </filter>
+            <rect width="540" height="960" filter="url(#v01-gf2)" />
+          </svg>
+          <svg class="v01-grain" viewBox="0 0 540 960" preserveAspectRatio="none" aria-hidden="true">
+            <filter id="v01-gf3" x="0" y="0" width="100%" height="100%">
+              <feTurbulence type="fractalNoise" baseFrequency="0.82" numOctaves="2" seed="41" />
+              <feColorMatrix type="matrix" values="0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 4.2 -2.0" />
+            </filter>
+            <rect width="540" height="960" filter="url(#v01-gf3)" />
+          </svg>
+          <svg class="v01-grain" viewBox="0 0 540 960" preserveAspectRatio="none" aria-hidden="true">
+            <filter id="v01-gf4" x="0" y="0" width="100%" height="100%">
+              <feTurbulence type="fractalNoise" baseFrequency="0.82" numOctaves="2" seed="53" />
+              <feColorMatrix type="matrix" values="0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 4.2 -2.0" />
+            </filter>
+            <rect width="540" height="960" filter="url(#v01-gf4)" />
+          </svg>
+          <svg class="v01-grain" viewBox="0 0 540 960" preserveAspectRatio="none" aria-hidden="true">
+            <filter id="v01-gf5" x="0" y="0" width="100%" height="100%">
+              <feTurbulence type="fractalNoise" baseFrequency="0.82" numOctaves="2" seed="67" />
+              <feColorMatrix type="matrix" values="0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 4.2 -2.0" />
+            </filter>
+            <rect width="540" height="960" filter="url(#v01-gf5)" />
+          </svg>
+        </div>
+        <div id="v01-flick" class="clip" data-start="0" data-duration="4.5" data-track-index="6"></div>
+  </div>
+  <script>
+    (function () {
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      const stepped = (name, n) => { const e = gsap.parseEase(name); return (t) => Math.round(e(t) * n) / n; };
+
+      // Scene 1 (0.0-1.4): FIG. 1 label + typewriter "ITALIA, OGGI."
+      tl.fromTo("#v01-fig", { opacity: 0 }, { opacity: 1, duration: 0.01 }, 0.08);
+      tl.fromTo("#v01-rule", { scaleX: 0 }, { scaleX: 1, duration: 0.3, ease: "steps(6)" }, 0.12);
+      const chars = gsap.utils.toArray(".v01-ch");
+      const gaps = [0.07, 0.06, 0.08, 0.06, 0.07, 0.09, 0.12, 0.06, 0.07, 0.06, 0.08, 0.07, 0.07];
+      let t = 0.3;
+      chars.forEach((c, i) => { tl.set(c, { display: "inline" }, t); t += gaps[i]; });
+      // caret blink: visible while typing, then blinks every 0.25s to the end
+      const caretOn = t;
+      for (let b = caretOn; b < 4.5; b += 0.5) {
+        tl.set("#v01-caret", { opacity: 0 }, b);
+        tl.set("#v01-caret", { opacity: 1 }, Math.min(b + 0.25, 4.5));
+      }
+
+      // Scene 2 (1.4-2.2): red disc snaps in with hard overshoot + speed lines shooting right
+      tl.fromTo("#v01-disc", { scale: 0, rotation: -8 }, { scale: 1.16, rotation: 3, duration: 0.16, ease: "steps(4)" }, 1.4);
+      tl.to("#v01-disc", { scale: 0.93, rotation: -1, duration: 0.1, ease: "steps(2)" }, 1.56);
+      tl.to("#v01-disc", { scale: 1.03, rotation: 0, duration: 0.1, ease: "steps(2)" }, 1.66);
+      tl.to("#v01-disc", { scale: 1, duration: 0.14, ease: "steps(3)" }, 1.76);
+      gsap.utils.toArray(".v01-speed").forEach((el, i) => {
+        const d = parseFloat(el.getAttribute("data-d"));
+        tl.fromTo(el, { x: -1100, rotation: -16, scaleX: 0.3 }, { x: 1250, rotation: -16, scaleX: 1.4, duration: 0.5 + (i % 3) * 0.06, ease: stepped("power2.in", 7) }, 1.38 + d);
+      });
+      // snap shake on landing
+      [[1.56, 14, -8], [1.6, -12, 6], [1.63, 8, 10], [1.66, -5, -4], [1.7, 0, 0]].forEach(([tt, x, y]) => tl.set("#v01-cam", { x, y }, tt));
+
+      // Scene 3 (2.2-4.5): stepped double heartbeat every ~0.9s + camera shake per beat
+      [2.3, 3.2, 4.1].forEach((b, i) => {
+        tl.to("#v01-disc", { scale: 1.06, duration: 0.07, ease: "steps(2)" }, b);
+        tl.to("#v01-disc", { scale: 1.0, duration: 0.09, ease: "steps(2)" }, b + 0.07);
+        tl.to("#v01-disc", { scale: 1.04, duration: 0.07, ease: "steps(2)" }, b + 0.2);
+        tl.to("#v01-disc", { scale: 1.0, duration: 0.16, ease: "steps(3)" }, b + 0.27);
+        tl.fromTo("#v01-echo", { scale: 1.0, opacity: 0.55 }, { scale: 1.22, opacity: 0, duration: 0.36, ease: "steps(6)", immediateRender: false }, b);
+        const s = i === 2 ? 0.7 : 1;
+        [[0, 9, -6], [0.04, -8, 5], [0.08, 4, 3], [0.12, 0, 0], [0.2, 6, -4], [0.24, -4, 3], [0.28, 0, 0]].forEach(([dt, x, y]) =>
+          tl.set("#v01-cam", { x: x * s, y: y * s }, b + dt));
+      });
+
+        // --- archival grain + flicker (deterministic) ---
+        (function () {
+          const grains = gsap.utils.toArray(".v01-grain");
+          const order = [0, 3, 1, 5, 2, 4];
+          const flick = "#v01-flick";
+          let seed = 1234567;
+          const rnd = () => { seed = (seed * 1103515245 + 12345) % 2147483648; return seed / 2147483648; };
+          const steps = Math.ceil(4.5 * 15);
+          let prev = -1;
+          for (let k = 0; k < steps; k++) {
+            const t = k / 15;
+            const cur = order[k % 6];
+            if (prev >= 0) tl.set(grains[prev], { visibility: "hidden" }, t);
+            tl.set(grains[cur], { visibility: "visible" }, t);
+            prev = cur;
+            const boosted = false;
+            const amp = boosted ? 0.055 : 0.032;
+            tl.set(flick, { opacity: 0.012 + rnd() * amp }, t);
+          }
+        })();
+      tl.set({}, {}, 4.5);
+      window.__timelines["01-colore"] = tl;
+    })();
+  </script>
+</template>

@@ -1,0 +1,2642 @@
+{
+  "ok": true,
+  "strict": false,
+  "browserSkipped": false,
+  "lint": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 5,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "composition_file_too_large",
+        "severity": "warning",
+        "message": "This HTML composition file has 754 lines. Smaller sub-compositions are easier to read, iterate on, and diff.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "/home/user/A-occhio-server/videos/passaparola-spot/index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Split coherent scenes or layers into separate .html files under compositions/, then mount them from the parent with data-composition-src so each file stays small enough to inspect, revise, and validate independently."
+      },
+      {
+        "code": "clip_ends_past_root_duration",
+        "severity": "warning",
+        "message": "<audio id=\"el-sfx-70\"> runs from 30s to 32.5s, past the root composition's data-duration of 31.9s, so it is cut off in previews, posters and renders.",
+        "selector": "#el-sfx-70",
+        "dataAttributes": {},
+        "sourceFile": "/home/user/A-occhio-server/videos/passaparola-spot/index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Extend the root data-duration to 32.5, or make <audio id=\"el-sfx-70\"> end at or before 31.9s."
+      },
+      {
+        "code": "composition_file_too_large",
+        "severity": "warning",
+        "message": "This HTML composition file has 374 lines. Smaller sub-compositions are easier to read, iterate on, and diff.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "/home/user/A-occhio-server/videos/passaparola-spot/compositions/frames/03-pagina-recensione.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Split this sub-composition further into smaller .html files, then mount them from the parent with data-composition-src so each file stays small enough to inspect, revise, and validate independently."
+      },
+      {
+        "code": "composition_file_too_large",
+        "severity": "warning",
+        "message": "This HTML composition file has 435 lines. Smaller sub-compositions are easier to read, iterate on, and diff.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "/home/user/A-occhio-server/videos/passaparola-spot/compositions/frames/05-sito-vetrina.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Split this sub-composition further into smaller .html files, then mount them from the parent with data-composition-src so each file stays small enough to inspect, revise, and validate independently."
+      },
+      {
+        "code": "composition_file_too_large",
+        "severity": "warning",
+        "message": "This HTML composition file has 304 lines. Smaller sub-compositions are easier to read, iterate on, and diff.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "/home/user/A-occhio-server/videos/passaparola-spot/compositions/frames/07-shooting.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Split this sub-composition further into smaller .html files, then mount them from the parent with data-composition-src so each file stays small enough to inspect, revise, and validate independently."
+      }
+    ],
+    "filesScanned": 9
+  },
+  "runtime": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 8,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "clip_media_fit",
+        "severity": "warning",
+        "message": "Audio \"el-02-targa-nfc-voice\" is 2.18s but its slot (data-duration) is 4.00s — the slot is shortened to the media length when rendered. Set data-duration to ~2.18s if that isn't intended.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-duration": "31.9",
+          "data-width": "1920",
+          "data-height": "1080"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1920,
+          "height": 1080
+        },
+        "time": 0
+      },
+      {
+        "code": "clip_media_fit",
+        "severity": "warning",
+        "message": "Audio \"el-03-pagina-recensione-voice\" is 4.37s but its slot (data-duration) is 5.00s — the slot is shortened to the media length when rendered. Set data-duration to ~4.37s if that isn't intended.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-duration": "31.9",
+          "data-width": "1920",
+          "data-height": "1080"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1920,
+          "height": 1080
+        },
+        "time": 0
+      },
+      {
+        "code": "clip_media_fit",
+        "severity": "warning",
+        "message": "Audio \"el-04-scalata-maps-voice\" is 2.69s but its slot (data-duration) is 3.00s — the slot is shortened to the media length when rendered. Set data-duration to ~2.69s if that isn't intended.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-duration": "31.9",
+          "data-width": "1920",
+          "data-height": "1080"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1920,
+          "height": 1080
+        },
+        "time": 0
+      },
+      {
+        "code": "clip_media_fit",
+        "severity": "warning",
+        "message": "Audio \"el-05-sito-vetrina-voice\" is 4.62s but its slot (data-duration) is 5.00s — the slot is shortened to the media length when rendered. Set data-duration to ~4.62s if that isn't intended.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-duration": "31.9",
+          "data-width": "1920",
+          "data-height": "1080"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1920,
+          "height": 1080
+        },
+        "time": 0
+      },
+      {
+        "code": "clip_media_fit",
+        "severity": "warning",
+        "message": "Audio \"el-06-report-voice\" is 2.68s but its slot (data-duration) is 4.00s — the slot is shortened to the media length when rendered. Set data-duration to ~2.68s if that isn't intended.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-duration": "31.9",
+          "data-width": "1920",
+          "data-height": "1080"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1920,
+          "height": 1080
+        },
+        "time": 0
+      },
+      {
+        "code": "clip_media_fit",
+        "severity": "warning",
+        "message": "Audio \"el-07-shooting-voice\" is 2.72s but its slot (data-duration) is 3.00s — the slot is shortened to the media length when rendered. Set data-duration to ~2.72s if that isn't intended.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-duration": "31.9",
+          "data-width": "1920",
+          "data-height": "1080"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1920,
+          "height": 1080
+        },
+        "time": 0
+      },
+      {
+        "code": "clip_media_fit",
+        "severity": "warning",
+        "message": "Audio \"el-08-logo-voice\" is 3.74s but its slot (data-duration) is 3.90s — the slot is shortened to the media length when rendered. Set data-duration to ~3.74s if that isn't intended.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-duration": "31.9",
+          "data-width": "1920",
+          "data-height": "1080"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1920,
+          "height": 1080
+        },
+        "time": 0
+      },
+      {
+        "code": "gsap_tween_tail",
+        "severity": "warning",
+        "message": "In timeline \"main\", a tween on scale of #f07-shooting-af ends at 27.220 s, 0.040 s after a later tween on scale ends at 27.180 s. For that tail the earlier tween takes scale back and leaves its own end value on screen, so the later tween's end never shows. End the earlier tween by 27.120 s, or add overwrite: \"auto\" to the later tween.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-duration": "31.9",
+          "data-width": "1920",
+          "data-height": "1080"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1920,
+          "height": 1080
+        },
+        "time": 27.18
+      }
+    ]
+  },
+  "layout": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 53,
+    "findings": [
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 1.772,
+        "selector": "#f01-maps-search > span:nth-of-type(1)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -480.44,
+          "top": -1232.97,
+          "right": 360.79,
+          "bottom": -1130.42,
+          "width": 841.23,
+          "height": 102.55
+        },
+        "containerSelector": "#root",
+        "text": "ristoranti vicino a me",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 480.44,
+          "top": 1232.97
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/01-maps-problema.html",
+        "bbox": {
+          "x": -480.44,
+          "y": -1232.97,
+          "width": 841.23,
+          "height": 102.55
+        },
+        "firstSeen": 1.772,
+        "lastSeen": 1.772,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          1.772
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 1.772,
+        "selector": "#f01-maps-card > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -247.99,
+          "top": -879.18,
+          "right": 492.55,
+          "bottom": -742.45,
+          "width": 740.54,
+          "height": 136.73
+        },
+        "containerSelector": "#root",
+        "text": "Trattoria ••••••",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 247.99,
+          "top": 879.18
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/01-maps-problema.html",
+        "bbox": {
+          "x": -247.99,
+          "y": -879.18,
+          "width": 740.54,
+          "height": 136.73
+        },
+        "firstSeen": 1.772,
+        "lastSeen": 1.772,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          1.772
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 1.772,
+        "selector": "#f01-maps-card > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > span:nth-of-type(2)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": 292.1,
+          "top": -716.81,
+          "right": 474.5,
+          "bottom": -614.26,
+          "width": 182.4,
+          "height": 102.55
+        },
+        "containerSelector": "#root",
+        "text": "4,6 ·",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "top": 716.81
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/01-maps-problema.html",
+        "bbox": {
+          "x": 292.1,
+          "y": -716.81,
+          "width": 182.4,
+          "height": 102.55
+        },
+        "firstSeen": 1.772,
+        "lastSeen": 1.772,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          1.772
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 1.772,
+        "selector": "#f01-maps-card > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > span:nth-of-type(3)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": 515.52,
+          "top": -716.81,
+          "right": 738.67,
+          "bottom": -614.26,
+          "width": 223.15,
+          "height": 102.55
+        },
+        "containerSelector": "#root",
+        "text": "2.341",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "top": 716.81
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/01-maps-problema.html",
+        "bbox": {
+          "x": 515.52,
+          "y": -716.81,
+          "width": 223.15,
+          "height": 102.55
+        },
+        "firstSeen": 1.772,
+        "lastSeen": 1.772,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          1.772
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 1.772,
+        "selector": "#f01-maps-card > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -247.99,
+          "top": -345.92,
+          "right": 550.02,
+          "bottom": -209.19,
+          "width": 798.01,
+          "height": 136.73
+        },
+        "containerSelector": "#root",
+        "text": "Ristorante •••••",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 247.99,
+          "top": 345.92
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/01-maps-problema.html",
+        "bbox": {
+          "x": -247.99,
+          "y": -345.92,
+          "width": 798.01,
+          "height": 136.73
+        },
+        "firstSeen": 1.772,
+        "lastSeen": 1.772,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          1.772
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 1.772,
+        "selector": "#f01-maps-card > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(2) > span:nth-of-type(2)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": 292.1,
+          "top": -183.56,
+          "right": 473.7,
+          "bottom": -81.01,
+          "width": 181.6,
+          "height": 102.55
+        },
+        "containerSelector": "#root",
+        "text": "4,5 ·",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "top": 183.56
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/01-maps-problema.html",
+        "bbox": {
+          "x": 292.1,
+          "y": -183.56,
+          "width": 181.6,
+          "height": 102.55
+        },
+        "firstSeen": 1.772,
+        "lastSeen": 1.772,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          1.772
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 1.772,
+        "selector": "#f01-maps-card > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(2) > span:nth-of-type(3)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": 514.72,
+          "top": -183.56,
+          "right": 734.88,
+          "bottom": -81.01,
+          "width": 220.16,
+          "height": 102.55
+        },
+        "containerSelector": "#root",
+        "text": "1.870",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "top": 183.56
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/01-maps-problema.html",
+        "bbox": {
+          "x": 514.72,
+          "y": -183.56,
+          "width": 220.16,
+          "height": 102.55
+        },
+        "firstSeen": 1.772,
+        "lastSeen": 1.772,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          1.772
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 1.772,
+        "selector": "#f01-maps-selname",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -172.79,
+          "top": 269.37,
+          "right": 806.66,
+          "bottom": 450.54,
+          "width": 979.45,
+          "height": 181.17
+        },
+        "containerSelector": "#root",
+        "text": "Osteria Marea",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 172.79
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/01-maps-problema.html",
+        "bbox": {
+          "x": -172.79,
+          "y": 269.37,
+          "width": 979.45,
+          "height": 181.17
+        },
+        "firstSeen": 1.772,
+        "lastSeen": 1.772,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          1.772
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 1.772,
+        "selector": "#f01-maps-world",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": -1198.28,
+          "top": -1822.63,
+          "right": 5364.86,
+          "bottom": 1869.13,
+          "width": 6563.14,
+          "height": 3691.76
+        },
+        "containerSelector": "#f01-maps-stage",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 1198.28,
+          "right": 3444.86,
+          "top": 1822.63,
+          "bottom": 789.13
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/01-maps-problema.html",
+        "bbox": {
+          "x": -1198.28,
+          "y": -1822.63,
+          "width": 6563.14,
+          "height": 3691.76
+        },
+        "firstSeen": 1.772,
+        "lastSeen": 1.772,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          1.772
+        ]
+      },
+      {
+        "code": "escaped_container",
+        "severity": "info",
+        "time": 1.772,
+        "selector": "#f01-maps-world",
+        "message": "Positioned element renders far outside its offset parent — its coordinates were likely computed in a different frame (canvas/viewport pixels).",
+        "rect": {
+          "left": -1198.28,
+          "top": -1822.63,
+          "right": 5364.86,
+          "bottom": 1869.13,
+          "width": 6563.14,
+          "height": 3691.76
+        },
+        "containerSelector": "#f01-maps-stage",
+        "text": "ristoranti vicino a me Trattoria •••••• 4,6 · 2.341 Ristorante ••••• 4,5 · 1.870 Osteria Marea 4,8 · 34 recensioni Cinque stelle. Ma le leggono in pochi.",
+        "fixHint": "Compute left/top in the offset parent's frame (subtract its rect), or mark intentional placement with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/01-maps-problema.html",
+        "bbox": {
+          "x": -1198.28,
+          "y": -1822.63,
+          "width": 6563.14,
+          "height": 3691.76
+        },
+        "firstSeen": 1.772,
+        "lastSeen": 1.772,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          1.772
+        ]
+      },
+      {
+        "code": "panel_out_of_canvas",
+        "severity": "info",
+        "time": 1.772,
+        "selector": "#f01-maps-sel",
+        "message": "Painted panel extends outside the composition canvas.",
+        "rect": {
+          "left": -788.08,
+          "top": 159.98,
+          "right": 2069.61,
+          "bottom": 843.64,
+          "width": 2857.7,
+          "height": 683.66
+        },
+        "containerSelector": "#root",
+        "text": "Osteria Marea 4,8 · 34 recensioni",
+        "fixHint": "Move the panel inward, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 788.08,
+          "right": 149.61
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/01-maps-problema.html",
+        "bbox": {
+          "x": -788.08,
+          "y": 159.98,
+          "width": 2857.7,
+          "height": 683.66
+        },
+        "firstSeen": 1.772,
+        "lastSeen": 1.772,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          1.772
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 4.237,
+        "selector": "#f01-maps-rev",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 594.84,
+          "top": 726.53,
+          "right": 859.01,
+          "bottom": 775.31,
+          "width": 264.17,
+          "height": 48.78
+        },
+        "containerSelector": "#f02-targa-nfc-caption",
+        "text": "34 recensioni",
+        "fixHint": "Give each block its own zone, or mark intentional layering with data-layout-allow-overlap.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/01-maps-problema.html",
+        "bbox": {
+          "x": 594.84,
+          "y": 726.53,
+          "width": 264.17,
+          "height": 48.78
+        },
+        "firstSeen": 4.237,
+        "lastSeen": 4.237,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          4.237
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 5.109,
+        "selector": "#f02-targa-nfc-headline > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 1092.23,
+          "top": 364.56,
+          "right": 1199.24,
+          "bottom": 515.75,
+          "width": 107.01,
+          "height": 151.19
+        },
+        "containerSelector": "#f02-targa-nfc-headline > span:nth-of-type(1) > span:nth-of-type(2)",
+        "text": "B",
+        "fixHint": "Give each block its own zone, or mark intentional layering with data-layout-allow-overlap.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/02-targa-nfc.html",
+        "bbox": {
+          "x": 1092.23,
+          "y": 364.56,
+          "width": 107.01,
+          "height": 151.19
+        },
+        "firstSeen": 5.109,
+        "lastSeen": 5.109,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          5.109
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 5.317,
+        "selector": "#f02-targa-nfc-cam",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": -4.9,
+          "top": -2.75,
+          "right": 1924.9,
+          "bottom": 1082.75,
+          "width": 1929.79,
+          "height": 1085.51
+        },
+        "containerSelector": "#f02-targa-nfc-stage",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 4.9,
+          "right": 4.9,
+          "top": 2.75,
+          "bottom": 2.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/02-targa-nfc.html",
+        "bbox": {
+          "x": -4.9,
+          "y": -2.75,
+          "width": 1929.79,
+          "height": 1085.51
+        },
+        "firstSeen": 5.317,
+        "lastSeen": 5.317,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          5.317
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 5.483,
+        "selector": "span.f02-targa-nfc-line.f02-targa-nfc-coral > span:nth-of-type(1)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 1094.4,
+          "top": 484.89,
+          "right": 1171.79,
+          "bottom": 639.14,
+          "width": 77.39,
+          "height": 154.25
+        },
+        "containerSelector": "span.f02-targa-nfc-line.f02-targa-nfc-coral > span:nth-of-type(2)",
+        "text": "t",
+        "fixHint": "Give each block its own zone, or mark intentional layering with data-layout-allow-overlap.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/02-targa-nfc.html",
+        "bbox": {
+          "x": 1094.4,
+          "y": 484.89,
+          "width": 77.39,
+          "height": 154.25
+        },
+        "firstSeen": 5.483,
+        "lastSeen": 5.483,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          5.483
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 8.861,
+        "selector": "div.f03-pills > div:nth-of-type(7)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": 219.44,
+          "top": 1070.21,
+          "right": 235.75,
+          "bottom": 1092.96,
+          "width": 16.31,
+          "height": 22.75
+        },
+        "containerSelector": "#root",
+        "text": "IT",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "bottom": 12.96
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/03-pagina-recensione.html",
+        "bbox": {
+          "x": 219.44,
+          "y": 1070.21,
+          "width": 16.31,
+          "height": 22.75
+        },
+        "firstSeen": 8.861,
+        "lastSeen": 8.861,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          8.861
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 8.861,
+        "selector": "div.f03-pills > div:nth-of-type(8)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": 282.34,
+          "top": 1070.21,
+          "right": 305.27,
+          "bottom": 1092.96,
+          "width": 22.93,
+          "height": 22.75
+        },
+        "containerSelector": "#root",
+        "text": "EN",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "bottom": 12.96
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/03-pagina-recensione.html",
+        "bbox": {
+          "x": 282.34,
+          "y": 1070.21,
+          "width": 22.93,
+          "height": 22.75
+        },
+        "firstSeen": 8.861,
+        "lastSeen": 8.861,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          8.861
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 8.861,
+        "selector": "div.f03-pills > div:nth-of-type(9)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": 348.58,
+          "top": 1070.21,
+          "right": 371.47,
+          "bottom": 1092.96,
+          "width": 22.89,
+          "height": 22.75
+        },
+        "containerSelector": "#root",
+        "text": "DE",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "bottom": 12.96
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/03-pagina-recensione.html",
+        "bbox": {
+          "x": 348.58,
+          "y": 1070.21,
+          "width": 22.89,
+          "height": 22.75
+        },
+        "firstSeen": 8.861,
+        "lastSeen": 8.861,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          8.861
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 8.861,
+        "selector": "div.f03-pills > div:nth-of-type(10)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": 415.25,
+          "top": 1070.21,
+          "right": 437.19,
+          "bottom": 1092.96,
+          "width": 21.94,
+          "height": 22.75
+        },
+        "containerSelector": "#root",
+        "text": "FR",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "bottom": 12.96
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/03-pagina-recensione.html",
+        "bbox": {
+          "x": 415.25,
+          "y": 1070.21,
+          "width": 21.94,
+          "height": 22.75
+        },
+        "firstSeen": 8.861,
+        "lastSeen": 8.861,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          8.861
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 8.861,
+        "selector": "div.f03-pills > div:nth-of-type(11)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": 481.49,
+          "top": 1070.21,
+          "right": 503.38,
+          "bottom": 1092.96,
+          "width": 21.89,
+          "height": 22.75
+        },
+        "containerSelector": "#root",
+        "text": "ES",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "bottom": 12.96
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/03-pagina-recensione.html",
+        "bbox": {
+          "x": 481.49,
+          "y": 1070.21,
+          "width": 21.89,
+          "height": 22.75
+        },
+        "firstSeen": 8.861,
+        "lastSeen": 8.861,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          8.861
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 8.861,
+        "selector": "span.f03-btn-label",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": 205.3,
+          "top": 1164.35,
+          "right": 514.74,
+          "bottom": 1191.24,
+          "width": 309.44,
+          "height": 26.89
+        },
+        "containerSelector": "#root",
+        "text": "Scrivi la recensione su Google",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "bottom": 111.24
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/03-pagina-recensione.html",
+        "bbox": {
+          "x": 205.3,
+          "y": 1164.35,
+          "width": 309.44,
+          "height": 26.89
+        },
+        "firstSeen": 8.861,
+        "lastSeen": 8.861,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          8.861
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 8.861,
+        "selector": "div.f03-world",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 13.46,
+          "top": 13.98,
+          "right": 1999.7,
+          "bottom": 1131.24,
+          "width": 1986.24,
+          "height": 1117.26
+        },
+        "containerSelector": "#f03-pagina-recensione-stage",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "right": 79.7,
+          "bottom": 51.24
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/03-pagina-recensione.html",
+        "bbox": {
+          "x": 13.46,
+          "y": 13.98,
+          "width": 1986.24,
+          "height": 1117.26
+        },
+        "firstSeen": 8.861,
+        "lastSeen": 12.406,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          8.861,
+          12.406
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 8.861,
+        "selector": "div.f03-sheet",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 145.88,
+          "top": 950.2,
+          "right": 574.16,
+          "bottom": 1281.24,
+          "width": 428.28,
+          "height": 331.04
+        },
+        "containerSelector": "div.f03-screen",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 145.88,
+          "top": 81.22,
+          "right": 574.16,
+          "bottom": 929.51,
+          "width": 428.28,
+          "height": 848.29
+        },
+        "overflow": {
+          "bottom": 351.73
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/03-pagina-recensione.html",
+        "bbox": {
+          "x": 145.88,
+          "y": 950.2,
+          "width": 428.28,
+          "height": 331.04
+        },
+        "firstSeen": 8.861,
+        "lastSeen": 8.861,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          8.861
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 8.861,
+        "selector": "div.f03-shine",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 39.33,
+          "top": 1126.07,
+          "right": 132.43,
+          "bottom": 1229.52,
+          "width": 93.1,
+          "height": 103.45
+        },
+        "containerSelector": "div.f03-btn",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 173.81,
+          "top": 1136.41,
+          "right": 546.23,
+          "bottom": 1219.17,
+          "width": 372.42,
+          "height": 82.76
+        },
+        "overflow": {
+          "left": 134.48,
+          "top": 10.34,
+          "bottom": 10.35
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/03-pagina-recensione.html",
+        "bbox": {
+          "x": 39.33,
+          "y": 1126.07,
+          "width": 93.1,
+          "height": 103.45
+        },
+        "firstSeen": 8.861,
+        "lastSeen": 12.406,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          8.861,
+          12.406
+        ]
+      },
+      {
+        "code": "panel_out_of_canvas",
+        "severity": "info",
+        "time": 8.861,
+        "selector": "div.f03-sheet",
+        "message": "Painted panel extends outside the composition canvas.",
+        "rect": {
+          "left": 145.88,
+          "top": 950.2,
+          "right": 574.16,
+          "bottom": 1281.24,
+          "width": 428.28,
+          "height": 331.04
+        },
+        "containerSelector": "#root",
+        "text": "Com'è andata? IT EN DE FR ES Scrivi la recension",
+        "fixHint": "Move the panel inward, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "bottom": 201.24
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/03-pagina-recensione.html",
+        "bbox": {
+          "x": 145.88,
+          "y": 950.2,
+          "width": 428.28,
+          "height": 331.04
+        },
+        "firstSeen": 8.861,
+        "lastSeen": 8.861,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          8.861
+        ]
+      },
+      {
+        "code": "escaped_container",
+        "severity": "info",
+        "time": 12.406,
+        "selector": "div.f03-shine",
+        "message": "Positioned element renders far outside its offset parent — its coordinates were likely computed in a different frame (canvas/viewport pixels).",
+        "rect": {
+          "left": 604.94,
+          "top": 725.58,
+          "right": 698.28,
+          "bottom": 829.3,
+          "width": 93.35,
+          "height": 103.72
+        },
+        "containerSelector": "div.f03-btn",
+        "text": "",
+        "fixHint": "Compute left/top in the offset parent's frame (subtract its rect), or mark intentional placement with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 169.31,
+          "top": 735.95,
+          "right": 542.7,
+          "bottom": 818.93,
+          "width": 373.39,
+          "height": 82.98
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/03-pagina-recensione.html",
+        "bbox": {
+          "x": 604.94,
+          "y": 725.58,
+          "width": 93.35,
+          "height": 103.72
+        },
+        "firstSeen": 12.406,
+        "lastSeen": 12.406,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          12.406
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 13.209,
+        "selector": "div.f03-thanks.f03-split > span:nth-of-type(12)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 1195.21,
+          "top": 240.33,
+          "right": 1228.23,
+          "bottom": 303.76,
+          "width": 33.02,
+          "height": 63.43
+        },
+        "containerSelector": "#f04-trat-r1",
+        "text": "u",
+        "fixHint": "Give each block its own zone, or mark intentional layering with data-layout-allow-overlap.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/03-pagina-recensione.html",
+        "bbox": {
+          "x": 1195.21,
+          "y": 240.33,
+          "width": 33.02,
+          "height": 63.43
+        },
+        "firstSeen": 13.209,
+        "lastSeen": 13.209,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          13.209
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 13.333,
+        "selector": "div.f03-headline > span:nth-of-type(1) > span:nth-of-type(12)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 1530.12,
+          "top": 702.21,
+          "right": 1614.1,
+          "bottom": 861.46,
+          "width": 83.98,
+          "height": 159.25
+        },
+        "containerSelector": "#f04-toast-1",
+        "text": "d",
+        "fixHint": "Give each block its own zone, or mark intentional layering with data-layout-allow-overlap.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/03-pagina-recensione.html",
+        "bbox": {
+          "x": 1530.12,
+          "y": 702.21,
+          "width": 83.98,
+          "height": 159.25
+        },
+        "firstSeen": 13.333,
+        "lastSeen": 13.333,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          13.333
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 13.333,
+        "selector": "div.f03-headline > span:nth-of-type(1) > span:nth-of-type(13)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 1614.1,
+          "top": 702.21,
+          "right": 1652.03,
+          "bottom": 861.46,
+          "width": 37.93,
+          "height": 159.25
+        },
+        "containerSelector": "#f04-toast-1",
+        "text": "i",
+        "fixHint": "Give each block its own zone, or mark intentional layering with data-layout-allow-overlap.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/03-pagina-recensione.html",
+        "bbox": {
+          "x": 1614.1,
+          "y": 702.21,
+          "width": 37.93,
+          "height": 159.25
+        },
+        "firstSeen": 13.333,
+        "lastSeen": 13.333,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          13.333
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 13.333,
+        "selector": "div.f03-sub",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 926.8,
+          "top": 237.22,
+          "right": 1420.84,
+          "bottom": 274.09,
+          "width": 494.04,
+          "height": 36.87
+        },
+        "containerSelector": "#f04-trat-r1",
+        "text": "Recensione pubblicata su Google",
+        "fixHint": "Give each block its own zone, or mark intentional layering with data-layout-allow-overlap.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/03-pagina-recensione.html",
+        "bbox": {
+          "x": 926.8,
+          "y": 237.22,
+          "width": 494.04,
+          "height": 36.87
+        },
+        "firstSeen": 13.333,
+        "lastSeen": 13.333,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          13.333
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 14.579,
+        "selector": "#f04-rist-r2",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 1127.94,
+          "top": 341.05,
+          "right": 1153.67,
+          "bottom": 396.26,
+          "width": 25.73,
+          "height": 55.21
+        },
+        "containerSelector": "#f04-marea-r3",
+        "text": "2",
+        "fixHint": "Give each block its own zone, or mark intentional layering with data-layout-allow-overlap.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/04-scalata-maps.html",
+        "bbox": {
+          "x": 1127.94,
+          "y": 341.05,
+          "width": 25.73,
+          "height": 55.21
+        },
+        "firstSeen": 14.579,
+        "lastSeen": 14.704,
+        "occurrences": 2,
+        "heldMs": 125,
+        "times": [
+          14.579,
+          14.704
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 14.579,
+        "selector": "#f04-row-rist > div:nth-of-type(2) > div:nth-of-type(1)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 1215.63,
+          "top": 328.58,
+          "right": 1460.47,
+          "bottom": 371.88,
+          "width": 244.84,
+          "height": 43.3
+        },
+        "containerSelector": "#f04-row-marea > div:nth-of-type(4) > div:nth-of-type(1)",
+        "text": "Ristorante •••••",
+        "fixHint": "Give each block its own zone, or mark intentional layering with data-layout-allow-overlap.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/04-scalata-maps.html",
+        "bbox": {
+          "x": 1215.63,
+          "y": 328.58,
+          "width": 244.84,
+          "height": 43.3
+        },
+        "firstSeen": 14.579,
+        "lastSeen": 14.579,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          14.579
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 14.579,
+        "selector": "#f04-row-rist > div:nth-of-type(2) > div:nth-of-type(2)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 1215.63,
+          "top": 376.91,
+          "right": 1335.06,
+          "bottom": 403.97,
+          "width": 119.43,
+          "height": 27.06
+        },
+        "containerSelector": "span.f04-stars",
+        "text": "4,5 · 1.870",
+        "fixHint": "Give each block its own zone, or mark intentional layering with data-layout-allow-overlap.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/04-scalata-maps.html",
+        "bbox": {
+          "x": 1215.63,
+          "y": 376.91,
+          "width": 119.43,
+          "height": 27.06
+        },
+        "firstSeen": 14.579,
+        "lastSeen": 14.579,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          14.579
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 14.704,
+        "selector": "#f04-row-trat > div:nth-of-type(2) > div:nth-of-type(2)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 1206.24,
+          "top": 224.71,
+          "right": 1325.46,
+          "bottom": 251.73,
+          "width": 119.22,
+          "height": 27.02
+        },
+        "containerSelector": "#f04-row-marea > div:nth-of-type(4) > div:nth-of-type(1)",
+        "text": "4,6 · 2.341",
+        "fixHint": "Give each block its own zone, or mark intentional layering with data-layout-allow-overlap.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/04-scalata-maps.html",
+        "bbox": {
+          "x": 1206.24,
+          "y": 224.71,
+          "width": 119.22,
+          "height": 27.02
+        },
+        "firstSeen": 14.704,
+        "lastSeen": 14.704,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          14.704
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 14.829,
+        "selector": "#f04-row-trat > div:nth-of-type(2) > div:nth-of-type(1)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 1196.39,
+          "top": 233.02,
+          "right": 1422.73,
+          "bottom": 276.16,
+          "width": 226.34,
+          "height": 43.14
+        },
+        "containerSelector": "#f04-row-marea > div:nth-of-type(4) > div:nth-of-type(2)",
+        "text": "Trattoria ••••••",
+        "fixHint": "Give each block its own zone, or mark intentional layering with data-layout-allow-overlap.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/04-scalata-maps.html",
+        "bbox": {
+          "x": 1196.39,
+          "y": 233.02,
+          "width": 226.34,
+          "height": 43.14
+        },
+        "firstSeen": 14.829,
+        "lastSeen": 14.829,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          14.829
+        ]
+      },
+      {
+        "code": "text_box_overflow",
+        "severity": "info",
+        "time": 15.95,
+        "selector": "#f04-counter",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": -103.23,
+          "top": 171.07,
+          "right": 458.28,
+          "bottom": 447.22,
+          "width": 561.51,
+          "height": 276.15
+        },
+        "containerSelector": "#el-04-scalata-maps > div:nth-of-type(1)",
+        "text": "300",
+        "fixHint": "Text is 562px x 276px inside 1920px x 1080px and overflows by up to 103px; widen the container to at least ~2023px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 103.23
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/04-scalata-maps.html",
+        "bbox": {
+          "x": -103.23,
+          "y": 171.07,
+          "width": 561.51,
+          "height": 276.15
+        },
+        "firstSeen": 15.95,
+        "lastSeen": 15.95,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          15.95
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 15.95,
+        "selector": "#f04-counter",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -103.23,
+          "top": 113.65,
+          "right": 458.28,
+          "bottom": 504.64,
+          "width": 561.51,
+          "height": 390.99
+        },
+        "containerSelector": "#root",
+        "text": "300",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 103.23
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/04-scalata-maps.html",
+        "bbox": {
+          "x": -103.23,
+          "y": 113.65,
+          "width": 561.51,
+          "height": 390.99
+        },
+        "firstSeen": 15.95,
+        "lastSeen": 15.95,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          15.95
+        ]
+      },
+      {
+        "code": "text_box_overflow",
+        "severity": "info",
+        "time": 15.95,
+        "selector": "#f04-label",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": -103.23,
+          "top": 470.75,
+          "right": 147.47,
+          "bottom": 517.63,
+          "width": 250.7,
+          "height": 46.88
+        },
+        "containerSelector": "#el-04-scalata-maps > div:nth-of-type(1)",
+        "text": "recensioni",
+        "fixHint": "Text is 251px x 47px inside 1920px x 1080px and overflows by up to 103px; widen the container to at least ~2023px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 103.23
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/04-scalata-maps.html",
+        "bbox": {
+          "x": -103.23,
+          "y": 470.75,
+          "width": 250.7,
+          "height": 46.88
+        },
+        "firstSeen": 15.95,
+        "lastSeen": 15.95,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          15.95
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 15.95,
+        "selector": "#f04-label",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -103.23,
+          "top": 470.75,
+          "right": 147.47,
+          "bottom": 517.63,
+          "width": 250.7,
+          "height": 46.88
+        },
+        "containerSelector": "#root",
+        "text": "recensioni",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 103.23
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/04-scalata-maps.html",
+        "bbox": {
+          "x": -103.23,
+          "y": 470.75,
+          "width": 250.7,
+          "height": 46.88
+        },
+        "firstSeen": 15.95,
+        "lastSeen": 15.95,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          15.95
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 15.95,
+        "selector": "#f04-h-a > span:nth-of-type(1)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -103.23,
+          "top": 692.35,
+          "right": -52.45,
+          "bottom": 793.56,
+          "width": 50.78,
+          "height": 101.21
+        },
+        "containerSelector": "#root",
+        "text": "P",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 103.23
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/04-scalata-maps.html",
+        "bbox": {
+          "x": -103.23,
+          "y": 692.35,
+          "width": 50.78,
+          "height": 101.21
+        },
+        "firstSeen": 15.95,
+        "lastSeen": 15.95,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          15.95
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 15.95,
+        "selector": "#f04-h-a > span:nth-of-type(2)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -52.45,
+          "top": 692.35,
+          "right": -28.32,
+          "bottom": 793.56,
+          "width": 24.13,
+          "height": 101.21
+        },
+        "containerSelector": "#root",
+        "text": "i",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 52.45
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/04-scalata-maps.html",
+        "bbox": {
+          "x": -52.45,
+          "y": 692.35,
+          "width": 24.13,
+          "height": 101.21
+        },
+        "firstSeen": 15.95,
+        "lastSeen": 15.95,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          15.95
+        ]
+      },
+      {
+        "code": "text_box_overflow",
+        "severity": "info",
+        "time": 15.95,
+        "selector": "#f04-h-a > span:nth-of-type(3)",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": -28.32,
+          "top": 701.17,
+          "right": 23.4,
+          "bottom": 784.74,
+          "width": 51.72,
+          "height": 83.57
+        },
+        "containerSelector": "#el-04-scalata-maps > div:nth-of-type(1)",
+        "text": "ù",
+        "fixHint": "Text is 52px x 84px inside 1920px x 1080px and overflows by up to 28px; widen the container to at least ~1948px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 28.32
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/04-scalata-maps.html",
+        "bbox": {
+          "x": -28.32,
+          "y": 701.17,
+          "width": 51.72,
+          "height": 83.57
+        },
+        "firstSeen": 15.95,
+        "lastSeen": 15.95,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          15.95
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 15.95,
+        "selector": "#f04-h-a > span:nth-of-type(3)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -28.32,
+          "top": 692.35,
+          "right": 23.4,
+          "bottom": 793.56,
+          "width": 51.72,
+          "height": 101.21
+        },
+        "containerSelector": "#root",
+        "text": "ù",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 28.32
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/04-scalata-maps.html",
+        "bbox": {
+          "x": -28.32,
+          "y": 692.35,
+          "width": 51.72,
+          "height": 101.21
+        },
+        "firstSeen": 15.95,
+        "lastSeen": 15.95,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          15.95
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 15.95,
+        "selector": "#f04-h-b > span:nth-of-type(10)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -103.23,
+          "top": 775.91,
+          "right": -64.11,
+          "bottom": 877.12,
+          "width": 39.12,
+          "height": 101.21
+        },
+        "containerSelector": "#root",
+        "text": "t",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 103.23
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/04-scalata-maps.html",
+        "bbox": {
+          "x": -103.23,
+          "y": 775.91,
+          "width": 39.12,
+          "height": 101.21
+        },
+        "firstSeen": 15.95,
+        "lastSeen": 15.95,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          15.95
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 15.95,
+        "selector": "#f04-h-b > span:nth-of-type(11)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -64.11,
+          "top": 775.91,
+          "right": -12.7,
+          "bottom": 877.12,
+          "width": 51.41,
+          "height": 101.21
+        },
+        "containerSelector": "#root",
+        "text": "o",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 64.11
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/04-scalata-maps.html",
+        "bbox": {
+          "x": -64.11,
+          "y": 775.91,
+          "width": 51.41,
+          "height": 101.21
+        },
+        "firstSeen": 15.95,
+        "lastSeen": 15.95,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          15.95
+        ]
+      },
+      {
+        "code": "text_box_overflow",
+        "severity": "info",
+        "time": 15.95,
+        "selector": "#f04-h-b > span:nth-of-type(12)",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": -12.7,
+          "top": 784.73,
+          "right": 13.95,
+          "bottom": 868.3,
+          "width": 26.65,
+          "height": 83.57
+        },
+        "containerSelector": "#el-04-scalata-maps > div:nth-of-type(1)",
+        "text": ".",
+        "fixHint": "Text is 27px x 84px inside 1920px x 1080px and overflows by up to 13px; widen the container to at least ~1933px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 12.7
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/04-scalata-maps.html",
+        "bbox": {
+          "x": -12.7,
+          "y": 784.73,
+          "width": 26.65,
+          "height": 83.57
+        },
+        "firstSeen": 15.95,
+        "lastSeen": 15.95,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          15.95
+        ]
+      },
+      {
+        "code": "canvas_overflow",
+        "severity": "info",
+        "time": 15.95,
+        "selector": "#f04-h-b > span:nth-of-type(12)",
+        "message": "Text extends outside the composition canvas.",
+        "rect": {
+          "left": -12.7,
+          "top": 775.91,
+          "right": 13.95,
+          "bottom": 877.12,
+          "width": 26.65,
+          "height": 101.21
+        },
+        "containerSelector": "#root",
+        "text": ".",
+        "fixHint": "Move the text inward, reduce its size, or mark intentional off-canvas animation with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 12.7
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/04-scalata-maps.html",
+        "bbox": {
+          "x": -12.7,
+          "y": 775.91,
+          "width": 26.65,
+          "height": 101.21
+        },
+        "firstSeen": 15.95,
+        "lastSeen": 15.95,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          15.95
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 15.95,
+        "selector": "#f04-stage",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": -23.42,
+          "top": -13.18,
+          "right": 1943.42,
+          "bottom": 1093.18,
+          "width": 1966.85,
+          "height": 1106.35
+        },
+        "containerSelector": "#el-04-scalata-maps > div:nth-of-type(1)",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 0,
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "width": 1920,
+          "height": 1080
+        },
+        "overflow": {
+          "left": 23.42,
+          "right": 23.42,
+          "top": 13.18,
+          "bottom": 13.18
+        },
+        "dataAttributes": {
+          "data-start": "0",
+          "data-duration": "3.5",
+          "data-track-index": "1"
+        },
+        "sourceFile": "compositions/frames/04-scalata-maps.html",
+        "bbox": {
+          "x": -23.42,
+          "y": -13.18,
+          "width": 1966.85,
+          "height": 1106.35
+        },
+        "firstSeen": 15.95,
+        "lastSeen": 15.95,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          15.95
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 25.171,
+        "selector": "#r06-title",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 61.92,
+          "top": 103.61,
+          "right": 558.72,
+          "bottom": 174.51,
+          "width": 496.8,
+          "height": 70.9
+        },
+        "containerSelector": "#f07-shooting-rec",
+        "text": "Report di ottobre",
+        "fixHint": "Give each block its own zone, or mark intentional layering with data-layout-allow-overlap.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/06-report.html",
+        "bbox": {
+          "x": 61.92,
+          "y": 103.61,
+          "width": 496.8,
+          "height": 70.9
+        },
+        "firstSeen": 25.171,
+        "lastSeen": 25.171,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          25.171
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 26.583,
+        "selector": "#f07-shooting-cam",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 70.69,
+          "top": 65.31,
+          "right": 1849.31,
+          "bottom": 907.89,
+          "width": 1778.61,
+          "height": 842.59
+        },
+        "containerSelector": "#f07-shooting-vf",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 115,
+          "top": 96,
+          "right": 1805,
+          "bottom": 896,
+          "width": 1690,
+          "height": 800
+        },
+        "overflow": {
+          "left": 44.31,
+          "right": 44.31,
+          "top": 30.69,
+          "bottom": 11.89
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/07-shooting.html",
+        "bbox": {
+          "x": 70.69,
+          "y": 65.31,
+          "width": 1778.61,
+          "height": 842.59
+        },
+        "firstSeen": 26.583,
+        "lastSeen": 26.583,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          26.583
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 26.583,
+        "selector": "#f07-shooting-world > svg:nth-of-type(2) > use:nth-of-type(1)",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 70.62,
+          "top": -89.8,
+          "right": 1849.38,
+          "bottom": 1064.43,
+          "width": 1778.76,
+          "height": 1154.23
+        },
+        "containerSelector": "#f07-shooting-world > svg:nth-of-type(2)",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 70.69,
+          "top": 65.31,
+          "right": 1849.31,
+          "bottom": 907.89,
+          "width": 1778.61,
+          "height": 842.59
+        },
+        "overflow": {
+          "top": 155.11,
+          "bottom": 156.54
+        },
+        "dataAttributes": {
+          "data-hf-svg-reference-aliases": "[{\"name\":\"href\",\"localName\":\"href\",\"namespaceURI\":null,\"before\":\"#f07-shooting-sym-hands\",\"after\":\"#f07-shooting-sym-hands\"}]"
+        },
+        "sourceFile": "compositions/frames/07-shooting.html",
+        "bbox": {
+          "x": 70.62,
+          "y": -89.8,
+          "width": 1778.76,
+          "height": 1154.23
+        },
+        "firstSeen": 26.583,
+        "lastSeen": 26.583,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          26.583
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 26.583,
+        "selector": "#f07-shooting-thumb1 > svg:nth-of-type(1) > use:nth-of-type(1)",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 1314.39,
+          "top": 137,
+          "right": 1487.61,
+          "bottom": 219,
+          "width": 173.23,
+          "height": 82
+        },
+        "containerSelector": "#f07-shooting-thumb1 > svg:nth-of-type(1)",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 1337,
+          "top": 137,
+          "right": 1465,
+          "bottom": 219,
+          "width": 128,
+          "height": 82
+        },
+        "overflow": {
+          "left": 22.61,
+          "right": 22.61
+        },
+        "dataAttributes": {
+          "data-hf-svg-reference-aliases": "[{\"name\":\"href\",\"localName\":\"href\",\"namespaceURI\":null,\"before\":\"#f07-shooting-sym-dish\",\"after\":\"#f07-shooting-sym-dish\"}]"
+        },
+        "sourceFile": "compositions/frames/07-shooting.html",
+        "bbox": {
+          "x": 1314.39,
+          "y": 137,
+          "width": 173.23,
+          "height": 82
+        },
+        "firstSeen": 26.583,
+        "lastSeen": 26.583,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          26.583
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 26.583,
+        "selector": "#f07-shooting-thumb2 > svg:nth-of-type(1) > use:nth-of-type(1)",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 1278.12,
+          "top": 161.99,
+          "right": 1549.93,
+          "bottom": 340.8,
+          "width": 271.81,
+          "height": 178.81
+        },
+        "containerSelector": "#f07-shooting-thumb2 > svg:nth-of-type(1)",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 1313.62,
+          "top": 186.02,
+          "right": 1514.44,
+          "bottom": 316.56,
+          "width": 200.82,
+          "height": 130.54
+        },
+        "overflow": {
+          "left": 35.5,
+          "right": 35.49,
+          "top": 24.03,
+          "bottom": 24.24
+        },
+        "dataAttributes": {
+          "data-hf-svg-reference-aliases": "[{\"name\":\"href\",\"localName\":\"href\",\"namespaceURI\":null,\"before\":\"#f07-shooting-sym-hands\",\"after\":\"#f07-shooting-sym-hands\"}]"
+        },
+        "sourceFile": "compositions/frames/07-shooting.html",
+        "bbox": {
+          "x": 1278.12,
+          "y": 161.99,
+          "width": 271.81,
+          "height": 178.81
+        },
+        "firstSeen": 26.583,
+        "lastSeen": 26.583,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          26.583
+        ]
+      }
+    ],
+    "duration": 31.9,
+    "samples": [
+      1.772,
+      5.317,
+      8.861,
+      12.406,
+      15.95,
+      19.494,
+      23.039,
+      26.583,
+      30.128
+    ],
+    "transitionSamples": [],
+    "transitionSamplesDropped": 0,
+    "tolerance": 2,
+    "totalIssueCount": 53,
+    "truncated": false
+  },
+  "motion": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": false,
+    "samples": 0
+  },
+  "contrast": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 4,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 2.54:1; WCAG AA requires 3:1.",
+        "text": "·",
+        "fg": "rgb(154,154,154)",
+        "bg": "rgb(247,242,242)",
+        "ratio": 2.54,
+        "requiredRatio": 3,
+        "suggestedColor": "rgb(140,140,140)",
+        "large": true,
+        "selector": "div > div:nth-of-type(1) > div > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(4) > div:nth-of-type(3) > span:nth-of-type(2)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/01-maps-problema.html",
+        "bbox": {
+          "x": 873.476806640625,
+          "y": 535.9969482421875,
+          "width": 34.877197265625,
+          "height": 109.385498046875
+        },
+        "time": 1.772,
+        "times": [
+          1.772
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 1.13:1; WCAG AA requires 4.5:1.",
+        "text": "IT",
+        "fg": "rgb(255,255,255)",
+        "bg": "rgb(245,241,234)",
+        "ratio": 1.13,
+        "requiredRatio": 4.5,
+        "suggestedColor": "rgb(110,110,110)",
+        "large": false,
+        "selector": "div > div:nth-of-type(3) > div > div:nth-of-type(2) > div > div:nth-of-type(1) > div > div:nth-of-type(4) > div:nth-of-type(3) > div:nth-of-type(7)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/03-pagina-recensione.html",
+        "bbox": {
+          "x": 198.6392059326172,
+          "y": 1061.929931640625,
+          "width": 57.93199157714844,
+          "height": 39.31103515625
+        },
+        "time": 8.861,
+        "times": [
+          8.861
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 1.84:1; WCAG AA requires 4.5:1.",
+        "text": "★★★★★",
+        "fg": "rgb(226,176,79)",
+        "bg": "rgb(249,245,245)",
+        "ratio": 1.84,
+        "requiredRatio": 4.5,
+        "suggestedColor": "rgb(139,108,49)",
+        "large": false,
+        "selector": "div > div:nth-of-type(4) > div > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(4) > div:nth-of-type(2) > span:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/04-scalata-maps.html",
+        "bbox": {
+          "x": 988.7837524414062,
+          "y": 211.89744567871094,
+          "width": 132.93890380859375,
+          "height": 29.830520629882812
+        },
+        "time": 15.95,
+        "times": [
+          15.95
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 1.94:1; WCAG AA requires 3:1.",
+        "text": "★",
+        "fg": "rgb(226,176,79)",
+        "bg": "rgb(252,252,252)",
+        "ratio": 1.94,
+        "requiredRatio": 3,
+        "suggestedColor": "rgb(180,140,63)",
+        "large": true,
+        "selector": "div > div:nth-of-type(4) > div > div:nth-of-type(2) > div > div:nth-of-type(5) > span",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/04-scalata-maps.html",
+        "bbox": {
+          "x": 949.3648071289062,
+          "y": 677.4334716796875,
+          "width": 28.94818115234375,
+          "height": 36.22271728515625
+        },
+        "time": 15.95,
+        "times": [
+          15.95
+        ]
+      }
+    ],
+    "enabled": true,
+    "samples": [
+      1.772,
+      8.861,
+      15.95,
+      23.039,
+      30.128
+    ],
+    "checked": 110,
+    "passed": 106
+  },
+  "hdr": {
+    "autoPromotion": null,
+    "inspection": "available"
+  },
+  "snapshots": {
+    "enabled": false,
+    "files": [],
+    "times": [],
+    "findingFiles": []
+  }
+}

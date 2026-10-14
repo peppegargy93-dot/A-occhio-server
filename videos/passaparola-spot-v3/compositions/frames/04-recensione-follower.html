@@ -1,0 +1,1034 @@
+<template>
+  <div
+    id="root"
+    data-composition-id="04-recensione-follower"
+    data-width="1080"
+    data-height="1920"
+    data-duration="6.8"
+  >
+    <style>
+      @font-face {
+        font-family: "Space Grotesk";
+        src: url("assets/fonts/space-grotesk-latin-500-normal.woff2") format("woff2");
+        font-weight: 500;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: "Space Grotesk";
+        src: url("assets/fonts/space-grotesk-latin-600-normal.woff2") format("woff2");
+        font-weight: 600;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: "Space Grotesk";
+        src: url("assets/fonts/space-grotesk-latin-700-normal.woff2") format("woff2");
+        font-weight: 700;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: "Inter";
+        src: url("assets/fonts/inter-latin-500-normal.woff2") format("woff2");
+        font-weight: 500;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: "Inter";
+        src: url("assets/fonts/inter-latin-600-normal.woff2") format("woff2");
+        font-weight: 600;
+        font-style: normal;
+      }
+
+      #root {
+        position: absolute;
+        inset: 0;
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        color: #1f1a17;
+        font-family: "Inter", sans-serif;
+        --f04-bg: #faf6ef;
+        --f04-ink: #1f1a17;
+        --f04-muted: #6b625b;
+        --f04-coral: #b5392c;
+        --f04-ochre: #e2b04f;
+        --f04-navy: #123247;
+        --f04-gold: #e0b04b;
+        --f04-shadow: 0 40px 80px -24px rgba(31, 26, 23, 0.28),
+          0 12px 24px -12px rgba(31, 26, 23, 0.18);
+      }
+      [data-composition-id="04-recensione-follower"] * {
+        box-sizing: border-box;
+      }
+
+      /* full-bleed ground (clip layer, not the root) */
+      [data-composition-id="04-recensione-follower"] .f04-bg {
+        position: absolute;
+        inset: 0;
+        background: var(--f04-bg);
+      }
+      [data-composition-id="04-recensione-follower"] .f04-stage {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+      }
+      [data-composition-id="04-recensione-follower"] .f04-world {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 1080px;
+        height: 1920px;
+        transform-origin: 0 0;
+        will-change: transform;
+      }
+
+      /* ---------- phone ---------- */
+      [data-composition-id="04-recensione-follower"] .f04-phone {
+        position: absolute;
+        left: 215px;
+        top: 420px;
+        width: 650px;
+        height: 1300px;
+        padding: 16px;
+        border-radius: 86px;
+        background: #1f1a17;
+        box-shadow: 0 70px 130px -34px rgba(31, 26, 23, 0.36),
+          0 22px 40px -16px rgba(31, 26, 23, 0.24);
+      }
+      [data-composition-id="04-recensione-follower"] .f04-screen {
+        position: relative;
+        width: 618px;
+        height: 1268px;
+        border-radius: 70px;
+        background: #ffffff;
+        overflow: hidden;
+      }
+      [data-composition-id="04-recensione-follower"] .f04-header {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 618px;
+        height: 360px;
+        background: var(--f04-navy);
+      }
+      [data-composition-id="04-recensione-follower"] .f04-notch {
+        position: absolute;
+        left: 249px;
+        top: 18px;
+        width: 120px;
+        height: 32px;
+        border-radius: 100px;
+        background: #1f1a17;
+      }
+      [data-composition-id="04-recensione-follower"] .f04-logo {
+        position: absolute;
+        left: 199px;
+        top: 76px;
+        width: 220px;
+        height: 110px;
+        overflow: visible;
+      }
+      [data-composition-id="04-recensione-follower"] .f04-logo ellipse,
+      [data-composition-id="04-recensione-follower"] .f04-logo path {
+        fill: none;
+        stroke: var(--f04-gold);
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      [data-composition-id="04-recensione-follower"] .f04-venue {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 214px;
+        text-align: center;
+        font-family: "Space Grotesk", sans-serif;
+        font-weight: 700;
+        font-size: 50px;
+        line-height: 1;
+        letter-spacing: 0.06em;
+        color: #ffffff;
+        white-space: nowrap;
+      }
+      [data-composition-id="04-recensione-follower"] .f04-venue-rule {
+        position: absolute;
+        left: 279px;
+        top: 292px;
+        width: 60px;
+        height: 4px;
+        border-radius: 2px;
+        background: var(--f04-gold);
+      }
+
+      [data-composition-id="04-recensione-follower"] .f04-ask {
+        position: absolute;
+        left: 0;
+        top: 396px;
+        width: 618px;
+        height: 70px;
+      }
+      [data-composition-id="04-recensione-follower"] .f04-ask-v {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 618px;
+        text-align: center;
+        font-family: "Space Grotesk", sans-serif;
+        font-weight: 700;
+        font-size: 54px;
+        line-height: 70px;
+        letter-spacing: 0.01em;
+        color: var(--f04-navy);
+        white-space: nowrap;
+      }
+      [data-composition-id="04-recensione-follower"] .f04-pills {
+        position: absolute;
+        left: 41px;
+        top: 490px;
+        width: 536px;
+        height: 60px;
+      }
+      [data-composition-id="04-recensione-follower"] .f04-pill {
+        position: absolute;
+        top: 0;
+        width: 100px;
+        height: 60px;
+        border-radius: 100px;
+        background: rgba(18, 50, 71, 0.07);
+      }
+      [data-composition-id="04-recensione-follower"] .f04-pill-hl {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100px;
+        height: 60px;
+        border-radius: 100px;
+        background: var(--f04-gold);
+        box-shadow: 0 10px 18px -10px rgba(18, 50, 71, 0.55);
+      }
+      [data-composition-id="04-recensione-follower"] .f04-pill-label {
+        position: absolute;
+        top: 0;
+        width: 100px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Space Grotesk", sans-serif;
+        font-weight: 600;
+        font-size: 30px;
+        letter-spacing: 0.04em;
+        color: var(--f04-navy);
+      }
+      [data-composition-id="04-recensione-follower"] .f04-stars {
+        position: absolute;
+        left: 89px;
+        top: 580px;
+        width: 440px;
+        height: 72px;
+      }
+      [data-composition-id="04-recensione-follower"] .f04-star {
+        position: absolute;
+        top: 0;
+        width: 72px;
+        height: 72px;
+        display: block;
+      }
+      [data-composition-id="04-recensione-follower"] .f04-star-empty path {
+        fill: none;
+        stroke: var(--f04-gold);
+        stroke-width: 1.4;
+        stroke-linejoin: round;
+      }
+      [data-composition-id="04-recensione-follower"] .f04-star-full {
+        transform-origin: 50% 55%;
+      }
+      [data-composition-id="04-recensione-follower"] .f04-star-full path {
+        fill: var(--f04-gold);
+        stroke: var(--f04-gold);
+        stroke-width: 1.2;
+        stroke-linejoin: round;
+      }
+
+      [data-composition-id="04-recensione-follower"] .f04-btn {
+        position: absolute;
+        left: 24px;
+        width: 570px;
+        height: 112px;
+        border-radius: 100px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        font-family: "Space Grotesk", sans-serif;
+        font-weight: 600;
+        font-size: 30px;
+        letter-spacing: 0;
+        white-space: nowrap;
+        color: var(--f04-navy);
+      }
+      [data-composition-id="04-recensione-follower"] .f04-btn-g {
+        top: 690px;
+        background: var(--f04-gold);
+        box-shadow: 0 16px 28px -14px rgba(18, 50, 71, 0.55);
+      }
+      [data-composition-id="04-recensione-follower"] .f04-btn-i {
+        top: 826px;
+        border: 3px solid var(--f04-navy);
+        background: transparent;
+      }
+      [data-composition-id="04-recensione-follower"] .f04-btn-fill {
+        position: absolute;
+        inset: 0;
+        border-radius: 100px;
+        background: var(--f04-navy);
+      }
+      [data-composition-id="04-recensione-follower"] .f04-btn svg {
+        position: relative;
+        display: block;
+        flex: 0 0 36px;
+        width: 36px;
+        height: 36px;
+      }
+      [data-composition-id="04-recensione-follower"] .f04-btn-g svg path {
+        fill: var(--f04-navy);
+      }
+      [data-composition-id="04-recensione-follower"] .f04-btn-i svg rect,
+      [data-composition-id="04-recensione-follower"] .f04-btn-i svg circle {
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2.2;
+      }
+      [data-composition-id="04-recensione-follower"] .f04-btn-i svg .f04-dot {
+        fill: currentColor;
+        stroke: none;
+      }
+      [data-composition-id="04-recensione-follower"] .f04-btn-label {
+        position: relative;
+      }
+      [data-composition-id="04-recensione-follower"] .f04-shine {
+        position: absolute;
+        left: 0;
+        top: -12px;
+        width: 110px;
+        height: 136px;
+      }
+      [data-composition-id="04-recensione-follower"] .f04-shine-band {
+        width: 110px;
+        height: 136px;
+        transform: skewX(-20deg);
+        background: linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0) 0%,
+          rgba(255, 255, 255, 0.5) 50%,
+          rgba(255, 255, 255, 0) 100%
+        );
+      }
+      [data-composition-id="04-recensione-follower"] .f04-veil {
+        position: absolute;
+        left: 0;
+        top: 362px;
+        width: 618px;
+        height: 452px;
+        background: #ffffff;
+      }
+      [data-composition-id="04-recensione-follower"] .f04-skel {
+        position: absolute;
+        left: 24px;
+        width: 570px;
+        border-radius: 32px;
+        background: rgba(18, 50, 71, 0.05);
+      }
+      [data-composition-id="04-recensione-follower"] .f04-skel-line {
+        position: absolute;
+        left: 30px;
+        height: 18px;
+        border-radius: 9px;
+        background: rgba(18, 50, 71, 0.1);
+      }
+
+      /* ---------- thank-you card ---------- */
+      [data-composition-id="04-recensione-follower"] .f04-card {
+        position: absolute;
+        left: 160px;
+        top: 740px;
+        width: 760px;
+        padding: 48px 40px 44px;
+        border-radius: 40px;
+        background: #ffffff;
+        text-align: center;
+        box-shadow: var(--f04-shadow);
+        transform-origin: 50% 60%;
+      }
+      [data-composition-id="04-recensione-follower"] .f04-cstars {
+        position: relative;
+        width: 344px;
+        height: 60px;
+        margin: 0 auto;
+        overflow: hidden;
+      }
+      [data-composition-id="04-recensione-follower"] .f04-cstars-inner {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 344px;
+        height: 60px;
+        display: flex;
+        gap: 11px;
+      }
+      [data-composition-id="04-recensione-follower"] .f04-cstars svg {
+        display: block;
+        flex: 0 0 60px;
+        width: 60px;
+        height: 60px;
+      }
+      [data-composition-id="04-recensione-follower"] .f04-cstars path {
+        fill: var(--f04-gold);
+        stroke: var(--f04-gold);
+        stroke-width: 1.2;
+        stroke-linejoin: round;
+      }
+      [data-composition-id="04-recensione-follower"] .f04-thanks {
+        margin-top: 24px;
+        font-family: "Space Grotesk", sans-serif;
+        font-weight: 700;
+        font-size: 68px;
+        line-height: 1.05;
+        letter-spacing: 0.03em;
+        color: var(--f04-navy);
+        white-space: nowrap;
+      }
+      [data-composition-id="04-recensione-follower"] .f04-sub {
+        margin-top: 14px;
+        font-family: "Inter", sans-serif;
+        font-weight: 500;
+        font-size: 32px;
+        line-height: 1.3;
+        color: var(--f04-muted);
+      }
+
+      /* confetti (registry `confetti`, inlined, coral + gold) */
+      [data-composition-id="04-recensione-follower"] .f04-confetti {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 1080px;
+        height: 1920px;
+        pointer-events: none;
+      }
+      [data-composition-id="04-recensione-follower"] .f04-particle {
+        position: absolute;
+        left: 532px;
+        top: 760px;
+        width: 16px;
+        height: 26px;
+        border-radius: 4px;
+        background: var(--f04-coral);
+      }
+      [data-composition-id="04-recensione-follower"] .f04-particle.f04-g {
+        background: var(--f04-gold);
+      }
+
+      /* ---------- follow payoff ---------- */
+      [data-composition-id="04-recensione-follower"] .f04-heart {
+        position: absolute;
+        left: 445px;
+        top: 1000px;
+        width: 190px;
+        height: 190px;
+        transform-origin: 50% 60%;
+        filter: drop-shadow(0 22px 26px rgba(181, 57, 44, 0.35));
+      }
+      [data-composition-id="04-recensione-follower"] .f04-heart svg {
+        display: block;
+        width: 190px;
+        height: 190px;
+      }
+      [data-composition-id="04-recensione-follower"] .f04-heart path {
+        fill: var(--f04-coral);
+      }
+      [data-composition-id="04-recensione-follower"] .f04-hring {
+        position: absolute;
+        left: 440px;
+        top: 995px;
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        border: 5px solid var(--f04-coral);
+        opacity: 0;
+      }
+      [data-composition-id="04-recensione-follower"] .f04-badge {
+        position: absolute;
+        left: 340px;
+        top: 880px;
+        width: 400px;
+        height: 108px;
+        border-radius: 100px;
+        background: var(--f04-coral);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Space Grotesk", sans-serif;
+        font-weight: 700;
+        font-size: 52px;
+        letter-spacing: 0.02em;
+        color: #ffffff;
+        white-space: nowrap;
+        box-shadow: 0 24px 40px -18px rgba(181, 57, 44, 0.6);
+        transform-origin: 50% 100%;
+      }
+      [data-composition-id="04-recensione-follower"] .f04-mascot {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 120px;
+        height: 120px;
+        transform-origin: 50% 90%;
+      }
+      [data-composition-id="04-recensione-follower"] .f04-mascot img {
+        display: block;
+        width: 120px;
+        height: 120px;
+      }
+
+      /* click ripples */
+      [data-composition-id="04-recensione-follower"] .f04-ripple {
+        position: absolute;
+        width: 110px;
+        height: 110px;
+        border-radius: 50%;
+        border: 4px solid var(--f04-coral);
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      /* cursor + coral echo trail (registry `echo-trail`, merged) */
+      [data-composition-id="04-recensione-follower"] .f04-cursorlayer {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 1080px;
+        height: 1920px;
+        pointer-events: none;
+      }
+      [data-composition-id="04-recensione-follower"] .f04-ghost,
+      [data-composition-id="04-recensione-follower"] .f04-lead {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 72px;
+        height: 72px;
+      }
+      [data-composition-id="04-recensione-follower"] .f04-ghost {
+        opacity: 0;
+        filter: drop-shadow(0 0 12px rgba(181, 57, 44, 0.85));
+      }
+      [data-composition-id="04-recensione-follower"] .f04-ghost svg path {
+        fill: #b5392c;
+        stroke: #ffffff;
+        stroke-width: 1.2;
+        stroke-linejoin: round;
+      }
+      [data-composition-id="04-recensione-follower"] .f04-lead-inner {
+        width: 72px;
+        height: 72px;
+        transform-origin: 12% 8%;
+        filter: drop-shadow(0 6px 8px rgba(31, 26, 23, 0.3));
+      }
+      [data-composition-id="04-recensione-follower"] .f04-lead-inner img,
+      [data-composition-id="04-recensione-follower"] .f04-ghost svg {
+        display: block;
+        width: 72px;
+        height: 72px;
+      }
+
+      /* ---------- titles (screen-fixed, outside the camera) ---------- */
+      [data-composition-id="04-recensione-follower"] .f04-titles {
+        position: absolute;
+        left: 80px;
+        top: 186px;
+        width: 920px;
+        height: 210px;
+        text-align: center;
+        font-family: "Space Grotesk", sans-serif;
+        font-weight: 700;
+        font-size: 88px;
+        line-height: 100px;
+        letter-spacing: 0.02em;
+        color: var(--f04-ink);
+      }
+      [data-composition-id="04-recensione-follower"] .f04-tblock {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 920px;
+      }
+      [data-composition-id="04-recensione-follower"] .f04-line {
+        display: block;
+        white-space: nowrap;
+      }
+      [data-composition-id="04-recensione-follower"] .f04-coral {
+        color: var(--f04-coral);
+      }
+      [data-composition-id="04-recensione-follower"] .f04-ch {
+        display: inline-block;
+      }
+      [data-composition-id="04-recensione-follower"] .f04-sp {
+        display: inline-block;
+        width: 0.26em;
+      }
+
+      /* static deterministic grain */
+      [data-composition-id="04-recensione-follower"] .f04-grain {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        mix-blend-mode: multiply;
+        opacity: 0.08;
+      }
+      [data-composition-id="04-recensione-follower"] .f04-grain svg {
+        display: block;
+        width: 1080px;
+        height: 1920px;
+      }
+    </style>
+
+    <div id="f04-recensione-follower-bg" class="f04-bg clip" data-start="0" data-duration="6.8" data-track-index="0"></div>
+
+    <div id="f04-recensione-follower-stage" class="f04-stage clip" data-start="0" data-duration="6.8" data-track-index="1">
+      <div class="f04-world">
+        <!-- phone: Osteria Marea venue page (focal) -->
+        <div class="f04-phone">
+          <div class="f04-screen">
+            <div class="f04-header">
+              <svg class="f04-logo" viewBox="0 0 220 110" xmlns="http://www.w3.org/2000/svg">
+                <ellipse class="f04-logo-oval" cx="110" cy="55" rx="106" ry="51" stroke-width="5" />
+                <path class="f04-logo-wave" d="M44 64 C 64 40, 86 40, 106 58 S 146 76, 166 52 C 172 44, 182 42, 184 50" stroke-width="6" />
+              </svg>
+              <div class="f04-venue f04-split">Osteria Marea</div>
+              <div class="f04-venue-rule"></div>
+            </div>
+            <div class="f04-notch"></div>
+
+            <div class="f04-ask">
+              <div class="f04-ask-v">Com'è andata?</div>
+              <div class="f04-ask-v">How was it?</div>
+              <div class="f04-ask-v">Wie war's?</div>
+              <div class="f04-ask-v">C'était comment ?</div>
+              <div class="f04-ask-v">¿Qué tal?</div>
+            </div>
+
+            <div class="f04-pills">
+              <div class="f04-pill" style="left: 0px"></div>
+              <div class="f04-pill" style="left: 109px"></div>
+              <div class="f04-pill" style="left: 218px"></div>
+              <div class="f04-pill" style="left: 327px"></div>
+              <div class="f04-pill" style="left: 436px"></div>
+              <div class="f04-pill-hl"></div>
+              <div class="f04-pill-label" style="left: 0px">IT</div>
+              <div class="f04-pill-label" style="left: 109px">EN</div>
+              <div class="f04-pill-label" style="left: 218px">DE</div>
+              <div class="f04-pill-label" style="left: 327px">FR</div>
+              <div class="f04-pill-label" style="left: 436px">ES</div>
+            </div>
+
+            <div class="f04-stars">
+              <svg class="f04-star f04-star-empty" style="left: 0px" viewBox="0 0 24 24"><path d="M12 1.8l3.1 6.6 7.2.9-5.3 5 1.4 7.1L12 17.9l-6.4 3.5 1.4-7.1-5.3-5 7.2-.9z" /></svg>
+              <svg class="f04-star f04-star-empty" style="left: 92px" viewBox="0 0 24 24"><path d="M12 1.8l3.1 6.6 7.2.9-5.3 5 1.4 7.1L12 17.9l-6.4 3.5 1.4-7.1-5.3-5 7.2-.9z" /></svg>
+              <svg class="f04-star f04-star-empty" style="left: 184px" viewBox="0 0 24 24"><path d="M12 1.8l3.1 6.6 7.2.9-5.3 5 1.4 7.1L12 17.9l-6.4 3.5 1.4-7.1-5.3-5 7.2-.9z" /></svg>
+              <svg class="f04-star f04-star-empty" style="left: 276px" viewBox="0 0 24 24"><path d="M12 1.8l3.1 6.6 7.2.9-5.3 5 1.4 7.1L12 17.9l-6.4 3.5 1.4-7.1-5.3-5 7.2-.9z" /></svg>
+              <svg class="f04-star f04-star-empty" style="left: 368px" viewBox="0 0 24 24"><path d="M12 1.8l3.1 6.6 7.2.9-5.3 5 1.4 7.1L12 17.9l-6.4 3.5 1.4-7.1-5.3-5 7.2-.9z" /></svg>
+              <svg class="f04-star f04-star-full" style="left: 0px" viewBox="0 0 24 24"><path d="M12 1.8l3.1 6.6 7.2.9-5.3 5 1.4 7.1L12 17.9l-6.4 3.5 1.4-7.1-5.3-5 7.2-.9z" /></svg>
+              <svg class="f04-star f04-star-full" style="left: 92px" viewBox="0 0 24 24"><path d="M12 1.8l3.1 6.6 7.2.9-5.3 5 1.4 7.1L12 17.9l-6.4 3.5 1.4-7.1-5.3-5 7.2-.9z" /></svg>
+              <svg class="f04-star f04-star-full" style="left: 184px" viewBox="0 0 24 24"><path d="M12 1.8l3.1 6.6 7.2.9-5.3 5 1.4 7.1L12 17.9l-6.4 3.5 1.4-7.1-5.3-5 7.2-.9z" /></svg>
+              <svg class="f04-star f04-star-full" style="left: 276px" viewBox="0 0 24 24"><path d="M12 1.8l3.1 6.6 7.2.9-5.3 5 1.4 7.1L12 17.9l-6.4 3.5 1.4-7.1-5.3-5 7.2-.9z" /></svg>
+              <svg class="f04-star f04-star-full" style="left: 368px" viewBox="0 0 24 24"><path d="M12 1.8l3.1 6.6 7.2.9-5.3 5 1.4 7.1L12 17.9l-6.4 3.5 1.4-7.1-5.3-5 7.2-.9z" /></svg>
+            </div>
+
+            <div class="f04-btn f04-btn-g">
+              <div class="f04-shine"><div class="f04-shine-band"></div></div>
+              <svg viewBox="0 0 24 24"><path d="M12 1.8l3.1 6.6 7.2.9-5.3 5 1.4 7.1L12 17.9l-6.4 3.5 1.4-7.1-5.3-5 7.2-.9z" /></svg>
+              <span class="f04-btn-label">Scrivi la recensione su Google</span>
+            </div>
+
+            <div class="f04-veil"></div>
+
+            <div class="f04-btn f04-btn-i">
+              <div class="f04-btn-fill"></div>
+              <svg viewBox="0 0 24 24">
+                <rect x="3" y="3" width="18" height="18" rx="5.5" />
+                <circle cx="12" cy="12" r="4.2" />
+                <circle class="f04-dot" cx="17.3" cy="6.7" r="1.2" />
+              </svg>
+              <span class="f04-btn-label">Seguici su Instagram</span>
+            </div>
+
+            <div class="f04-skel" style="top: 978px; height: 124px">
+              <div class="f04-skel-line" style="top: 34px; width: 300px"></div>
+              <div class="f04-skel-line" style="top: 70px; width: 200px"></div>
+            </div>
+            <div class="f04-skel" style="top: 1118px; height: 124px">
+              <div class="f04-skel-line" style="top: 34px; width: 260px"></div>
+              <div class="f04-skel-line" style="top: 70px; width: 340px"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- confetti burst -->
+        <div class="f04-confetti">
+          <span class="f04-particle"></span><span class="f04-particle f04-g"></span><span class="f04-particle"></span><span class="f04-particle f04-g"></span><span class="f04-particle"></span><span class="f04-particle f04-g"></span><span class="f04-particle"></span><span class="f04-particle f04-g"></span><span class="f04-particle"></span><span class="f04-particle f04-g"></span><span class="f04-particle"></span><span class="f04-particle f04-g"></span><span class="f04-particle"></span><span class="f04-particle f04-g"></span><span class="f04-particle"></span><span class="f04-particle f04-g"></span><span class="f04-particle"></span><span class="f04-particle f04-g"></span><span class="f04-particle"></span><span class="f04-particle f04-g"></span><span class="f04-particle"></span><span class="f04-particle f04-g"></span><span class="f04-particle"></span><span class="f04-particle f04-g"></span><span class="f04-particle"></span><span class="f04-particle f04-g"></span>
+        </div>
+
+        <!-- thank-you card -->
+        <div class="f04-card">
+          <div class="f04-cstars">
+            <div class="f04-cstars-inner">
+              <svg viewBox="0 0 24 24"><path d="M12 1.8l3.1 6.6 7.2.9-5.3 5 1.4 7.1L12 17.9l-6.4 3.5 1.4-7.1-5.3-5 7.2-.9z" /></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 1.8l3.1 6.6 7.2.9-5.3 5 1.4 7.1L12 17.9l-6.4 3.5 1.4-7.1-5.3-5 7.2-.9z" /></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 1.8l3.1 6.6 7.2.9-5.3 5 1.4 7.1L12 17.9l-6.4 3.5 1.4-7.1-5.3-5 7.2-.9z" /></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 1.8l3.1 6.6 7.2.9-5.3 5 1.4 7.1L12 17.9l-6.4 3.5 1.4-7.1-5.3-5 7.2-.9z" /></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 1.8l3.1 6.6 7.2.9-5.3 5 1.4 7.1L12 17.9l-6.4 3.5 1.4-7.1-5.3-5 7.2-.9z" /></svg>
+            </div>
+          </div>
+          <div class="f04-thanks f04-split" data-layout-allow-overlap>Grazie di cuore</div>
+          <div class="f04-sub">Recensione pubblicata</div>
+        </div>
+
+        <!-- follow payoff -->
+        <div class="f04-hring"></div>
+        <div class="f04-heart">
+          <svg viewBox="0 0 24 24"><path d="M12 21.2s-7.6-4.7-9.7-9.4C.8 8.4 2.9 4.4 6.7 4.4c2.2 0 3.6 1.1 5.3 3 1.7-1.9 3.1-3 5.3-3 3.8 0 5.9 4 4.4 7.4-2.1 4.7-9.7 9.4-9.7 9.4z" /></svg>
+        </div>
+        <div class="f04-badge" data-layout-allow-overlap>+1 follower</div>
+        <div class="f04-mascot"><img src="assets/brand/mascot.svg" alt="" /></div>
+
+        <!-- click ripples -->
+        <div class="f04-ripple f04-ripple-g" style="left: 645px; top: 1135px"></div>
+        <div class="f04-ripple f04-ripple-g" style="left: 645px; top: 1135px"></div>
+        <div class="f04-ripple f04-ripple-i" style="left: 655px; top: 1270px"></div>
+        <div class="f04-ripple f04-ripple-i" style="left: 655px; top: 1270px"></div>
+
+        <!-- cursor with coral echo trail -->
+        <div class="f04-cursorlayer">
+          <div class="f04-ghost"><svg viewBox="0 0 24 24"><path d="M3 2 L20 12 L12 13.5 L8 21 Z" /></svg></div>
+          <div class="f04-ghost"><svg viewBox="0 0 24 24"><path d="M3 2 L20 12 L12 13.5 L8 21 Z" /></svg></div>
+          <div class="f04-ghost"><svg viewBox="0 0 24 24"><path d="M3 2 L20 12 L12 13.5 L8 21 Z" /></svg></div>
+          <div class="f04-ghost"><svg viewBox="0 0 24 24"><path d="M3 2 L20 12 L12 13.5 L8 21 Z" /></svg></div>
+          <div class="f04-ghost"><svg viewBox="0 0 24 24"><path d="M3 2 L20 12 L12 13.5 L8 21 Z" /></svg></div>
+          <div class="f04-lead"><div class="f04-lead-inner"><img src="assets/brand/cursor.svg" alt="" /></div></div>
+        </div>
+      </div>
+
+      <!-- titles: screen-fixed, top band (y 186–386) -->
+      <div class="f04-titles">
+        <div class="f04-tblock f04-tA">
+          <span class="f04-line f04-split f04-t1">In 30 secondi.</span>
+          <span class="f04-line f04-split f04-t2 f04-coral">Nella sua lingua.</span>
+        </div>
+        <div class="f04-tblock f04-tB">
+          <span class="f04-line f04-split f04-t3">E un follower</span>
+          <span class="f04-line f04-split f04-t4 f04-coral">in più.</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="f04-recensione-follower-grain-layer" class="f04-grain clip" data-start="0" data-duration="6.8" data-track-index="2">
+      <svg viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg">
+        <filter id="f04-recensione-follower-grain" x="0" y="0" width="100%" height="100%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="11" stitchTiles="stitch" />
+          <feColorMatrix type="saturate" values="0" />
+        </filter>
+        <rect width="1080" height="1920" filter="url(#f04-recensione-follower-grain)" />
+      </svg>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script>
+      (function () {
+        var FID = "04-recensione-follower";
+        var nodes = document.querySelectorAll('[data-composition-id="' + FID + '"]');
+        var root = nodes[nodes.length - 1];
+        function q(sel) {
+          return root.querySelector(sel);
+        }
+        function qa(sel) {
+          return Array.prototype.slice.call(root.querySelectorAll(sel));
+        }
+
+        // ---- baked closed-form spring (seek-safe, pure function of progress) ----
+        function springEase(response, dampingFraction) {
+          var w = (2 * Math.PI) / response;
+          var z = dampingFraction;
+          var pos;
+          if (z < 1) {
+            var wd = w * Math.sqrt(1 - z * z);
+            pos = function (t) {
+              return 1 - Math.exp(-z * w * t) * (Math.cos(wd * t) + ((z * w) / wd) * Math.sin(wd * t));
+            };
+          } else {
+            pos = function (t) {
+              return 1 - Math.exp(-w * t) * (1 + w * t);
+            };
+          }
+          var EPS = 0.001;
+          var SCAN = 12 / (z * w);
+          var N = 4800;
+          var T = SCAN;
+          for (var i = N; i >= 0; i--) {
+            var tt = (i / N) * SCAN;
+            if (Math.abs(1 - pos(tt)) > EPS) {
+              T = ((i + 1) / N) * SCAN;
+              break;
+            }
+          }
+          var xT = pos(T);
+          return {
+            duration: T,
+            ease: function (p) {
+              return pos(p * T) + p * (1 - xT);
+            },
+          };
+        }
+        var SPR_CAM = springEase(0.3, 1); // ~0.44s pull-back
+        var SPR_UI = springEase(0.42, 1); // header / card / badge
+        var SPR_POP = springEase(0.28, 1); // stars, heart
+        var SPR_SNAP = springEase(0.22, 1); // button release
+        var SPR_MASCOT = springEase(0.36, 0.62); // mascot only: playful overshoot
+        var SPR_MASCOT_LAND = springEase(0.3, 0.6);
+
+        // ---- split text into per-letter spans (deterministic) ----
+        qa(".f04-split").forEach(function (el) {
+          var text = el.textContent;
+          el.textContent = "";
+          for (var i = 0; i < text.length; i++) {
+            var s = document.createElement("span");
+            if (text[i] === " ") {
+              s.className = "f04-sp";
+            } else {
+              s.className = "f04-ch";
+              s.textContent = text[i];
+            }
+            el.appendChild(s);
+          }
+        });
+
+        // ---- svg-path-draw setup ----
+        var oval = q(".f04-logo-oval");
+        var wave = q(".f04-logo-wave");
+        var lenOval = oval.getTotalLength() * 1.02;
+        var lenWave = wave.getTotalLength() * 1.02;
+        oval.style.strokeDasharray = lenOval;
+        wave.style.strokeDasharray = lenWave;
+
+        // ---- virtual camera: zoom anchored on the phone's top edge (540,420) ----
+        function cam(s, px, py) {
+          return { x: 540 - s * 540 + px, y: 420 - s * 420 + py, scale: s };
+        }
+        var world = q(".f04-world");
+        // full-bleed white: the screen fills the frame (handoff from frame 03)
+        var C0 = { x: 540 - 1.8 * 540, y: 960 - 1.8 * 1070, scale: 1.8 };
+        var C1 = cam(1, 0, 0);
+        var C2 = cam(1.025, -8, 0);
+        var C3 = cam(1.055, -22, 0); // lean into the Google tap
+        var C4 = cam(1.0, 0, 0); // breathe out for the card
+        var C5 = cam(1.05, -20, 0); // lean into the Instagram tap
+        var C6 = cam(1.015, 0, 0); // settle on the payoff
+
+        var tl = gsap.timeline({ paused: true });
+
+        // Camera chain — always moving, ~1s motivated legs
+        tl.fromTo(world, C0, Object.assign({}, C1, { duration: SPR_CAM.duration, ease: SPR_CAM.ease }), 0);
+        tl.fromTo(world, C1, Object.assign({}, C2, { duration: 1.0, ease: "sine.inOut", immediateRender: false }), SPR_CAM.duration);
+        tl.fromTo(world, C2, Object.assign({}, C3, { duration: 0.9, ease: "power2.inOut", immediateRender: false }), 1.45);
+        tl.fromTo(world, C3, Object.assign({}, C4, { duration: 1.05, ease: "power2.inOut", immediateRender: false }), 2.35);
+        tl.fromTo(world, C4, Object.assign({}, C5, { duration: 1.2, ease: "power2.inOut", immediateRender: false }), 3.4);
+        tl.fromTo(world, C5, Object.assign({}, C6, { duration: 1.9, ease: "power2.out", immediateRender: false }), 4.6);
+
+        // ---------- Scene 1 (0.0–1.0): page loads during the pull-back ----------
+        tl.fromTo(q(".f04-header"), { yPercent: -100 }, { yPercent: 0, duration: SPR_UI.duration, ease: SPR_UI.ease }, 0.06);
+        tl.fromTo(oval, { strokeDashoffset: lenOval }, { strokeDashoffset: 0, duration: 0.6, ease: "power2.out" }, 0.22);
+        tl.fromTo(wave, { strokeDashoffset: lenWave }, { strokeDashoffset: 0, duration: 0.5, ease: "power2.out" }, 0.36);
+        qa(".f04-venue .f04-ch").forEach(function (ch, i) {
+          tl.fromTo(ch, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.26, ease: "power3.out" }, 0.3 + i * 0.03);
+        });
+        tl.fromTo(q(".f04-venue-rule"), { scaleX: 0 }, { scaleX: 1, duration: 0.4, ease: "power3.out" }, 0.62);
+
+        var asks = qa(".f04-ask-v");
+        tl.fromTo(q(".f04-ask"), { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" }, 0.32);
+        asks.forEach(function (a, i) {
+          if (i > 0) gsap.set(a, { opacity: 0 });
+        });
+        tl.fromTo(q(".f04-pills"), { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" }, 0.38);
+        tl.fromTo(q(".f04-stars"), { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" }, 0.44);
+        tl.fromTo(q(".f04-btn-g"), { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 0.5);
+        tl.fromTo(q(".f04-btn-i"), { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 0.56);
+        qa(".f04-skel").forEach(function (s, i) {
+          tl.fromTo(s, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 0.62 + i * 0.06);
+        });
+
+        // language pills cycle IT→EN→DE→FR→ES→IT, the question follows the language
+        var hl = q(".f04-pill-hl");
+        var STEP = 109;
+        var steps = [
+          { to: 1, at: 0.78 },
+          { to: 2, at: 0.96 },
+          { to: 3, at: 1.14 },
+          { to: 4, at: 1.32 },
+          { to: 0, at: 1.5 },
+        ];
+        var prev = 0;
+        steps.forEach(function (s) {
+          var d = s.to === 0 ? 0.24 : 0.14;
+          tl.fromTo(hl, { x: prev * STEP }, { x: s.to * STEP, duration: d, ease: "power3.inOut", immediateRender: false }, s.at);
+          tl.fromTo(asks[prev], { opacity: 1, y: 0 }, { opacity: 0, y: -14, duration: 0.08, ease: "power2.in", immediateRender: false }, s.at + 0.02);
+          tl.fromTo(asks[s.to], { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.1, ease: "power2.out", immediateRender: false }, s.at + 0.08);
+          prev = s.to;
+        });
+
+        // ---------- Scene 2 (1.0–2.4): title types; cursor taps the gold button ----------
+        qa(".f04-t1 .f04-ch").forEach(function (ch, i) {
+          tl.fromTo(ch, { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.24, ease: "power3.out" }, 1.0 + i * 0.04);
+        });
+
+        var TIP = { x: 9, y: 6 }; // arrow tip inside the 72px cursor box
+        var lead = q(".f04-lead");
+        var leadInner = q(".f04-lead-inner");
+        var ghosts = qa(".f04-ghost");
+        var layer = q(".f04-cursorlayer");
+        var BASES = [0.55, 0.42, 0.3, 0.2, 0.12];
+        var DELTA = 0.045;
+        function moveEase(u) {
+          return 1 - Math.pow(1 - u, 3);
+        }
+        function bez(a, c, b, u) {
+          return (1 - u) * (1 - u) * a + 2 * u * (1 - u) * c + u * u * b;
+        }
+        function cursorMove(P0, PC, P1, at, dur) {
+          var ex = function (p) {
+            return (bez(P0.x, PC.x, P1.x, moveEase(p)) - P0.x) / (P1.x - P0.x);
+          };
+          var ey = function (p) {
+            return (bez(P0.y, PC.y, P1.y, moveEase(p)) - P0.y) / (P1.y - P0.y);
+          };
+          function addPath(el, t) {
+            tl.fromTo(el, { x: P0.x - TIP.x }, { x: P1.x - TIP.x, duration: dur, ease: ex, immediateRender: false }, t);
+            tl.fromTo(el, { y: P0.y - TIP.y }, { y: P1.y - TIP.y, duration: dur, ease: ey, immediateRender: false }, t);
+          }
+          addPath(lead, at);
+          ghosts.forEach(function (g, i) {
+            var t = at + (i + 1) * DELTA;
+            addPath(g, t);
+            tl.fromTo(g, { opacity: 0 }, { opacity: BASES[i], duration: 0.06, ease: "power1.out", immediateRender: false }, at + 0.02);
+            tl.fromTo(g, { opacity: BASES[i] }, { opacity: 0, duration: 0.16, ease: "power1.in", immediateRender: false }, t + dur - 0.2);
+          });
+        }
+        function press(btnEl, at, rippleSel) {
+          tl.fromTo(leadInner, { scale: 1 }, { scale: 0.85, duration: 0.08, ease: "power2.in", immediateRender: false }, at);
+          tl.fromTo(btnEl, { scale: 1 }, { scale: 0.95, duration: 0.08, ease: "power2.in", immediateRender: false }, at);
+          tl.to(leadInner, { scale: 1, duration: SPR_SNAP.duration, ease: SPR_SNAP.ease }, at + 0.08);
+          tl.to(btnEl, { scale: 1, duration: SPR_SNAP.duration, ease: SPR_SNAP.ease }, at + 0.08);
+          qa(rippleSel).forEach(function (r, i) {
+            tl.fromTo(r, { scale: 0, opacity: 1 }, { scale: 3.6, opacity: 0, duration: 0.65, ease: "power2.out", immediateRender: false }, at + 0.02 + i * 0.1);
+          });
+        }
+
+        // cursor rests at the start point, hidden, until it enters
+        gsap.set([lead].concat(ghosts), { x: 900 - TIP.x, y: 1560 - TIP.y });
+        tl.fromTo(layer, { opacity: 0 }, { opacity: 1, duration: 0.14, ease: "power2.out" }, 1.44);
+        var G = { x: 700, y: 1190 }; // gold button, right of the label
+        cursorMove({ x: 900, y: 1560 }, { x: 880, y: 1260 }, G, 1.46, 0.55);
+        tl.fromTo(q(".f04-shine"), { x: -150 }, { x: 640, duration: 0.55, ease: "power2.inOut" }, 1.62);
+        var CLICK_G = 2.08;
+        press(q(".f04-btn-g"), CLICK_G, ".f04-ripple-g");
+
+        // ---------- Scene 3 (2.4–3.8): stars fill, thank-you card + confetti, title completes ----------
+        var R = { x: 900, y: 1300 }; // rest spot off to the right
+        cursorMove(G, { x: 820, y: 1170 }, R, 2.24, 0.6);
+
+        qa(".f04-star-full").forEach(function (st, i) {
+          var at = 2.24 + i * 0.09;
+          tl.fromTo(st, { scale: 0, rotation: -30 }, { scale: 1, rotation: 0, duration: SPR_POP.duration, ease: SPR_POP.ease }, at);
+          tl.fromTo(st, { opacity: 0 }, { opacity: 1, duration: 0.08, ease: "none" }, at);
+        });
+
+        var card = q(".f04-card");
+        tl.fromTo(card, { y: 90, scale: 0.6 }, { y: 0, scale: 1, duration: SPR_UI.duration, ease: SPR_UI.ease }, 2.78);
+        tl.fromTo(card, { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "power2.out" }, 2.78);
+        tl.fromTo(q(".f04-cstars-inner"), { x: -344 }, { x: 0, duration: 0.4, ease: "power2.out" }, 2.92);
+        tl.fromTo(q(".f04-cstars"), { x: 344 }, { x: 0, duration: 0.4, ease: "power2.out" }, 2.92);
+        qa(".f04-thanks .f04-ch").forEach(function (ch, i) {
+          tl.fromTo(ch, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.24, ease: "power3.out" }, 2.98 + i * 0.028);
+        });
+        tl.fromTo(q(".f04-sub"), { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" }, 3.3);
+
+        // confetti burst from the card's top edge, then gravity + fade before the dismiss
+        var BURST = 2.96;
+        qa(".f04-particle").forEach(function (p, i) {
+          var bx = Math.cos(i * 0.83) * 380;
+          var by = -120 - Math.abs(Math.sin(i * 0.61)) * 170;
+          var br = 180 + i * 37;
+          var t1 = BURST + i * 0.008;
+          tl.fromTo(p, { x: 0, y: 0, rotation: 0, scale: 0, opacity: 0 }, { x: bx, y: by, rotation: br, scale: 1, opacity: 1, duration: 0.42, ease: "power2.out" }, t1);
+          var t2 = t1 + 0.42;
+          tl.fromTo(p, { y: by, rotation: br }, { y: by + 260 + (i % 5) * 30, rotation: br + 160, duration: 3.85 - t2, ease: "power1.in", immediateRender: false }, t2);
+          tl.fromTo(p, { opacity: 1 }, { opacity: 0, duration: 0.25, ease: "power1.in", immediateRender: false }, 3.6);
+        });
+
+        qa(".f04-t2 .f04-ch").forEach(function (ch, i) {
+          tl.fromTo(ch, { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.24, ease: "power3.out" }, 2.86 + i * 0.038);
+        });
+
+        // ---------- Scene 4 (3.8–5.2): card dismisses; cursor taps "Seguici su Instagram" ----------
+        tl.fromTo(card, { scale: 1, y: 0, opacity: 1 }, { scale: 0.86, y: 50, opacity: 0, duration: 0.3, ease: "power2.in", immediateRender: false }, 3.8);
+        var I = { x: 710, y: 1324 };
+        cursorMove(R, { x: 860, y: 1400 }, I, 3.92, 0.52);
+        var CLICK_I = 4.5;
+        var btnI = q(".f04-btn-i");
+        press(btnI, CLICK_I, ".f04-ripple-i");
+        tl.fromTo(q(".f04-btn-fill"), { opacity: 0 }, { opacity: 1, duration: 0.18, ease: "power2.out" }, CLICK_I + 0.06);
+        tl.fromTo(btnI, { color: "#123247" }, { color: "#ffffff", duration: 0.18, ease: "power2.out", immediateRender: false }, CLICK_I + 0.06);
+        var R2 = { x: 930, y: 1420 };
+        cursorMove(I, { x: 880, y: 1330 }, R2, 4.66, 0.6);
+
+        // ---------- Scene 5 (5.2–6.5): heart pops, "+1 follower", title swaps, mascot celebrates ----------
+        tl.fromTo(q(".f04-veil"), { opacity: 0 }, { opacity: 0.92, duration: 0.3, ease: "power2.out" }, 4.68);
+        var heart = q(".f04-heart");
+        tl.fromTo(heart, { y: 180, scale: 0 }, { y: 0, scale: 1, duration: SPR_POP.duration * 1.3, ease: SPR_POP.ease }, 4.72);
+        tl.fromTo(heart, { opacity: 0 }, { opacity: 1, duration: 0.1, ease: "none" }, 4.72);
+        tl.fromTo(q(".f04-hring"), { scale: 0.6, opacity: 0.9 }, { scale: 1.9, opacity: 0, duration: 0.6, ease: "power2.out", immediateRender: false }, 5.0);
+        tl.fromTo(heart, { scale: 1 }, { scale: 1.12, duration: 0.1, ease: "power2.out", immediateRender: false }, 5.0);
+        tl.to(heart, { scale: 1, duration: SPR_SNAP.duration, ease: SPR_SNAP.ease }, 5.1);
+
+        var badge = q(".f04-badge");
+        tl.fromTo(badge, { y: 60, scale: 0.5 }, { y: 0, scale: 1, duration: SPR_UI.duration, ease: SPR_UI.ease }, 5.22);
+        tl.fromTo(badge, { opacity: 0 }, { opacity: 1, duration: 0.16, ease: "power2.out" }, 5.22);
+
+        // title swap (cut catalog: per-word lift-out, then new line types in)
+        var tA = qa(".f04-tA .f04-line");
+        tA.forEach(function (ln, i) {
+          tl.fromTo(ln, { opacity: 1, y: 0, filter: "blur(0px)" }, { opacity: 0, y: -36, filter: "blur(8px)", duration: 0.24, ease: "power2.in", immediateRender: false }, 5.2 + i * 0.05);
+        });
+        qa(".f04-t3 .f04-ch").forEach(function (ch, i) {
+          tl.fromTo(ch, { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.24, ease: "power3.out" }, 5.4 + i * 0.038);
+        });
+        qa(".f04-t4 .f04-ch").forEach(function (ch, i) {
+          tl.fromTo(ch, { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.24, ease: "power3.out" }, 5.86 + i * 0.038);
+        });
+
+        // mascot pops beside the badge, then a celebratory jump + spin (overshoot only here)
+        var mascot = q(".f04-mascot");
+        var MH = 60;
+        var MX = 810, MY = 900;
+        tl.fromTo(mascot, { x: MX - MH, y: MY - MH, scale: 0, rotation: -14 }, { scale: 1, rotation: 0, duration: SPR_MASCOT.duration, ease: SPR_MASCOT.ease }, 5.42);
+        tl.to(mascot, { scaleX: 1.14, scaleY: 0.86, duration: 0.08, ease: "power2.out" }, 5.86);
+        tl.to(mascot, { scaleX: 1, scaleY: 1, duration: 0.12, ease: "power2.out" }, 5.94);
+        tl.to(mascot, { y: MY - MH - 110, duration: 0.24, ease: "power2.out" }, 5.94);
+        tl.to(mascot, { y: MY - MH, duration: 0.26, ease: "power2.in" }, 6.18);
+        tl.fromTo(mascot, { rotation: 0 }, { rotation: 360, duration: 0.5, ease: "power2.inOut", immediateRender: false }, 5.94);
+        tl.to(mascot, { scaleX: 1.12, scaleY: 0.88, duration: 0.05, ease: "power2.out" }, 6.44);
+
+        window.__timelines[FID] = tl;
+      })();
+    ;(function(){var id="04-recensione-follower",k=1.0156;var inner=window.__timelines[id];if(!inner)return;var outer=gsap.timeline({paused:true});inner.paused(false);inner.timeScale(k);outer.add(inner,0);outer.set({},{},6.4);window.__timelines[id]=outer;})();
+</script>
+  </div>
+</template>

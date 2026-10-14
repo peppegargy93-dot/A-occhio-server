@@ -1,0 +1,340 @@
+<template>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <style>
+    @font-face {
+      font-family: "Anton";
+      src: url("assets/fonts/anton-latin-400-normal.woff2") format("woff2");
+      font-weight: 400;
+      font-style: normal;
+    }
+    #root {
+      position: absolute;
+      inset: 0;
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+    }
+    .v11-layer {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+    }
+    #v11-ground {
+      background: #efe6d2;
+    }
+    #v11-ground svg,
+    #v11-overlay svg {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1080px;
+      height: 1920px;
+    }
+    #v11-overlay {
+      pointer-events: none;
+    }
+    #v11-vignette {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        ellipse 78% 62% at 50% 48%,
+        rgba(20, 20, 20, 0) 55%,
+        rgba(20, 20, 20, 0.34) 100%
+      );
+    }
+    #v11-flicker {
+      position: absolute;
+      inset: 0;
+      background: #141414;
+      opacity: 0.03;
+    }
+    #v11-flag {
+      position: absolute;
+      left: 150px;
+      top: 470px;
+      width: 780px;
+      height: 780px;
+      transform-origin: 390px 390px;
+    }
+    #v11-green {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 262px;
+      height: 780px;
+      background: #009246;
+      transform-origin: 131px 390px;
+      z-index: 3;
+    }
+    #v11-white-wrap {
+      position: absolute;
+      left: 260px;
+      top: 0;
+      width: 260px;
+      height: 780px;
+      transform-origin: 130px 390px;
+      z-index: 2;
+    }
+    .v11-dust {
+      position: absolute;
+      width: 26.6px;
+      height: 26.6px;
+      background: #faf6ec;
+    }
+    #v11-red-wrap {
+      position: absolute;
+      left: 460px;
+      top: -60px;
+      width: 380px;
+      height: 900px;
+      transform-origin: 190px 450px;
+      z-index: 1;
+    }
+    #v11-red-svg {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 380px;
+      height: 900px;
+      overflow: visible;
+    }
+    #v11-title {
+      position: absolute;
+      left: 80px;
+      width: 920px;
+      top: 200px;
+      text-align: center;
+      font-family: "Anton", sans-serif;
+      font-size: 120px;
+      line-height: 1.08;
+      color: #efe6d2;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      z-index: 5;
+    }
+    .v11-line {
+      display: block;
+      white-space: nowrap;
+    }
+    .v11-word {
+      display: inline-block;
+      margin: 0 14px;
+    }
+  </style>
+
+  <div id="root" data-composition-id="11-bandiera" data-width="1080" data-height="1920" data-duration="15.484">
+    <!-- Ground: aged paper + fibres/stains (static, fixed seed) -->
+    <div id="v11-ground" class="v11-layer clip" data-start="0" data-duration="15.484" data-track-index="0">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="none">
+        <filter id="v11-stain" x="0" y="0" width="100%" height="100%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.004 0.006" numOctaves="3" seed="11" />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.851  0 0 0 0 0.804  0 0 0 0 0.698  1.8 0 0 0 -0.85" />
+        </filter>
+        <filter id="v11-fibre" x="0" y="0" width="100%" height="100%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.012 0.32" numOctaves="2" seed="4" />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.851  0 0 0 0 0.804  0 0 0 0 0.698  2.6 0 0 0 -1.45" />
+        </filter>
+        <image width="1080" height="1920" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1080' height='1920' viewBox='0 0 1080 1920'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25'%3E %3CfeTurbulence type='fractalNoise' baseFrequency='0.004 0.006' numOctaves='3' seed='11' /%3E %3CfeColorMatrix type='matrix' values='0 0 0 0 0.851 0 0 0 0 0.804 0 0 0 0 0.698 1.8 0 0 0 -0.85' /%3E %3C/filter%3E%3Crect width='1080' height='1920' filter='url(%23f)'/%3E%3C/svg%3E" opacity="0.55"/>
+        <image width="1080" height="1920" preserveAspectRatio="none" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1080' height='1920' viewBox='0 0 1080 1920'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25'%3E %3CfeTurbulence type='fractalNoise' baseFrequency='0.012 0.32' numOctaves='2' seed='4' /%3E %3CfeColorMatrix type='matrix' values='0 0 0 0 0.851 0 0 0 0 0.804 0 0 0 0 0.698 2.6 0 0 0 -1.45' /%3E %3C/filter%3E%3Crect width='1080' height='1920' filter='url(%23f)'/%3E%3C/svg%3E" opacity="0.5"/>
+      </svg>
+    </div>
+
+    <!-- Content -->
+    <div id="v11-stage" class="v11-layer clip" data-start="0" data-duration="15.484" data-track-index="1">
+      <div id="v11-flag">
+        <div id="v11-red-wrap">
+          <svg id="v11-red-svg" viewBox="-60 -60 380 900">
+            <polygon id="v11-red-poly" fill="#CE2B37" points="0,0 260,0 260,780 0,780" />
+          </svg>
+        </div>
+        <div id="v11-white-wrap"></div>
+        <div id="v11-green"></div>
+      </div>
+      <div id="v11-title">
+        <span class="v11-line"><span class="v11-word">Il</span><span class="v11-word">verde</span></span>
+        <span class="v11-line"><span class="v11-word">è</span><span class="v11-word">il</span><span class="v11-word">verde.</span></span>
+      </div>
+    </div>
+
+    <!-- Overlay: film grain tiles, flicker, vignette -->
+    <div id="v11-overlay" class="v11-layer clip" data-start="0" data-duration="15.484" data-track-index="2">
+      <div id="v11-grain"></div>
+      <div id="v11-flicker"></div>
+      <div id="v11-vignette"></div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      // Voice beats (seconds). Everything below is driven from these.
+      const BEATS = { rosso: 2.736, bianco: 9.884, verde: 10.726 };
+      const DUR = 15.484;
+      const FPS = 30;
+      const tl = gsap.timeline({ paused: true });
+
+      // ---------- Film grain: 6 pre-baked tiles, fixed seeds ----------
+      const grainHost = document.getElementById("v11-grain");
+      const GRAIN_SEEDS = [3, 17, 29, 41, 53, 67];
+      let g = "";
+      GRAIN_SEEDS.forEach(function (seed, i) {
+        g +=
+          '<svg id="v11-grain-' + i + '" viewBox="0 0 1080 1920" preserveAspectRatio="none" style="opacity:0">' +
+          '<image width="1080" height="1920" preserveAspectRatio="none" opacity="0.32" href="data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920">' +
+          '<filter id="f" x="0" y="0" width="100%" height="100%">' +
+          '<feTurbulence type="fractalNoise" baseFrequency="0.82" numOctaves="2" seed="' + seed + '" stitchTiles="stitch"/>' +
+          '<feColorMatrix type="matrix" values="0 0 0 0 0.078  0 0 0 0 0.078  0 0 0 0 0.078  2.4 0 0 0 -1.2"/>' +
+          "</filter>" +
+          '<rect width="1080" height="1920" filter="url(#f)"/></svg>') + '"/></svg>';
+      });
+      grainHost.innerHTML = g;
+      const tiles = GRAIN_SEEDS.map(function (_, i) {
+        return document.getElementById("v11-grain-" + i);
+      });
+      const flicker = document.getElementById("v11-flicker");
+      const STEP = 2 / FPS;
+      const nSteps = Math.ceil(DUR / STEP);
+      for (let i = 0; i < nSteps; i++) {
+        const t = i * STEP;
+        tl.set(tiles[i % 6], { opacity: 1 }, t);
+        if (i > 0) tl.set(tiles[(i - 1) % 6], { opacity: 0 }, t);
+        // deterministic ±3% brightness flicker
+        const f = 0.03 + 0.03 * Math.sin(i * 2.71) * Math.cos(i * 1.37);
+        tl.set(flicker, { opacity: f }, t);
+      }
+
+      // ---------- Scene 1: breathing tricolour ----------
+      const flag = document.getElementById("v11-flag");
+      // one keyframed tween: 0.96 ↔ 1.04 in 1.25 s half-breaths, settling to 1 on "verde"
+      const breath = [];
+      let bt = 0, up = true;
+      while (bt + 1.25 <= BEATS.verde) {
+        breath.push({ scale: up ? 1.04 : 0.96, duration: 1.25, ease: "sine.inOut" });
+        up = !up;
+        bt += 1.25;
+      }
+      breath.push({ scale: 1, duration: BEATS.verde - bt, ease: "sine.inOut" });
+      tl.set(flag, { scale: 0.96 }, 0);
+      tl.to(flag, { keyframes: breath }, 0);
+
+      // ---------- Scene 2: red stiffens into spikes ----------
+      const poly = document.getElementById("v11-red-poly");
+      const W = 260, H = 780, SEG = H / 18;
+      // perimeter: corners + segment midpoints with outward normals
+      const pts = [];
+      function edge(x0, y0, x1, y1, nx, ny) {
+        const len = Math.hypot(x1 - x0, y1 - y0);
+        const n = Math.round(len / SEG);
+        for (let k = 0; k < n; k++) {
+          const a = k / n, b = (k + 0.5) / n;
+          pts.push({ x: x0 + (x1 - x0) * a, y: y0 + (y1 - y0) * a, nx: 0, ny: 0 });
+          const amp = k % 2 === 0 ? 48 : 30;
+          pts.push({ x: x0 + (x1 - x0) * b, y: y0 + (y1 - y0) * b, nx: nx * amp, ny: ny * amp });
+        }
+      }
+      edge(0, 0, W, 0, 0, -1);
+      edge(W, 0, W, H, 1, 0);
+      edge(W, H, 0, H, 0, 1);
+      edge(0, H, 0, 0, -1, 0);
+      const spike = { s: 0 };
+      function drawRed() {
+        const s = spike.s;
+        poly.setAttribute(
+          "points",
+          pts.map(function (p) {
+            return (p.x + p.nx * s).toFixed(1) + "," + (p.y + p.ny * s).toFixed(1);
+          }).join(" ")
+        );
+      }
+      drawRed();
+      // stiffen: quick, rigid
+      tl.fromTo(spike, { s: 0 }, { s: 1, duration: 0.45, ease: "back.out(2.2)", onUpdate: drawRed }, BEATS.rosso + 0.15);
+      // slight tremor (deterministic table), damped after "bianco"
+      const redSvg = document.getElementById("v11-red-svg");
+      let ti = 0;
+      for (let t = BEATS.rosso + 0.15; t < BEATS.verde; t += STEP) {
+        const amp = t < BEATS.bianco ? 3.2 : 1.4;
+        tl.set(redSvg, {
+          x: amp * Math.sin(ti * 12.9898),
+          y: amp * 0.6 * Math.cos(ti * 78.233),
+          rotation: amp * 0.12 * Math.sin(ti * 4.1414),
+        }, t);
+        ti++;
+      }
+      tl.set(redSvg, { x: 0, y: 0, rotation: 0 }, BEATS.verde);
+
+      // ---------- Scene 3: white crumbles into dust and recomposes ----------
+      const whiteWrap = document.getElementById("v11-white-wrap");
+      const COLS = 10, ROWS = 30, CELL = 26;
+      const dust = [];
+      let html = "";
+      for (let r = 0; r < ROWS; r++) {
+        for (let c = 0; c < COLS; c++) {
+          html += '<div class="v11-dust" style="left:' + c * CELL + "px;top:" + r * CELL + 'px"></div>';
+        }
+      }
+      whiteWrap.innerHTML = html;
+      whiteWrap.querySelectorAll(".v11-dust").forEach(function (el) { dust.push(el); });
+      const crumbleAt = BEATS.bianco + 0.3;
+      const recomposeAt = BEATS.bianco + 1.55;
+      dust.forEach(function (el, i) {
+        const r = Math.floor(i / COLS), c = i % COLS;
+        // deterministic per-cell offsets (integer hashes, no randomness)
+        const hx = ((i * 37) % 23) - 11;
+        const hy = (i * 53) % 29;
+        const hr = ((i * 71) % 31) - 15;
+        const delay = (r / ROWS) * 0.35 + ((c * 7) % 5) * 0.02;
+        const dx = hx * 9 + (c - 4.5) * 14;
+        const dy = 90 + hy * 9 + (ROWS - r) * 4;
+        tl.fromTo(el,
+          { x: 0, y: 0, rotation: 0, scale: 1, opacity: 1 },
+          { x: dx, y: dy, rotation: hr * 9, scale: 0.35 + (hy % 5) * 0.08, opacity: 0.7, duration: 0.7, ease: "power1.in" },
+          crumbleAt + delay);
+        tl.to(el,
+          { x: 0, y: 0, rotation: 0, scale: 1, opacity: 1, duration: 0.95, ease: "sine.inOut" },
+          recomposeAt + (1 - r / ROWS) * 0.3 + ((c * 3) % 4) * 0.02);
+      });
+      // panel itself gives a tiny "sniff" shiver before crumbling
+      tl.fromTo(whiteWrap, { scaleY: 1 }, { scaleY: 1.03, duration: 0.15, ease: "sine.out" }, BEATS.bianco + 0.1);
+      tl.to(whiteWrap, { scaleY: 1, duration: 0.15, ease: "sine.in" }, BEATS.bianco + 0.25);
+
+      // ---------- Scene 4: green swells and lazily pushes the others out ----------
+      const green = document.getElementById("v11-green");
+      const redWrap = document.getElementById("v11-red-wrap");
+      const SWELL = 0.9, PUSH = 2.0;
+      const pushStart = BEATS.verde + SWELL;
+      tl.fromTo(green,
+        { scale: 1, x: 0, y: 0, borderRadius: 0 },
+        { scale: 1.12, borderRadius: 40, duration: SWELL, ease: "sine.inOut" },
+        BEATS.verde);
+      // first nudge from the swell (green right edge moves ~16px)
+      tl.to([whiteWrap, redWrap], { x: 16, duration: SWELL, ease: "sine.inOut" }, BEATS.verde);
+      // full expansion: centre on canvas, cover 1080×1920
+      tl.to(green, { x: 260, y: 100, scaleX: 5.4, scaleY: 3.2, borderRadius: 24, duration: PUSH, ease: "power1.inOut" }, pushStart);
+      // right edge goes 425 → 1242 (+816): the others ride on it, swaying softly
+      tl.to(whiteWrap, { x: 16 + 830, rotation: 7, duration: PUSH, ease: "power1.inOut" }, pushStart);
+      tl.to(redWrap, { x: 16 + 830, rotation: 10, duration: PUSH, ease: "power1.inOut" }, pushStart);
+      // the spikes soften while leaving
+      tl.to(spike, { s: 0.25, duration: PUSH, ease: "sine.inOut", onUpdate: drawRed }, pushStart);
+
+      // title: soft fade-in, word by word
+      const words = document.querySelectorAll("#v11-title .v11-word");
+      const titleAt = BEATS.verde + 0.5;
+      words.forEach(function (w, i) {
+        tl.fromTo(w,
+          { opacity: 0, y: 34 },
+          { opacity: 1, y: 0, duration: 0.9, ease: "power1.out" },
+          titleAt + i * 0.16);
+      });
+      // gentle sway to the end
+      const title = document.getElementById("v11-title");
+      tl.fromTo(title, { rotation: 0 }, { rotation: -1.2, duration: DUR - titleAt, ease: "sine.inOut" }, titleAt);
+
+      tl.set({}, {}, DUR);
+      window.__timelines = window.__timelines || {};
+      window.__timelines["11-bandiera"] = tl;
+    })();
+  </script>
+</template>

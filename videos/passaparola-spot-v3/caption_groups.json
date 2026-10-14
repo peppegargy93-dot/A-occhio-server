@@ -1,0 +1,841 @@
+{
+  "total_duration_s": 38.02,
+  "width": 1080,
+  "height": 1920,
+  "groups": [
+    {
+      "id": "caption-group-0",
+      "frame": 1,
+      "start": 0.19,
+      "end": 1.98,
+      "text": "Da te si mangia benissimo,",
+      "words": [
+        {
+          "id": "caption-word-0-0",
+          "text": "Da",
+          "start": 0.19,
+          "end": 0.2
+        },
+        {
+          "id": "caption-word-0-1",
+          "text": "te",
+          "start": 0.2,
+          "end": 0.38
+        },
+        {
+          "id": "caption-word-0-2",
+          "text": "si",
+          "start": 0.38,
+          "end": 0.57
+        },
+        {
+          "id": "caption-word-0-3",
+          "text": "mangia",
+          "start": 0.57,
+          "end": 1.12
+        },
+        {
+          "id": "caption-word-0-4",
+          "text": "benissimo,",
+          "start": 1.13,
+          "end": 1.88
+        }
+      ]
+    },
+    {
+      "id": "caption-group-1",
+      "frame": 1,
+      "start": 1.98,
+      "end": 3.52,
+      "text": "e chi viene lo sa.",
+      "words": [
+        {
+          "id": "caption-word-1-0",
+          "text": "e",
+          "start": 1.98,
+          "end": 2.1
+        },
+        {
+          "id": "caption-word-1-1",
+          "text": "chi",
+          "start": 2.26,
+          "end": 2.42
+        },
+        {
+          "id": "caption-word-1-2",
+          "text": "viene",
+          "start": 2.45,
+          "end": 2.95
+        },
+        {
+          "id": "caption-word-1-3",
+          "text": "lo",
+          "start": 2.95,
+          "end": 3.15
+        },
+        {
+          "id": "caption-word-1-4",
+          "text": "sa.",
+          "start": 3.15,
+          "end": 3.4
+        }
+      ]
+    },
+    {
+      "id": "caption-group-2",
+      "frame": 2,
+      "start": 3.6,
+      "end": 4.8,
+      "text": "Ma su Google,",
+      "words": [
+        {
+          "id": "caption-word-2-0",
+          "text": "Ma",
+          "start": 3.6,
+          "end": 3.63
+        },
+        {
+          "id": "caption-word-2-1",
+          "text": "su",
+          "start": 3.63,
+          "end": 3.81
+        },
+        {
+          "id": "caption-word-2-2",
+          "text": "Google,",
+          "start": 3.89,
+          "end": 4.8
+        }
+      ]
+    },
+    {
+      "id": "caption-group-3",
+      "frame": 2,
+      "start": 4.8,
+      "end": 7.32,
+      "text": "chi ti cerca trova prima gli altri.",
+      "words": [
+        {
+          "id": "caption-word-3-0",
+          "text": "chi",
+          "start": 4.8,
+          "end": 5.09
+        },
+        {
+          "id": "caption-word-3-1",
+          "text": "ti",
+          "start": 5.11,
+          "end": 5.28
+        },
+        {
+          "id": "caption-word-3-2",
+          "text": "cerca",
+          "start": 5.66,
+          "end": 5.84
+        },
+        {
+          "id": "caption-word-3-3",
+          "text": "trova",
+          "start": 5.85,
+          "end": 6.15
+        },
+        {
+          "id": "caption-word-3-4",
+          "text": "prima",
+          "start": 6.15,
+          "end": 6.44
+        },
+        {
+          "id": "caption-word-3-5",
+          "text": "gli",
+          "start": 6.46,
+          "end": 6.56
+        },
+        {
+          "id": "caption-word-3-6",
+          "text": "altri.",
+          "start": 6.98,
+          "end": 7.2
+        }
+      ]
+    },
+    {
+      "id": "caption-group-4",
+      "frame": 3,
+      "start": 7.4,
+      "end": 8.24,
+      "text": "Con Passaparola,",
+      "words": [
+        {
+          "id": "caption-word-4-0",
+          "text": "Con",
+          "start": 7.4,
+          "end": 7.5
+        },
+        {
+          "id": "caption-word-4-1",
+          "text": "Passaparola,",
+          "start": 7.5,
+          "end": 8.24
+        }
+      ]
+    },
+    {
+      "id": "caption-group-5",
+      "frame": 3,
+      "start": 8.24,
+      "end": 9.95,
+      "text": "sul bancone c'è una targa,",
+      "words": [
+        {
+          "id": "caption-word-5-0",
+          "text": "sul",
+          "start": 8.24,
+          "end": 8.46
+        },
+        {
+          "id": "caption-word-5-1",
+          "text": "bancone",
+          "start": 8.46,
+          "end": 8.98
+        },
+        {
+          "id": "caption-word-5-2",
+          "text": "c'è",
+          "start": 8.98,
+          "end": 9.19
+        },
+        {
+          "id": "caption-word-5-3",
+          "text": "una",
+          "start": 9.19,
+          "end": 9.46
+        },
+        {
+          "id": "caption-word-5-4",
+          "text": "targa,",
+          "start": 9.46,
+          "end": 9.95
+        }
+      ]
+    },
+    {
+      "id": "caption-group-6",
+      "frame": 3,
+      "start": 9.95,
+      "end": 11.4,
+      "text": "basta avvicinare il telefono",
+      "words": [
+        {
+          "id": "caption-word-6-0",
+          "text": "basta",
+          "start": 9.95,
+          "end": 10.22
+        },
+        {
+          "id": "caption-word-6-1",
+          "text": "avvicinare",
+          "start": 10.22,
+          "end": 10.79
+        },
+        {
+          "id": "caption-word-6-2",
+          "text": "il",
+          "start": 10.79,
+          "end": 10.9
+        },
+        {
+          "id": "caption-word-6-3",
+          "text": "telefono",
+          "start": 10.9,
+          "end": 11.37
+        }
+      ]
+    },
+    {
+      "id": "caption-group-7",
+      "frame": 4,
+      "start": 11.4,
+      "end": 13.31,
+      "text": "e in trenta secondi ti lascia la",
+      "words": [
+        {
+          "id": "caption-word-7-0",
+          "text": "e",
+          "start": 11.4,
+          "end": 11.44
+        },
+        {
+          "id": "caption-word-7-1",
+          "text": "in",
+          "start": 11.44,
+          "end": 11.55
+        },
+        {
+          "id": "caption-word-7-2",
+          "text": "trenta",
+          "start": 11.61,
+          "end": 11.88
+        },
+        {
+          "id": "caption-word-7-3",
+          "text": "secondi",
+          "start": 12.07,
+          "end": 12.58
+        },
+        {
+          "id": "caption-word-7-4",
+          "text": "ti",
+          "start": 12.58,
+          "end": 12.8
+        },
+        {
+          "id": "caption-word-7-5",
+          "text": "lascia",
+          "start": 12.8,
+          "end": 13.16
+        },
+        {
+          "id": "caption-word-7-6",
+          "text": "la",
+          "start": 13.16,
+          "end": 13.29
+        }
+      ]
+    },
+    {
+      "id": "caption-group-8",
+      "frame": 4,
+      "start": 13.31,
+      "end": 14,
+      "text": "recensione,",
+      "words": [
+        {
+          "id": "caption-word-8-0",
+          "text": "recensione,",
+          "start": 13.31,
+          "end": 14
+        }
+      ]
+    },
+    {
+      "id": "caption-group-9",
+      "frame": 4,
+      "start": 14,
+      "end": 15,
+      "text": "nella sua lingua.",
+      "words": [
+        {
+          "id": "caption-word-9-0",
+          "text": "nella",
+          "start": 14,
+          "end": 14.35
+        },
+        {
+          "id": "caption-word-9-1",
+          "text": "sua",
+          "start": 14.35,
+          "end": 14.48
+        },
+        {
+          "id": "caption-word-9-2",
+          "text": "lingua.",
+          "start": 14.84,
+          "end": 15
+        }
+      ]
+    },
+    {
+      "id": "caption-group-10",
+      "frame": 4,
+      "start": 15,
+      "end": 15.76,
+      "text": "E con un tocco,",
+      "words": [
+        {
+          "id": "caption-word-10-0",
+          "text": "E",
+          "start": 15,
+          "end": 15.07
+        },
+        {
+          "id": "caption-word-10-1",
+          "text": "con",
+          "start": 15.07,
+          "end": 15.29
+        },
+        {
+          "id": "caption-word-10-2",
+          "text": "un",
+          "start": 15.29,
+          "end": 15.44
+        },
+        {
+          "id": "caption-word-10-3",
+          "text": "tocco,",
+          "start": 15.44,
+          "end": 15.76
+        }
+      ]
+    },
+    {
+      "id": "caption-group-11",
+      "frame": 4,
+      "start": 15.76,
+      "end": 17.87,
+      "text": "ti segue anche su Instagram.",
+      "words": [
+        {
+          "id": "caption-word-11-0",
+          "text": "ti",
+          "start": 15.76,
+          "end": 16.3
+        },
+        {
+          "id": "caption-word-11-1",
+          "text": "segue",
+          "start": 16.3,
+          "end": 16.33
+        },
+        {
+          "id": "caption-word-11-2",
+          "text": "anche",
+          "start": 16.33,
+          "end": 16.7
+        },
+        {
+          "id": "caption-word-11-3",
+          "text": "su",
+          "start": 16.7,
+          "end": 16.85
+        },
+        {
+          "id": "caption-word-11-4",
+          "text": "Instagram.",
+          "start": 16.85,
+          "end": 17.75
+        }
+      ]
+    },
+    {
+      "id": "caption-group-12",
+      "frame": 5,
+      "start": 17.97,
+      "end": 18.91,
+      "text": "Più recensioni,",
+      "words": [
+        {
+          "id": "caption-word-12-0",
+          "text": "Più",
+          "start": 17.97,
+          "end": 18.04
+        },
+        {
+          "id": "caption-word-12-1",
+          "text": "recensioni,",
+          "start": 18.04,
+          "end": 18.91
+        }
+      ]
+    },
+    {
+      "id": "caption-group-13",
+      "frame": 5,
+      "start": 18.91,
+      "end": 20.31,
+      "text": "più in alto su Google.",
+      "words": [
+        {
+          "id": "caption-word-13-0",
+          "text": "più",
+          "start": 18.91,
+          "end": 19.12
+        },
+        {
+          "id": "caption-word-13-1",
+          "text": "in",
+          "start": 19.12,
+          "end": 19.27
+        },
+        {
+          "id": "caption-word-13-2",
+          "text": "alto",
+          "start": 19.27,
+          "end": 19.58
+        },
+        {
+          "id": "caption-word-13-3",
+          "text": "su",
+          "start": 19.58,
+          "end": 19.7
+        },
+        {
+          "id": "caption-word-13-4",
+          "text": "Google.",
+          "start": 20.08,
+          "end": 20.19
+        }
+      ]
+    },
+    {
+      "id": "caption-group-14",
+      "frame": 6,
+      "start": 20.49,
+      "end": 22.14,
+      "text": "Sul tavolo c'è il tuo nuovo menu,",
+      "words": [
+        {
+          "id": "caption-word-14-0",
+          "text": "Sul",
+          "start": 20.49,
+          "end": 20.5
+        },
+        {
+          "id": "caption-word-14-1",
+          "text": "tavolo",
+          "start": 20.5,
+          "end": 20.9
+        },
+        {
+          "id": "caption-word-14-2",
+          "text": "c'è",
+          "start": 20.9,
+          "end": 21.07
+        },
+        {
+          "id": "caption-word-14-3",
+          "text": "il",
+          "start": 21.08,
+          "end": 21.21
+        },
+        {
+          "id": "caption-word-14-4",
+          "text": "tuo",
+          "start": 21.21,
+          "end": 21.41
+        },
+        {
+          "id": "caption-word-14-5",
+          "text": "nuovo",
+          "start": 21.41,
+          "end": 21.74
+        },
+        {
+          "id": "caption-word-14-6",
+          "text": "menu,",
+          "start": 21.74,
+          "end": 22.14
+        }
+      ]
+    },
+    {
+      "id": "caption-group-15",
+      "frame": 6,
+      "start": 22.14,
+      "end": 23.82,
+      "text": "da sfogliare col telefono.",
+      "words": [
+        {
+          "id": "caption-word-15-0",
+          "text": "da",
+          "start": 22.14,
+          "end": 22.19
+        },
+        {
+          "id": "caption-word-15-1",
+          "text": "sfogliare",
+          "start": 22.29,
+          "end": 22.83
+        },
+        {
+          "id": "caption-word-15-2",
+          "text": "col",
+          "start": 22.89,
+          "end": 23.06
+        },
+        {
+          "id": "caption-word-15-3",
+          "text": "telefono.",
+          "start": 23.06,
+          "end": 23.7
+        }
+      ]
+    },
+    {
+      "id": "caption-group-16",
+      "frame": 6,
+      "start": 23.84,
+      "end": 25.42,
+      "text": "Ogni piatto con la sua foto,",
+      "words": [
+        {
+          "id": "caption-word-16-0",
+          "text": "Ogni",
+          "start": 23.84,
+          "end": 23.98
+        },
+        {
+          "id": "caption-word-16-1",
+          "text": "piatto",
+          "start": 23.98,
+          "end": 24.39
+        },
+        {
+          "id": "caption-word-16-2",
+          "text": "con",
+          "start": 24.41,
+          "end": 24.63
+        },
+        {
+          "id": "caption-word-16-3",
+          "text": "la",
+          "start": 24.63,
+          "end": 24.77
+        },
+        {
+          "id": "caption-word-16-4",
+          "text": "sua",
+          "start": 24.77,
+          "end": 24.99
+        },
+        {
+          "id": "caption-word-16-5",
+          "text": "foto,",
+          "start": 24.99,
+          "end": 25.42
+        }
+      ]
+    },
+    {
+      "id": "caption-group-17",
+      "frame": 6,
+      "start": 25.42,
+      "end": 27.82,
+      "text": "gli allergeni e il piatto del giorno.",
+      "words": [
+        {
+          "id": "caption-word-17-0",
+          "text": "gli",
+          "start": 25.42,
+          "end": 25.58
+        },
+        {
+          "id": "caption-word-17-1",
+          "text": "allergeni",
+          "start": 25.96,
+          "end": 26.3
+        },
+        {
+          "id": "caption-word-17-2",
+          "text": "e",
+          "start": 26.3,
+          "end": 26.37
+        },
+        {
+          "id": "caption-word-17-3",
+          "text": "il",
+          "start": 26.37,
+          "end": 26.51
+        },
+        {
+          "id": "caption-word-17-4",
+          "text": "piatto",
+          "start": 26.51,
+          "end": 26.86
+        },
+        {
+          "id": "caption-word-17-5",
+          "text": "del",
+          "start": 26.86,
+          "end": 27.4
+        },
+        {
+          "id": "caption-word-17-6",
+          "text": "giorno.",
+          "start": 27.4,
+          "end": 27.7
+        }
+      ]
+    },
+    {
+      "id": "caption-group-18",
+      "frame": 7,
+      "start": 27.87,
+      "end": 29.49,
+      "text": "E le foto le scattiamo noi,",
+      "words": [
+        {
+          "id": "caption-word-18-0",
+          "text": "E le",
+          "start": 27.87,
+          "end": 28.02
+        },
+        {
+          "id": "caption-word-18-1",
+          "text": "foto",
+          "start": 28.02,
+          "end": 28.32
+        },
+        {
+          "id": "caption-word-18-2",
+          "text": "le",
+          "start": 28.32,
+          "end": 28.47
+        },
+        {
+          "id": "caption-word-18-3",
+          "text": "scattiamo",
+          "start": 28.47,
+          "end": 29.13
+        },
+        {
+          "id": "caption-word-18-4",
+          "text": "noi,",
+          "start": 29.13,
+          "end": 29.49
+        }
+      ]
+    },
+    {
+      "id": "caption-group-19",
+      "frame": 7,
+      "start": 29.49,
+      "end": 30.85,
+      "text": "piatto per piatto.",
+      "words": [
+        {
+          "id": "caption-word-19-0",
+          "text": "piatto",
+          "start": 29.49,
+          "end": 29.69
+        },
+        {
+          "id": "caption-word-19-1",
+          "text": "per",
+          "start": 30.06,
+          "end": 30.12
+        },
+        {
+          "id": "caption-word-19-2",
+          "text": "piatto.",
+          "start": 30.19,
+          "end": 30.73
+        }
+      ]
+    },
+    {
+      "id": "caption-group-20",
+      "frame": 8,
+      "start": 31.15,
+      "end": 31.43,
+      "text": "Così",
+      "words": [
+        {
+          "id": "caption-word-20-0",
+          "text": "Così",
+          "start": 31.15,
+          "end": 31.31
+        }
+      ]
+    },
+    {
+      "id": "caption-group-21",
+      "frame": 8,
+      "start": 31.85,
+      "end": 33.47,
+      "text": "personalizziamo i tuoi servizi.",
+      "words": [
+        {
+          "id": "caption-word-21-0",
+          "text": "personalizziamo",
+          "start": 31.85,
+          "end": 32.48
+        },
+        {
+          "id": "caption-word-21-1",
+          "text": "i",
+          "start": 32.48,
+          "end": 32.56
+        },
+        {
+          "id": "caption-word-21-2",
+          "text": "tuoi",
+          "start": 32.56,
+          "end": 32.83
+        },
+        {
+          "id": "caption-word-21-3",
+          "text": "servizi.",
+          "start": 32.83,
+          "end": 33.35
+        }
+      ]
+    },
+    {
+      "id": "caption-group-22",
+      "frame": 9,
+      "start": 33.74,
+      "end": 34.54,
+      "text": "Passaparola.",
+      "words": [
+        {
+          "id": "caption-word-22-0",
+          "text": "Passaparola.",
+          "start": 33.74,
+          "end": 34.52
+        }
+      ]
+    },
+    {
+      "id": "caption-group-23",
+      "frame": 9,
+      "start": 34.54,
+      "end": 37.06,
+      "text": "Fatti raccontare da chi ti ha scelto.",
+      "words": [
+        {
+          "id": "caption-word-23-0",
+          "text": "Fatti",
+          "start": 34.54,
+          "end": 34.9
+        },
+        {
+          "id": "caption-word-23-1",
+          "text": "raccontare",
+          "start": 34.9,
+          "end": 35.67
+        },
+        {
+          "id": "caption-word-23-2",
+          "text": "da",
+          "start": 35.8,
+          "end": 35.83
+        },
+        {
+          "id": "caption-word-23-3",
+          "text": "chi",
+          "start": 35.83,
+          "end": 36.06
+        },
+        {
+          "id": "caption-word-23-4",
+          "text": "ti",
+          "start": 36.13,
+          "end": 36.21
+        },
+        {
+          "id": "caption-word-23-5",
+          "text": "ha",
+          "start": 36.21,
+          "end": 36.36
+        },
+        {
+          "id": "caption-word-23-6",
+          "text": "scelto.",
+          "start": 36.36,
+          "end": 36.94
+        }
+      ]
+    }
+  ]
+}
