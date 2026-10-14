@@ -1,0 +1,1018 @@
+{
+  "total_duration_s": 73.653,
+  "width": 1080,
+  "height": 1920,
+  "groups": [
+    {
+      "id": "caption-group-0",
+      "frame": 1,
+      "start": 0.1,
+      "end": 2.47,
+      "text": "C'è un colore che ci perseguita da",
+      "words": [
+        {
+          "id": "caption-word-0-0",
+          "text": "C'è",
+          "start": 0.1,
+          "end": 0.3
+        },
+        {
+          "id": "caption-word-0-1",
+          "text": "un",
+          "start": 0.3,
+          "end": 0.49
+        },
+        {
+          "id": "caption-word-0-2",
+          "text": "colore",
+          "start": 0.51,
+          "end": 0.94
+        },
+        {
+          "id": "caption-word-0-3",
+          "text": "che",
+          "start": 1.27,
+          "end": 1.41
+        },
+        {
+          "id": "caption-word-0-4",
+          "text": "ci",
+          "start": 1.41,
+          "end": 1.52
+        },
+        {
+          "id": "caption-word-0-5",
+          "text": "perseguita",
+          "start": 1.57,
+          "end": 2.32
+        },
+        {
+          "id": "caption-word-0-6",
+          "text": "da",
+          "start": 2.32,
+          "end": 2.47
+        }
+      ]
+    },
+    {
+      "id": "caption-group-1",
+      "frame": 1,
+      "start": 2.47,
+      "end": 3.12,
+      "text": "sempre,",
+      "words": [
+        {
+          "id": "caption-word-1-0",
+          "text": "sempre,",
+          "start": 2.47,
+          "end": 3
+        }
+      ]
+    },
+    {
+      "id": "caption-group-2",
+      "frame": 1,
+      "start": 3.68,
+      "end": 5.98,
+      "text": "e noi facciamo finta di niente.",
+      "words": [
+        {
+          "id": "caption-word-2-0",
+          "text": "e noi",
+          "start": 3.68,
+          "end": 4.44
+        },
+        {
+          "id": "caption-word-2-1",
+          "text": "facciamo",
+          "start": 4.44,
+          "end": 4.63
+        },
+        {
+          "id": "caption-word-2-2",
+          "text": "finta",
+          "start": 4.95,
+          "end": 5.2
+        },
+        {
+          "id": "caption-word-2-3",
+          "text": "di",
+          "start": 5.2,
+          "end": 5.32
+        },
+        {
+          "id": "caption-word-2-4",
+          "text": "niente.",
+          "start": 5.32,
+          "end": 5.86
+        }
+      ]
+    },
+    {
+      "id": "caption-group-3",
+      "frame": 2,
+      "start": 6.1,
+      "end": 8.2,
+      "text": "Il rosso del semaforo,",
+      "words": [
+        {
+          "id": "caption-word-3-0",
+          "text": "Il",
+          "start": 6.1,
+          "end": 6.35
+        },
+        {
+          "id": "caption-word-3-1",
+          "text": "rosso",
+          "start": 6.41,
+          "end": 6.7
+        },
+        {
+          "id": "caption-word-3-2",
+          "text": "del",
+          "start": 6.76,
+          "end": 7.08
+        },
+        {
+          "id": "caption-word-3-3",
+          "text": "semaforo,",
+          "start": 7.08,
+          "end": 8.19
+        }
+      ]
+    },
+    {
+      "id": "caption-group-4",
+      "frame": 2,
+      "start": 8.2,
+      "end": 9.83,
+      "text": "quando sei già in ritardo.",
+      "words": [
+        {
+          "id": "caption-word-4-0",
+          "text": "quando",
+          "start": 8.2,
+          "end": 8.57
+        },
+        {
+          "id": "caption-word-4-1",
+          "text": "sei",
+          "start": 8.57,
+          "end": 8.75
+        },
+        {
+          "id": "caption-word-4-2",
+          "text": "già",
+          "start": 8.75,
+          "end": 8.87
+        },
+        {
+          "id": "caption-word-4-3",
+          "text": "in",
+          "start": 8.95,
+          "end": 9.05
+        },
+        {
+          "id": "caption-word-4-4",
+          "text": "ritardo.",
+          "start": 9.05,
+          "end": 9.71
+        }
+      ]
+    },
+    {
+      "id": "caption-group-5",
+      "frame": 3,
+      "start": 9.95,
+      "end": 12.76,
+      "text": "Il rosso della batteria all'uno per cento,",
+      "words": [
+        {
+          "id": "caption-word-5-0",
+          "text": "Il",
+          "start": 9.95,
+          "end": 10.2
+        },
+        {
+          "id": "caption-word-5-1",
+          "text": "rosso",
+          "start": 10.21,
+          "end": 10.46
+        },
+        {
+          "id": "caption-word-5-2",
+          "text": "della",
+          "start": 10.46,
+          "end": 10.99
+        },
+        {
+          "id": "caption-word-5-3",
+          "text": "batteria",
+          "start": 10.99,
+          "end": 11.86
+        },
+        {
+          "id": "caption-word-5-4",
+          "text": "all'uno per cento,",
+          "start": 11.86,
+          "end": 12.76
+        }
+      ]
+    },
+    {
+      "id": "caption-group-6",
+      "frame": 3,
+      "start": 12.76,
+      "end": 14,
+      "text": "fuori casa.",
+      "words": [
+        {
+          "id": "caption-word-6-0",
+          "text": "fuori",
+          "start": 12.76,
+          "end": 12.98
+        },
+        {
+          "id": "caption-word-6-1",
+          "text": "casa.",
+          "start": 13.19,
+          "end": 13.88
+        }
+      ]
+    },
+    {
+      "id": "caption-group-7",
+      "frame": 4,
+      "start": 14.07,
+      "end": 16.69,
+      "text": "Il rosso del conto,",
+      "words": [
+        {
+          "id": "caption-word-7-0",
+          "text": "Il",
+          "start": 14.07,
+          "end": 14.32
+        },
+        {
+          "id": "caption-word-7-1",
+          "text": "rosso",
+          "start": 14.565,
+          "end": 15.25
+        },
+        {
+          "id": "caption-word-7-2",
+          "text": "del",
+          "start": 15.25,
+          "end": 15.51
+        },
+        {
+          "id": "caption-word-7-3",
+          "text": "conto,",
+          "start": 15.51,
+          "end": 16.65
+        }
+      ]
+    },
+    {
+      "id": "caption-group-8",
+      "frame": 4,
+      "start": 16.69,
+      "end": 19.36,
+      "text": "quando al ventisette mancano dodici giorni.",
+      "words": [
+        {
+          "id": "caption-word-8-0",
+          "text": "quando",
+          "start": 16.69,
+          "end": 17.14
+        },
+        {
+          "id": "caption-word-8-1",
+          "text": "al",
+          "start": 17.14,
+          "end": 17.29
+        },
+        {
+          "id": "caption-word-8-2",
+          "text": "ventisette",
+          "start": 17.29,
+          "end": 17.71
+        },
+        {
+          "id": "caption-word-8-3",
+          "text": "mancano",
+          "start": 17.79,
+          "end": 18.02
+        },
+        {
+          "id": "caption-word-8-4",
+          "text": "dodici",
+          "start": 18.23,
+          "end": 18.74
+        },
+        {
+          "id": "caption-word-8-5",
+          "text": "giorni.",
+          "start": 18.93,
+          "end": 19.24
+        }
+      ]
+    },
+    {
+      "id": "caption-group-9",
+      "frame": 5,
+      "start": 19.46,
+      "end": 21.91,
+      "text": "Il rosso della penna della maestra sul",
+      "words": [
+        {
+          "id": "caption-word-9-0",
+          "text": "Il",
+          "start": 19.46,
+          "end": 19.71
+        },
+        {
+          "id": "caption-word-9-1",
+          "text": "rosso",
+          "start": 19.65,
+          "end": 19.81
+        },
+        {
+          "id": "caption-word-9-2",
+          "text": "della",
+          "start": 19.81,
+          "end": 20.23
+        },
+        {
+          "id": "caption-word-9-3",
+          "text": "penna",
+          "start": 20.23,
+          "end": 20.5
+        },
+        {
+          "id": "caption-word-9-4",
+          "text": "della",
+          "start": 20.83,
+          "end": 21.06
+        },
+        {
+          "id": "caption-word-9-5",
+          "text": "maestra",
+          "start": 21.06,
+          "end": 21.68
+        },
+        {
+          "id": "caption-word-9-6",
+          "text": "sul",
+          "start": 21.68,
+          "end": 21.91
+        }
+      ]
+    },
+    {
+      "id": "caption-group-10",
+      "frame": 5,
+      "start": 21.91,
+      "end": 23.72,
+      "text": "compito che avevi copiato.",
+      "words": [
+        {
+          "id": "caption-word-10-0",
+          "text": "compito",
+          "start": 21.91,
+          "end": 22.42
+        },
+        {
+          "id": "caption-word-10-1",
+          "text": "che",
+          "start": 22.42,
+          "end": 22.46
+        },
+        {
+          "id": "caption-word-10-2",
+          "text": "avevi",
+          "start": 22.65,
+          "end": 23.02
+        },
+        {
+          "id": "caption-word-10-3",
+          "text": "copiato.",
+          "start": 23.27,
+          "end": 23.6
+        }
+      ]
+    },
+    {
+      "id": "caption-group-11",
+      "frame": 6,
+      "start": 24,
+      "end": 26.2,
+      "text": "Quante volte ancora?",
+      "words": [
+        {
+          "id": "caption-word-11-0",
+          "text": "Quante",
+          "start": 24,
+          "end": 24.25
+        },
+        {
+          "id": "caption-word-11-1",
+          "text": "volte",
+          "start": 24.57,
+          "end": 24.93
+        },
+        {
+          "id": "caption-word-11-2",
+          "text": "ancora?",
+          "start": 24.95,
+          "end": 26.08
+        }
+      ]
+    },
+    {
+      "id": "caption-group-12",
+      "frame": 7,
+      "start": 26.8,
+      "end": 26.93,
+      "text": "E poi,",
+      "words": [
+        {
+          "id": "caption-word-12-0",
+          "text": "E poi,",
+          "start": 26.8,
+          "end": 26.81
+        }
+      ]
+    },
+    {
+      "id": "caption-group-13",
+      "frame": 7,
+      "start": 26.93,
+      "end": 28.6,
+      "text": "diciamolo,",
+      "words": [
+        {
+          "id": "caption-word-13-0",
+          "text": "diciamolo,",
+          "start": 26.93,
+          "end": 28.48
+        }
+      ]
+    },
+    {
+      "id": "caption-group-14",
+      "frame": 7,
+      "start": 29.05,
+      "end": 31.32,
+      "text": "il rosso è anche il comunismo.",
+      "words": [
+        {
+          "id": "caption-word-14-0",
+          "text": "il",
+          "start": 29.05,
+          "end": 29.2
+        },
+        {
+          "id": "caption-word-14-1",
+          "text": "rosso",
+          "start": 29.2,
+          "end": 29.85
+        },
+        {
+          "id": "caption-word-14-2",
+          "text": "è",
+          "start": 29.91,
+          "end": 29.92
+        },
+        {
+          "id": "caption-word-14-3",
+          "text": "anche",
+          "start": 30.19,
+          "end": 30.28
+        },
+        {
+          "id": "caption-word-14-4",
+          "text": "il",
+          "start": 30.32,
+          "end": 30.42
+        },
+        {
+          "id": "caption-word-14-5",
+          "text": "comunismo.",
+          "start": 30.42,
+          "end": 31.2
+        }
+      ]
+    },
+    {
+      "id": "caption-group-15",
+      "frame": 9,
+      "start": 37.153,
+      "end": 40.263,
+      "text": "Ma la soluzione c'è sempre stata.",
+      "words": [
+        {
+          "id": "caption-word-15-0",
+          "text": "Ma",
+          "start": 37.153,
+          "end": 37.303
+        },
+        {
+          "id": "caption-word-15-1",
+          "text": "la",
+          "start": 37.303,
+          "end": 37.553
+        },
+        {
+          "id": "caption-word-15-2",
+          "text": "soluzione",
+          "start": 37.553,
+          "end": 39.233
+        },
+        {
+          "id": "caption-word-15-3",
+          "text": "c'è",
+          "start": 39.233,
+          "end": 39.413
+        },
+        {
+          "id": "caption-word-15-4",
+          "text": "sempre",
+          "start": 39.413,
+          "end": 39.753
+        },
+        {
+          "id": "caption-word-15-5",
+          "text": "stata.",
+          "start": 39.803,
+          "end": 40.143
+        }
+      ]
+    },
+    {
+      "id": "caption-group-16",
+      "frame": 10,
+      "start": 40.473,
+      "end": 41.733,
+      "text": "Semaforo rosso?",
+      "words": [
+        {
+          "id": "caption-word-16-0",
+          "text": "Semaforo",
+          "start": 40.473,
+          "end": 41.013
+        },
+        {
+          "id": "caption-word-16-1",
+          "text": "rosso?",
+          "start": 41.083,
+          "end": 41.613
+        }
+      ]
+    },
+    {
+      "id": "caption-group-17",
+      "frame": 10,
+      "start": 42.143,
+      "end": 42.723,
+      "text": "Verde.",
+      "words": [
+        {
+          "id": "caption-word-17-0",
+          "text": "Verde.",
+          "start": 42.143,
+          "end": 42.653
+        }
+      ]
+    },
+    {
+      "id": "caption-group-18",
+      "frame": 10,
+      "start": 42.723,
+      "end": 43.853,
+      "text": "Batteria scarica?",
+      "words": [
+        {
+          "id": "caption-word-18-0",
+          "text": "Batteria",
+          "start": 42.723,
+          "end": 43.213
+        },
+        {
+          "id": "caption-word-18-1",
+          "text": "scarica?",
+          "start": 43.213,
+          "end": 43.853
+        }
+      ]
+    },
+    {
+      "id": "caption-group-19",
+      "frame": 10,
+      "start": 43.853,
+      "end": 44.873,
+      "text": "Verde.",
+      "words": [
+        {
+          "id": "caption-word-19-0",
+          "text": "Verde.",
+          "start": 43.853,
+          "end": 44.773
+        }
+      ]
+    },
+    {
+      "id": "caption-group-20",
+      "frame": 10,
+      "start": 44.873,
+      "end": 45.973,
+      "text": "Conto in rosso?",
+      "words": [
+        {
+          "id": "caption-word-20-0",
+          "text": "Conto",
+          "start": 44.873,
+          "end": 45.193
+        },
+        {
+          "id": "caption-word-20-1",
+          "text": "in",
+          "start": 45.193,
+          "end": 45.373
+        },
+        {
+          "id": "caption-word-20-2",
+          "text": "rosso?",
+          "start": 45.373,
+          "end": 45.973
+        }
+      ]
+    },
+    {
+      "id": "caption-group-21",
+      "frame": 10,
+      "start": 45.973,
+      "end": 46.913,
+      "text": "Verde.",
+      "words": [
+        {
+          "id": "caption-word-21-0",
+          "text": "Verde.",
+          "start": 45.973,
+          "end": 46.813
+        }
+      ]
+    },
+    {
+      "id": "caption-group-22",
+      "frame": 10,
+      "start": 46.913,
+      "end": 48.713,
+      "text": "La maestra?",
+      "words": [
+        {
+          "id": "caption-word-22-0",
+          "text": "La",
+          "start": 46.913,
+          "end": 47.113
+        },
+        {
+          "id": "caption-word-22-1",
+          "text": "maestra?",
+          "start": 47.113,
+          "end": 48.613
+        }
+      ]
+    },
+    {
+      "id": "caption-group-23",
+      "frame": 10,
+      "start": 48.713,
+      "end": 50.693,
+      "text": "Soprattutto la maestra.",
+      "words": [
+        {
+          "id": "caption-word-23-0",
+          "text": "Soprattutto",
+          "start": 48.713,
+          "end": 49.733
+        },
+        {
+          "id": "caption-word-23-1",
+          "text": "la",
+          "start": 49.733,
+          "end": 49.823
+        },
+        {
+          "id": "caption-word-23-2",
+          "text": "maestra.",
+          "start": 49.823,
+          "end": 50.573
+        }
+      ]
+    },
+    {
+      "id": "caption-group-24",
+      "frame": 11,
+      "start": 50.833,
+      "end": 52.893,
+      "text": "Guarda la nostra bandiera.",
+      "words": [
+        {
+          "id": "caption-word-24-0",
+          "text": "Guarda",
+          "start": 50.833,
+          "end": 51.293
+        },
+        {
+          "id": "caption-word-24-1",
+          "text": "la",
+          "start": 51.293,
+          "end": 51.473
+        },
+        {
+          "id": "caption-word-24-2",
+          "text": "nostra",
+          "start": 51.473,
+          "end": 51.923
+        },
+        {
+          "id": "caption-word-24-3",
+          "text": "bandiera.",
+          "start": 52.023,
+          "end": 52.893
+        }
+      ]
+    },
+    {
+      "id": "caption-group-25",
+      "frame": 11,
+      "start": 52.893,
+      "end": 55.493,
+      "text": "A destra il rosso:",
+      "words": [
+        {
+          "id": "caption-word-25-0",
+          "text": "A",
+          "start": 52.893,
+          "end": 53.563
+        },
+        {
+          "id": "caption-word-25-1",
+          "text": "destra",
+          "start": 53.563,
+          "end": 54.233
+        },
+        {
+          "id": "caption-word-25-2",
+          "text": "il",
+          "start": 54.233,
+          "end": 54.463
+        },
+        {
+          "id": "caption-word-25-3",
+          "text": "rosso:",
+          "start": 54.463,
+          "end": 55.373
+        }
+      ]
+    },
+    {
+      "id": "caption-group-26",
+      "frame": 11,
+      "start": 56.073,
+      "end": 56.833,
+      "text": "il male,",
+      "words": [
+        {
+          "id": "caption-word-26-0",
+          "text": "il male,",
+          "start": 56.073,
+          "end": 56.733
+        }
+      ]
+    },
+    {
+      "id": "caption-group-27",
+      "frame": 11,
+      "start": 56.833,
+      "end": 58.993,
+      "text": "tutto ciò che dobbiamo combattere.",
+      "words": [
+        {
+          "id": "caption-word-27-0",
+          "text": "tutto",
+          "start": 56.833,
+          "end": 57.063
+        },
+        {
+          "id": "caption-word-27-1",
+          "text": "ciò",
+          "start": 57.063,
+          "end": 57.253
+        },
+        {
+          "id": "caption-word-27-2",
+          "text": "che",
+          "start": 57.253,
+          "end": 57.453
+        },
+        {
+          "id": "caption-word-27-3",
+          "text": "dobbiamo",
+          "start": 57.453,
+          "end": 57.923
+        },
+        {
+          "id": "caption-word-27-4",
+          "text": "combattere.",
+          "start": 57.923,
+          "end": 58.893
+        }
+      ]
+    },
+    {
+      "id": "caption-group-28",
+      "frame": 11,
+      "start": 58.993,
+      "end": 60.553,
+      "text": "Al centro il bianco:",
+      "words": [
+        {
+          "id": "caption-word-28-0",
+          "text": "Al",
+          "start": 58.993,
+          "end": 59.083
+        },
+        {
+          "id": "caption-word-28-1",
+          "text": "centro",
+          "start": 59.083,
+          "end": 59.663
+        },
+        {
+          "id": "caption-word-28-2",
+          "text": "il",
+          "start": 59.663,
+          "end": 59.853
+        },
+        {
+          "id": "caption-word-28-3",
+          "text": "bianco:",
+          "start": 59.853,
+          "end": 60.453
+        }
+      ]
+    },
+    {
+      "id": "caption-group-29",
+      "frame": 11,
+      "start": 60.553,
+      "end": 62.853,
+      "text": "come l'italiano medio tira avanti.",
+      "words": [
+        {
+          "id": "caption-word-29-0",
+          "text": "come",
+          "start": 60.553,
+          "end": 60.743
+        },
+        {
+          "id": "caption-word-29-1",
+          "text": "l'italiano",
+          "start": 60.743,
+          "end": 61.463
+        },
+        {
+          "id": "caption-word-29-2",
+          "text": "medio",
+          "start": 61.463,
+          "end": 61.653
+        },
+        {
+          "id": "caption-word-29-3",
+          "text": "tira avanti.",
+          "start": 61.653,
+          "end": 62.733
+        }
+      ]
+    },
+    {
+      "id": "caption-group-30",
+      "frame": 11,
+      "start": 63.713,
+      "end": 66.293,
+      "text": "E il verde… e il verde.",
+      "words": [
+        {
+          "id": "caption-word-30-0",
+          "text": "E il",
+          "start": 63.713,
+          "end": 63.883
+        },
+        {
+          "id": "caption-word-30-1",
+          "text": "verde…",
+          "start": 63.883,
+          "end": 64.823
+        },
+        {
+          "id": "caption-word-30-2",
+          "text": "e il",
+          "start": 65.203,
+          "end": 65.393
+        },
+        {
+          "id": "caption-word-30-3",
+          "text": "verde.",
+          "start": 65.393,
+          "end": 66.193
+        }
+      ]
+    },
+    {
+      "id": "caption-group-31",
+      "frame": 11,
+      "start": 66.293,
+      "end": 67.973,
+      "text": "Ti fa stare chill, bro.",
+      "words": [
+        {
+          "id": "caption-word-31-0",
+          "text": "Ti",
+          "start": 66.293,
+          "end": 66.373
+        },
+        {
+          "id": "caption-word-31-1",
+          "text": "fa",
+          "start": 66.373,
+          "end": 66.553
+        },
+        {
+          "id": "caption-word-31-2",
+          "text": "stare",
+          "start": 66.553,
+          "end": 67.003
+        },
+        {
+          "id": "caption-word-31-3",
+          "text": "chill, bro.",
+          "start": 67.013,
+          "end": 67.873
+        }
+      ]
+    },
+    {
+      "id": "caption-group-32",
+      "frame": 11,
+      "start": 67.973,
+      "end": 68.993,
+      "text": "Tranquillo.",
+      "words": [
+        {
+          "id": "caption-word-32-0",
+          "text": "Tranquillo.",
+          "start": 67.973,
+          "end": 68.873
+        }
+      ]
+    },
+    {
+      "id": "caption-group-33",
+      "frame": 12,
+      "start": 69.873,
+      "end": 70.673,
+      "text": "Verde.",
+      "words": [
+        {
+          "id": "caption-word-33-0",
+          "text": "Verde.",
+          "start": 69.873,
+          "end": 70.673
+        }
+      ]
+    },
+    {
+      "id": "caption-group-34",
+      "frame": 12,
+      "start": 70.673,
+      "end": 71.993,
+      "text": "Facciamola passare.",
+      "words": [
+        {
+          "id": "caption-word-34-0",
+          "text": "Facciamola",
+          "start": 70.673,
+          "end": 71.213
+        },
+        {
+          "id": "caption-word-34-1",
+          "text": "passare.",
+          "start": 71.643,
+          "end": 71.873
+        }
+      ]
+    }
+  ]
+}

@@ -17,7 +17,7 @@
     .v06-title { position: absolute; left: 80px; right: 80px; top: 170px; height: 180px; text-align: center; font-family: "Anton", sans-serif; font-size: 150px; line-height: 180px; color: #141414; white-space: nowrap; }
     .v06-title span { display: inline-block; }
   </style>
-  <div id="v06-root" data-composition-id="06-quante-volte" data-start="0" data-duration="2.2" data-width="1080" data-height="1920">
+  <div id="v06-root" data-composition-id="06-quante-volte" data-start="0" data-duration="2.5" data-width="1080" data-height="1920">
     <!-- shared generic red symbols (no real sign text, no brand) -->
     <svg width="0" height="0" style="position:absolute;" xmlns="http://www.w3.org/2000/svg">
       <defs>
@@ -73,7 +73,7 @@
     </svg>
 
     <!-- ground -->
-    <div id="v06-ground" class="clip v06-layer v06-ground" data-start="0" data-duration="2.2" data-track-index="0">
+    <div id="v06-ground" class="clip v06-layer v06-ground" data-start="0" data-duration="2.5" data-track-index="0">
       <svg width="1080" height="1920" viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg" style="position:absolute;left:0;top:0;">
         <defs>
           <filter id="v06-fibre"><feTurbulence type="fractalNoise" baseFrequency="0.012 0.08" numOctaves="3" seed="7"/><feColorMatrix type="matrix" values="0 0 0 0 0.35  0 0 0 0 0.28  0 0 0 0 0.16  0 0 0 0.55 -0.12"/></filter>
@@ -131,8 +131,8 @@
     </div>
 
     <!-- vignette, grain, flicker -->
-    <div id="v06-vignette" class="clip v06-layer v06-vignette" data-start="0" data-duration="2.2" data-track-index="4"></div>
-    <svg id="v06-grain" class="clip v06-layer v06-grain" data-start="0" data-duration="2.2" data-track-index="5" width="1080" height="1920" viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg">
+    <div id="v06-vignette" class="clip v06-layer v06-vignette" data-start="0" data-duration="2.5" data-track-index="4"></div>
+    <svg id="v06-grain" class="clip v06-layer v06-grain" data-start="0" data-duration="2.5" data-track-index="5" width="1080" height="1920" viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <filter id="v06-n0"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="5"/><feColorMatrix type="saturate" values="0"/></filter>
         <filter id="v06-n1"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="13"/><feColorMatrix type="saturate" values="0"/></filter>
@@ -148,7 +148,7 @@
       <rect id="v06-g4" width="1080" height="1920" filter="url(#v06-n4)" visibility="hidden"/>
       <rect id="v06-g5" width="1080" height="1920" filter="url(#v06-n5)" visibility="hidden"/>
     </svg>
-    <div id="v06-flicker" class="clip v06-layer v06-flicker" data-start="0" data-duration="2.2" data-track-index="6"></div>
+    <div id="v06-flicker" class="clip v06-layer v06-flicker" data-start="0" data-duration="2.5" data-track-index="6"></div>
   </div>
   <script>
     (function () {

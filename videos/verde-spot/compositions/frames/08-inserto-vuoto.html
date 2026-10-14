@@ -57,7 +57,7 @@
       var DUR = 5.733;
       var tl = gsap.timeline({ paused: true });
       // clipping drops onto the paper with a slight settle
-      tl.fromTo(q("v08-clip-wrap"), { y: -60, rotation: -6, opacity: 0 }, { y: 0, rotation: -2.4, opacity: 1, duration: 0.45, ease: "power3.out" }, 0);
+      
       tl.fromTo(q("v08-caption"), { opacity: 0 }, { opacity: 1, duration: 0.01 }, 0.25);
       // grain swap every 2 frames + gentle flicker (deterministic)
       var g = [q("v08-g0"), q("v08-g1"), q("v08-g2")];

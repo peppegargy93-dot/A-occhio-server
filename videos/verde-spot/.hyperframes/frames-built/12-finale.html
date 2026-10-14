@@ -1,0 +1,226 @@
+<template>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <style>
+    @font-face {
+      font-family: "Anton";
+      src: url("assets/fonts/anton-latin-400-normal.woff2") format("woff2");
+      font-weight: 400;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: "Special Elite";
+      src: url("assets/fonts/special-elite-latin-400-normal.woff2") format("woff2");
+      font-weight: 400;
+      font-style: normal;
+    }
+    #root {
+      position: absolute;
+      inset: 0;
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+    }
+    .v12-layer {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+    }
+    #v12-ground {
+      background: #009246;
+    }
+    #v12-ground svg,
+    #v12-overlay svg {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1080px;
+      height: 1920px;
+    }
+    #v12-vignette {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        ellipse 78% 62% at 50% 48%,
+        rgba(20, 20, 20, 0) 55%,
+        rgba(20, 20, 20, 0.36) 100%
+      );
+    }
+    #v12-flicker {
+      position: absolute;
+      inset: 0;
+      background: #141414;
+      opacity: 0.03;
+    }
+    #v12-stamp {
+      position: absolute;
+      left: 0;
+      top: 510px;
+      width: 1080px;
+      height: 500px;
+      transform-origin: 540px 250px;
+    }
+    #v12-stamp svg {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1080px;
+      height: 500px;
+      overflow: visible;
+    }
+    #v12-slogan {
+      position: absolute;
+      left: 80px;
+      width: 920px;
+      top: 1020px;
+      text-align: center;
+      font-family: "Anton", sans-serif;
+      font-size: 96px;
+      line-height: 120px;
+      color: #efe6d2;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .v12-type {
+      position: absolute;
+      left: 80px;
+      width: 920px;
+      text-align: center;
+      font-family: "Special Elite", monospace;
+      color: #efe6d2;
+      white-space: pre;
+    }
+    #v12-phone {
+      top: 1230px;
+      font-size: 48px;
+      line-height: 60px;
+    }
+    #v12-sign {
+      top: 1316px;
+      font-size: 40px;
+      line-height: 50px;
+    }
+  </style>
+
+  <div id="root" data-composition-id="12-finale" data-width="1080" data-height="1920" data-duration="4">
+    <!-- Ground: green field + paper fibres showing through -->
+    <div id="v12-ground" class="v12-layer clip" data-start="0" data-duration="4" data-track-index="0">
+      <svg viewBox="0 0 1080 1920" preserveAspectRatio="none">
+        <filter id="v12-stain" x="0" y="0" width="100%" height="100%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.004 0.006" numOctaves="3" seed="12" />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.078  0 0 0 0 0.078  0 0 0 0 0.078  1.6 0 0 0 -0.8" />
+        </filter>
+        <filter id="v12-fibre" x="0" y="0" width="100%" height="100%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.012 0.32" numOctaves="2" seed="4" />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.937  0 0 0 0 0.902  0 0 0 0 0.824  2.6 0 0 0 -1.4" />
+        </filter>
+        <rect width="1080" height="1920" filter="url(#v12-stain)" opacity="0.22" />
+        <rect width="1080" height="1920" filter="url(#v12-fibre)" opacity="0.28" />
+      </svg>
+    </div>
+
+    <!-- Content -->
+    <div id="v12-stage" class="v12-layer clip" data-start="0" data-duration="4" data-track-index="1">
+      <div id="v12-stamp">
+        <svg viewBox="0 0 1080 500">
+          <filter id="v12-ink" x="-10%" y="-10%" width="120%" height="120%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.055" numOctaves="3" seed="7" result="n" />
+            <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -7 5.5" result="m" />
+            <feComposite in="SourceGraphic" in2="m" operator="in" />
+          </filter>
+          <g transform="rotate(-12 540 250)" filter="url(#v12-ink)">
+            <rect x="150" y="85" width="780" height="330" fill="none" stroke="#EFE6D2" stroke-width="16" />
+            <rect x="176" y="111" width="728" height="278" fill="none" stroke="#EFE6D2" stroke-width="7" />
+            <text x="540" y="343" text-anchor="middle" font-family="Anton, sans-serif" font-size="260"
+              fill="#EFE6D2" textLength="620" lengthAdjust="spacingAndGlyphs">VERDE.</text>
+          </g>
+        </svg>
+      </div>
+      <div id="v12-slogan">Facciamola passare.</div>
+      <div id="v12-phone" class="v12-type"></div>
+      <div id="v12-sign" class="v12-type"></div>
+    </div>
+
+    <!-- Overlay: grain (dark + paper specks), flicker, vignette -->
+    <div id="v12-overlay" class="v12-layer clip" data-start="0" data-duration="4" data-track-index="2">
+      <div id="v12-grain"></div>
+      <div id="v12-flicker"></div>
+      <div id="v12-vignette"></div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const DUR = 4.0;
+      const STILL_FROM = 2.8; // last 1.2 s fully still
+      const FPS = 30;
+      const tl = gsap.timeline({ paused: true });
+
+      // ---------- Paper grain on green: 6 tiles, fixed seeds ----------
+      const SEEDS = [5, 19, 31, 43, 59, 71];
+      let g = "";
+      SEEDS.forEach(function (seed, i) {
+        g +=
+          '<svg id="v12-grain-' + i + '" viewBox="0 0 1080 1920" preserveAspectRatio="none" style="opacity:0">' +
+          '<filter id="v12-gf-' + i + '" x="0" y="0" width="100%" height="100%">' +
+          '<feTurbulence type="fractalNoise" baseFrequency="0.82" numOctaves="2" seed="' + seed + '" stitchTiles="stitch"/>' +
+          '<feComponentTransfer result="n"><feFuncA type="identity"/></feComponentTransfer>' +
+          '<feColorMatrix in="n" type="matrix" values="0 0 0 0 0.078  0 0 0 0 0.078  0 0 0 0 0.078  2.4 0 0 0 -1.25" result="dark"/>' +
+          '<feColorMatrix in="n" type="matrix" values="0 0 0 0 0.937  0 0 0 0 0.902  0 0 0 0 0.824  0 -2.4 0 0 1.05" result="light"/>' +
+          '<feMerge><feMergeNode in="dark"/><feMergeNode in="light"/></feMerge>' +
+          "</filter>" +
+          '<rect width="1080" height="1920" filter="url(#v12-gf-' + i + ')" opacity="0.3"/></svg>';
+      });
+      document.getElementById("v12-grain").innerHTML = g;
+      const tiles = SEEDS.map(function (_, i) { return document.getElementById("v12-grain-" + i); });
+      const flicker = document.getElementById("v12-flicker");
+      const STEP = 2 / FPS;
+      const nSteps = Math.round(STILL_FROM / STEP);
+      for (let i = 0; i <= nSteps; i++) {
+        const t = i * STEP;
+        tl.set(tiles[i % 6], { opacity: 1 }, t);
+        if (i > 0) tl.set(tiles[(i - 1) % 6], { opacity: 0 }, t);
+        const f = i === nSteps ? 0.03 : 0.03 + 0.03 * Math.sin(i * 2.71) * Math.cos(i * 1.37);
+        tl.set(flicker, { opacity: f }, t);
+      }
+      // from STILL_FROM on: grain + flicker frozen on the last tile
+
+      // ---------- Scene 1: the stamp lands (scale 1.35 → 0.94 → 1) ----------
+      const stamp = document.getElementById("v12-stamp");
+      const stage = document.getElementById("v12-stage");
+      tl.fromTo(stamp, { scale: 1.35, opacity: 0 }, { scale: 0.94, opacity: 1, duration: 0.22, ease: "power3.in" }, 0.1);
+      tl.to(stamp, { scale: 1, duration: 0.3, ease: "power1.out" }, 0.32);
+      // thud: the whole sheet takes the hit
+      tl.fromTo(stage, { y: 0 }, { y: 10, duration: 0.05, ease: "power1.out" }, 0.32);
+      tl.to(stage, { y: 0, duration: 0.3, ease: "sine.out" }, 0.37);
+
+      // ---------- Scene 2: "Facciamola passare." slides in softly ----------
+      tl.fromTo("#v12-slogan",
+        { x: -70, opacity: 0 },
+        { x: 0, opacity: 1, duration: 1.0, ease: "power2.out" },
+        0.85);
+
+      // ---------- Scene 3: typewriter lines ----------
+      function typeLine(id, text, start, end) {
+        const host = document.getElementById(id);
+        host.innerHTML = text.split("").map(function (ch) {
+          return '<span class="v12-ch">' + ch + "</span>";
+        }).join("");
+        const chars = host.querySelectorAll(".v12-ch");
+        const per = (end - start) / chars.length;
+        chars.forEach(function (c, i) {
+          tl.fromTo(c, { opacity: 0 }, { opacity: 1, duration: 0.001 }, start + i * per);
+        });
+      }
+      typeLine("v12-phone", "Numero verde 800 420 420", 2.0, 2.45);
+      typeLine("v12-sign", "Comitato per il Verde", 2.4, 2.78);
+
+      // ---------- Scene 4: hold still until the end ----------
+      tl.set({}, {}, DUR);
+      window.__timelines = window.__timelines || {};
+      window.__timelines["12-finale"] = tl;
+    })();
+  </script>
+</template>

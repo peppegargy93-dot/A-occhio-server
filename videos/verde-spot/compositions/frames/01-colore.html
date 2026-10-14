@@ -24,10 +24,10 @@
       #v01-caret { display:inline-block; width:0.55em; height:0.12em; background:#141414; margin-left:0.06em; vertical-align:-0.05em; }
       #v01-rule { position:absolute; left:120px; top:420px; width:300px; height:4px; background:#141414; transform-origin:0% 50%; }
   </style>
-  <div id="root" data-composition-id="01-colore" data-start="0" data-duration="4.5" data-width="1080" data-height="1920">
+  <div id="root" data-composition-id="01-colore" data-start="0" data-duration="6.1" data-width="1080" data-height="1920">
 
-        <div id="v01-ground" class="clip" data-start="0" data-duration="4.5" data-track-index="0"></div>
-        <div id="v01-tex" class="clip" data-start="0" data-duration="4.5" data-track-index="1">
+        <div id="v01-ground" class="clip" data-start="0" data-duration="6.1" data-track-index="0"></div>
+        <div id="v01-tex" class="clip" data-start="0" data-duration="6.1" data-track-index="1">
           <svg viewBox="0 0 1080 1920" preserveAspectRatio="none" aria-hidden="true">
             <filter id="v01-stain" x="0" y="0" width="100%" height="100%">
               <feTurbulence type="fractalNoise" baseFrequency="0.006" numOctaves="4" seed="11" />
@@ -41,8 +41,8 @@
             <rect width="1080" height="1920" filter="url(#v01-fibre)" opacity="0.18" />
           </svg>
         </div>
-        <div id="v01-plane" class="clip" data-start="0" data-duration="4.5" data-track-index="2"></div>
-        <div id="v01-cam" class="clip" data-start="0" data-duration="4.5" data-track-index="3">
+        <div id="v01-plane" class="clip" data-start="0" data-duration="6.1" data-track-index="2"></div>
+        <div id="v01-cam" class="clip" data-start="0" data-duration="6.1" data-track-index="3">
           <div id="v01-speeds">
           <div class="v01-speed" data-d="0.0" style="top:700px; width:620px; height:14px; background:#141414;"></div>
           <div class="v01-speed" data-d="0.03" style="top:760px; width:880px; height:30px; background:#CE2B37;"></div>
@@ -60,8 +60,8 @@
           <div id="v01-rule"></div>
         </div>
 
-        <div id="v01-vig" class="clip" data-start="0" data-duration="4.5" data-track-index="4"></div>
-        <div id="v01-grainwrap" class="clip" data-start="0" data-duration="4.5" data-track-index="5" style="opacity:0.4">
+        <div id="v01-vig" class="clip" data-start="0" data-duration="6.1" data-track-index="4"></div>
+        <div id="v01-grainwrap" class="clip" data-start="0" data-duration="6.1" data-track-index="5" style="opacity:0.4">
           <svg class="v01-grain" viewBox="0 0 540 960" preserveAspectRatio="none" aria-hidden="true">
             <filter id="v01-gf0" x="0" y="0" width="100%" height="100%">
               <feTurbulence type="fractalNoise" baseFrequency="0.82" numOctaves="2" seed="3" />
@@ -105,7 +105,7 @@
             <rect width="540" height="960" filter="url(#v01-gf5)" />
           </svg>
         </div>
-        <div id="v01-flick" class="clip" data-start="0" data-duration="4.5" data-track-index="6"></div>
+        <div id="v01-flick" class="clip" data-start="0" data-duration="6.1" data-track-index="6"></div>
   </div>
   <script>
     (function () {
@@ -174,5 +174,6 @@
       tl.set({}, {}, 4.5);
       window.__timelines["01-colore"] = tl;
     })();
-  </script>
+  ;(function(){var id="01-colore",k=0.7377;var inner=window.__timelines[id];if(!inner)return;var outer=gsap.timeline({paused:true});inner.paused(false);inner.timeScale(k);outer.add(inner,0);outer.set({},{},6.1);window.__timelines[id]=outer;})();
+</script>
 </template>

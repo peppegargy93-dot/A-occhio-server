@@ -1,5 +1,5 @@
 <template>
-  <div id="root" data-composition-id="10-botta-risposta" data-start="0" data-duration="6.7" data-width="1080" data-height="1920">
+  <div id="root" data-composition-id="10-botta-risposta" data-start="0" data-duration="10.34" data-width="1080" data-height="1920">
     <style>
       @font-face { font-family: "Anton"; src: url("assets/fonts/anton-latin-400-normal.woff2") format("woff2"); font-weight: 400; }
       @font-face { font-family: "Special Elite"; src: url("assets/fonts/special-elite-latin-400-normal.woff2") format("woff2"); font-weight: 400; }
@@ -42,7 +42,7 @@
     </style>
 
     <!-- ===== Ground: paper + fibre (full-duration clip, lowest track) ===== -->
-    <div id="v10-ground" class="v10-layer v10-paper clip" data-start="0" data-duration="6.7" data-track-index="0">
+    <div id="v10-ground" class="v10-layer v10-paper clip" data-start="0" data-duration="10.34" data-track-index="0">
       <svg class="v10-full" viewBox="0 0 1080 1920" aria-hidden="true">
         <filter id="v10-fibre" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
           <feTurbulence type="fractalNoise" baseFrequency="0.011 0.045" numOctaves="4" seed="7" />
@@ -58,7 +58,7 @@
     </div>
 
     <!-- ===== Stage: the four beats + stamps ===== -->
-    <div id="v10-stage" class="v10-layer clip" data-start="0" data-duration="6.7" data-track-index="1">
+    <div id="v10-stage" class="v10-layer clip" data-start="0" data-duration="10.34" data-track-index="1">
 
       <!-- Depero diagonal plane behind every beat (constant) -->
       <svg class="v10-svg" viewBox="0 0 1080 1920" aria-hidden="true">
@@ -208,7 +208,7 @@
     </div>
 
     <!-- ===== Atmosphere: grain tiles + flicker + vignette (full-duration clip, top) ===== -->
-    <div id="v10-atmos" class="v10-layer clip" data-start="0" data-duration="6.7" data-track-index="2">
+    <div id="v10-atmos" class="v10-layer clip" data-start="0" data-duration="10.34" data-track-index="2">
       <svg class="v10-full v10-grain v10-g0" viewBox="0 0 1080 1920" aria-hidden="true"><filter id="v10-gr0" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="11" /><feColorMatrix type="matrix" values="0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 -2.4 1.25" /></filter><rect width="1080" height="1920" filter="url(#v10-gr0)" opacity="0.5" /></svg>
       <svg class="v10-full v10-grain" viewBox="0 0 1080 1920" aria-hidden="true"><filter id="v10-gr1" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="29" /><feColorMatrix type="matrix" values="0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 -2.4 1.25" /></filter><rect width="1080" height="1920" filter="url(#v10-gr1)" opacity="0.5" /></svg>
       <svg class="v10-full v10-grain" viewBox="0 0 1080 1920" aria-hidden="true"><filter id="v10-gr2" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="47" /><feColorMatrix type="matrix" values="0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 -2.4 1.25" /></filter><rect width="1080" height="1920" filter="url(#v10-gr2)" opacity="0.5" /></svg>
@@ -221,13 +221,13 @@
     <script>
       (function () {
         var ID = "10-botta-risposta";
-        var DUR = 6.7;
+        var DUR = 10.34;
         var root = document.querySelector('[data-composition-id="' + ID + '"]');
         var q = function (s) { return root.querySelector(s); };
         var qa = function (s) { return Array.prototype.slice.call(root.querySelectorAll(s)); };
 
         // ---- Retime here: every tween below is driven from these beat times (seconds) ----
-        const BEATS = { semaforo:0.0, verde1:0.9, batteria:1.6, verde2:2.5, conto:3.2, verde3:4.0, maestraQ:4.6, maestraA:5.6 };
+        const BEATS = { semaforo:0.15, verde1:1.67, batteria:2.45, verde2:3.82, conto:4.6, verde3:5.81, maestraQ:6.65, maestraA:7.93 };
         var STAMP_LEAD = 0.1;   // stamp starts falling this much before its "Verde" so the impact lands on the word
         var LIFT_LEAD = 0.32;   // previous stamp lifts away this much before the next beat
         var SWAP_LEAD = 0.26;   // outgoing illustration leaves this much before the next beat

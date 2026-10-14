@@ -1,0 +1,265 @@
+<template>
+  <div id="root" data-composition-id="04-conto" data-start="0" data-duration="3.6" data-width="1080" data-height="1920">
+    <style>
+      @font-face { font-family: "Anton"; src: url("assets/fonts/anton-latin-400-normal.woff2") format("woff2"); font-weight: 400; }
+      @font-face { font-family: "Special Elite"; src: url("assets/fonts/special-elite-latin-400-normal.woff2") format("woff2"); font-weight: 400; }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; }
+
+      /* --- paper ground (full-duration clip) --- */
+      #root .v04-ground { position: absolute; inset: 0; background: #EFE6D2; overflow: hidden; }
+      #root .v04-ground svg { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
+      #root .v04-fibre { opacity: 0.3; mix-blend-mode: multiply; }
+
+      /* --- world (content) --- */
+      #root .v04-world { position: absolute; inset: 0; transform-origin: 540px 800px; }
+      #root .v04-hall { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
+
+      /* calendar page (tear-off) */
+      #root .v04-cal { position: absolute; left: 230px; top: 300px; width: 620px; height: 720px; transform-origin: 50% 40%; }
+      #root .v04-cal-page { position: absolute; inset: 0; background: #EFE6D2; border: 10px solid #141414; }
+      #root .v04-cal-head { position: absolute; left: 0; right: 0; top: 0; height: 120px; background: #CE2B37; border-bottom: 10px solid #141414; }
+      #root .v04-cal-ring { position: absolute; top: -38px; width: 34px; height: 76px; border: 9px solid #141414; border-radius: 18px; background: #EFE6D2; }
+      #root .v04-cal-tear { position: absolute; left: -10px; right: -10px; bottom: -10px; height: 26px; }
+      #root .v04-cal-num { position: absolute; left: 0; right: 0; top: 150px; height: 470px; text-align: center; font-family: "Anton"; font-size: 400px; line-height: 1.12; color: #CE2B37; }
+      #root .v04-cal-num span { display: inline-block; transform-origin: 50% 100%; }
+      #root .v04-cal-back { position: absolute; left: 230px; top: 300px; width: 620px; height: 720px; background: #D9CDB2; border: 10px solid #141414; transform-origin: 50% 40%; }
+
+      /* digit column — reusable: floors built by JS from a string (frame 10 rebuilds it in green) */
+      #root .v04-col { position: absolute; left: 430px; top: 0; width: 220px; height: 1400px; }
+      #root .v04-floor { position: absolute; left: 0; width: 220px; height: 116px; background: #EFE6D2; border: 8px solid #141414; transform-origin: 50% 100%;
+        font-family: "Anton"; font-size: 104px; line-height: 100px; text-align: center; color: #CE2B37; }
+      #root .v04-dust { position: absolute; width: 26px; height: 26px; background: #141414; }
+      #root .v04-dust.v04-d2 { background: #D9CDB2; border: 4px solid #141414; }
+
+      /* stamp −12 GIORNI */
+      #root .v04-stamp { position: absolute; left: 440px; top: 1010px; padding: 8px; border: 7px solid #CE2B37; transform-origin: 50% 50%; }
+      #root .v04-stamp-in { border: 4px solid #CE2B37; padding: 6px 26px 4px; font-family: "Anton"; font-size: 92px; line-height: 1.05; color: #CE2B37; white-space: nowrap; letter-spacing: 0.02em; }
+
+      #root .v04-cap { position: absolute; left: 110px; top: 1440px; font-family: "Special Elite"; font-size: 46px; line-height: 1; color: #141414; letter-spacing: 0.04em; white-space: pre; }
+      #root .v04-cap span { display: inline-block; }
+
+      /* --- grain + flicker + vignette --- */
+      #root .v04-fx { position: absolute; inset: 0; pointer-events: none; }
+      #root .v04-fx svg { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; visibility: hidden; opacity: 0.2; mix-blend-mode: multiply; }
+      #root .v04-fx[data-g="0"] .v04-g0, #root .v04-fx[data-g="1"] .v04-g1, #root .v04-fx[data-g="2"] .v04-g2,
+      #root .v04-fx[data-g="3"] .v04-g3, #root .v04-fx[data-g="4"] .v04-g4, #root .v04-fx[data-g="5"] .v04-g5 { visibility: visible; }
+      #root .v04-vig { position: absolute; inset: 0; background: radial-gradient(ellipse 78% 62% at 50% 46%, rgba(20,20,20,0) 55%, rgba(20,20,20,0.34) 100%); }
+      #root .v04-flick { position: absolute; inset: 0; background: #141414; opacity: 0.02; }
+    </style>
+
+    <!-- GROUND -->
+    <div id="v04-ground" class="v04-ground clip" data-start="0" data-duration="3.6" data-track-index="0">
+      <svg class="v04-fibre" viewBox="0 0 1080 1920" aria-hidden="true">
+        <filter id="v04-fib" x="0" y="0" width="100%" height="100%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.006 0.11" numOctaves="3" seed="5" />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 0 0.08  0.9 0 0 0 -0.48" />
+        </filter>
+        <filter id="v04-stain" x="0" y="0" width="100%" height="100%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.0045" numOctaves="4" seed="17" />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.2  0 0 0 0 0.16  0 0 0 0 0.1  1.6 0 0 0 -0.78" />
+        </filter>
+        <rect width="1080" height="1920" filter="url(#v04-fib)" />
+        <rect width="1080" height="1920" filter="url(#v04-stain)" opacity="0.35" />
+      </svg>
+    </div>
+
+    <!-- WORLD -->
+    <div id="v04-world" class="v04-world clip" data-start="0" data-duration="3.6" data-track-index="1">
+
+      <!-- perspective corridor converging on the vanishing point (540, 560) -->
+      <svg class="v04-hall" viewBox="0 0 1080 1920" aria-hidden="true">
+        <polygon id="v04-floorp" points="0,1180 1080,1180 1080,1400 0,1400" fill="#D9CDB2" />
+        <g stroke="#141414" stroke-width="5" fill="none">
+          <line class="v04-pl" x1="0" y1="200" x2="540" y2="560" stroke-dasharray="650" stroke-dashoffset="650" />
+          <line class="v04-pl" x1="1080" y1="200" x2="540" y2="560" stroke-dasharray="650" stroke-dashoffset="650" />
+          <line class="v04-pl" x1="0" y1="1180" x2="540" y2="560" stroke-dasharray="830" stroke-dashoffset="830" />
+          <line class="v04-pl" x1="1080" y1="1180" x2="540" y2="560" stroke-dasharray="830" stroke-dashoffset="830" />
+          <line class="v04-pl" x1="270" y1="1180" x2="540" y2="560" stroke-dasharray="680" stroke-dashoffset="680" />
+          <line class="v04-pl" x1="810" y1="1180" x2="540" y2="560" stroke-dasharray="680" stroke-dashoffset="680" />
+        </g>
+        <rect id="v04-vp" x="526" y="546" width="28" height="28" fill="#141414" transform="rotate(45 540 560)" />
+      </svg>
+
+      <!-- torn-off pages behind (the stack the 27 escapes from) -->
+      <div id="v04-back2" class="v04-cal-back"></div>
+      <div id="v04-back1" class="v04-cal-back"></div>
+
+      <!-- tear-off calendar page "27" -->
+      <div id="v04-cal" class="v04-cal">
+        <div class="v04-cal-page"></div>
+        <div class="v04-cal-head"></div>
+        <div class="v04-cal-ring" style="left: 140px;"></div>
+        <div class="v04-cal-ring" style="left: 293px;"></div>
+        <div class="v04-cal-ring" style="left: 446px;"></div>
+        <div class="v04-cal-num"><span id="v04-n2">2</span><span id="v04-n7">7</span></div>
+        <svg class="v04-cal-tear" viewBox="0 0 640 26" preserveAspectRatio="none" aria-hidden="true">
+          <polygon points="0,0 640,0 640,26 600,8 560,26 520,8 480,26 440,8 400,26 360,8 320,26 280,8 240,26 200,8 160,26 120,8 80,26 40,8 0,26" fill="#141414" />
+        </svg>
+      </div>
+
+      <!-- DIGIT COLUMN (skyscraper) -->
+      <div id="v04-col" class="v04-col"></div>
+      <div id="v04-dustwrap"></div>
+
+      <!-- stamp -->
+      <div id="v04-stamp" class="v04-stamp"><div class="v04-stamp-in">&minus;12 GIORNI</div></div>
+
+      <!-- caption -->
+      <div id="v04-cap" class="v04-cap"></div>
+    </div>
+
+    <!-- FX -->
+    <div id="v04-fx" class="v04-fx clip" data-g="0" data-start="0" data-duration="3.6" data-track-index="2">
+      <svg class="v04-g0" viewBox="0 0 540 960" aria-hidden="true"><filter id="v04-n0"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="1" seed="23" /><feColorMatrix type="matrix" values="0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 0 0.08  2.2 0 0 0 -1.05" /></filter><rect width="540" height="960" filter="url(#v04-n0)" /></svg>
+      <svg class="v04-g1" viewBox="0 0 540 960" aria-hidden="true"><filter id="v04-n1"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="1" seed="44" /><feColorMatrix type="matrix" values="0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 0 0.08  2.2 0 0 0 -1.05" /></filter><rect width="540" height="960" filter="url(#v04-n1)" /></svg>
+      <svg class="v04-g2" viewBox="0 0 540 960" aria-hidden="true"><filter id="v04-n2"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="1" seed="65" /><feColorMatrix type="matrix" values="0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 0 0.08  2.2 0 0 0 -1.05" /></filter><rect width="540" height="960" filter="url(#v04-n2)" /></svg>
+      <svg class="v04-g3" viewBox="0 0 540 960" aria-hidden="true"><filter id="v04-n3"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="1" seed="86" /><feColorMatrix type="matrix" values="0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 0 0.08  2.2 0 0 0 -1.05" /></filter><rect width="540" height="960" filter="url(#v04-n3)" /></svg>
+      <svg class="v04-g4" viewBox="0 0 540 960" aria-hidden="true"><filter id="v04-n4"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="1" seed="107" /><feColorMatrix type="matrix" values="0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 0 0.08  2.2 0 0 0 -1.05" /></filter><rect width="540" height="960" filter="url(#v04-n4)" /></svg>
+      <svg class="v04-g5" viewBox="0 0 540 960" aria-hidden="true"><filter id="v04-n5"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="1" seed="128" /><feColorMatrix type="matrix" values="0 0 0 0 0.08  0 0 0 0 0.08  0 0 0 0 0.08  2.2 0 0 0 -1.05" /></filter><rect width="540" height="960" filter="url(#v04-n5)" /></svg>
+      <div class="v04-vig"></div>
+      <div id="v04-flick" class="v04-flick"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script>
+      (function () {
+        var ID = "04-conto", D = 3.6, FPS = 30;
+        var root = document.querySelector('[data-composition-id="' + ID + '"]');
+        var q = function (s) { return root.querySelector(s); };
+        var qa = function (s) { return root.querySelectorAll(s); };
+        var hash = function (n) { var x = Math.sin(n * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
+
+        // ---- build the digit column: one floor per character, top to bottom ----
+        var DIGITS = "-1.247,00", FLOOR_H = 116, BASE = 1400;
+        var col = q("#v04-col"), floors = [];
+        for (var d = 0; d < DIGITS.length; d++) {
+          var f = document.createElement("div");
+          f.className = "v04-floor";
+          f.textContent = DIGITS[d] === "-" ? "−" : DIGITS[d];
+          var fromBottom = DIGITS.length - 1 - d;
+          f.style.top = (BASE - (fromBottom + 1) * FLOOR_H) + "px";
+          col.appendChild(f);
+          floors[fromBottom] = f; // floors[0] = ground floor
+        }
+        var N = floors.length;
+
+        // dust blocks: 3 per floor, laid out at the column base
+        var dustWrap = q("#v04-dustwrap"), dust = [];
+        for (var u = 0; u < N * 3; u++) {
+          var b = document.createElement("div");
+          b.className = "v04-dust" + (u % 3 === 1 ? " v04-d2" : "");
+          b.style.left = (520 + (hash(u + 5) - 0.5) * 120) + "px";
+          b.style.top = (1330 + (hash(u + 9) - 0.5) * 50) + "px";
+          dustWrap.appendChild(b);
+          dust.push(b);
+        }
+
+        // typed caption
+        var capEl = q("#v04-cap"), CAP = "FIG. 4: IL CONTO";
+        capEl.innerHTML = "";
+        for (var c = 0; c < CAP.length; c++) {
+          var sp = document.createElement("span");
+          sp.textContent = CAP[c] === " " ? " " : CAP[c];
+          capEl.appendChild(sp);
+        }
+        var capChars = capEl.querySelectorAll("span");
+
+        var tl = gsap.timeline({ paused: true });
+
+        // ---- grain swap every 2 frames + deterministic flicker ----
+        var fx = q("#v04-fx"), flick = q("#v04-flick");
+        var steps = Math.ceil(D * FPS / 2);
+        for (var s = 0; s < steps; s++) {
+          var t = s * 2 / FPS;
+          tl.set(fx, { attr: { "data-g": String(Math.floor(hash(s + 13) * 6) % 6) } }, t);
+          tl.set(flick, { opacity: 0.03 + (hash(s * 7 + 4) - 0.5) * 0.06 }, t);
+        }
+
+        // ---- camera: stepped drift toward the vanishing point ----
+        tl.fromTo(q("#v04-world"), { scale: 1, y: 0 }, { scale: 1.06, y: 24, duration: D, ease: "steps(18)" }, 0);
+
+        // ---- Scene 1 (0.0–1.3): the skyscraper of red digits rises, then collapses floor by floor ----
+        for (var i = 0; i < N; i++) {
+          tl.fromTo(floors[i], { y: 260, opacity: 0, scaleY: 0.4 },
+            { y: 0, opacity: 1, scaleY: 1, duration: 0.06, ease: "steps(2)" }, 0.02 + i * 0.045);
+        }
+        tl.fromTo(q("#v04-floorp"), { x: -1080 }, { x: 0, duration: 0.15, ease: "steps(3)" }, 0);
+        // nervous wobble at the top before it goes
+        tl.set(col, { x: 8, rotation: 1.2, transformOrigin: "50% 100%" }, 0.5);
+        tl.set(col, { x: -10, rotation: -1.6 }, 0.55);
+        tl.set(col, { x: 6, rotation: 0.8 }, 0.6);
+        tl.set(col, { x: 0, rotation: 0 }, 0.64);
+
+        // collapse: ground floor crushes, everything above drops one squashed storey; repeat upward
+        var SQ = 0.2, DROP = FLOOR_H * (1 - SQ), T0 = 0.66, DT = 0.07;
+        for (var j = 0; j < N; j++) {
+          var tc = T0 + j * DT;
+          // floor j crushes into rubble (lands slightly skewed, offset sideways)
+          tl.to(floors[j], {
+            scaleY: SQ, x: (hash(j + 31) - 0.5) * 60, rotation: (hash(j + 57) - 0.5) * 14,
+            duration: DT * 0.8, ease: "steps(2)"
+          }, tc);
+          // everything above drops
+          for (var a = j + 1; a < N; a++) {
+            tl.to(floors[a], { y: DROP * (j + 1), duration: DT * 0.8, ease: "steps(2)" }, tc);
+          }
+          // dust bursts out — mostly to the right
+          for (var e = 0; e < 3; e++) {
+            var db = dust[j * 3 + e];
+            var dx = 90 + hash(j * 3 + e + 2) * 200;
+            dx = e === 0 ? -dx * 0.6 : dx;
+            tl.fromTo(db, { x: 0, y: -DROP * 0 - j * FLOOR_H * SQ, opacity: 1, scale: 1, rotation: 0 },
+              { x: dx, y: -j * FLOOR_H * SQ - 60 - hash(j + e) * 120, opacity: 0, scale: 0.4, rotation: 90,
+                duration: 0.45, ease: "steps(6)" }, tc);
+          }
+        }
+
+        // caption typed letter by letter
+        for (var k = 0; k < capChars.length; k++) {
+          tl.fromTo(capChars[k], { opacity: 0 }, { opacity: 1, duration: 0.01, ease: "none" }, 0.3 + k * 0.035);
+        }
+
+        // ---- Scene 2 (1.3–3.6): calendar "27" snaps in, then recedes jittering to the vanishing point ----
+        var pls = qa(".v04-pl");
+        for (var p = 0; p < pls.length; p++) {
+          tl.to(pls[p], { attr: { "stroke-dashoffset": 0 }, duration: 0.2, ease: "steps(5)" }, 1.25 + p * 0.03);
+        }
+        tl.fromTo(q("#v04-vp"), { opacity: 0 }, { opacity: 1, duration: 0.05, ease: "steps(1)" }, 1.4);
+
+        var cal = q("#v04-cal");
+        tl.fromTo(cal, { scale: 1.5, skewX: -14, opacity: 0, y: -80 },
+          { scale: 0.92, skewX: 6, opacity: 1, y: 0, duration: 0.1, ease: "power4.in" }, 1.32);
+        tl.to(cal, { scale: 1.04, skewX: -3, duration: 0.06, ease: "steps(2)" }, 1.42);
+        tl.to(cal, { scale: 1, skewX: 0, duration: 0.06, ease: "steps(2)" }, 1.48);
+        tl.fromTo(q("#v04-n2"), { scaleY: 1.35, scaleX: 0.85 }, { scaleY: 1, scaleX: 1, duration: 0.15, ease: "steps(3)" }, 1.38);
+        tl.fromTo(q("#v04-n7"), { scaleY: 0.75, scaleX: 1.25, rotation: -6 }, { scaleY: 1.05, scaleX: 0.97, rotation: 3, duration: 0.17, ease: "steps(3)" }, 1.4);
+        // back pages show briefly as the stack the page is torn from
+        tl.fromTo(q("#v04-back1"), { opacity: 0, x: 0, y: 0, rotation: 0 }, { opacity: 1, x: 18, y: 16, rotation: 2, duration: 0.05, ease: "steps(1)" }, 1.36);
+        tl.fromTo(q("#v04-back2"), { opacity: 0, x: 0, y: 0, rotation: 0 }, { opacity: 1, x: 36, y: 32, rotation: 4, duration: 0.05, ease: "steps(1)" }, 1.38);
+
+        // recede: shrink toward VP (540,560) in nervous steps, with a jitter pulse at each step
+        // page center is at (540, 300 + 0.4*720 = 588) via transform-origin 50% 40%
+        var RS = 12, R0 = 1.7, R1 = 3.5;
+        for (var r = 1; r <= RS; r++) {
+          var pr = r / RS;
+          var tr = R0 + (R1 - R0) * (r - 1) / RS;
+          var sc = 1 - 0.9 * Math.pow(pr, 0.8);
+          tl.to(cal, { scale: sc, y: -28 * pr, x: (hash(r + 90) - 0.5) * 40 * (1 - pr * 0.6),
+            rotation: (hash(r + 120) - 0.5) * 10, duration: 0.05, ease: "steps(1)" }, tr);
+        }
+        // back pages fall behind first, faster
+        tl.to(q("#v04-back1"), { scale: 0.3, y: -30, opacity: 0.0, duration: 0.6, ease: "steps(4)" }, 1.7);
+        tl.to(q("#v04-back2"), { scale: 0.3, y: -30, opacity: 0.0, duration: 0.5, ease: "steps(4)" }, 1.7);
+
+        // stamp "−12 GIORNI" lands: squash + small bounce, then a nervous tick
+        var stamp = q("#v04-stamp");
+        tl.fromTo(stamp, { scale: 1.35, rotation: -9, opacity: 0 }, { scale: 0.94, rotation: -9, opacity: 1, duration: 0.08, ease: "power4.in" }, 2.3);
+        tl.to(stamp, { scale: 1, duration: 0.08, ease: "steps(2)" }, 2.38);
+        tl.set(stamp, { x: 6 }, 2.9); tl.set(stamp, { x: -4 }, 2.94); tl.set(stamp, { x: 0 }, 2.98);
+
+        window.__timelines = window.__timelines || {};
+        window.__timelines[ID] = tl;
+      })();
+    </script>
+  </div>
+</template>

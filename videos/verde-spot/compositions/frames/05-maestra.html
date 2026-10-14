@@ -24,9 +24,9 @@
     .v05-pen svg { position: absolute; left: -460px; top: -40px; overflow: visible; }
     .v05-speed { position: absolute; height: 8px; background: #141414; transform-origin: 0 50%; }
   </style>
-  <div id="v05-root" data-composition-id="05-maestra" data-start="0" data-duration="3.8" data-width="1080" data-height="1920">
+  <div id="v05-root" data-composition-id="05-maestra" data-start="0" data-duration="4.54" data-width="1080" data-height="1920">
     <!-- ground: paper + fibre/stain texture -->
-    <div id="v05-ground" class="clip v05-layer v05-ground" data-start="0" data-duration="3.8" data-track-index="0">
+    <div id="v05-ground" class="clip v05-layer v05-ground" data-start="0" data-duration="4.54" data-track-index="0">
       <svg width="1080" height="1920" viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg" style="position:absolute;left:0;top:0;">
         <defs>
           <filter id="v05-fibre"><feTurbulence type="fractalNoise" baseFrequency="0.012 0.08" numOctaves="3" seed="7"/><feColorMatrix type="matrix" values="0 0 0 0 0.35  0 0 0 0 0.28  0 0 0 0 0.16  0 0 0 0.55 -0.12"/></filter>
@@ -38,7 +38,7 @@
     </div>
 
     <!-- stage -->
-    <div id="v05-stage" class="clip v05-layer" data-start="0" data-duration="3.8" data-track-index="1">
+    <div id="v05-stage" class="clip v05-layer" data-start="0" data-duration="4.54" data-track-index="1">
       <div id="v05-cam" class="v05-layer">
         <div id="v05-shake" class="v05-layer">
           <!-- caption -->
@@ -155,8 +155,8 @@
     </div>
 
     <!-- vignette, grain, flicker -->
-    <div id="v05-vignette" class="clip v05-layer v05-vignette" data-start="0" data-duration="3.8" data-track-index="2"></div>
-    <svg id="v05-grain" class="clip v05-layer v05-grain" data-start="0" data-duration="3.8" data-track-index="3" width="1080" height="1920" viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg">
+    <div id="v05-vignette" class="clip v05-layer v05-vignette" data-start="0" data-duration="4.54" data-track-index="2"></div>
+    <svg id="v05-grain" class="clip v05-layer v05-grain" data-start="0" data-duration="4.54" data-track-index="3" width="1080" height="1920" viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <filter id="v05-n0"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="3"/><feColorMatrix type="saturate" values="0"/></filter>
         <filter id="v05-n1"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="11"/><feColorMatrix type="saturate" values="0"/></filter>
@@ -172,7 +172,7 @@
       <rect id="v05-g4" width="1080" height="1920" filter="url(#v05-n4)" visibility="hidden"/>
       <rect id="v05-g5" width="1080" height="1920" filter="url(#v05-n5)" visibility="hidden"/>
     </svg>
-    <div id="v05-flicker" class="clip v05-layer v05-flicker" data-start="0" data-duration="3.8" data-track-index="4"></div>
+    <div id="v05-flicker" class="clip v05-layer v05-flicker" data-start="0" data-duration="4.54" data-track-index="4"></div>
   </div>
   <script>
     (function () {
@@ -262,5 +262,6 @@
       window.__timelines = window.__timelines || {};
       window.__timelines["05-maestra"] = tl;
     })();
-  </script>
+  ;(function(){var id="05-maestra",k=0.837;var inner=window.__timelines[id];if(!inner)return;var outer=gsap.timeline({paused:true});inner.paused(false);inner.timeScale(k);outer.add(inner,0);outer.set({},{},4.54);window.__timelines[id]=outer;})();
+</script>
 </template>

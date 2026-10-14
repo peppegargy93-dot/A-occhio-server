@@ -1,6 +1,6 @@
 ---
 format: 1080x1920
-duration: 55s
+duration: 74s
 message: "Il verde è la soluzione a tutto"
 arc: Rosso persecutore (1–7) → archivio (8) → svolta verde (9) → botta e risposta (10) → bandiera (11) → firma (12)
 audience: pubblico social italiano, Reels/TikTok, autoplay muto
@@ -20,7 +20,7 @@ music: none
 
 - scene: Typewriter caption "ITALIA, OGGI." on cream paper; then a huge red disc snaps into center and pulses like a heart
 - voiceover: "C'è un colore che ci perseguita da sempre, e noi facciamo finta di niente."
-- duration: 4.5s
+- duration: 6.1s
 - transition_in: cut
 - status: outline
 - src: compositions/frames/01-colore.html
@@ -34,7 +34,7 @@ Scene 3 (2.2–4.5s): the disc pulses like a heartbeat (double beat: 1.0→1.06�
 
 - scene: A traffic light made of black cylinders and cones crosses the screen diagonally; red lights up; cube cars crush into each other; a clock with spinning hands; title "RITARDO!"
 - voiceover: "Il rosso del semaforo, quando sei già in ritardo."
-- duration: 3.3s
+- duration: 3.85s
 - transition_in: cut
 - status: outline
 - src: compositions/frames/02-semaforo.html
@@ -48,7 +48,7 @@ Scene 3 (2.0–3.3s): a round clock (black ring, cream face) with hands spinning
 
 - scene: Giant battery with the last red notch blinking; a panicking block mannequin searching for a socket that isn't there; title "1%"
 - voiceover: "Il rosso della batteria all'uno per cento, fuori casa."
-- duration: 3.2s
+- duration: 4.12s
 - transition_in: cut
 - status: outline
 - src: compositions/frames/03-batteria.html
@@ -62,7 +62,7 @@ Scene 3 (2.2–3.2s): a Depero block mannequin jerks left/right beside the batte
 
 - scene: A column of red digits collapses like a building; behind, a calendar makes the "27" run further away; title "27" shrinking toward the horizon
 - voiceover: "Il rosso del conto, quando al ventisette mancano dodici giorni."
-- duration: 3.6s
+- duration: 5.39s
 - transition_in: cut
 - status: outline
 - src: compositions/frames/04-conto.html
@@ -75,7 +75,7 @@ Scene 2 (1.3–3.6s): a tear-off calendar page with "27" (Anton 400 px) recedes 
 
 - scene: Block-mannequin teacher arms folded before two identical homework sheets; a blade-shaped red pen slashes a sheet diagonally and writes a huge "4"
 - voiceover: "Il rosso della penna della maestra, sul compito che avevi copiato."
-- duration: 3.8s
+- duration: 4.54s
 - transition_in: cut
 - status: outline
 - src: compositions/frames/05-maestra.html
@@ -89,7 +89,7 @@ Scene 3 (2.4–3.8s): a huge red "4" (Anton 420 px) is written onto the sheet, c
 
 - scene: Six-frame flashes: red card, engine warning light, "99+" notification dot, red motorway sticker, red weather alert; then all red elements spin into a vortex; title "QUANTE VOLTE?"
 - voiceover: "Quante volte ancora?"
-- duration: 2.2s
+- duration: 2.5s
 - transition_in: cut
 - status: outline
 - src: compositions/frames/06-quante-volte.html
@@ -102,7 +102,7 @@ Scene 2 (1.0–2.2s): all five reappear and spin into a spiral vortex around cen
 
 - scene: The vortex recomposes into a giant geometric hammer and sickle; music cuts; only film grain remains
 - voiceover: "E poi, diciamolo, il rosso è anche il comunismo."
-- duration: 4.4s
+- duration: 4.82s
 - transition_in: cut
 - status: outline
 - src: compositions/frames/07-comunismo.html
@@ -115,17 +115,17 @@ Scene 2 (1.4–4.4s): a giant flat geometric hammer and sickle (red #CE2B37, bui
 
 - scene: inserto.mp4 inside a slightly tilted newspaper-clipping frame on cream paper, caption "MATERIALE D'ARCHIVIO"; fallback 5 s grey box "INSERTO"
 - voiceover: ""
-- duration: 5s
+- duration: 5.733s
 - transition_in: cut
 - status: outline
-- src: compositions/frames/08-inserto.html
+- src: compositions/frames/08-inserto-vuoto.html
 - blueprint: compose
 
 ## Frame 9 — La svolta
 
 - scene: The traffic light from scene 2 returns and switches to green; for 6 frames the green disc has a leaf cut-out; chill begins, everything slows; title "LA SOLUZIONE."
 - voiceover: "Ma la soluzione c'è sempre stata."
-- duration: 2.8s
+- duration: 3.18s
 - transition_in: cut
 - status: outline
 - src: compositions/frames/09-svolta.html
@@ -139,7 +139,7 @@ Scene 3 (1.2–2.8s): "LA SOLUZIONE." (Anton 140 px, green) floats in softly at 
 
 - scene: The red illustrations return one at a time and turn green on each "Verde" with the stamp: traffic light (cars restart relaxed), battery fills (little leaf instead of bolt), digits climb back neatly and 27 comes close, teacher stays red on the question then on "Soprattutto la maestra" lies on a deckchair with a green pen while 4 becomes "10 e lode" green
 - voiceover: "Semaforo rosso? Verde. Batteria scarica? Verde. Conto in rosso? Verde. La maestra? Soprattutto la maestra."
-- duration: 6.7s
+- duration: 10.34s
 - transition_in: cut
 - status: outline
 - src: compositions/frames/10-botta-risposta.html
@@ -151,7 +151,7 @@ Four beats, each a red illustration (smaller, centered) that turns green on its 
 
 - scene: Tricolour of three panels breathing like a meditation-app circle; on "rosso" the red panel stiffens into aggressive spikes; on "bianco" (sniff SFX) the white panel crumbles into dust and recomposes; on "verde" the green panel swells softly and lazily pushes the other two out until the screen is all green; title "IL VERDE È IL VERDE."
 - voiceover: "Guarda la nostra bandiera. A destra il rosso: il male, tutto ciò che dobbiamo combattere. Al centro il bianco: come l'italiano medio tira avanti. E il verde è il verde. Ti fa stare chill, bro. Tranquillo."
-- duration: 11.5s
+- duration: 19.08s
 - transition_in: cut
 - status: outline
 - src: compositions/frames/11-bandiera.html

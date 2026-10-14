@@ -1,0 +1,733 @@
+{
+ "bgm": null,
+ "voices": [
+  {
+   "frame": 1,
+   "path": "assets/voice/01.wav",
+   "words": [
+    {
+     "text": "C'è",
+     "start": 0.1,
+     "end": 0.3
+    },
+    {
+     "text": "un",
+     "start": 0.3,
+     "end": 0.49
+    },
+    {
+     "text": "colore",
+     "start": 0.51,
+     "end": 0.94
+    },
+    {
+     "text": "che",
+     "start": 1.27,
+     "end": 1.41
+    },
+    {
+     "text": "ci",
+     "start": 1.41,
+     "end": 1.52
+    },
+    {
+     "text": "perseguita",
+     "start": 1.57,
+     "end": 2.32
+    },
+    {
+     "text": "da",
+     "start": 2.32,
+     "end": 2.47
+    },
+    {
+     "text": "sempre,",
+     "start": 2.47,
+     "end": 3
+    },
+    {
+     "text": "e noi",
+     "start": 3.68,
+     "end": 4.44
+    },
+    {
+     "text": "facciamo",
+     "start": 4.44,
+     "end": 4.63
+    },
+    {
+     "text": "finta",
+     "start": 4.95,
+     "end": 5.2
+    },
+    {
+     "text": "di",
+     "start": 5.2,
+     "end": 5.32
+    },
+    {
+     "text": "niente.",
+     "start": 5.32,
+     "end": 5.86
+    }
+   ]
+  },
+  {
+   "frame": 2,
+   "path": "assets/voice/02.wav",
+   "words": [
+    {
+     "text": "Il",
+     "start": 0.0,
+     "end": 0.25
+    },
+    {
+     "text": "rosso",
+     "start": 0.31,
+     "end": 0.6
+    },
+    {
+     "text": "del",
+     "start": 0.66,
+     "end": 0.98
+    },
+    {
+     "text": "semaforo,",
+     "start": 0.98,
+     "end": 2.09
+    },
+    {
+     "text": "quando",
+     "start": 2.1,
+     "end": 2.47
+    },
+    {
+     "text": "sei",
+     "start": 2.47,
+     "end": 2.65
+    },
+    {
+     "text": "già",
+     "start": 2.65,
+     "end": 2.77
+    },
+    {
+     "text": "in",
+     "start": 2.85,
+     "end": 2.95
+    },
+    {
+     "text": "ritardo.",
+     "start": 2.95,
+     "end": 3.61
+    }
+   ]
+  },
+  {
+   "frame": 3,
+   "path": "assets/voice/03.wav",
+   "words": [
+    {
+     "text": "Il",
+     "start": 0.0,
+     "end": 0.25
+    },
+    {
+     "text": "rosso",
+     "start": 0.26,
+     "end": 0.51
+    },
+    {
+     "text": "della",
+     "start": 0.51,
+     "end": 1.04
+    },
+    {
+     "text": "batteria",
+     "start": 1.04,
+     "end": 1.91
+    },
+    {
+     "text": "all'uno per cento,",
+     "start": 1.91,
+     "end": 2.81
+    },
+    {
+     "text": "fuori",
+     "start": 2.81,
+     "end": 3.03
+    },
+    {
+     "text": "casa.",
+     "start": 3.24,
+     "end": 3.93
+    }
+   ]
+  },
+  {
+   "frame": 4,
+   "path": "assets/voice/04.wav",
+   "words": [
+    {
+     "text": "Il",
+     "start": 0.0,
+     "end": 0.25
+    },
+    {
+     "text": "rosso",
+     "start": 0.495,
+     "end": 1.18
+    },
+    {
+     "text": "del",
+     "start": 1.18,
+     "end": 1.44
+    },
+    {
+     "text": "conto,",
+     "start": 1.44,
+     "end": 2.58
+    },
+    {
+     "text": "quando",
+     "start": 2.62,
+     "end": 3.07
+    },
+    {
+     "text": "al",
+     "start": 3.07,
+     "end": 3.22
+    },
+    {
+     "text": "ventisette",
+     "start": 3.22,
+     "end": 3.64
+    },
+    {
+     "text": "mancano",
+     "start": 3.72,
+     "end": 3.95
+    },
+    {
+     "text": "dodici",
+     "start": 4.16,
+     "end": 4.67
+    },
+    {
+     "text": "giorni.",
+     "start": 4.86,
+     "end": 5.17
+    }
+   ]
+  },
+  {
+   "frame": 5,
+   "path": "assets/voice/05.wav",
+   "words": [
+    {
+     "text": "Il",
+     "start": 0.0,
+     "end": 0.25
+    },
+    {
+     "text": "rosso",
+     "start": 0.19,
+     "end": 0.35
+    },
+    {
+     "text": "della",
+     "start": 0.35,
+     "end": 0.77
+    },
+    {
+     "text": "penna",
+     "start": 0.77,
+     "end": 1.04
+    },
+    {
+     "text": "della",
+     "start": 1.37,
+     "end": 1.6
+    },
+    {
+     "text": "maestra",
+     "start": 1.6,
+     "end": 2.22
+    },
+    {
+     "text": "sul",
+     "start": 2.22,
+     "end": 2.45
+    },
+    {
+     "text": "compito",
+     "start": 2.45,
+     "end": 2.96
+    },
+    {
+     "text": "che",
+     "start": 2.96,
+     "end": 3.0
+    },
+    {
+     "text": "avevi",
+     "start": 3.19,
+     "end": 3.56
+    },
+    {
+     "text": "copiato.",
+     "start": 3.81,
+     "end": 4.14
+    }
+   ]
+  },
+  {
+   "frame": 6,
+   "path": "assets/voice/06.wav",
+   "words": [
+    {
+     "text": "Quante",
+     "start": 0.0,
+     "end": 0.25
+    },
+    {
+     "text": "volte",
+     "start": 0.57,
+     "end": 0.93
+    },
+    {
+     "text": "ancora?",
+     "start": 0.95,
+     "end": 2.08
+    }
+   ]
+  },
+  {
+   "frame": 7,
+   "path": "assets/voice/07.wav",
+   "words": [
+    {
+     "text": "E poi,",
+     "start": 0.3,
+     "end": 0.31
+    },
+    {
+     "text": "diciamolo,",
+     "start": 0.43,
+     "end": 1.98
+    },
+    {
+     "text": "il",
+     "start": 2.55,
+     "end": 2.7
+    },
+    {
+     "text": "rosso",
+     "start": 2.7,
+     "end": 3.35
+    },
+    {
+     "text": "è",
+     "start": 3.41,
+     "end": 3.42
+    },
+    {
+     "text": "anche",
+     "start": 3.69,
+     "end": 3.78
+    },
+    {
+     "text": "il",
+     "start": 3.82,
+     "end": 3.92
+    },
+    {
+     "text": "comunismo.",
+     "start": 3.92,
+     "end": 4.7
+    }
+   ]
+  },
+  {
+   "frame": 9,
+   "path": "assets/voice/09.wav",
+   "words": [
+    {
+     "text": "Ma",
+     "start": 0.1,
+     "end": 0.25
+    },
+    {
+     "text": "la",
+     "start": 0.25,
+     "end": 0.5
+    },
+    {
+     "text": "soluzione",
+     "start": 0.5,
+     "end": 2.18
+    },
+    {
+     "text": "c'è",
+     "start": 2.18,
+     "end": 2.36
+    },
+    {
+     "text": "sempre",
+     "start": 2.36,
+     "end": 2.7
+    },
+    {
+     "text": "stata.",
+     "start": 2.75,
+     "end": 3.09
+    }
+   ]
+  },
+  {
+   "frame": 10,
+   "path": "assets/voice/10.wav",
+   "words": [
+    {
+     "text": "Semaforo",
+     "start": 0.24,
+     "end": 0.78
+    },
+    {
+     "text": "rosso?",
+     "start": 0.85,
+     "end": 1.38
+    },
+    {
+     "text": "Verde.",
+     "start": 1.91,
+     "end": 2.42
+    },
+    {
+     "text": "Batteria",
+     "start": 2.49,
+     "end": 2.98
+    },
+    {
+     "text": "scarica?",
+     "start": 2.98,
+     "end": 3.62
+    },
+    {
+     "text": "Verde.",
+     "start": 3.62,
+     "end": 4.54
+    },
+    {
+     "text": "Conto",
+     "start": 4.64,
+     "end": 4.96
+    },
+    {
+     "text": "in",
+     "start": 4.96,
+     "end": 5.14
+    },
+    {
+     "text": "rosso?",
+     "start": 5.14,
+     "end": 5.74
+    },
+    {
+     "text": "Verde.",
+     "start": 5.74,
+     "end": 6.58
+    },
+    {
+     "text": "La",
+     "start": 6.68,
+     "end": 6.88
+    },
+    {
+     "text": "maestra?",
+     "start": 6.88,
+     "end": 8.38
+    },
+    {
+     "text": "Soprattutto",
+     "start": 8.48,
+     "end": 9.5
+    },
+    {
+     "text": "la",
+     "start": 9.5,
+     "end": 9.59
+    },
+    {
+     "text": "maestra.",
+     "start": 9.59,
+     "end": 10.34
+    }
+   ]
+  },
+  {
+   "frame": 11,
+   "path": "assets/voice/11.wav",
+   "words": [
+    {
+     "text": "Guarda",
+     "start": 0.26,
+     "end": 0.72
+    },
+    {
+     "text": "la",
+     "start": 0.72,
+     "end": 0.9
+    },
+    {
+     "text": "nostra",
+     "start": 0.9,
+     "end": 1.35
+    },
+    {
+     "text": "bandiera.",
+     "start": 1.45,
+     "end": 2.32
+    },
+    {
+     "text": "A",
+     "start": 2.32,
+     "end": 2.99
+    },
+    {
+     "text": "destra",
+     "start": 2.99,
+     "end": 3.66
+    },
+    {
+     "text": "il",
+     "start": 3.66,
+     "end": 3.89
+    },
+    {
+     "text": "rosso:",
+     "start": 3.89,
+     "end": 4.8
+    },
+    {
+     "text": "il male,",
+     "start": 5.5,
+     "end": 6.16
+    },
+    {
+     "text": "tutto",
+     "start": 6.26,
+     "end": 6.49
+    },
+    {
+     "text": "ciò",
+     "start": 6.49,
+     "end": 6.68
+    },
+    {
+     "text": "che",
+     "start": 6.68,
+     "end": 6.88
+    },
+    {
+     "text": "dobbiamo",
+     "start": 6.88,
+     "end": 7.35
+    },
+    {
+     "text": "combattere.",
+     "start": 7.35,
+     "end": 8.32
+    },
+    {
+     "text": "Al",
+     "start": 8.42,
+     "end": 8.51
+    },
+    {
+     "text": "centro",
+     "start": 8.51,
+     "end": 9.09
+    },
+    {
+     "text": "il",
+     "start": 9.09,
+     "end": 9.28
+    },
+    {
+     "text": "bianco:",
+     "start": 9.28,
+     "end": 9.88
+    },
+    {
+     "text": "come",
+     "start": 9.98,
+     "end": 10.17
+    },
+    {
+     "text": "l'italiano",
+     "start": 10.17,
+     "end": 10.89
+    },
+    {
+     "text": "medio",
+     "start": 10.89,
+     "end": 11.08
+    },
+    {
+     "text": "tira avanti.",
+     "start": 11.08,
+     "end": 12.16
+    },
+    {
+     "text": "E il",
+     "start": 13.14,
+     "end": 13.31
+    },
+    {
+     "text": "verde…",
+     "start": 13.31,
+     "end": 14.25
+    },
+    {
+     "text": "e il",
+     "start": 14.63,
+     "end": 14.82
+    },
+    {
+     "text": "verde.",
+     "start": 14.82,
+     "end": 15.62
+    },
+    {
+     "text": "Ti",
+     "start": 15.72,
+     "end": 15.8
+    },
+    {
+     "text": "fa",
+     "start": 15.8,
+     "end": 15.98
+    },
+    {
+     "text": "stare",
+     "start": 15.98,
+     "end": 16.43
+    },
+    {
+     "text": "chill, bro.",
+     "start": 16.44,
+     "end": 17.3
+    },
+    {
+     "text": "Tranquillo.",
+     "start": 17.4,
+     "end": 18.3
+    }
+   ]
+  },
+  {
+   "frame": 12,
+   "path": "assets/voice/12.wav",
+   "words": [
+    {
+     "text": "Verde.",
+     "start": 0.22,
+     "end": 1.02
+    },
+    {
+     "text": "Facciamola",
+     "start": 1.02,
+     "end": 1.56
+    },
+    {
+     "text": "passare.",
+     "start": 1.99,
+     "end": 2.22
+    }
+   ]
+  }
+ ],
+ "sfx": [
+  {
+   "frame": 1,
+   "file": "assets/sfx/meccanico-bed.wav",
+   "offset_s": 0,
+   "duration_s": 26.5,
+   "volume": 0.3,
+   "source": "host"
+  },
+  {
+   "frame": 2,
+   "file": "assets/sfx/semaforo-click.wav",
+   "offset_s": 1.17,
+   "duration_s": 0.12,
+   "volume": 0.45,
+   "source": "host"
+  },
+  {
+   "frame": 9,
+   "file": "assets/sfx/semaforo-click.wav",
+   "offset_s": 0.74,
+   "duration_s": 0.12,
+   "volume": 0.45,
+   "source": "host"
+  },
+  {
+   "frame": 10,
+   "file": "assets/sfx/stamp.wav",
+   "offset_s": 1.64,
+   "duration_s": 0.45,
+   "volume": 0.7,
+   "source": "host"
+  },
+  {
+   "frame": 10,
+   "file": "assets/sfx/stamp.wav",
+   "offset_s": 3.79,
+   "duration_s": 0.45,
+   "volume": 0.7,
+   "source": "host"
+  },
+  {
+   "frame": 10,
+   "file": "assets/sfx/stamp.wav",
+   "offset_s": 5.779999999999999,
+   "duration_s": 0.45,
+   "volume": 0.7,
+   "source": "host"
+  },
+  {
+   "frame": 10,
+   "file": "assets/sfx/chime.mp3",
+   "offset_s": 8.5,
+   "duration_s": 2.544,
+   "volume": 0.35,
+   "source": "host"
+  },
+  {
+   "frame": 11,
+   "file": "assets/sfx/sniff.wav",
+   "offset_s": 11.85,
+   "duration_s": 0.75,
+   "volume": 0.6,
+   "source": "host"
+  },
+  {
+   "frame": 12,
+   "file": "assets/sfx/stamp.wav",
+   "offset_s": 0.29,
+   "duration_s": 0.45,
+   "volume": 0.8,
+   "source": "host"
+  },
+  {
+   "frame": 9,
+   "file": "assets/bgm/lofi.wav",
+   "offset_s": 0,
+   "duration_s": 36.6,
+   "volume": 0.18,
+   "source": "host"
+  }
+ ]
+}
