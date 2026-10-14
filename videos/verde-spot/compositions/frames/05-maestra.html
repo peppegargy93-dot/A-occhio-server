@@ -10,8 +10,8 @@
     .v05-vignette { background: radial-gradient(ellipse at 50% 45%, rgba(20,20,20,0) 52%, rgba(20,20,20,0.40) 100%); }
     .v05-grain { mix-blend-mode: multiply; opacity: 0.30; }
     .v05-flicker { background: #141414; opacity: 0; }
-    .v05-caption { position: absolute; left: 100px; right: 100px; top: 186px; text-align: center; font-family: "Special Elite", monospace; font-size: 50px; color: #141414; letter-spacing: 0.05em; white-space: pre; }
-    .v05-caption-rule { position: absolute; left: 250px; width: 580px; top: 262px; height: 4px; background: #141414; transform-origin: 0 50%; }
+    .v05-caption { position: absolute; left: 100px; right: 100px; top: 168px; text-align: center; font-family: "Special Elite", monospace; font-size: 50px; color: #141414; letter-spacing: 0.05em; white-space: pre; }
+    .v05-caption-rule { position: absolute; left: 250px; width: 580px; top: 236px; height: 4px; background: #141414; transform-origin: 0 50%; }
     .v05-sheet { position: absolute; width: 360px; height: 340px; }
     .v05-half { position: absolute; left: 0; top: 0; width: 360px; height: 340px; }
     .v05-paper { position: absolute; inset: 0; background: #F6F0E1; border: 3px solid #141414; box-shadow: 10px 12px 0 rgba(20,20,20,0.22); }
@@ -197,7 +197,7 @@
       tl.fromTo(q('#v05-cam'), { scale: 1, transformOrigin: '540px 1150px' }, { scale: 1.05, duration: D, ease: 'none' }, 0);
 
       // ---- Scene 1 (0.0-1.4): teacher, sheets, caption ----
-      tl.fromTo(q('#v05-teacher'), { y: 90, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: 'steps(4)' }, 0);
+      tl.fromTo(q('#v05-teacher'), { y: 130, opacity: 0 }, { y: 40, opacity: 1, duration: 0.3, ease: 'steps(4)' }, 0);
       tl.fromTo(q('#v05-sheetL'), { y: 60, rotation: -9, opacity: 0 }, { y: 0, rotation: -2.5, opacity: 1, duration: 0.24, ease: 'steps(3)' }, 0.12);
       tl.fromTo(q('#v05-sheetR'), { y: 60, rotation: 9, opacity: 0 }, { y: 0, rotation: 2.5, opacity: 1, duration: 0.24, ease: 'steps(3)' }, 0.22);
       // caption typed letter by letter
