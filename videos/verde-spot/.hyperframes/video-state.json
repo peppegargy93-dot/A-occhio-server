@@ -1,7 +1,7 @@
 {
   "version": 1,
   "historyId": "dbd931c2-a15e-4257-8a0d-d5c3a5c7b643",
-  "currentRevision": "7dc7fbd2-4a6d-464e-ab02-1f14d9cb20de",
+  "currentRevision": "3c3e433f-e811-43c8-8304-a0bdcba9fc8d",
   "pendingChanges": false,
   "files": {
     "AGENTS.md": {
@@ -193,8 +193,8 @@
       "content": "/root/.cache/hyperframes/history/dbd931c2-a15e-4257-8a0d-d5c3a5c7b643/blobs/ad/ad5dadeef78a520800a9e5cdd27a92ff5ac37f11b6a07f611b6b52b9f8c79a17"
     },
     "index.html": {
-      "hash": "bd69d9c406b03b3db23047f0158a928de50c4d0630e95f9e5840355be0872798",
-      "content": "/root/.cache/hyperframes/history/dbd931c2-a15e-4257-8a0d-d5c3a5c7b643/blobs/bd/bd69d9c406b03b3db23047f0158a928de50c4d0630e95f9e5840355be0872798"
+      "hash": "cc80a705528f20f03885cc0cc1697fdd8fb982484e9c7fe554f6f5d88ce20b6b",
+      "content": "/root/.cache/hyperframes/history/dbd931c2-a15e-4257-8a0d-d5c3a5c7b643/blobs/cc/cc80a705528f20f03885cc0cc1697fdd8fb982484e9c7fe554f6f5d88ce20b6b"
     },
     "meta.json": {
       "hash": "6dc1dfbff01d2ca19f3fccd9d8ac4a0f95f8121bb8466f77e801654772265efd",
@@ -1098,6 +1098,21 @@
           "after": "/root/.cache/hyperframes/history/dbd931c2-a15e-4257-8a0d-d5c3a5c7b643/blobs/bd/bd69d9c406b03b3db23047f0158a928de50c4d0630e95f9e5840355be0872798"
         }
       }
+    },
+    "3c3e433f-e811-43c8-8304-a0bdcba9fc8d": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1792017799952,
+      "endedAt": 1792017799953,
+      "files": {
+        "index.html": {
+          "before": "/root/.cache/hyperframes/history/dbd931c2-a15e-4257-8a0d-d5c3a5c7b643/blobs/bd/bd69d9c406b03b3db23047f0158a928de50c4d0630e95f9e5840355be0872798",
+          "after": "/root/.cache/hyperframes/history/dbd931c2-a15e-4257-8a0d-d5c3a5c7b643/blobs/cc/cc80a705528f20f03885cc0cc1697fdd8fb982484e9c7fe554f6f5d88ce20b6b"
+        }
+      }
     }
   },
   "checks": {
@@ -1226,7 +1241,7 @@
   "snapshots": {
     "latest": {
       "revision": "6a58d605-0e19-4784-84f8-0a251cea2410",
-      "id": "d0eaf8dd-4dd0-4d01-b139-6abe091a42e7-6"
+      "id": "799e295a-428f-4d7d-b8da-8b5a211d0b56-0"
     },
     "revisions": {
       "48e7d39a-738e-4d6d-80bb-f6b4ae31c19e": [
@@ -2518,7 +2533,6 @@
         {
           "scope": "full",
           "id": "92e3bd26-b8d7-4247-81c5-9bec2a0d8cdc-0",
-          "image": "/home/user/A-occhio-server/videos/verde-spot/.hyperframes/artifacts/snapshots/9fd44879-dd27-4c05-aafe-2cbed2289c05/frame-00-at-20.1s.png",
           "time": 20.1,
           "metadata": {
             "width": 1080,
@@ -2533,12 +2547,13 @@
           "revision": "182f124b-4adb-4646-b2f6-3fbfc1efbcd4",
           "inputFingerprint": "b49248674b7d7ccafbf5c944512a5df687416cbd5501df60f255adb8da05be07",
           "inputScope": "local-project-files",
-          "attribution": "recorded-revision"
+          "attribution": "recorded-revision",
+          "status": "cleaned",
+          "cleanedAfterRender": "640c9b95-8ccc-4dbf-9f54-d95ebcc33675"
         },
         {
           "scope": "full",
           "id": "92e3bd26-b8d7-4247-81c5-9bec2a0d8cdc-1",
-          "image": "/home/user/A-occhio-server/videos/verde-spot/.hyperframes/artifacts/snapshots/9fd44879-dd27-4c05-aafe-2cbed2289c05/frame-01-at-20.5s.png",
           "time": 20.5,
           "metadata": {
             "width": 1080,
@@ -2553,12 +2568,13 @@
           "revision": "182f124b-4adb-4646-b2f6-3fbfc1efbcd4",
           "inputFingerprint": "b49248674b7d7ccafbf5c944512a5df687416cbd5501df60f255adb8da05be07",
           "inputScope": "local-project-files",
-          "attribution": "recorded-revision"
+          "attribution": "recorded-revision",
+          "status": "cleaned",
+          "cleanedAfterRender": "640c9b95-8ccc-4dbf-9f54-d95ebcc33675"
         },
         {
           "scope": "full",
           "id": "92e3bd26-b8d7-4247-81c5-9bec2a0d8cdc-2",
-          "image": "/home/user/A-occhio-server/videos/verde-spot/.hyperframes/artifacts/snapshots/9fd44879-dd27-4c05-aafe-2cbed2289c05/frame-02-at-21s.png",
           "time": 21,
           "metadata": {
             "width": 1080,
@@ -2573,12 +2589,13 @@
           "revision": "182f124b-4adb-4646-b2f6-3fbfc1efbcd4",
           "inputFingerprint": "b49248674b7d7ccafbf5c944512a5df687416cbd5501df60f255adb8da05be07",
           "inputScope": "local-project-files",
-          "attribution": "recorded-revision"
+          "attribution": "recorded-revision",
+          "status": "cleaned",
+          "cleanedAfterRender": "640c9b95-8ccc-4dbf-9f54-d95ebcc33675"
         },
         {
           "scope": "full",
           "id": "92e3bd26-b8d7-4247-81c5-9bec2a0d8cdc-3",
-          "image": "/home/user/A-occhio-server/videos/verde-spot/.hyperframes/artifacts/snapshots/9fd44879-dd27-4c05-aafe-2cbed2289c05/frame-03-at-21.5s.png",
           "time": 21.5,
           "metadata": {
             "width": 1080,
@@ -2593,12 +2610,13 @@
           "revision": "182f124b-4adb-4646-b2f6-3fbfc1efbcd4",
           "inputFingerprint": "b49248674b7d7ccafbf5c944512a5df687416cbd5501df60f255adb8da05be07",
           "inputScope": "local-project-files",
-          "attribution": "recorded-revision"
+          "attribution": "recorded-revision",
+          "status": "cleaned",
+          "cleanedAfterRender": "640c9b95-8ccc-4dbf-9f54-d95ebcc33675"
         },
         {
           "scope": "full",
           "id": "92e3bd26-b8d7-4247-81c5-9bec2a0d8cdc-4",
-          "image": "/home/user/A-occhio-server/videos/verde-spot/.hyperframes/artifacts/snapshots/9fd44879-dd27-4c05-aafe-2cbed2289c05/frame-04-at-59.76s.png",
           "time": 59.76,
           "metadata": {
             "width": 1080,
@@ -2613,14 +2631,15 @@
           "revision": "182f124b-4adb-4646-b2f6-3fbfc1efbcd4",
           "inputFingerprint": "b49248674b7d7ccafbf5c944512a5df687416cbd5501df60f255adb8da05be07",
           "inputScope": "local-project-files",
-          "attribution": "recorded-revision"
+          "attribution": "recorded-revision",
+          "status": "cleaned",
+          "cleanedAfterRender": "640c9b95-8ccc-4dbf-9f54-d95ebcc33675"
         }
       ],
       "85fd12c1-2923-4da0-a544-332ebd02f65e": [
         {
           "scope": "full",
           "id": "793f5ff5-cb01-4e67-b1b7-c7c50920d4f0-0",
-          "image": "/home/user/A-occhio-server/videos/verde-spot/.hyperframes/artifacts/snapshots/1443a413-95d0-4e18-9c1c-effdcab8eed3/frame-00-at-31.6s.png",
           "time": 31.6,
           "metadata": {
             "width": 1080,
@@ -2635,12 +2654,13 @@
           "revision": "85fd12c1-2923-4da0-a544-332ebd02f65e",
           "inputFingerprint": "588a539ceeb72dd01e230f183c13c38aaa2f8c4a040d0caffd48df819be21631",
           "inputScope": "local-project-files",
-          "attribution": "recorded-revision"
+          "attribution": "recorded-revision",
+          "status": "cleaned",
+          "cleanedAfterRender": "640c9b95-8ccc-4dbf-9f54-d95ebcc33675"
         },
         {
           "scope": "full",
           "id": "793f5ff5-cb01-4e67-b1b7-c7c50920d4f0-1",
-          "image": "/home/user/A-occhio-server/videos/verde-spot/.hyperframes/artifacts/snapshots/1443a413-95d0-4e18-9c1c-effdcab8eed3/frame-01-at-32.05s.png",
           "time": 32.05,
           "metadata": {
             "width": 1080,
@@ -2655,12 +2675,13 @@
           "revision": "85fd12c1-2923-4da0-a544-332ebd02f65e",
           "inputFingerprint": "588a539ceeb72dd01e230f183c13c38aaa2f8c4a040d0caffd48df819be21631",
           "inputScope": "local-project-files",
-          "attribution": "recorded-revision"
+          "attribution": "recorded-revision",
+          "status": "cleaned",
+          "cleanedAfterRender": "640c9b95-8ccc-4dbf-9f54-d95ebcc33675"
         },
         {
           "scope": "full",
           "id": "793f5ff5-cb01-4e67-b1b7-c7c50920d4f0-2",
-          "image": "/home/user/A-occhio-server/videos/verde-spot/.hyperframes/artifacts/snapshots/1443a413-95d0-4e18-9c1c-effdcab8eed3/frame-02-at-32.9s.png",
           "time": 32.9,
           "metadata": {
             "width": 1080,
@@ -2675,12 +2696,13 @@
           "revision": "85fd12c1-2923-4da0-a544-332ebd02f65e",
           "inputFingerprint": "588a539ceeb72dd01e230f183c13c38aaa2f8c4a040d0caffd48df819be21631",
           "inputScope": "local-project-files",
-          "attribution": "recorded-revision"
+          "attribution": "recorded-revision",
+          "status": "cleaned",
+          "cleanedAfterRender": "640c9b95-8ccc-4dbf-9f54-d95ebcc33675"
         },
         {
           "scope": "full",
           "id": "793f5ff5-cb01-4e67-b1b7-c7c50920d4f0-3",
-          "image": "/home/user/A-occhio-server/videos/verde-spot/.hyperframes/artifacts/snapshots/1443a413-95d0-4e18-9c1c-effdcab8eed3/frame-03-at-35s.png",
           "time": 35,
           "metadata": {
             "width": 1080,
@@ -2695,12 +2717,13 @@
           "revision": "85fd12c1-2923-4da0-a544-332ebd02f65e",
           "inputFingerprint": "588a539ceeb72dd01e230f183c13c38aaa2f8c4a040d0caffd48df819be21631",
           "inputScope": "local-project-files",
-          "attribution": "recorded-revision"
+          "attribution": "recorded-revision",
+          "status": "cleaned",
+          "cleanedAfterRender": "640c9b95-8ccc-4dbf-9f54-d95ebcc33675"
         },
         {
           "scope": "full",
           "id": "793f5ff5-cb01-4e67-b1b7-c7c50920d4f0-4",
-          "image": "/home/user/A-occhio-server/videos/verde-spot/.hyperframes/artifacts/snapshots/1443a413-95d0-4e18-9c1c-effdcab8eed3/frame-04-at-36.9s.png",
           "time": 36.9,
           "metadata": {
             "width": 1080,
@@ -2715,12 +2738,13 @@
           "revision": "85fd12c1-2923-4da0-a544-332ebd02f65e",
           "inputFingerprint": "588a539ceeb72dd01e230f183c13c38aaa2f8c4a040d0caffd48df819be21631",
           "inputScope": "local-project-files",
-          "attribution": "recorded-revision"
+          "attribution": "recorded-revision",
+          "status": "cleaned",
+          "cleanedAfterRender": "640c9b95-8ccc-4dbf-9f54-d95ebcc33675"
         },
         {
           "scope": "full",
           "id": "793f5ff5-cb01-4e67-b1b7-c7c50920d4f0-5",
-          "image": "/home/user/A-occhio-server/videos/verde-spot/.hyperframes/artifacts/snapshots/1443a413-95d0-4e18-9c1c-effdcab8eed3/frame-05-at-40.9s.png",
           "time": 40.9,
           "metadata": {
             "width": 1080,
@@ -2735,12 +2759,13 @@
           "revision": "85fd12c1-2923-4da0-a544-332ebd02f65e",
           "inputFingerprint": "588a539ceeb72dd01e230f183c13c38aaa2f8c4a040d0caffd48df819be21631",
           "inputScope": "local-project-files",
-          "attribution": "recorded-revision"
+          "attribution": "recorded-revision",
+          "status": "cleaned",
+          "cleanedAfterRender": "640c9b95-8ccc-4dbf-9f54-d95ebcc33675"
         },
         {
           "scope": "full",
           "id": "793f5ff5-cb01-4e67-b1b7-c7c50920d4f0-6",
-          "image": "/home/user/A-occhio-server/videos/verde-spot/.hyperframes/artifacts/snapshots/1443a413-95d0-4e18-9c1c-effdcab8eed3/frame-06-at-41.6s.png",
           "time": 41.6,
           "metadata": {
             "width": 1080,
@@ -2755,12 +2780,13 @@
           "revision": "85fd12c1-2923-4da0-a544-332ebd02f65e",
           "inputFingerprint": "588a539ceeb72dd01e230f183c13c38aaa2f8c4a040d0caffd48df819be21631",
           "inputScope": "local-project-files",
-          "attribution": "recorded-revision"
+          "attribution": "recorded-revision",
+          "status": "cleaned",
+          "cleanedAfterRender": "640c9b95-8ccc-4dbf-9f54-d95ebcc33675"
         },
         {
           "scope": "full",
           "id": "793f5ff5-cb01-4e67-b1b7-c7c50920d4f0-7",
-          "image": "/home/user/A-occhio-server/videos/verde-spot/.hyperframes/artifacts/snapshots/1443a413-95d0-4e18-9c1c-effdcab8eed3/frame-07-at-59.76s.png",
           "time": 59.76,
           "metadata": {
             "width": 1080,
@@ -2775,14 +2801,15 @@
           "revision": "85fd12c1-2923-4da0-a544-332ebd02f65e",
           "inputFingerprint": "588a539ceeb72dd01e230f183c13c38aaa2f8c4a040d0caffd48df819be21631",
           "inputScope": "local-project-files",
-          "attribution": "recorded-revision"
+          "attribution": "recorded-revision",
+          "status": "cleaned",
+          "cleanedAfterRender": "640c9b95-8ccc-4dbf-9f54-d95ebcc33675"
         }
       ],
       "cb7e61b7-569a-4c00-acc7-5c87f794706d": [
         {
           "scope": "crop",
           "id": "af6e8399-d169-41f8-8e1f-c6abb8df56b0-0",
-          "image": "/home/user/A-occhio-server/videos/verde-spot/.hyperframes/artifacts/snapshots/a7b3b004-60e3-4efe-a62b-7b7b02c396d8/frame-00-at-40.9s.png",
           "time": 40.9,
           "metadata": {
             "width": 3240,
@@ -2812,12 +2839,13 @@
           "revision": "cb7e61b7-569a-4c00-acc7-5c87f794706d",
           "inputFingerprint": "7c0e259f181c34f60355abd790c578113074a2284839ed420bd2fbee345864af",
           "inputScope": "local-project-files",
-          "attribution": "recorded-revision"
+          "attribution": "recorded-revision",
+          "status": "cleaned",
+          "cleanedAfterRender": "640c9b95-8ccc-4dbf-9f54-d95ebcc33675"
         },
         {
           "scope": "crop",
           "id": "af6e8399-d169-41f8-8e1f-c6abb8df56b0-1",
-          "image": "/home/user/A-occhio-server/videos/verde-spot/.hyperframes/artifacts/snapshots/a7b3b004-60e3-4efe-a62b-7b7b02c396d8/frame-01-at-41.3s.png",
           "time": 41.3,
           "metadata": {
             "width": 3240,
@@ -2847,12 +2875,13 @@
           "revision": "cb7e61b7-569a-4c00-acc7-5c87f794706d",
           "inputFingerprint": "7c0e259f181c34f60355abd790c578113074a2284839ed420bd2fbee345864af",
           "inputScope": "local-project-files",
-          "attribution": "recorded-revision"
+          "attribution": "recorded-revision",
+          "status": "cleaned",
+          "cleanedAfterRender": "640c9b95-8ccc-4dbf-9f54-d95ebcc33675"
         },
         {
           "scope": "crop",
           "id": "af6e8399-d169-41f8-8e1f-c6abb8df56b0-2",
-          "image": "/home/user/A-occhio-server/videos/verde-spot/.hyperframes/artifacts/snapshots/a7b3b004-60e3-4efe-a62b-7b7b02c396d8/frame-02-at-41.6s.png",
           "time": 41.6,
           "metadata": {
             "width": 3240,
@@ -2882,14 +2911,15 @@
           "revision": "cb7e61b7-569a-4c00-acc7-5c87f794706d",
           "inputFingerprint": "7c0e259f181c34f60355abd790c578113074a2284839ed420bd2fbee345864af",
           "inputScope": "local-project-files",
-          "attribution": "recorded-revision"
+          "attribution": "recorded-revision",
+          "status": "cleaned",
+          "cleanedAfterRender": "640c9b95-8ccc-4dbf-9f54-d95ebcc33675"
         }
       ],
       "6a58d605-0e19-4784-84f8-0a251cea2410": [
         {
           "scope": "full",
           "id": "ae55fc8e-1a4f-4c06-9914-0e8b123da3bb-0",
-          "image": "/home/user/A-occhio-server/videos/verde-spot/.hyperframes/artifacts/snapshots/ad0cc28c-fb3e-4310-865b-a49ce10ee546/frame-00-at-54s.png",
           "time": 54,
           "metadata": {
             "width": 1080,
@@ -2904,12 +2934,13 @@
           "revision": "6a58d605-0e19-4784-84f8-0a251cea2410",
           "inputFingerprint": "3abc0e6268bbdd5a00427813c82f3d241b5ffe524dd6f690743ae90c1bdf6f96",
           "inputScope": "local-project-files",
-          "attribution": "recorded-revision"
+          "attribution": "recorded-revision",
+          "status": "cleaned",
+          "cleanedAfterRender": "640c9b95-8ccc-4dbf-9f54-d95ebcc33675"
         },
         {
           "scope": "full",
           "id": "ae55fc8e-1a4f-4c06-9914-0e8b123da3bb-1",
-          "image": "/home/user/A-occhio-server/videos/verde-spot/.hyperframes/artifacts/snapshots/ad0cc28c-fb3e-4310-865b-a49ce10ee546/frame-01-at-55.5s.png",
           "time": 55.5,
           "metadata": {
             "width": 1080,
@@ -2924,12 +2955,13 @@
           "revision": "6a58d605-0e19-4784-84f8-0a251cea2410",
           "inputFingerprint": "3abc0e6268bbdd5a00427813c82f3d241b5ffe524dd6f690743ae90c1bdf6f96",
           "inputScope": "local-project-files",
-          "attribution": "recorded-revision"
+          "attribution": "recorded-revision",
+          "status": "cleaned",
+          "cleanedAfterRender": "640c9b95-8ccc-4dbf-9f54-d95ebcc33675"
         },
         {
           "scope": "full",
           "id": "ae55fc8e-1a4f-4c06-9914-0e8b123da3bb-2",
-          "image": "/home/user/A-occhio-server/videos/verde-spot/.hyperframes/artifacts/snapshots/ad0cc28c-fb3e-4310-865b-a49ce10ee546/frame-02-at-56.8s.png",
           "time": 56.8,
           "metadata": {
             "width": 1080,
@@ -2944,12 +2976,13 @@
           "revision": "6a58d605-0e19-4784-84f8-0a251cea2410",
           "inputFingerprint": "3abc0e6268bbdd5a00427813c82f3d241b5ffe524dd6f690743ae90c1bdf6f96",
           "inputScope": "local-project-files",
-          "attribution": "recorded-revision"
+          "attribution": "recorded-revision",
+          "status": "cleaned",
+          "cleanedAfterRender": "640c9b95-8ccc-4dbf-9f54-d95ebcc33675"
         },
         {
           "scope": "full",
           "id": "ae55fc8e-1a4f-4c06-9914-0e8b123da3bb-3",
-          "image": "/home/user/A-occhio-server/videos/verde-spot/.hyperframes/artifacts/snapshots/ad0cc28c-fb3e-4310-865b-a49ce10ee546/frame-03-at-57.5s.png",
           "time": 57.5,
           "metadata": {
             "width": 1080,
@@ -2964,12 +2997,13 @@
           "revision": "6a58d605-0e19-4784-84f8-0a251cea2410",
           "inputFingerprint": "3abc0e6268bbdd5a00427813c82f3d241b5ffe524dd6f690743ae90c1bdf6f96",
           "inputScope": "local-project-files",
-          "attribution": "recorded-revision"
+          "attribution": "recorded-revision",
+          "status": "cleaned",
+          "cleanedAfterRender": "640c9b95-8ccc-4dbf-9f54-d95ebcc33675"
         },
         {
           "scope": "full",
           "id": "ae55fc8e-1a4f-4c06-9914-0e8b123da3bb-4",
-          "image": "/home/user/A-occhio-server/videos/verde-spot/.hyperframes/artifacts/snapshots/ad0cc28c-fb3e-4310-865b-a49ce10ee546/frame-04-at-60.5s.png",
           "time": 60.5,
           "metadata": {
             "width": 1080,
@@ -2984,12 +3018,13 @@
           "revision": "6a58d605-0e19-4784-84f8-0a251cea2410",
           "inputFingerprint": "3abc0e6268bbdd5a00427813c82f3d241b5ffe524dd6f690743ae90c1bdf6f96",
           "inputScope": "local-project-files",
-          "attribution": "recorded-revision"
+          "attribution": "recorded-revision",
+          "status": "cleaned",
+          "cleanedAfterRender": "640c9b95-8ccc-4dbf-9f54-d95ebcc33675"
         },
         {
           "scope": "full",
           "id": "ae55fc8e-1a4f-4c06-9914-0e8b123da3bb-5",
-          "image": "/home/user/A-occhio-server/videos/verde-spot/.hyperframes/artifacts/snapshots/ad0cc28c-fb3e-4310-865b-a49ce10ee546/frame-05-at-61.5s.png",
           "time": 61.5,
           "metadata": {
             "width": 1080,
@@ -3004,12 +3039,13 @@
           "revision": "6a58d605-0e19-4784-84f8-0a251cea2410",
           "inputFingerprint": "3abc0e6268bbdd5a00427813c82f3d241b5ffe524dd6f690743ae90c1bdf6f96",
           "inputScope": "local-project-files",
-          "attribution": "recorded-revision"
+          "attribution": "recorded-revision",
+          "status": "cleaned",
+          "cleanedAfterRender": "640c9b95-8ccc-4dbf-9f54-d95ebcc33675"
         },
         {
           "scope": "full",
           "id": "ae55fc8e-1a4f-4c06-9914-0e8b123da3bb-6",
-          "image": "/home/user/A-occhio-server/videos/verde-spot/.hyperframes/artifacts/snapshots/ad0cc28c-fb3e-4310-865b-a49ce10ee546/frame-06-at-59.76s.png",
           "time": 59.76,
           "metadata": {
             "width": 1080,
@@ -3024,7 +3060,9 @@
           "revision": "6a58d605-0e19-4784-84f8-0a251cea2410",
           "inputFingerprint": "3abc0e6268bbdd5a00427813c82f3d241b5ffe524dd6f690743ae90c1bdf6f96",
           "inputScope": "local-project-files",
-          "attribution": "recorded-revision"
+          "attribution": "recorded-revision",
+          "status": "cleaned",
+          "cleanedAfterRender": "640c9b95-8ccc-4dbf-9f54-d95ebcc33675"
         },
         {
           "scope": "crop",
@@ -3064,7 +3102,6 @@
         {
           "scope": "full",
           "id": "d0eaf8dd-4dd0-4d01-b139-6abe091a42e7-0",
-          "image": "/home/user/A-occhio-server/videos/verde-spot/.hyperframes/artifacts/snapshots/e9e24373-efa5-4fae-a1bb-55b1d0dba2ac/frame-00-at-32.05s.png",
           "time": 32.05,
           "metadata": {
             "width": 1080,
@@ -3079,12 +3116,13 @@
           "revision": "6a58d605-0e19-4784-84f8-0a251cea2410",
           "inputFingerprint": "3abc0e6268bbdd5a00427813c82f3d241b5ffe524dd6f690743ae90c1bdf6f96",
           "inputScope": "local-project-files",
-          "attribution": "recorded-revision"
+          "attribution": "recorded-revision",
+          "status": "cleaned",
+          "cleanedAfterRender": "640c9b95-8ccc-4dbf-9f54-d95ebcc33675"
         },
         {
           "scope": "full",
           "id": "d0eaf8dd-4dd0-4d01-b139-6abe091a42e7-1",
-          "image": "/home/user/A-occhio-server/videos/verde-spot/.hyperframes/artifacts/snapshots/e9e24373-efa5-4fae-a1bb-55b1d0dba2ac/frame-01-at-35.6s.png",
           "time": 35.6,
           "metadata": {
             "width": 1080,
@@ -3099,12 +3137,13 @@
           "revision": "6a58d605-0e19-4784-84f8-0a251cea2410",
           "inputFingerprint": "3abc0e6268bbdd5a00427813c82f3d241b5ffe524dd6f690743ae90c1bdf6f96",
           "inputScope": "local-project-files",
-          "attribution": "recorded-revision"
+          "attribution": "recorded-revision",
+          "status": "cleaned",
+          "cleanedAfterRender": "640c9b95-8ccc-4dbf-9f54-d95ebcc33675"
         },
         {
           "scope": "full",
           "id": "d0eaf8dd-4dd0-4d01-b139-6abe091a42e7-2",
-          "image": "/home/user/A-occhio-server/videos/verde-spot/.hyperframes/artifacts/snapshots/e9e24373-efa5-4fae-a1bb-55b1d0dba2ac/frame-02-at-41.3s.png",
           "time": 41.3,
           "metadata": {
             "width": 1080,
@@ -3119,12 +3158,13 @@
           "revision": "6a58d605-0e19-4784-84f8-0a251cea2410",
           "inputFingerprint": "3abc0e6268bbdd5a00427813c82f3d241b5ffe524dd6f690743ae90c1bdf6f96",
           "inputScope": "local-project-files",
-          "attribution": "recorded-revision"
+          "attribution": "recorded-revision",
+          "status": "cleaned",
+          "cleanedAfterRender": "640c9b95-8ccc-4dbf-9f54-d95ebcc33675"
         },
         {
           "scope": "full",
           "id": "d0eaf8dd-4dd0-4d01-b139-6abe091a42e7-3",
-          "image": "/home/user/A-occhio-server/videos/verde-spot/.hyperframes/artifacts/snapshots/e9e24373-efa5-4fae-a1bb-55b1d0dba2ac/frame-03-at-55s.png",
           "time": 55,
           "metadata": {
             "width": 1080,
@@ -3139,12 +3179,13 @@
           "revision": "6a58d605-0e19-4784-84f8-0a251cea2410",
           "inputFingerprint": "3abc0e6268bbdd5a00427813c82f3d241b5ffe524dd6f690743ae90c1bdf6f96",
           "inputScope": "local-project-files",
-          "attribution": "recorded-revision"
+          "attribution": "recorded-revision",
+          "status": "cleaned",
+          "cleanedAfterRender": "640c9b95-8ccc-4dbf-9f54-d95ebcc33675"
         },
         {
           "scope": "full",
           "id": "d0eaf8dd-4dd0-4d01-b139-6abe091a42e7-4",
-          "image": "/home/user/A-occhio-server/videos/verde-spot/.hyperframes/artifacts/snapshots/e9e24373-efa5-4fae-a1bb-55b1d0dba2ac/frame-04-at-57s.png",
           "time": 57,
           "metadata": {
             "width": 1080,
@@ -3159,12 +3200,13 @@
           "revision": "6a58d605-0e19-4784-84f8-0a251cea2410",
           "inputFingerprint": "3abc0e6268bbdd5a00427813c82f3d241b5ffe524dd6f690743ae90c1bdf6f96",
           "inputScope": "local-project-files",
-          "attribution": "recorded-revision"
+          "attribution": "recorded-revision",
+          "status": "cleaned",
+          "cleanedAfterRender": "640c9b95-8ccc-4dbf-9f54-d95ebcc33675"
         },
         {
           "scope": "full",
           "id": "d0eaf8dd-4dd0-4d01-b139-6abe091a42e7-5",
-          "image": "/home/user/A-occhio-server/videos/verde-spot/.hyperframes/artifacts/snapshots/e9e24373-efa5-4fae-a1bb-55b1d0dba2ac/frame-05-at-61.2s.png",
           "time": 61.2,
           "metadata": {
             "width": 1080,
@@ -3179,12 +3221,13 @@
           "revision": "6a58d605-0e19-4784-84f8-0a251cea2410",
           "inputFingerprint": "3abc0e6268bbdd5a00427813c82f3d241b5ffe524dd6f690743ae90c1bdf6f96",
           "inputScope": "local-project-files",
-          "attribution": "recorded-revision"
+          "attribution": "recorded-revision",
+          "status": "cleaned",
+          "cleanedAfterRender": "640c9b95-8ccc-4dbf-9f54-d95ebcc33675"
         },
         {
           "scope": "full",
           "id": "d0eaf8dd-4dd0-4d01-b139-6abe091a42e7-6",
-          "image": "/home/user/A-occhio-server/videos/verde-spot/.hyperframes/artifacts/snapshots/e9e24373-efa5-4fae-a1bb-55b1d0dba2ac/frame-06-at-59.76s.png",
           "time": 59.76,
           "metadata": {
             "width": 1080,
@@ -3199,7 +3242,9 @@
           "revision": "6a58d605-0e19-4784-84f8-0a251cea2410",
           "inputFingerprint": "3abc0e6268bbdd5a00427813c82f3d241b5ffe524dd6f690743ae90c1bdf6f96",
           "inputScope": "local-project-files",
-          "attribution": "recorded-revision"
+          "attribution": "recorded-revision",
+          "status": "cleaned",
+          "cleanedAfterRender": "640c9b95-8ccc-4dbf-9f54-d95ebcc33675"
         }
       ]
     },
@@ -3207,15 +3252,15 @@
   },
   "renders": {
     "latest": {
-      "id": "b96ea68f-acd2-427a-b31c-f1b41f6c1129",
-      "completedAt": 1792015550287,
+      "id": "c7097371-5752-4a32-a2eb-43b1128413df",
+      "completedAt": 1792018446135,
       "output": "/home/user/A-occhio-server/videos/verde-spot/renders/master-vuoto.mp4",
       "status": "completed",
-      "revision": "52d85f18-7b0e-45eb-8535-a8699d8530ea"
+      "revision": "3c3e433f-e811-43c8-8304-a0bdcba9fc8d"
     },
     "retainedRevisions": [
-      "52d85f18-7b0e-45eb-8535-a8699d8530ea",
-      "182f124b-4adb-4646-b2f6-3fbfc1efbcd4"
+      "3c3e433f-e811-43c8-8304-a0bdcba9fc8d",
+      "7dc7fbd2-4a6d-464e-ab02-1f14d9cb20de"
     ]
   },
   "pendingArtifactCleanup": []
