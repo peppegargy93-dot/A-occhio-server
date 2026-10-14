@@ -423,7 +423,7 @@
           for (const c of el.getAttribute("data-text")) {
             const s = document.createElement("span");
             s.className = "f02-ch";
-            s.textContent = c === " " ? " " : c;
+            s.textContent = c === " " ? "\u00a0" : c;
             el.appendChild(s);
           }
         });

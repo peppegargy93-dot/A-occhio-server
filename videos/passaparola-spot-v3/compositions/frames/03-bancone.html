@@ -254,7 +254,8 @@
       tl.to($("screen-bloom"), { scale: 26, duration: 0.55, ease: "power2.inOut" }, 2.05);
 
       /* ===== Scene 3 (2.4-3.4): title types at top; camera zooms into the white phone screen ===== */
-      tl.to($$("ch"), { opacity: 1, y: 0, duration: 0.18, ease: "power2.out", stagger: 0.035 }, 2.3);
+      // title types 1.0-1.58s (as the phone rises); its screen-space layer sits above the stage's white bloom, covered only by the handoff page at 3.18
+      tl.to($$("ch"), { opacity: 1, y: 0, duration: 0.18, ease: "power2.out", stagger: 0.033 }, 1.0);
 
       // coordinate-target zoom onto screen center (540,1540): T = (0, 960-1540), cam scale 2.9
       tl.to(world, { x: 0, y: -580, duration: 0.7, ease: "power3.inOut" }, 2.5);
